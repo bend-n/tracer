@@ -1,0 +1,87 @@
+[gd_scene load_steps=6 format=3 uid="uid://duba8yjseopy6"]
+
+[ext_resource type="Script" path="res://scenes/track-base.gd" id="1_ke7nx"]
+[ext_resource type="Texture2D" uid="uid://2fjjxft1ip57" path="res://assets/road.png" id="1_q0215"]
+[ext_resource type="Material" uid="uid://dtpgjplswm6lr" path="res://rail.tres" id="2_3pcob"]
+[ext_resource type="Material" uid="uid://dk84idq7ktc5m" path="res://assets/mats/support.tres" id="3_4570s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xw8xl"]
+albedo_texture = ExtResource("1_q0215")
+uv1_scale = Vector3(8, 8, 8)
+
+[node name="TrackLoader" type="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.70198, -8.01861, -4.84379)
+script = ExtResource("1_ke7nx")
+
+[node name="Road" type="CSGPolygon3D" parent="."]
+polygon = PackedVector2Array(-8.5, 0, -8.5, -0.1, 8.5, -0.1, 8.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 2.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 0.0
+path_joined = true
+material = SubResource("StandardMaterial3D_xw8xl")
+
+[node name="CollisionShape" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.165113, 0)
+visible = false
+use_collision = true
+polygon = PackedVector2Array(-11.5, 0, 11.5, 0, 11.5, 5, 14.5, 5, 14.5, -1, -14.5, -1, -14.5, 5, -11.5, 5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 6.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+
+[node name="Rail-L" type="CSGPolygon3D" parent="."]
+polygon = PackedVector2Array(11.5, 0.5, 11.45, 0.47, 11.45, 0.43, 11.5, 0.4, 11.5, 0.55, 11.45, 0.32, 11.45, 0.28, 11.5, 0.25, 11.55, 0.25, 11.55, 0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 2.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+material = ExtResource("2_3pcob")
+
+[node name="Rail-R" type="CSGPolygon3D" parent="."]
+polygon = PackedVector2Array(-11.5, 0.5, -11.45, 0.47, -11.45, 0.43, -11.5, 0.4, -11.5, 0.55, -11.45, 0.32, -11.45, 0.28, -11.5, 0.25, -11.55, 0.25, -11.55, 0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 2.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+
+[node name="Support" type="CSGPolygon3D" parent="."]
+polygon = PackedVector2Array(-10.5, -0.17, 10.5, -0.17, 15.1, -8, -15, -8)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 5.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+material = ExtResource("3_4570s")
+
+[connection signal="curve_changed" from="." to="." method="_on_curve_changed"]

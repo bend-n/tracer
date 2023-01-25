@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b3sesqrdyxv5t"]
+
+[ext_resource type="Texture2D" uid="uid://dyk71hogwv01g" path="res://assets/grass.png" id="1_2pspn"]
+
+[resource]
+albedo_texture = ExtResource("1_2pspn")
+emission = Color(0, 0.0745098, 0.219608, 1)
+emission_energy_multiplier = 16.0
+ao_light_affect = 0.33
+uv1_scale = Vector3(100, 100, 100)

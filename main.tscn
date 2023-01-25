@@ -1,0 +1,120 @@
+[gd_scene load_steps=17 format=3 uid="uid://bnbab2hgqh4w5"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_cps4g"]
+[ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="1_rbfsw"]
+[ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="2_rymfk"]
+[ext_resource type="Material" uid="uid://b3sesqrdyxv5t" path="res://assets/mats/grass.tres" id="3_iiti7"]
+[ext_resource type="Script" path="res://cam.gd" id="4_u07o8"]
+[ext_resource type="PackedScene" uid="uid://duba8yjseopy6" path="res://scenes/track.tscn" id="6_u5ece"]
+[ext_resource type="Theme" uid="uid://ch2uo5qd8ubx6" path="res://ui/theme.tres" id="8_qjj2f"]
+[ext_resource type="Script" path="res://ui/revs.gd" id="9_hvuf0"]
+[ext_resource type="Script" path="res://ui/speedometer.gd" id="10_fu5aw"]
+[ext_resource type="Script" path="res://ui/gears.gd" id="10_gvf44"]
+[ext_resource type="Curve3D" uid="uid://u2f56xx8h2re" path="res://tracks/speedway_curve.tres" id="12_5lojs"]
+[ext_resource type="Resource" uid="uid://d3te55uy5ei7k" path="res://tracks/speedway_track.tres" id="13_pjowj"]
+[ext_resource type="Script" path="res://test.gd" id="14_6hrhe"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tkhh8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ta0cd"]
+material = ExtResource("3_iiti7")
+size = Vector2(5000, 5000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h85yi"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_cps4g")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.261981, -0.791013, -0.55287, 0.791617, -0.15154, 0.591927, -0.552004, -0.592735, 0.586479, 0, 37.0187, 0)
+
+[node name="Env" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_rbfsw")
+camera_attributes = ExtResource("2_rymfk")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("WorldBoundaryShape3D_tkhh8")
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_ta0cd")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_this")]
+transform = Transform3D(-0.718418, -0.318909, -0.618201, 0.111279, -0.92996, 0.350416, -0.686653, 0.182953, 0.703588, -7.07504, 13.1712, 16.3801)
+script = ExtResource("4_u07o8")
+follow_this = NodePath("../Car/SedanSports")
+target_distance = 7.0
+target_height = 5.0
+
+[node name="Car" type="Node3D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -105.0
+offset_right = 152.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_qjj2f")
+theme_override_constants/separation = 50
+
+[node name="Panel3" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_qjj2f")
+
+[node name="Revometer" type="Label" parent="CanvasLayer/HBoxContainer/Panel3" node_paths=PackedStringArray("car")]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 2
+size_flags_horizontal = 4
+text = " 0rpm"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_hvuf0")
+car = NodePath("../../../../Car/SedanSports")
+
+[node name="Panel" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_qjj2f")
+
+[node name="Speedometer" type="Label" parent="CanvasLayer/HBoxContainer/Panel" node_paths=PackedStringArray("car")]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "龍 0km/h"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("10_fu5aw")
+car = NodePath("../../../../Car/SedanSports")
+
+[node name="Panel2" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_qjj2f")
+
+[node name="Gearometer" type="RichTextLabel" parent="CanvasLayer/HBoxContainer/Panel2" node_paths=PackedStringArray("car")]
+custom_minimum_size = Vector2(244, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]  [b][color=#4682b4]N[/color][/b][/center]"
+fit_content_height = true
+scroll_active = false
+script = ExtResource("10_gvf44")
+car = NodePath("../../../../Car/SedanSports")
+
+[node name="Track" parent="." instance=ExtResource("6_u5ece")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+curve = ExtResource("12_5lojs")
+track = ExtResource("13_pjowj")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.43223, 0)
+material = SubResource("StandardMaterial3D_h85yi")
+script = ExtResource("14_6hrhe")

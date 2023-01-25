@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://u8g53husgywi"]
+
+[ext_resource type="PackedScene" uid="uid://b6vxr0dxeev81" path="res://assets/cars/kenney_sedan/sedan.blend" id="1_a083g"]
+[ext_resource type="Script" path="res://car.gd" id="1_hlt8r"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1m0u8"]
+bounce = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2sf22"]
+radius = 1.0
+
+[node name="Sedan" type="Node3D"]
+
+[node name="SedanSports" parent="." instance=ExtResource("1_a083g")]
+physics_material_override = SubResource("PhysicsMaterial_1m0u8")
+script = ExtResource("1_hlt8r")
+
+[node name="Ball" type="CollisionShape3D" parent="SedanSports"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.956712, 0)
+shape = SubResource("SphereShape3D_2sf22")

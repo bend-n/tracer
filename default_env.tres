@@ -1,0 +1,26 @@
+[gd_resource type="Environment" load_steps=5 format=3 uid="uid://biwshm46yl62v"]
+
+[sub_resource type="Gradient" id="Gradient_dslwg"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gewg2"]
+gradient = SubResource("Gradient_dslwg")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_57jkl"]
+sky_top_color = Color(0.282353, 0.372549, 1, 1)
+sky_horizon_color = Color(0.427451, 0.658824, 1, 1)
+sky_curve = 0.204906
+ground_bottom_color = Color(0.427451, 0.658824, 1, 1)
+ground_horizon_color = Color(0.427451, 0.658824, 1, 1)
+ground_curve = 13.0515
+
+[sub_resource type="Sky" id="Sky_c7ivh"]
+sky_material = SubResource("ProceduralSkyMaterial_57jkl")
+process_mode = 1
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_c7ivh")
+ambient_light_source = 3
+ambient_light_color = Color(0.87451, 0.87451, 0.815686, 1)
+volumetric_fog_density = 1.0
+adjustment_color_correction = SubResource("GradientTexture1D_gewg2")
