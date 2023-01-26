@@ -13,3 +13,6 @@ support_height = 2.0
 track = ExtResource("2_33qpi")
 left_barrier = true
 right_barrier = true
+sun_x = -90
+sun_y = 0
+offset = Vector3(0, 1, 0)

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://main.gd" id="1_cps4g"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="1_rbfsw"]
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="2_rymfk"]
-[ext_resource type="Material" path="res://assets/mats/grass.tres" id="3_iiti7"]
+[ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="3_iiti7"]
 [ext_resource type="Script" path="res://cam.gd" id="4_u07o8"]
 [ext_resource type="PackedScene" uid="uid://dyd5mqhgu6qfv" path="res://assets/cars/kenney_sedan/sedan.tscn" id="6_1vlt4"]
 [ext_resource type="PackedScene" uid="uid://clw61td2wh84w" path="res://scenes/track.tscn" id="6_u5ece"]
@@ -21,10 +21,6 @@ size = Vector2(5000, 5000)
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_cps4g")
-
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.261981, -0.791013, -0.55287, 0.791617, -0.15154, 0.591927, -0.552004, -0.592735, 0.586479, 0, 37.0187, 0)
-directional_shadow_mode = 0
 
 [node name="Env" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_rbfsw")
@@ -44,15 +40,12 @@ mesh = SubResource("PlaneMesh_ta0cd")
 transform = Transform3D(-0.718418, -0.318909, -0.618201, 0.111279, -0.92996, 0.350416, -0.686653, 0.182953, 0.703588, -7.07504, 13.1712, 16.3801)
 far = 400.0
 script = ExtResource("4_u07o8")
-follow_this = NodePath("../Car/Sedan")
+follow_this = NodePath("../Sedan")
 target_distance = 9.0
 target_height = 5.0
 
-[node name="Car" type="Node3D" parent="."]
+[node name="Sedan" parent="." instance=ExtResource("6_1vlt4")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2, 100)
-
-[node name="Sedan" parent="Car" instance=ExtResource("6_1vlt4")]
-show_debug = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -82,34 +75,20 @@ text = "龍 0km/h"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("10_fu5aw")
-car = NodePath("../../../../Car/Sedan")
+car = NodePath("../../../../Sedan")
 
-[node name="MiniMap" type="Line2D" parent="CanvasLayer" node_paths=PackedStringArray("track")]
-position = Vector2(200, 150)
-default_color = Color(0.588235, 0.588235, 0.588235, 0.807843)
+[node name="MiniMap" type="Line2D" parent="CanvasLayer" node_paths=PackedStringArray("track", "car")]
+position = Vector2(300, 145)
+points = PackedVector2Array(-66, -46, 128, 3, -55, 150, -84, -24)
+default_color = Color(0.588235, 0.588235, 0.588235, 0.537255)
 joint_mode = 2
 antialiased = true
 script = ExtResource("9_17iea")
 track = NodePath("../../Track")
+car = NodePath("../../Sedan")
+player_color = Color(1, 0.388235, 0.321569, 0.803922)
 
 [node name="Track" parent="." instance=ExtResource("6_u5ece")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 curve = ExtResource("12_5lojs")
 track = ExtResource("13_pjowj")
-
-[node name="Road" parent="Track" index="0"]
-polygon = PackedVector2Array(-20, 0, -20, -0.1, 20, -0.1, 20, 0)
-
-[node name="CollisionShape" parent="Track" index="1"]
-polygon = PackedVector2Array(-23, 0, 23, 0, 23, 5, 26, 5, 26, -1, -26, -1, -26, 5, -23, 5)
-
-[node name="Rail-L" parent="Track" index="2"]
-polygon = PackedVector2Array(23, 0.5, 22.95, 0.47, 22.95, 0.43, 23, 0.4, 23, 0.55, 22.95, 0.32, 22.95, 0.28, 23, 0.25, 23.05, 0.25, 23.05, 0.5)
-
-[node name="Rail-R" parent="Track" index="3"]
-polygon = PackedVector2Array(-23, 0.5, -22.95, 0.47, -22.95, 0.43, -23, 0.4, -23, 0.55, -22.95, 0.32, -22.95, 0.28, -23, 0.25, -23.05, 0.25, -23.05, 0.5)
-
-[node name="Support" parent="Track" index="4"]
-polygon = PackedVector2Array(-22, -0.17, 22, -0.17, 25.1, -2, -25, -2)
-
-[editable path="Track"]

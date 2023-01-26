@@ -2,6 +2,7 @@
 extends Path3D
 class_name TrackLoader
 
+@export_group("Track")
 @export var track: TrackResource = null:
 	set(new_track):
 		if track != new_track:
@@ -20,8 +21,9 @@ class_name TrackLoader
 @onready var rail_l := $"Rail-L" as CSGPolygon3D
 @onready var rail_r := $"Rail-R" as CSGPolygon3D
 @onready var collision := $CollisionShape as CSGPolygon3D
+@onready var sun := $Sun as DirectionalLight3D
 
-var is_dirty = true
+var is_dirty := true
 
 func vec(x := 0.0, y := 0.0) -> Vector2:
 	return Vector2(x, y)
@@ -29,24 +31,28 @@ func vec(x := 0.0, y := 0.0) -> Vector2:
 
 func _update():
 	if !is_dirty or !track or !track.track:
-		# curve = null
+		# curve = null # editor freezes with this, idk why
 		return
 	curve = track.track
 	curve.set_point_tilt(0, PI/2)
 	curve.set_point_tilt(curve.get_point_count() - 1, 0.0)
 
+	sun.rotation_degrees.x = (track.sun_x)
+	sun.rotation_degrees.y = (track.sun_y)
+
+
 	# update our track
-	var thw: float = track.track_width * 0.5 # track half width
+	var thw := track.track_width * 0.5 # track half width
 	road.polygon = PackedVector2Array([vec(-thw), vec(-thw, -0.1), vec(thw, -0.1), vec(thw)])
 	support.polygon = PackedVector2Array([
-		vec(-thw - 2.0, -0.17),
-		vec( thw + 2.0, -0.17),
+		vec(-thw - 2.0, -1),
+		vec( thw + 2.0, -1),
 		vec( track.lower_support_width + 0.1, -track.support_height),
 		vec(-track.lower_support_width, -track.support_height)
 	])
 
 	# update our rails
-	var rp: float = thw + track.rail_distance # rail position
+	var rp := thw + track.rail_distance # rail position
 	rail_l.polygon = PackedVector2Array([
 		vec(rp, 0.5),
 		vec(rp - 0.05, 0.47),
@@ -85,6 +91,9 @@ func _update():
 	c.set(6, Vector2(-rp - 3.0, 5.0))
 	c.set(7, Vector2(-rp, 5.0))
 	collision.polygon = c
+
+	# annd offset
+	position = track.offset
 
 	is_dirty = false
 
