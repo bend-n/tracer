@@ -8,6 +8,9 @@ var last_lookat
 
 func _ready():
 	last_lookat = follow_this.global_transform.origin
+	if follow_this is Car:
+		await follow_this.ready
+		follow_this = follow_this.car_mesh
 
 func _physics_process(delta):
 	var delta_v = global_transform.origin - follow_this.global_transform.origin

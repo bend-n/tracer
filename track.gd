@@ -10,3 +10,7 @@ class_name TrackResource
 @export var support_height = 8.0
 ## Track curve
 @export var track: Curve3D = null
+## Left barrier? (does not change collisions). see also [member right_barrier]
+@export var left_barrier = true
+## Right barrier? (does not change collisions). see also [member left_barrier]
+@export var right_barrier = true

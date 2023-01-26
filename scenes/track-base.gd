@@ -1,5 +1,6 @@
 @tool
 extends Path3D
+class_name TrackLoader
 
 @export var track: TrackResource = null:
 	set(new_track):
@@ -35,7 +36,7 @@ func _update():
 	curve.set_point_tilt(curve.get_point_count() - 1, 0.0)
 
 	# update our track
-	var thw = track.track_width * 0.5 # track half width
+	var thw: float = track.track_width * 0.5 # track half width
 	road.polygon = PackedVector2Array([vec(-thw), vec(-thw, -0.1), vec(thw, -0.1), vec(thw)])
 	support.polygon = PackedVector2Array([
 		vec(-thw - 2.0, -0.17),
@@ -45,8 +46,7 @@ func _update():
 	])
 
 	# update our rails
-
-	var rp := thw + track.rail_distance # rail position
+	var rp: float = thw + track.rail_distance # rail position
 	rail_l.polygon = PackedVector2Array([
 		vec(rp, 0.5),
 		vec(rp - 0.05, 0.47),
@@ -59,6 +59,7 @@ func _update():
 		vec(rp  + 0.05, 0.25),
 		vec(rp + 0.05, 0.5)
 	])
+	rail_l.visible = track.left_barrier
 	rail_r.polygon = PackedVector2Array([
 		vec(-rp, 0.5),
 		vec(-rp + 0.05, 0.47),
@@ -71,7 +72,7 @@ func _update():
 		vec(-rp - 0.05, 0.25),
 		vec(-rp - 0.05, .5)
 	])
-
+	rail_r.visible = track.right_barrier
 	# update our collision
 
 	var c = collision.polygon

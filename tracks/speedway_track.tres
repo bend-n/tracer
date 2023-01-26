@@ -4,9 +4,12 @@
 [ext_resource type="Curve3D" uid="uid://u2f56xx8h2re" path="res://tracks/speedway_curve.tres" id="2_33qpi"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_c5h3o")
-track_width = 25.0
+track_width = 40.0
 rail_distance = 3.0
-lower_support_width = 18.0
+lower_support_width = 25.0
 support_height = 2.0
 track = ExtResource("2_33qpi")
+left_barrier = true
+right_barrier = true

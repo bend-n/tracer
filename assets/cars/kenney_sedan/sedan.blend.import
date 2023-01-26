@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b6vxr0dxeev81"
+uid="uid://bbj2agqv581cd"
 path="res://.godot/imported/sedan.blend-3ceae6cdea71e2b9a73446751f661182.scn"
 
 [deps]
@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/sedan.blend-3ceae6cdea71e2b9a73446751f661182.
 
 [params]
 
-nodes/root_type="RigidBody3D"
+nodes/root_type="Node3D"
 nodes/root_name="SedanSports"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

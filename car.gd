@@ -1,83 +1,80 @@
-extends VehicleBody3D
+extends Node3D
 class_name Car
 
-@export var STEER_SPEED := 0.1
-@export var MAX_ENGINE_FORCE := 700.0
-@export var MAX_BRAKE_FORCE := 50.0
+@onready var ball := $Ball as RigidBody3D
+@onready var car_mesh := $CarMesh as Node3D
+@onready var ground_ray := $CarMesh/GroundRay as RayCast3D
+# mesh references
+@onready var right_wheel := $CarMesh/frontright as MeshInstance3D
+@onready var left_wheel := $CarMesh/frontleft as MeshInstance3D
+@onready var skid_l = $CarMesh/SkidL as GPUParticles3D
+@onready var skid_r = $CarMesh/SkidR as GPUParticles3D
+@onready var body_mesh := $CarMesh/body as MeshInstance3D
+@export var show_debug := false
 
-@export var gear_ratios: Array[float] # 6
-@export var reverse_ratio := -2.5
-@export var final_drive_ratio := 3.38
-@export var max_engine_rpm := 8000.0
-@export var gear_shift_time = 0.3
-@export var power_curve: Curve = null
+var acceleration := 35.0 # ai must change this for randomness
+const sphere_offset := Vector3(0, -2, .5)
+const max_steering_range := deg_to_rad(40.0)
+const turn_speed := 2.0
+const wheel_turn_speed := 0.2
+const turn_stop_limit := 0.75
+const body_tilt := 685.0
 
-var current_gear = 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
-const names: Array[StringName] = ["neutral", "first", "second", "third", "fourth", "fifth", "sixth", "reverse"] # -1 = last
-var clutch_position: float = 1.0 # 0.0 = clutch engaged
-var current_speed_mps = 0.0 # meters
-@onready var last_pos = position
-@export var wheel_radius: float
-@onready var wheel_circumference: float = 2.0 * PI * wheel_radius
-var gear_timer = 0.0
+var throttle := 0.0
+var _steering := 0.0
 
-func get_speed_kph():
-	return current_speed_mps * 3600.0 / 1000.0
+func _ready():
+    $Ball/DebugMesh.visible = show_debug
+    ground_ray.add_exception(ball)
 
-# calculate the RPM of our engine based on the current velocity of our car
-func calculate_rpm() -> float:
-	# if we are in neutral, no rpm
-	if current_gear == 0:
-		return 0.0
+func steer(to: float) -> void:
+    _steering = clamp(lerpf(_steering, -to, wheel_turn_speed), -max_steering_range, max_steering_range)
+    if is_zero_approx(_steering) or (_steering < .05 && _steering > -.05):
+        _steering = 0
+    # rotate wheels for effect
+    right_wheel.rotation.y = _steering * .75
+    left_wheel.rotation.y = _steering * .75
 
-	var wheel_rotation_speed: float = 60.0 * current_speed_mps / wheel_circumference
-	var drive_shaft_rotation_speed: float = wheel_rotation_speed * final_drive_ratio
-	if current_gear == -1:
-		# we are in reverse
-		return drive_shaft_rotation_speed * -reverse_ratio
-	elif current_gear <= gear_ratios.size():
-		return drive_shaft_rotation_speed * gear_ratios[current_gear - 1]
-	return 0.0
+func move_mesh(delta: float) -> void:
+   # just lerp the y due to trimesh bouncing
+   car_mesh.transform.origin.x = ball.transform.origin.x + sphere_offset.x
+   car_mesh.transform.origin.z = ball.transform.origin.z + sphere_offset.z
+   car_mesh.transform.origin.y = lerp(car_mesh.transform.origin.y, ball.transform.origin.y + sphere_offset.y, 1 * delta)
+   ball.apply_central_force(-car_mesh.global_transform.basis.z * throttle)
 
-func _process_gear_inputs(delta: float):
-	if gear_timer > 0.0:
-		gear_timer = max(0.0, gear_timer - delta)
-		clutch_position = 0.0
-	else:
-		if Input.is_action_just_pressed("shift_down") and current_gear > -1:
-			current_gear = current_gear - 1
-			gear_timer = gear_shift_time
-			clutch_position = 0.0
-		elif Input.is_action_just_pressed("shift_up") and current_gear < gear_ratios.size():
-			current_gear = current_gear + 1
-			gear_timer = gear_shift_time
-			clutch_position = 0.0
-		else:
-			clutch_position = 1.0
+func turn(delta: float) -> void:
+    if ball.linear_velocity.length() > turn_stop_limit:
+        var new_basis := car_mesh.global_transform.basis.rotated(car_mesh.global_transform.basis.y, _steering)
+        car_mesh.global_transform.basis = car_mesh.global_transform.basis.slerp(new_basis, turn_speed * delta)
+        car_mesh.global_transform = car_mesh.global_transform.orthonormalized()
+        # tilt body for effect
+        body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf((-_steering * .2) * ball.linear_velocity.length_squared() / body_tilt, -.4, .4), 10 * delta)
 
-func _process(delta: float):
-	_process_gear_inputs(delta)
+func floor_mesh(delta: float) ->  void:
+    var n = ground_ray.get_collision_normal()
+    var xform := align_with_y(car_mesh.global_transform, n.normalized())
+    car_mesh.global_transform = car_mesh.global_transform.interpolate_with(xform, 10 * delta)
 
-func _physics_process(delta):
-	current_speed_mps = (position - last_pos).length() / delta
-	var steer_val = Input.get_axis("ui_left", "ui_right")
-	var throttle_val = Input.get_action_strength("accel")
-	var brake_val = Input.get_action_strength("brake")
+func _physics_process(delta: float) -> void:
+    move_mesh(delta)
 
-	var power_factor = power_curve.sample_baked(clamp(calculate_rpm() / max_engine_rpm, 0.0, 1.0))
+    # if not ground_ray.is_colliding():
+    #     return
 
-	if current_gear == -1:
-		engine_force = clutch_position * throttle_val * power_factor * reverse_ratio * final_drive_ratio * MAX_ENGINE_FORCE
-	elif current_gear > 0 and current_gear <= gear_ratios.size():
-		engine_force = clutch_position * throttle_val * power_factor * gear_ratios[current_gear - 1] * final_drive_ratio * MAX_ENGINE_FORCE
-	else:
-		engine_force = 0.0
+    # print(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.y))
+    # if throttle < 0 && :
+    #     steering = -steering
 
-	brake = brake_val * MAX_BRAKE_FORCE
-	steering = clamp(lerpf(steering + -(steer_val * STEER_SPEED), 0, STEER_SPEED), -.8, .8)
-	print("%0.2f" % steering)
-	if is_zero_approx(steering) or (steering < .05 && steering > -.05):
-		steering = 0
+    # drift particles
+    var drift: bool = ball.linear_velocity.length() > 25 and abs(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.z)) > .5
+    skid_l.emitting = drift
+    skid_r.emitting = drift
 
-	# remember where we are
-	last_pos = position
+    turn(delta)
+    floor_mesh(delta)
+
+func align_with_y(xform: Transform3D, new_y: Vector3) -> Transform3D:
+    xform.basis.y = new_y
+    xform.basis.x = -xform.basis.z.cross(new_y)
+    xform.basis = xform.basis.orthonormalized()
+    return xform
