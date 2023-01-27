@@ -5,6 +5,8 @@
 [ext_resource type="FontVariation" uid="uid://ba8ab6dti2fvo" path="res://ui/boldsans.tres" id="3_fpgf0"]
 
 [resource]
+default_font = ExtResource("1_37cf0")
+default_font_size = 76
 Label/font_sizes/font_size = 76
 Label/fonts/font = ExtResource("1_37cf0")
 PanelContainer/styles/panel = ExtResource("1_g8q83")

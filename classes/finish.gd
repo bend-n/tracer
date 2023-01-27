@@ -1,0 +1,2 @@
+extends CheckPoint
+class_name Finish

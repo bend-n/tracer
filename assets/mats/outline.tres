@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://daq466g05ublu"]
+
+[resource]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+texture_filter = 0
+grow = true
+grow_amount = 2.0

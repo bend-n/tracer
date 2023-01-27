@@ -7,18 +7,12 @@ extends Line2D
 func _ready() -> void:
 	clear_points()
 	width = track.track.track_width
-	# am on the fence about outlining
-	# var outline := Line2D.new()
-	# outline.width = width + 10
-	# outline.default_color = Color.BLACK
-	# outline.show_behind_parent = true
-	# outline.antialiased = true
-	# outline.joint_mode = LINE_JOINT_ROUND
-	# add_child(outline)
+	if !track.track.is_loop:
+		end_cap_mode = LINE_CAP_ROUND
+		begin_cap_mode = LINE_CAP_ROUND
 	for point_3d in track.curve.get_baked_points():
 		var p := flatten(point_3d)
 		add_point(p)
-		# outline.add_point(p)
 
 
 func _process(_delta: float) -> void:

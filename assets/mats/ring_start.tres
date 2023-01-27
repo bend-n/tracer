@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cpjh47d4kaxtx"]
+
+[ext_resource type="Texture2D" uid="uid://bt35gqul2twf6" path="res://assets/textures/start.png" id="1_fs7sc"]
+[ext_resource type="Material" uid="uid://daq466g05ublu" path="res://assets/mats/outline.tres" id="2_akkc8"]
+
+[resource]
+next_pass = ExtResource("2_akkc8")
+albedo_texture = ExtResource("1_fs7sc")
+metallic_specular = 0.0
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 0

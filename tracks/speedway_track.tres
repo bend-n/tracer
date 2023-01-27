@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="TrackResource" load_steps=3 format=3 uid="uid://d3te55uy5ei7k"]
+[gd_resource type="Resource" script_class="TrackResource" load_steps=5 format=3 uid="uid://busubw34xl76"]
 
-[ext_resource type="Script" path="res://track.gd" id="1_c5h3o"]
+[ext_resource type="Script" path="res://classes/track.gd" id="1_c5h3o"]
+[ext_resource type="PackedScene" uid="uid://d4a3e1w62m3ck" path="res://scenes/ring_checkpoint.tscn" id="1_ehf5p"]
 [ext_resource type="Curve3D" uid="uid://u2f56xx8h2re" path="res://tracks/speedway_curve.tres" id="2_33qpi"]
+[ext_resource type="PackedScene" uid="uid://t8ywjcjgw322" path="res://scenes/ring_finish.tscn" id="2_lfdrw"]
 
 [resource]
 resource_local_to_scene = true
@@ -16,3 +18,8 @@ right_barrier = true
 sun_x = -90
 sun_y = 0
 offset = Vector3(0, 1, 0)
+checkpoints = PackedFloat32Array(0.2, 0.6)
+checkpoint_scene = ExtResource("1_ehf5p")
+finish_location = 0.0
+finish_scene = ExtResource("2_lfdrw")
+laps = 0

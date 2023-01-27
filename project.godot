@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="tracer"
-run/main_scene="res://main.tscn"
+run/main_scene="res://race.tscn"
 config/features=PackedStringArray("4.0")
 
 [display]
@@ -26,6 +26,28 @@ window/stretch/aspect="expand"
 movie_writer/movie_file="/home/bendn/Documents/tracer/movie.mp4.avi"
 movie_writer/disable_vsync=true
 movie_writer/fps=30
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/channel_pack": 0,
+"compress/hdr_compression": 1,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d/compress_to": 0,
+"mipmaps/generate": false,
+"mipmaps/limit": -1,
+"process/fix_alpha_border": true,
+"process/hdr_as_srgb": false,
+"process/hdr_clamp_exposure": false,
+"process/normal_map_invert_y": false,
+"process/premult_alpha": false,
+"process/size_limit": 0,
+"roughness/mode": 0,
+"roughness/src_normal": ""
+}
 
 [input]
 
@@ -65,6 +87,11 @@ shift_down={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":88,"physical_keycode":0,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+3d_physics/layer_1="world"
+3d_physics/layer_2="player"
 
 [physics]
 

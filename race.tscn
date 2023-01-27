@@ -1,0 +1,105 @@
+[gd_scene load_steps=16 format=3 uid="uid://dmkcxlevx4c7g"]
+
+[ext_resource type="Script" path="res://race.gd" id="1_ckbwd"]
+[ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="2_pnp7e"]
+[ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="3_jx550"]
+[ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="4_i1mlf"]
+[ext_resource type="Script" path="res://cam.gd" id="5_nb035"]
+[ext_resource type="PackedScene" uid="uid://ccn1nk1a0b0sa" path="res://assets/cars/kenney_sedan/sedan.tscn" id="6_nu32e"]
+[ext_resource type="Theme" uid="uid://ch2uo5qd8ubx6" path="res://ui/theme.tres" id="7_6itw5"]
+[ext_resource type="Script" path="res://ui/speedometer.gd" id="8_awr5n"]
+[ext_resource type="Script" path="res://ui/timer.gd" id="9_dn61b"]
+[ext_resource type="Script" path="res://ui/map.gd" id="10_58kgt"]
+[ext_resource type="PackedScene" uid="uid://clw61td2wh84w" path="res://scenes/track.tscn" id="11_6q53c"]
+[ext_resource type="Curve3D" uid="uid://cuonflkcdybj0" path="res://tracks/test_curve.tres" id="12_8yl7p"]
+[ext_resource type="Resource" uid="uid://de46bcu1ivmtq" path="res://tracks/test.tres" id="13_sh6e8"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tkhh8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ta0cd"]
+material = ExtResource("4_i1mlf")
+size = Vector2(5000, 5000)
+
+[node name="race" type="Node3D" node_paths=PackedStringArray("car")]
+script = ExtResource("1_ckbwd")
+car = NodePath("Sedan")
+
+[node name="Env" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_pnp7e")
+camera_attributes = ExtResource("3_jx550")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("WorldBoundaryShape3D_tkhh8")
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_ta0cd")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_this")]
+far = 500.0
+script = ExtResource("5_nb035")
+follow_this = NodePath("../Sedan")
+target_distance = 9.0
+target_height = 5.0
+
+[node name="Sedan" parent="." instance=ExtResource("6_nu32e")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2, 100)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -105.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("7_6itw5")
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Panel" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Speedometer" type="Label" parent="CanvasLayer/HBoxContainer/Panel" node_paths=PackedStringArray("car")]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "龍 0km/h"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_awr5n")
+car = NodePath("../../../../Sedan")
+
+[node name="Panel2" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Timer" type="Label" parent="CanvasLayer/HBoxContainer/Panel2"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "祥 0:00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_dn61b")
+
+[node name="MiniMap" type="Line2D" parent="CanvasLayer" node_paths=PackedStringArray("track", "car")]
+position = Vector2(300, 145)
+default_color = Color(0.588235, 0.588235, 0.588235, 0.537255)
+joint_mode = 2
+antialiased = true
+script = ExtResource("10_58kgt")
+track = NodePath("../../Track")
+car = NodePath("../../Sedan")
+player_color = Color(1, 0.388235, 0.321569, 0.803922)
+
+[node name="Track" parent="." instance=ExtResource("11_6q53c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+curve = ExtResource("12_8yl7p")
+track = ExtResource("13_sh6e8")
+
+[connection signal="place_car" from="Track" to="." method="_on_track_place_car"]

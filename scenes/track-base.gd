@@ -23,6 +23,7 @@ class_name TrackLoader
 @onready var collision := $CollisionShape as CSGPolygon3D
 @onready var sun := $Sun as DirectionalLight3D
 
+signal place_car(at: Vector3, rot: Vector3)
 var is_dirty := true
 
 func vec(x := 0.0, y := 0.0) -> Vector2:
@@ -79,28 +80,59 @@ func _update():
 		vec(-rp - 0.05, .5)
 	])
 	rail_r.visible = track.right_barrier
+
 	# update our collision
-
-	var c = collision.polygon
-	c.set(0, Vector2(-rp, 0.0))
-	c.set(1, Vector2( rp, 0.0))
-	c.set(2, Vector2( rp, 5.0))
-	c.set(3, Vector2( rp + 3.0, 5.0))
-	c.set(4, Vector2( rp + 3.0, -1.0))
-	c.set(5, Vector2(-rp - 3.0, -1.0))
-	c.set(6, Vector2(-rp - 3.0, 5.0))
-	c.set(7, Vector2(-rp, 5.0))
-	collision.polygon = c
-
-	# annd offset
+	collision.polygon = PackedVector2Array([
+		vec(-rp, 0.0),
+		vec(rp, 0.0),
+		vec(rp, 5.0),
+		vec(rp + 3.0, 5.0),
+		vec(rp + 3.0, -1.0),
+		vec(-rp - 3.0, -1.0),
+		vec(-rp - 3.0, 5.0),
+		vec(-rp, 5.0),
+	])
+	# offset
 	position = track.offset
+
+	# objects
+	for child in get_children():
+		if child is PathFollow3D:
+			child.queue_free()
+
+	for cp in track.checkpoints:
+		var _c: CheckPoint = make_follower(track.checkpoint_scene, cp, track.checkpoint_scale, track.checkpoint_needs_collision)
+
+	var f: Finish = make_follower(track.finish_scene, track.finish_location, track.finish_scale, track.finish_needs_collision)
+	var start_position := f.global_position
+	var start_rot := f.global_rotation
+	if track.laps == 0:
+		var s: Start = make_follower(track.start_scene, track.start_location, track.start_scale, track.start_needs_collision)
+		start_position = s.global_position
+		start_rot = s.global_rotation
+	if not Engine.is_editor_hint():
+		place_car.emit(start_position, start_rot)
+
+	# loopage
+	rail_l.path_joined = track.is_loop
+	rail_r.path_joined = track.is_loop
+	collision.path_joined = track.is_loop
+	road.path_joined = track.is_loop
+	support.path_joined = track.is_loop
 
 	is_dirty = false
 
 func _ready():
 	call_deferred("_update")
 
-
 func _on_curve_changed() -> void:
 	is_dirty = true
 	call_deferred("_update")
+
+func make_follower(scene: PackedScene, ratio: float, scl: Vector3, collision: bool) -> PathFollow3D:
+	var follower: PathFollow3D = scene.instantiate()
+	add_child(follower)
+	follower.scale = scl
+	follower.needs_collision = collision
+	follower.progress_ratio = ratio # ratio set must be after add_child()
+	return follower

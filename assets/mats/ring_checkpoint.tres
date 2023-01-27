@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://c0lc82y5l5pmx"]
+
+[ext_resource type="Material" uid="uid://daq466g05ublu" path="res://assets/mats/outline.tres" id="1_5pppj"]
+[ext_resource type="Texture2D" uid="uid://bvpakhb1dybl1" path="res://assets/textures/checkpoint.png" id="1_70653"]
+
+[resource]
+next_pass = ExtResource("1_5pppj")
+albedo_texture = ExtResource("1_70653")
+metallic_specular = 0.0
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 0
