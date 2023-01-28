@@ -24,6 +24,7 @@ class_name TrackLoader
 @onready var sun := $Sun as DirectionalLight3D
 
 var checkpoints: Array[CheckPoint]
+var finish: Finish
 var start_rot: Vector3
 var start_pos: Vector3
 var is_dirty := true
@@ -103,17 +104,17 @@ func _update():
 
 	for i in len(track.checkpoints):
 		var c: CheckPoint = make_follower(track.checkpoint_scene, track.checkpoints[i], track.checkpoint_scale, track.checkpoint_needs_collision)
-		checkpoints.append(c)
 		if not Engine.is_editor_hint(): # godot tools are wierd
-			c.id = i
+			checkpoints.append(c)
 
-	var f: Finish = make_follower(track.finish_scene, track.finish_location, track.finish_scale, track.finish_needs_collision)
-	start_pos = f.global_position
-	start_rot = f.rotation
+	finish = make_follower(track.finish_scene, track.finish_location, track.finish_scale, track.finish_needs_collision)
 	if track.laps == 0:
 		var s: Start = make_follower(track.start_scene, track.start_location, track.start_scale, track.start_needs_collision)
 		start_pos = s.global_position
 		start_rot = s.rotation
+	else:
+		start_pos = finish.global_position
+		start_rot = finish.rotation
 	start_rot = start_rot.snapped(Vector3(PI/2, PI/2, PI/2))
 
 	# loopage

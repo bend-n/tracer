@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://nkh2xi7tnumc"]
+
+[ext_resource type="Theme" uid="uid://s8odxpp6ro5s" path="res://ui/splits/splits.tres" id="1_m5q5h"]
+[ext_resource type="Script" path="res://ui/splits/splits.gd" id="2_2frki"]
+[ext_resource type="Script" path="res://ui/splits/difference.gd" id="3_4w6ms"]
+[ext_resource type="StyleBox" uid="uid://dwfuwf6qbggrd" path="res://ui/splits/loss.tres" id="4_5hoie"]
+[ext_resource type="StyleBox" uid="uid://dddpw6gu8fex7" path="res://ui/splits/neutral.tres" id="4_ebhpa"]
+[ext_resource type="StyleBox" uid="uid://b8xfllxmdboe5" path="res://ui/splits/gains.tres" id="4_uicx0"]
+
+[node name="Splits" type="VBoxContainer" node_paths=PackedStringArray("diff", "current")]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -395.0
+offset_bottom = -307.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m5q5h")
+script = ExtResource("2_2frki")
+diff = NodePath("Difference")
+current = NodePath("Current/Label")
+
+[node name="Current" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="Current"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "0:00.00"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Difference" type="PanelContainer" parent="." node_paths=PackedStringArray("label")]
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("3_4w6ms")
+gain_style = ExtResource("4_uicx0")
+loss_style = ExtResource("4_5hoie")
+neutral_style = ExtResource("4_ebhpa")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="Difference"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "+0:00.00"
+horizontal_alignment = 2
+vertical_alignment = 1

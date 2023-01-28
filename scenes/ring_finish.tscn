@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://scenes/ring_finish.gd" id="1_oj823"]
 [ext_resource type="TorusMesh" uid="uid://bc8hyk8kfo4q1" path="res://assets/meshes/ring_finish.tres" id="2_hvrqd"]
 
-[sub_resource type="TorusMesh" id="TorusMesh_c1qmt"]
+[sub_resource type="TorusMesh" id="TorusMesh_afdq1"]
 inner_radius = 25.0
 outer_radius = 40.0
 rings = 10
 ring_segments = 4
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_431ml"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_bu8o6"]
 size = Vector3(52, 52, 3)
 
 [node name="RingFinish" type="PathFollow3D"]
@@ -23,15 +23,14 @@ mesh = ExtResource("2_hvrqd")
 transform = Transform3D(1, 0, 0, 0, 1, -8.35187e-23, 0, -8.35187e-23, 1, 0, 0, 0)
 visible = false
 use_collision = true
-mesh = SubResource("TorusMesh_c1qmt")
+mesh = SubResource("TorusMesh_afdq1")
 
 [node name="PlayerDetector" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.34943, 1.90735e-06, 0.0562134)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
 [node name="Area" type="CollisionShape3D" parent="PlayerDetector"]
-shape = SubResource("BoxShape3D_431ml")
+shape = SubResource("BoxShape3D_bu8o6")
 
-[connection signal="body_entered" from="PlayerDetector" to="." method="enter" flags=6 unbinds=1]
+[connection signal="body_entered" from="PlayerDetector" to="." method="enter" unbinds=1]

@@ -19,7 +19,7 @@ func _ready() -> void:
 	tween.tween_property(self, ^"global_position", main_cam.global_position, 2)
 	tween.tween_property(self, ^"global_rotation", main_cam.global_rotation, 1)
 	await tween.finished
-	count_player.play(&"count_in")
+	count_player.play(&"count_in", -1, 2)
 	await count_player.animation_finished
 	car.ball.freeze = false
 
