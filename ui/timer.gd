@@ -12,6 +12,9 @@ func start() -> void:
 func stop() -> void:
 	set_process(false)
 
+func now() -> float:
+	return elapsed_time
+
 ## format a number of seconds into m:s.ms
 static func format(time: float) -> String:
 	return "%01d:%02d.%02d" % [time / 60, fmod(time, 60), fmod(time * 1000, 100)]

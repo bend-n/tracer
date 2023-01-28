@@ -116,7 +116,7 @@ _data = {
 
 [node name="race" type="Node3D" node_paths=PackedStringArray("track", "splits", "timer")]
 script = ExtResource("1_ckbwd")
-car = ExtResource("6_nu32e")
+car_scene = ExtResource("6_nu32e")
 track = NodePath("Track")
 splits = NodePath("CanvasLayer/Splits")
 timer = NodePath("CanvasLayer/HBoxContainer/Panel2/Timer")
@@ -237,3 +237,4 @@ libraries = {
 [connection signal="created_car" from="." to="CanvasLayer/HBoxContainer/Panel/Speedometer" method="_on_race_created_car"]
 [connection signal="created_car" from="." to="CanvasLayer/MiniMap" method="_on_race_created_car"]
 [connection signal="created_car" from="." to="IntroCamera" method="_on_race_created_car"]
+[connection signal="race_started" from="IntroCamera" to="." method="_on_intro_camera_race_started"]

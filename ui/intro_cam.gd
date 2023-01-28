@@ -4,6 +4,8 @@ extends Camera3D
 @export var track: TrackLoader
 @export var count_player: AnimationPlayer
 
+signal race_started
+
 var car: Car
 
 func _ready() -> void:
@@ -22,6 +24,7 @@ func _ready() -> void:
 	count_player.play(&"count_in", -1, 2)
 	await count_player.animation_finished
 	car.ball.freeze = false
+	race_started.emit()
 
 func _on_race_created_car(_car: Car) -> void:
 	car = _car

@@ -8,6 +8,10 @@ extends PanelContainer
 enum Change { GAIN, LOSS, EQUAL }
 
 func update(time: float, prev_time: float) -> void:
+	if prev_time < 0: # no time set
+		hide()
+	else:
+		show() # shouldnt be needed but just to be carefull
 	var change := diff(time, prev_time)
 	style(change)
 	match change:

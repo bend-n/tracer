@@ -17,6 +17,7 @@ left_barrier = true
 right_barrier = true
 sun_x = -90
 sun_y = 0
+name = "test"
 is_loop = false
 offset = Vector3(0, 1, 0)
 laps = 0
