@@ -23,12 +23,13 @@ class_name TrackLoader
 @onready var collision := $CollisionShape as CSGPolygon3D
 @onready var sun := $Sun as DirectionalLight3D
 
-signal place_car(at: Vector3, rot: Vector3)
+var checkpoints: Array[CheckPoint]
+var start_rot: Vector3
+var start_pos: Vector3
 var is_dirty := true
 
 func vec(x := 0.0, y := 0.0) -> Vector2:
 	return Vector2(x, y)
-
 
 func _update():
 	if !is_dirty or !track or !track.track:
@@ -100,18 +101,20 @@ func _update():
 		if child is PathFollow3D:
 			child.queue_free()
 
-	for cp in track.checkpoints:
-		var _c: CheckPoint = make_follower(track.checkpoint_scene, cp, track.checkpoint_scale, track.checkpoint_needs_collision)
+	for i in len(track.checkpoints):
+		var c: CheckPoint = make_follower(track.checkpoint_scene, track.checkpoints[i], track.checkpoint_scale, track.checkpoint_needs_collision)
+		checkpoints.append(c)
+		if not Engine.is_editor_hint(): # godot tools are wierd
+			c.id = i
 
 	var f: Finish = make_follower(track.finish_scene, track.finish_location, track.finish_scale, track.finish_needs_collision)
-	var start_position := f.global_position
-	var start_rot := f.global_rotation
+	start_pos = f.global_position
+	start_rot = f.rotation
 	if track.laps == 0:
 		var s: Start = make_follower(track.start_scene, track.start_location, track.start_scale, track.start_needs_collision)
-		start_position = s.global_position
-		start_rot = s.global_rotation
-	if not Engine.is_editor_hint():
-		place_car.emit(start_position, start_rot)
+		start_pos = s.global_position
+		start_rot = s.rotation
+	start_rot = start_rot.snapped(Vector3(PI/2, PI/2, PI/2))
 
 	# loopage
 	rail_l.path_joined = track.is_loop
@@ -123,16 +126,16 @@ func _update():
 	is_dirty = false
 
 func _ready():
-	call_deferred("_update")
+	_update()
 
 func _on_curve_changed() -> void:
 	is_dirty = true
 	call_deferred("_update")
 
-func make_follower(scene: PackedScene, ratio: float, scl: Vector3, collision: bool) -> PathFollow3D:
+func make_follower(scene: PackedScene, ratio: float, scl: Vector3, collide: bool) -> PathFollow3D:
 	var follower: PathFollow3D = scene.instantiate()
+	follower.needs_collision = collide
 	add_child(follower)
 	follower.scale = scl
-	follower.needs_collision = collision
 	follower.progress_ratio = ratio # ratio set must be after add_child()
 	return follower

@@ -1,20 +1,20 @@
 [gd_scene load_steps=5 format=3 uid="uid://d4a3e1w62m3ck"]
 
-[ext_resource type="Script" path="res://classes/checkpoint.gd" id="1_kak2a"]
+[ext_resource type="Script" path="res://scenes/ring_checkpoint.gd" id="1_cmmpp"]
 [ext_resource type="TorusMesh" uid="uid://dlbpusye3e33p" path="res://assets/meshes/checkpoint.tres" id="2_xys6y"]
 
-[sub_resource type="TorusMesh" id="TorusMesh_nyq70"]
+[sub_resource type="TorusMesh" id="TorusMesh_wt6vi"]
 inner_radius = 25.0
 outer_radius = 40.0
 rings = 10
 ring_segments = 4
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_0mg7y"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_2btqs"]
 size = Vector3(52, 52, 3)
 
 [node name="Checkpoint" type="PathFollow3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-script = ExtResource("1_kak2a")
+script = ExtResource("1_cmmpp")
 
 [node name="Ring" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -24,7 +24,7 @@ mesh = ExtResource("2_xys6y")
 transform = Transform3D(1, 0, 0, 0, 1, -8.35187e-23, 0, -8.35187e-23, 1, 0, 0, 0)
 visible = false
 use_collision = true
-mesh = SubResource("TorusMesh_nyq70")
+mesh = SubResource("TorusMesh_wt6vi")
 
 [node name="PlayerDetector" type="Area3D" parent="."]
 collision_layer = 0
@@ -32,6 +32,6 @@ collision_mask = 2
 monitorable = false
 
 [node name="Area" type="CollisionShape3D" parent="PlayerDetector"]
-shape = SubResource("BoxShape3D_0mg7y")
+shape = SubResource("BoxShape3D_2btqs")
 
-[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_entered"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="enter" flags=6 unbinds=1]

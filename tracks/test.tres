@@ -8,10 +8,10 @@
 
 [resource]
 script = ExtResource("3_o0ql2")
-track_width = 17.0
+track_width = 15.0
 rail_distance = 3.0
-lower_support_width = 15.0
-support_height = 8.0
+lower_support_width = 23.0
+support_height = 12.0
 track = ExtResource("5_35ahq")
 left_barrier = true
 right_barrier = true
@@ -22,13 +22,13 @@ offset = Vector3(0, 1, 0)
 laps = 0
 checkpoints = PackedFloat32Array(0.5)
 checkpoint_scene = ExtResource("1_ra7ed")
-checkpoint_scale = Vector3(0.3, 0.3, 0.3)
-checkpoint_needs_collision = false
+checkpoint_scale = Vector3(0.4, 0.4, 0.4)
+checkpoint_needs_collision = true
 finish_location = 1.0
 finish_scene = ExtResource("2_e22em")
-finish_scale = Vector3(0.3, 0.3, 0.3)
-finish_needs_collision = false
+finish_scale = Vector3(0.4, 0.4, 0.4)
+finish_needs_collision = true
 start_location = 0.0
 start_scene = ExtResource("4_8biam")
-start_scale = Vector3(0.3, 0.3, 0.3)
-start_needs_collision = false
+start_scale = Vector3(0.4, 0.4, 0.4)
+start_needs_collision = true

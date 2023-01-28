@@ -13,7 +13,7 @@ class_name Car
 @export var show_debug := false
 
 var acceleration := 35.0 # ai must change this for randomness
-const sphere_offset := Vector3(0, -2, .5)
+const sphere_offset := Vector3(0, -2.3, 0)
 const max_steering_range := deg_to_rad(40.0)
 const turn_speed := 2.0
 const wheel_turn_speed := 0.2
@@ -37,10 +37,11 @@ func steer(to: float) -> void:
 
 func move_mesh(delta: float) -> void:
    # just lerp the y due to trimesh bouncing
-   car_mesh.transform.origin.x = ball.transform.origin.x + sphere_offset.x
-   car_mesh.transform.origin.z = ball.transform.origin.z + sphere_offset.z
-   car_mesh.transform.origin.y = lerp(car_mesh.transform.origin.y, ball.transform.origin.y + sphere_offset.y, 1 * delta)
-   ball.apply_central_force(-car_mesh.global_transform.basis.z * throttle)
+   car_mesh.global_position.x = ball.global_position.x + sphere_offset.x
+   car_mesh.global_position.z = ball.global_position.z + sphere_offset.z
+   car_mesh.global_position.y = lerp(car_mesh.global_position.y, ball.global_position.y + sphere_offset.y, 10 * delta)
+   if !ball.freeze:
+    ball.apply_central_force(-car_mesh.global_transform.basis.z * throttle)
 
 func turn(delta: float) -> void:
     if ball.linear_velocity.length() > turn_stop_limit:
@@ -50,8 +51,8 @@ func turn(delta: float) -> void:
         # tilt body for effect
         body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf((-_steering * .2) * ball.linear_velocity.length_squared() / body_tilt, -.4, .4), 10 * delta)
 
-func floor_mesh(delta: float) ->  void:
-    var n = ground_ray.get_collision_normal()
+func floor_mesh(delta: float) -> void:
+    var n := ground_ray.get_collision_normal()
     var xform := align_with_y(car_mesh.global_transform, n.normalized())
     car_mesh.global_transform = car_mesh.global_transform.interpolate_with(xform, 10 * delta)
 

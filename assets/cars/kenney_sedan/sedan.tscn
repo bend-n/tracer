@@ -1,6 +1,5 @@
-[gd_scene load_steps=21 format=3 uid="uid://ccn1nk1a0b0sa"]
+[gd_scene load_steps=20 format=3 uid="uid://ccn1nk1a0b0sa"]
 
-[ext_resource type="Script" path="res://classes/human_car.gd" id="1_2rc1g"]
 [ext_resource type="PackedScene" uid="uid://bbj2agqv581cd" path="res://assets/cars/kenney_sedan/sedan.blend" id="1_a083g"]
 [ext_resource type="Material" uid="uid://b0t01t5nxdfdp" path="res://assets/cars/skid.tres" id="3_abyal"]
 [ext_resource type="SphereMesh" uid="uid://cd2plk55q0xr7" path="res://assets/cars/sphere.tres" id="4_nipof"]
@@ -295,7 +294,6 @@ radial_segments = 16
 rings = 12
 
 [node name="Sedan" type="Node3D"]
-script = ExtResource("1_2rc1g")
 
 [node name="CarMesh" parent="." instance=ExtResource("1_a083g")]
 
@@ -340,10 +338,8 @@ draw_pass_1 = ExtResource("4_nipof")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Ball" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.5)
 collision_layer = 2
 collision_mask = 3
-axis_lock_angular_y = true
 physics_material_override = SubResource("PhysicsMaterial_grep7")
 linear_damp = 0.1
 angular_damp = 5.0
