@@ -25,7 +25,6 @@ window/stretch/aspect="expand"
 
 movie_writer/movie_file="/home/bendn/Documents/tracer/movie.mp4.avi"
 movie_writer/disable_vsync=true
-movie_writer/fps=30
 
 [importer_defaults]
 

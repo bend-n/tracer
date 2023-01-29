@@ -32,7 +32,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	for follower in followers:
-		(follower[0] as PathFollow2D).progress = track.curve.get_closest_offset((follower[1] as Node3D).global_position)
+		if is_instance_valid(follower[1]):
+			(follower[0] as PathFollow2D).progress = track.curve.get_closest_offset((follower[1] as Node3D).global_position)
 
 func vec(xy: float) -> Vector2:
 	return Vector2(xy, xy)
@@ -48,7 +49,6 @@ func mkfollower(node: Node3D, tex: Texture, mod := Color.WHITE, back := false):
 		followers.push_front([follower, node])
 	else:
 		followers.push_back([follower, node])
-
 
 func flatten(v: Vector3) -> Vector2:
 	return Vector2(v.x, v.z)
