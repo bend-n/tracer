@@ -12,9 +12,8 @@ func _ready() -> void:
 	var box := AABB()
 	for point in track.track.track.get_baked_points():
 		box = box.expand(point)
-	box = box.grow(200)
 	var box_center := box.get_center()
-	var top_center := Vector3(box_center.x, -box.position.y, box_center.z)
+	var top_center := Vector3(box_center.x, track.track.overview_height, box_center.z)
 	global_position = top_center
 	await get_tree().create_timer(2).timeout
 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

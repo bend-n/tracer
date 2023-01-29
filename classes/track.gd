@@ -22,6 +22,8 @@ class_name TrackResource
 ## Sun y rotation ( its a game, the sun rotates around us )
 @export_range(-360, 360) var sun_y := 0
 @export_group("", "")
+## The height of the overview cam
+@export var overview_height := 300.0
 ## The name of this track
 @export var name: String = ""
 ## Does the track loop around?

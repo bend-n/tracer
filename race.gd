@@ -5,7 +5,7 @@ extends Node3D
 @export var track: TrackLoader
 @export var splits: Control
 @export var timer: Control
-@onready var data := TrackSaveableData.new(track.checkpoints.size(), track.track.laps)
+@onready var data := TrackSaveableData.new(track.checkpoints.size(), track.track.laps if track.track.laps else 1)
 @onready var best_time_data := TrackSaveableData._load(saves % track.track.name)
 var car: Car
 var ghost: GhostCar

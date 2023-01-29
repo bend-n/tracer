@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dmkcxlevx4c7g"]
+[gd_scene load_steps=26 format=3 uid="uid://cech6c4yrmcvq"]
 
 [ext_resource type="Script" path="res://race.gd" id="1_ckbwd"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="2_pnp7e"]
@@ -15,14 +15,20 @@
 [ext_resource type="Script" path="res://ui/map.gd" id="10_58kgt"]
 [ext_resource type="PackedScene" uid="uid://clw61td2wh84w" path="res://scenes/track.tscn" id="11_6q53c"]
 [ext_resource type="PackedScene" uid="uid://nkh2xi7tnumc" path="res://ui/splits/splits.tscn" id="14_ge1w6"]
+[ext_resource type="Texture2D" uid="uid://bfe4ytl0vjosb" path="res://ui/assets/line.png" id="14_n0r0n"]
 [ext_resource type="Script" path="res://ui/intro_cam.gd" id="14_yajvg"]
 [ext_resource type="Script" path="res://ui/laps.gd" id="16_mxur4"]
+[ext_resource type="Texture2D" uid="uid://b3nmp7eyu0hjk" path="res://ui/assets/flag.png" id="16_rp311"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tkhh8"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ta0cd"]
 material = ExtResource("4_i1mlf")
 size = Vector2(5000, 5000)
+
+[sub_resource type="Gradient" id="Gradient_2kvil"]
+offsets = PackedFloat32Array(0, 0.178744, 0.454106, 0.719807, 1)
+colors = PackedColorArray(0.85098, 0.85098, 0.85098, 1, 0.942823, 0.942823, 0.942822, 1, 0.868985, 0.868985, 0.868985, 1, 0.838897, 0.838897, 0.838897, 1, 0.85098, 0.85098, 0.85098, 1)
 
 [sub_resource type="Animation" id="Animation_2si4r"]
 length = 0.001
@@ -189,13 +195,17 @@ vertical_alignment = 1
 script = ExtResource("9_dn61b")
 
 [node name="MiniMap" type="Line2D" parent="CanvasLayer" node_paths=PackedStringArray("track")]
-position = Vector2(300, 145)
-default_color = Color(0.588235, 0.588235, 0.588235, 0.537255)
-joint_mode = 2
+texture_repeat = 2
+points = PackedVector2Array(96, 29, -44, 43, 27, -54, 183, 9)
+default_color = Color(0.854902, 0.854902, 0.854902, 1)
+gradient = SubResource("Gradient_2kvil")
+texture = ExtResource("14_n0r0n")
+texture_mode = 1
 antialiased = true
 script = ExtResource("10_58kgt")
 track = NodePath("../../Track")
 player_color = Color(1, 0.388235, 0.321569, 0.803922)
+finish_indicator = ExtResource("16_rp311")
 
 [node name="Splits" parent="CanvasLayer" instance=ExtResource("14_ge1w6")]
 visible = false
@@ -261,6 +271,5 @@ libraries = {
 [connection signal="created_car" from="." to="CanvasLayer/HBoxContainer/Panel/Speedometer" method="_on_race_created_car"]
 [connection signal="created_car" from="." to="CanvasLayer/MiniMap" method="_on_race_created_car"]
 [connection signal="created_car" from="." to="IntroCamera" method="_on_race_created_car"]
-[connection signal="finished" from="." to="CanvasLayer/Laps" method="increment"]
 [connection signal="next_lap" from="." to="CanvasLayer/Laps" method="increment"]
 [connection signal="race_started" from="IntroCamera" to="." method="_on_intro_camera_race_started"]
