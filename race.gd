@@ -18,6 +18,7 @@ const saves := "user://%s.trackdata"
 
 signal next_lap
 signal created_car(car: Car)
+signal created_ghost(ghost: GhostCar)
 signal finished
 
 func mkghost() -> void:
@@ -27,7 +28,7 @@ func mkghost() -> void:
 	add_child(ghost)
 	ghost.global_position = best_time_data.loadshot(0)[0]
 	ghost.global_rotation = best_time_data.loadshot(0)[1]
-	print("ghost created")
+	created_ghost.emit(ghost)
 
 func _ready() -> void:
 	set_physics_process(false)
