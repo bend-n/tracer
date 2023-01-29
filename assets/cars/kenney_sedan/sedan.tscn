@@ -340,9 +340,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="Ball" type="RigidBody3D" parent="."]
 collision_layer = 2
 collision_mask = 3
+mass = 3.0
 physics_material_override = SubResource("PhysicsMaterial_grep7")
-linear_damp = 0.1
-angular_damp = 5.0
 
 [node name="Coll" type="CollisionShape3D" parent="Ball"]
 shape = SubResource("SphereShape3D_2sf22")

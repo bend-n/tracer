@@ -12,12 +12,14 @@ class_name Car
 @onready var body_mesh := $CarMesh/body as MeshInstance3D
 @export var show_debug := false
 
-var acceleration := 35.0 # ai must change this for randomness
+var acceleration := 45.0 # ai must change this for randomness
+const limit_speed := 200.0
+const limit_spin := 35.0
 const sphere_offset := Vector3(0, -2.3, 0)
 const max_steering_range := deg_to_rad(40.0)
 const turn_speed := 2.0
 const wheel_turn_speed := 0.2
-const turn_stop_limit := 0.75
+const turn_stop_limit := 2
 const body_tilt := 685.0
 
 var throttle := 0.0
@@ -44,7 +46,7 @@ func move_mesh(delta: float) -> void:
     ball.apply_central_force(-car_mesh.global_transform.basis.z * throttle)
 
 func turn(delta: float) -> void:
-    if ball.linear_velocity.length() > turn_stop_limit:
+    if kph() > turn_stop_limit:
         var new_basis := car_mesh.global_transform.basis.rotated(car_mesh.global_transform.basis.y, _steering)
         car_mesh.global_transform.basis = car_mesh.global_transform.basis.slerp(new_basis, turn_speed * delta)
         car_mesh.global_transform = car_mesh.global_transform.orthonormalized()
@@ -55,6 +57,18 @@ func floor_mesh(delta: float) -> void:
     var n := ground_ray.get_collision_normal()
     var xform := align_with_y(car_mesh.global_transform, n.normalized())
     car_mesh.global_transform = car_mesh.global_transform.interpolate_with(xform, 10 * delta)
+
+# aka arbitrary units/h
+func kph() -> float:
+    return (ball.linear_velocity.length_squared() / 12)
+
+# angular au/h
+func spin_kph() -> float:
+    return (ball.angular_velocity.length_squared() / 12)
+
+func limit() -> void:
+    ball.linear_damp = max(.1 * (kph() - limit_speed), 0) if kph() > limit_speed else 0.0
+    ball.angular_damp = max(.1 * (spin_kph() - limit_spin), 0) if spin_kph() > limit_spin else 0.0
 
 func _physics_process(delta: float) -> void:
     move_mesh(delta)
@@ -67,9 +81,11 @@ func _physics_process(delta: float) -> void:
     #     steering = -steering
 
     # drift particles
-    var drift: bool = ball.linear_velocity.length() > 25 and abs(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.z)) > .5
+    var drift: bool = kph() > 25 and abs(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.z)) > .5
     skid_l.emitting = drift
     skid_r.emitting = drift
+
+    limit()
 
     turn(delta)
     floor_mesh(delta)
