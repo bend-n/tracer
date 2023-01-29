@@ -1,12 +1,14 @@
 extends Node3D
 
 @export var car_scene: PackedScene
+@export var ghost_scene: PackedScene
 @export var track: TrackLoader
 @export var splits: Control
 @export var timer: Control
 @onready var data := TrackSaveableData.new(track.checkpoints.size())
 @onready var best_time_data := TrackSaveableData._load(saves % track.track.name)
-var car: Node3D
+var car: Car
+var ghost: GhostCar
 var start_frame: int
 
 const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
@@ -15,9 +17,20 @@ const saves := "user://%s.trackdata"
 signal created_car(car: Car)
 signal finished
 
+func mkghost() -> void:
+	var g: Node3D = ghost_scene.instantiate()
+	g.set_script(load("res://classes/ghost.gd"))
+	ghost = g
+	add_child(ghost)
+	ghost.global_position = best_time_data.loadshot(0)[0]
+	ghost.global_rotation = best_time_data.loadshot(0)[1]
+	print("ghost created")
+
 func _ready() -> void:
-	car = car_scene.instantiate()
-	car.set_script(load("res://classes/human_car.gd"))
+	set_physics_process(false)
+	if best_time_data:
+		mkghost()
+	car = HumanCar.attach(car_scene)
 	add_child(car)
 	car.ball.freeze = true
 	car.visible = false
@@ -27,6 +40,7 @@ func _ready() -> void:
 	car.global_position = car.global_position - (car.ball.global_transform.basis.z * 2) # bump forward a teensy bit
 	car.visible = true
 	created_car.emit(car)
+	print("car created")
 	for i in len(track.checkpoints):
 		track.checkpoints[i].collected.connect(collect.bind(i))
 
@@ -37,14 +51,24 @@ func _ready() -> void:
 					return
 			collect(-1)
 			finished.emit()
+			print("finished")
 			if not best_time_data or data.time < best_time_data.time:
+				print("new pb!")
 				SaveLoad.save(saves % track.track.name, data.data())
-				best_time_data = data
+				# best_time_data = data # this messes with the ghost, and doesnt matter yet anyways (until i can reset)
 			data = TrackSaveableData.new(track.checkpoints.size())
 	)
 
 func _physics_process(_delta: float) -> void:
-	data.snapshot(car.car_mesh)
+	data.snapshot(car)
+	if ghost:
+		if best_time_data.snaps() - 1 < Engine.get_physics_frames() - start_frame:
+			print("ran out of snaps, removing ghost")
+			ghost.queue_free()
+			ghost = null
+			return
+		var shot := best_time_data.loadshot(Engine.get_physics_frames() - start_frame)
+		ghost.update(shot[0], shot[1], shot[2])
 
 
 func collect(cp: int) -> void:
@@ -56,3 +80,4 @@ func collect(cp: int) -> void:
 
 func _on_intro_camera_race_started() -> void:
 	start_frame = Engine.get_physics_frames()
+	set_physics_process(true)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://dmkcxlevx4c7g"]
+[gd_scene load_steps=22 format=3 uid="uid://dmkcxlevx4c7g"]
 
 [ext_resource type="Script" path="res://race.gd" id="1_ckbwd"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="2_pnp7e"]
+[ext_resource type="PackedScene" uid="uid://bbj2agqv581cd" path="res://assets/cars/kenney_sedan/sedan.blend" id="3_cb3p0"]
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="3_jx550"]
 [ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="4_i1mlf"]
 [ext_resource type="Script" path="res://cam.gd" id="5_nb035"]
@@ -117,6 +118,7 @@ _data = {
 [node name="race" type="Node3D" node_paths=PackedStringArray("track", "splits", "timer")]
 script = ExtResource("1_ckbwd")
 car_scene = ExtResource("6_nu32e")
+ghost_scene = ExtResource("3_cb3p0")
 track = NodePath("Track")
 splits = NodePath("CanvasLayer/Splits")
 timer = NodePath("CanvasLayer/HBoxContainer/Panel2/Timer")

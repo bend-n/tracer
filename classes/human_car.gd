@@ -1,6 +1,12 @@
 class_name HumanCar
 extends Car
 
+static func attach(to: PackedScene) -> HumanCar:
+	var car := to.instantiate()
+	car.set_script(load("res://classes/human_car.gd"))
+	return car
+
+
 func _physics_process(delta: float) -> void:
 	throttle = 0
 	throttle -= Input.get_axis("accel", "brake")
