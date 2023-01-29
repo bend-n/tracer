@@ -31,8 +31,8 @@ class_name TrackResource
 ## Offset the entire track
 @export var offset := Vector3.UP
 @export_group("Race")
-## Num laps, 0 = no laps
-@export var laps := 0
+## Num laps, 1 = go to finish and done
+@export var laps := 1
 @export_subgroup("Checkpoints")
 ## Place the path offsets of checkpoint locations in this array
 @export var checkpoints: PackedFloat32Array = []
@@ -50,9 +50,9 @@ class_name TrackResource
 @export var finish_scale := Vector3.ONE
 @export var finish_needs_collision := false
 @export_subgroup("Start")
-## Start location in path offset (unused if [member laps] > 0)
+## Start location in path offset (unused if [member laps] > 1)
 @export var start_location: float = 0.0
-## Start scene (disregarded if [member laps] > 0)
+## Start scene (disregarded if [member laps] > 1)
 @export var start_scene: PackedScene = preload("res://scenes/ring_start.tscn")
 ## How much to scale the start (see above)
 @export var start_scale := Vector3.ONE

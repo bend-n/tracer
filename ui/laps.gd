@@ -6,7 +6,7 @@ extends PanelContainer
 var lap := 0
 
 func _ready() -> void:
-	visible = track.track.laps
+	visible = track.track.laps > 1
 	increment()
 
 func increment() -> void:

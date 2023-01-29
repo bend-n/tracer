@@ -108,7 +108,7 @@ func _update():
 			checkpoints.append(c)
 
 	finish = make_follower(track.finish_scene, track.finish_location, track.finish_scale, track.finish_needs_collision)
-	if track.laps == 0:
+	if track.laps == 1:
 		var s: Start = make_follower(track.start_scene, track.start_location, track.start_scale, track.start_needs_collision)
 		start_pos = s.global_position
 		start_rot = s.rotation

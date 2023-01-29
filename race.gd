@@ -5,7 +5,7 @@ extends Node3D
 @export var track: TrackLoader
 @export var splits: Control
 @export var timer: Control
-@onready var data := TrackSaveableData.new(track.checkpoints.size(), track.track.laps if track.track.laps else 1)
+@onready var data := TrackSaveableData.new(track.checkpoints.size(), track.track.laps)
 @onready var best_time_data := TrackSaveableData._load(saves % track.track.name)
 var car: Car
 var ghost: GhostCar
@@ -57,7 +57,7 @@ func _ready() -> void:
 				if data.checkpoints[current_lap][i] < 0:
 					return
 			collect(-1)
-			if not track.track.laps or track.track.laps - 1 == current_lap:
+			if track.track.laps - 1 == current_lap:
 				finished.emit()
 				playing = false
 				print("finished")
