@@ -7,8 +7,8 @@ class_name Car
 # mesh references
 @onready var right_wheel := $CarMesh/frontright as MeshInstance3D
 @onready var left_wheel := $CarMesh/frontleft as MeshInstance3D
-@onready var skid_l = $CarMesh/SkidL as GPUParticles3D
-@onready var skid_r = $CarMesh/SkidR as GPUParticles3D
+@onready var skid_l := $CarMesh/SkidL as GPUParticles3D
+@onready var skid_r := $CarMesh/SkidR as GPUParticles3D
 @onready var body_mesh := $CarMesh/body as MeshInstance3D
 @export var show_debug := false
 

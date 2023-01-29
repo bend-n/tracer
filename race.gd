@@ -5,15 +5,18 @@ extends Node3D
 @export var track: TrackLoader
 @export var splits: Control
 @export var timer: Control
-@onready var data := TrackSaveableData.new(track.checkpoints.size())
+@onready var data := TrackSaveableData.new(track.checkpoints.size(), track.track.laps)
 @onready var best_time_data := TrackSaveableData._load(saves % track.track.name)
 var car: Car
 var ghost: GhostCar
+var current_lap := 0
 var start_frame: int
+var playing := false
 
 const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
 const saves := "user://%s.trackdata"
 
+signal next_lap
 signal created_car(car: Car)
 signal finished
 
@@ -42,21 +45,29 @@ func _ready() -> void:
 	created_car.emit(car)
 	print("car created")
 	for i in len(track.checkpoints):
-		track.checkpoints[i].collected.connect(collect.bind(i))
+		track.checkpoints[i].collected.connect(
+			(func passed_cp(cp: int) -> void: if playing and data.checkpoints[current_lap][i] < 0: collect(cp))
+		.bind(i))
 
 	track.finish.collected.connect(
 		func passed_finish() -> void:
-			for t in data.checkpoints: # no any() function on packedfloat32
-				if t < 0:
+			if !playing: return
+			for i in len(data.checkpoints[current_lap]) - 1:  # no any() function on packedfloat32
+				if data.checkpoints[current_lap][i] < 0:
 					return
 			collect(-1)
-			finished.emit()
-			print("finished")
-			if not best_time_data or data.time < best_time_data.time:
-				print("new pb!")
-				SaveLoad.save(saves % track.track.name, data.data())
-				# best_time_data = data # this messes with the ghost, and doesnt matter yet anyways (until i can reset)
-			data = TrackSaveableData.new(track.checkpoints.size())
+			if not track.track.laps or track.track.laps - 1 == current_lap:
+				finished.emit()
+				playing = false
+				print("finished")
+				if not best_time_data or data.time < best_time_data.time:
+					print("new pb!")
+					SaveLoad.save(saves % track.track.name, data.data())
+					# best_time_data = data # this messes with the ghost, and doesnt matter yet anyways (until i can reset)
+				data = TrackSaveableData.new(track.checkpoints.size())
+			else:
+				current_lap += 1
+				next_lap.emit()
 	)
 
 func _physics_process(_delta: float) -> void:
@@ -73,12 +84,13 @@ func _physics_process(_delta: float) -> void:
 
 
 func collect(cp: int) -> void:
-	var time := best_time_data.checkpoints[cp] if best_time_data else -1.0
-	time = best_time_data.time if cp == -1 and time != -1.0 else time
+	var time := best_time_data.get_time(current_lap, cp) if best_time_data else -1.0
+	time = best_time_data.time if (not track.track.laps or track.track.laps == current_lap + 1) and cp == -1 and time != -1.0 else time
 	splits.update(timer.now(), time)
-	data.collect(cp, timer.now())
+	data.collect(current_lap, cp, timer.now())
 
 
 func _on_intro_camera_race_started() -> void:
 	start_frame = Engine.get_physics_frames()
+	playing = true
 	set_physics_process(true)

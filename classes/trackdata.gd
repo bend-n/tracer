@@ -1,10 +1,10 @@
 class_name TrackSaveableData
-extends RefCounted
+extends Resource
 
 const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
 
 var time: float
-var checkpoints: PackedFloat32Array
+var checkpoints: Array[PackedFloat32Array]
 var positional := {
 	origins = PackedVector3Array(),
 	rotations = PackedVector3Array(),
@@ -15,15 +15,22 @@ var positional := {
 func data() -> Dictionary:
 	return ({time = time, checkpoints = checkpoints, positional = positional})
 
-func _init(num_checkpoints: int) -> void:
-	checkpoints.resize(num_checkpoints)
-	checkpoints.fill(-1)
+func _init(num_checkpoints := 0, laps := 0) -> void:
+	for i in laps:
+		var arr: PackedFloat32Array = []
+		arr.resize(num_checkpoints + 1)
+		arr.fill(-1)
+		checkpoints.append(arr)
 
-func collect(cp: int, now: float) -> void:
-	if cp == -1: # fin
+func collect(lap: int, cp: int, now: float) -> void:
+	if lap == len(checkpoints) - 1 && cp == -1:
+		checkpoints[lap][cp] = now
 		time = now
 	else:
-		checkpoints[cp] = now
+		checkpoints[lap][cp] = now
+
+func get_time(lap: int, cp: int) -> float:
+	return checkpoints[lap][cp]
 
 func snapshot(obj: Car) -> void:
 	positional.origins.append(obj.car_mesh.global_position)
@@ -38,10 +45,12 @@ func snaps() -> int:
 	return positional.snaps
 
 static func from_d(d: Dictionary) -> TrackSaveableData:
+	if !d.has_all(["checkpoints", "positional", "time"]) and d.positional.has_all(["origins", "rotations", "steering", "snaps"]):
+		return null
 	var obj := TrackSaveableData.new(0)
-	obj.checkpoints = d.get("checkpoints", [])
-	obj.time = d.get("time", -1)
-	obj.positional = d.get("positional", {origins = [], rotations = [], steering = [], snaps = 0})
+	obj.checkpoints = d.checkpoints
+	obj.time = d.time
+	obj.positional = d.positional
 	return obj
 
 static func _load(path: String) -> TrackSaveableData:

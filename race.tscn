@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dmkcxlevx4c7g"]
+[gd_scene load_steps=23 format=3 uid="uid://dmkcxlevx4c7g"]
 
 [ext_resource type="Script" path="res://race.gd" id="1_ckbwd"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="2_pnp7e"]
@@ -6,16 +6,17 @@
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="3_jx550"]
 [ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="4_i1mlf"]
 [ext_resource type="Script" path="res://cam.gd" id="5_nb035"]
+[ext_resource type="Curve3D" uid="uid://u2f56xx8h2re" path="res://tracks/multilap_test_curve.tres" id="5_yk721"]
+[ext_resource type="Resource" uid="uid://crye0ijvmtsyb" path="res://tracks/multilap_test.tres" id="6_506fu"]
 [ext_resource type="PackedScene" uid="uid://ccn1nk1a0b0sa" path="res://assets/cars/kenney_sedan/sedan.tscn" id="6_nu32e"]
 [ext_resource type="Theme" uid="uid://ch2uo5qd8ubx6" path="res://ui/theme.tres" id="7_6itw5"]
 [ext_resource type="Script" path="res://ui/speedometer.gd" id="8_awr5n"]
 [ext_resource type="Script" path="res://ui/timer.gd" id="9_dn61b"]
 [ext_resource type="Script" path="res://ui/map.gd" id="10_58kgt"]
 [ext_resource type="PackedScene" uid="uid://clw61td2wh84w" path="res://scenes/track.tscn" id="11_6q53c"]
-[ext_resource type="Curve3D" uid="uid://cuonflkcdybj0" path="res://tracks/test_curve.tres" id="12_8yl7p"]
-[ext_resource type="Resource" uid="uid://de46bcu1ivmtq" path="res://tracks/test.tres" id="13_sh6e8"]
 [ext_resource type="PackedScene" uid="uid://nkh2xi7tnumc" path="res://ui/splits/splits.tscn" id="14_ge1w6"]
 [ext_resource type="Script" path="res://ui/intro_cam.gd" id="14_yajvg"]
+[ext_resource type="Script" path="res://ui/laps.gd" id="16_mxur4"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tkhh8"]
 
@@ -125,8 +126,8 @@ timer = NodePath("CanvasLayer/HBoxContainer/Panel2/Timer")
 
 [node name="Track" parent="." instance=ExtResource("11_6q53c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-curve = ExtResource("12_8yl7p")
-track = ExtResource("13_sh6e8")
+curve = ExtResource("5_yk721")
+track = ExtResource("6_506fu")
 
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(0.226651, 0, -0.973976, 0, 1, 0, 0.973976, 0, 0.226651, -25.1963, 1.82268, -2.33777)
@@ -199,6 +200,27 @@ player_color = Color(1, 0.388235, 0.321569, 0.803922)
 [node name="Splits" parent="CanvasLayer" instance=ExtResource("14_ge1w6")]
 visible = false
 
+[node name="Laps" type="PanelContainer" parent="CanvasLayer" node_paths=PackedStringArray("track", "label")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -80.0
+offset_right = 105.0
+grow_vertical = 0
+theme = ExtResource("7_6itw5")
+script = ExtResource("16_mxur4")
+track = NodePath("../../Track")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="CanvasLayer/Laps"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = " 1/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="IntroCamera" type="Camera3D" parent="." node_paths=PackedStringArray("main_cam", "track", "count_player")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 current = true
@@ -239,4 +261,6 @@ libraries = {
 [connection signal="created_car" from="." to="CanvasLayer/HBoxContainer/Panel/Speedometer" method="_on_race_created_car"]
 [connection signal="created_car" from="." to="CanvasLayer/MiniMap" method="_on_race_created_car"]
 [connection signal="created_car" from="." to="IntroCamera" method="_on_race_created_car"]
+[connection signal="finished" from="." to="CanvasLayer/Laps" method="increment"]
+[connection signal="next_lap" from="." to="CanvasLayer/Laps" method="increment"]
 [connection signal="race_started" from="IntroCamera" to="." method="_on_intro_camera_race_started"]
