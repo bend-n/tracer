@@ -69,6 +69,7 @@ func _physics_process(_delta: float) -> void:
 			return
 		var shot := best_time_data.loadshot(Engine.get_physics_frames() - start_frame)
 		ghost.update(shot[0], shot[1], shot[2])
+		ghost.visible = (ghost.global_position.distance_squared_to(car.car_mesh.global_position) > 10)
 
 
 func collect(cp: int) -> void:
