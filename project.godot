@@ -12,6 +12,8 @@ config_version=5
 
 config/name="tracer"
 run/main_scene="res://race.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="tracer"
 config/features=PackedStringArray("4.0")
 
 [display]
@@ -94,9 +96,11 @@ shift_down={
 
 [physics]
 
+3d/run_on_separate_thread=true
 3d/default_gravity=25.0
 
 [rendering]
 
+occlusion_culling/bvh_build_quality=0
 renderer/rendering_method="gl_compatibility"
 textures/canvas_textures/default_texture_filter=0
