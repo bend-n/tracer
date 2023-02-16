@@ -78,7 +78,7 @@ func _physics_process(delta: float) -> void:
         return
 
     # drift particles
-    var drift: bool = kph() > 25 and abs(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.z)) > .5
+    var drift: bool = kph() > 25 and abs(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.z)) > .8
     skid_l.emitting = drift
     skid_r.emitting = drift
 
