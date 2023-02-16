@@ -1,15 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://calx1puxr4eng"]
+[gd_scene load_steps=7 format=3 uid="uid://calx1puxr4eng"]
 
 [ext_resource type="Script" path="res://scenes/race_highlevel.gd" id="1_q8hua"]
-[ext_resource type="PackedScene" uid="uid://cech6c4yrmcvq" path="res://race.tscn" id="2_q333e"]
+[ext_resource type="PackedScene" uid="uid://ccn1nk1a0b0sa" path="res://assets/cars/kenney_sedan/sedan.tscn" id="3_cfvv6"]
 [ext_resource type="PackedScene" uid="uid://vok7fdcyec68" path="res://ui/hud.tscn" id="3_xp6f0"]
 [ext_resource type="PackedScene" uid="uid://clpo7rt0vkudy" path="res://ui/countdown.tscn" id="4_llox4"]
+[ext_resource type="PackedScene" uid="uid://bbj2agqv581cd" path="res://assets/cars/kenney_sedan/sedan.blend" id="4_waubg"]
+[ext_resource type="PackedScene" uid="uid://clw61td2wh84w" path="res://scenes/track.tscn" id="5_8mqbt"]
 
 [node name="race_high" type="Node"]
 script = ExtResource("1_q8hua")
-race_scene = ExtResource("2_q333e")
 hud_scene = ExtResource("3_xp6f0")
 countdown_scene = ExtResource("4_llox4")
+car_scene = ExtResource("3_cfvv6")
+ghost_scene = ExtResource("4_waubg")
+track_loader_scene = ExtResource("5_8mqbt")
 
 [node name="tester" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(1920, 1038)

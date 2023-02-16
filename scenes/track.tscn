@@ -1,16 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://clw61td2wh84w"]
+[gd_scene load_steps=10 format=3 uid="uid://clw61td2wh84w"]
 
 [ext_resource type="Script" path="res://scenes/track-base.gd" id="1_ke7nx"]
+[ext_resource type="Curve3D" uid="uid://2d8xnh5nyjq8" path="res://tracks/the fallen tramps_curve.tres" id="1_obdfl"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="2_2nntu"]
 [ext_resource type="Material" uid="uid://dtpgjplswm6lr" path="res://assets/mats/rail.tres" id="2_3pcob"]
 [ext_resource type="Material" uid="uid://bk4sxd2prmmom" path="res://assets/mats/support.tres" id="3_4570s"]
+[ext_resource type="Resource" uid="uid://crtutccbf1sxh" path="res://tracks/the fallen tramps.tres" id="3_avtir"]
+[ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="7_fidh3"]
+[ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="8_2nyv3"]
+[ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="9_6ooo5"]
 
 [node name="TrackLoader" type="Path3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.70198, -8.01861, -4.84379)
+curve = ExtResource("1_obdfl")
 script = ExtResource("1_ke7nx")
+track = ExtResource("3_avtir")
+metadata/_edit_group_ = true
 
 [node name="Road" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(-8.5, 0, -8.5, -0.1, 8.5, -0.1, 8.5, 0)
+polygon = PackedVector2Array(-20, 0, -20, -0.1, 20, -0.1, 20, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -20,66 +27,74 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 0.0
-path_joined = true
+path_joined = false
 material = ExtResource("2_2nntu")
+
+[node name="Rail-L" type="CSGPolygon3D" parent="."]
+polygon = PackedVector2Array(23, 0.5, 22.95, 0.47, 22.95, 0.43, 23, 0.4, 23, 0.55, 22.95, 0.32, 22.95, 0.28, 23, 0.25, 23.05, 0.25, 23.05, 0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 4.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = ExtResource("2_3pcob")
+
+[node name="Rail-R" type="CSGPolygon3D" parent="."]
+polygon = PackedVector2Array(-23, 0.5, -22.95, 0.47, -22.95, 0.43, -23, 0.4, -23, 0.55, -22.95, 0.32, -22.95, 0.28, -23, 0.25, -23.05, 0.25, -23.05, 0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 4.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Support" type="CSGPolygon3D" parent="."]
+polygon = PackedVector2Array(-22, -1, 22, -1, 25.1, -2, -25, -2)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 5.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = ExtResource("3_4570s")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.992546, -0.0211624, 0.120018, -4.42191e-09, 0.984808, 0.173648, -0.121869, 0.172354, -0.977467, 0, 0, 0)
+
+[node name="Env" type="WorldEnvironment" parent="."]
+environment = ExtResource("8_2nyv3")
+camera_attributes = ExtResource("9_6ooo5")
 
 [node name="CollisionShape" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.165113, 0)
 visible = false
 use_collision = true
-polygon = PackedVector2Array(-11.5, 0, 11.5, 0, 11.5, 5, 14.5, 5, 14.5, -1, -14.5, -1, -14.5, 5, -11.5, 5)
+polygon = PackedVector2Array(-23, 0, 23, 0, 23, 5, 26, 5, 26, -1, -26, -1, -26, 5, -23, 5)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
 path_interval = 1.0
-path_simplify_angle = 3.0
+path_simplify_angle = 5.0
 path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
-path_joined = true
+path_joined = false
 
-[node name="Rail-L" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(11.5, 0.5, 11.45, 0.47, 11.45, 0.43, 11.5, 0.4, 11.5, 0.55, 11.45, 0.32, 11.45, 0.28, 11.5, 0.25, 11.55, 0.25, 11.55, 0.5)
-mode = 2
-path_node = NodePath("..")
-path_interval_type = 0
-path_interval = 1.0
-path_simplify_angle = 2.0
-path_rotation = 2
-path_local = false
-path_continuous_u = true
-path_u_distance = 1.0
-path_joined = true
-material = ExtResource("2_3pcob")
-
-[node name="Rail-R" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(-11.5, 0.5, -11.45, 0.47, -11.45, 0.43, -11.5, 0.4, -11.5, 0.55, -11.45, 0.32, -11.45, 0.28, -11.5, 0.25, -11.55, 0.25, -11.55, 0.5)
-mode = 2
-path_node = NodePath("..")
-path_interval_type = 0
-path_interval = 1.0
-path_simplify_angle = 2.0
-path_rotation = 2
-path_local = false
-path_continuous_u = true
-path_u_distance = 1.0
-path_joined = true
-
-[node name="Support" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(-10.5, -0.17, 10.5, -0.17, 15.1, -8, -15, -8)
-mode = 2
-path_node = NodePath("..")
-path_interval_type = 0
-path_interval = 1.0
-path_simplify_angle = 3.0
-path_rotation = 2
-path_local = false
-path_continuous_u = true
-path_u_distance = 1.0
-path_joined = true
-material = ExtResource("3_4570s")
-
-[node name="Sun" type="DirectionalLight3D" parent="."]
+[node name="Ground" parent="." instance=ExtResource("7_fidh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
 
 [connection signal="curve_changed" from="." to="." method="_on_curve_changed"]

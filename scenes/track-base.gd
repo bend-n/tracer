@@ -22,6 +22,7 @@ class_name TrackLoader
 @onready var rail_r := $"Rail-R" as CSGPolygon3D
 @onready var collision := $CollisionShape as CSGPolygon3D
 @onready var sun := $Sun as DirectionalLight3D
+@onready var ground := $Ground as StaticBody3D
 
 var checkpoints: Array[CheckPoint]
 var finish: Finish
@@ -94,9 +95,6 @@ func _update():
 		vec(-rp - 3.0, 5.0),
 		vec(-rp, 5.0),
 	])
-	# offset
-	position = track.offset
-
 	# objects
 	for child in get_children():
 		if child is PathFollow3D:
@@ -115,7 +113,6 @@ func _update():
 	else:
 		start_pos = finish.global_position
 		start_rot = finish.global_rotation
-	start_rot = start_rot.snapped(Vector3(PI/2, PI/2, PI/2))
 
 	# loopage
 	rail_l.path_joined = track.is_loop
@@ -123,6 +120,9 @@ func _update():
 	collision.path_joined = track.is_loop
 	road.path_joined = track.is_loop
 	support.path_joined = track.is_loop
+
+	# offset
+	ground.global_position = track.offset
 
 	is_dirty = false
 

@@ -2,7 +2,7 @@ extends Camera3D
 class_name CarCamera
 
 @export var target_distance = 9.0
-@export var target_height = 4.0
+@export var target_height = 6.0
 
 var follow_this: Node3D
 var last_lookat: Vector3
@@ -11,6 +11,7 @@ func _ready():
 	global_position = follow_this.global_position + (follow_this.global_transform.basis.z * target_distance)
 	look_at(follow_this.global_position)
 	last_lookat = follow_this.global_position
+	far = 2000
 
 func target() -> Vector3:
 	var delta_v := global_position - follow_this.global_position

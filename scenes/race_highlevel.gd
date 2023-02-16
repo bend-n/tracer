@@ -1,15 +1,18 @@
 extends Splitscreen
 
-@export var race_scene: PackedScene
 @export var hud_scene: PackedScene
 @export var countdown_scene: PackedScene
+
+## For lowlevel race
+@export var car_scene: PackedScene
+@export var ghost_scene: PackedScene
+@export var track_loader_scene: PackedScene
 
 var race: Race
 var huds: Array[HUD]
 
 func _ready() -> void:
-	race = race_scene.instantiate()
-	race.initialize(Globals.playing)
+	race = Race.new(Globals.playing, car_scene, ghost_scene, track_loader_scene)
 	add_child(race)
 	add_player()
 	super()

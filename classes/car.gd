@@ -38,12 +38,10 @@ func steer(to: float) -> void:
     right_wheel.rotation.y = _steering * .75
     left_wheel.rotation.y = _steering * .75
 
-func move_mesh(delta: float) -> void:
-   # just lerp the y due to trimesh bouncing
-   car_mesh.global_position.x = ball.global_position.x + sphere_offset.x
-   car_mesh.global_position.z = ball.global_position.z + sphere_offset.z
-   car_mesh.global_position.y = lerp(car_mesh.global_position.y, ball.global_position.y + sphere_offset.y, 10 * delta)
-   if !ball.freeze:
+func move_mesh(_delta: float) -> void:
+    car_mesh.global_position.x = ball.global_position.x + sphere_offset.x
+    car_mesh.global_position.z = ball.global_position.z + sphere_offset.z
+    car_mesh.global_position.y = ball.global_position.y + sphere_offset.y
     ball.apply_central_force(-car_mesh.global_transform.basis.z * throttle)
 
 func turn(delta: float) -> void:
@@ -74,19 +72,16 @@ func limit(delta: float) -> void:
 func _physics_process(delta: float) -> void:
     move_mesh(delta)
 
-    # if not ground_ray.is_colliding():
-    #     return
-
-    # print(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.y))
-    # if throttle < 0 && :
-    #     steering = -steering
+    limit(delta)
+    if not ground_ray.is_colliding():
+        turn(delta/10)
+        return
 
     # drift particles
     var drift: bool = kph() > 25 and abs(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.z)) > .5
     skid_l.emitting = drift
     skid_r.emitting = drift
 
-    limit(delta)
     turn(delta)
     floor_mesh(delta)
 

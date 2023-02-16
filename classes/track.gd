@@ -2,11 +2,11 @@ extends Resource
 class_name TrackResource
 @export_group("Road")
 ## Width of road
-@export var track_width := 17.0
+@export var track_width := 40.0
 ## Distance between rails and road
 @export var rail_distance := 3.0
 ## Support base width
-@export var lower_support_width := 15.0
+@export var lower_support_width := 25.0
 ## Height of supports
 @export var support_height := 8.0
 ## Track curve
@@ -35,7 +35,7 @@ class_name TrackResource
 @export var laps := 1
 @export_subgroup("Checkpoints")
 ## Place the path offsets of checkpoint locations in this array
-@export var checkpoints: PackedFloat32Array = []
+@export var checkpoints: Array[float] = []
 ## The checkpoint scene
 @export var checkpoint_scene: PackedScene = preload("res://scenes/ring_checkpoint.tscn")
 ## How much to scale each checkpoint

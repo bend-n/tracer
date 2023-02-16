@@ -1,11 +1,10 @@
 extends Node3D
 class_name Race
 
-@export var car_scene: PackedScene
-@export var ghost_scene: PackedScene
-@export var track_loader_scene: PackedScene
-
 # in order of initialization
+var car_scene: PackedScene
+var track_loader_scene: PackedScene
+var ghost_scene: PackedScene
 var track_res: TrackResource
 var track: TrackLoader
 var data: TrackSaveableData
@@ -27,7 +26,10 @@ signal created_ghost(ghost: GhostCar)
 signal finished
 signal split(time: float, prev_time: float)
 
-func initialize(t: TrackResource) -> void:
+func _init(t: TrackResource, _car_scene, _ghost_scene, _track_loader_scene) -> void:
+	car_scene = _car_scene
+	ghost_scene = _ghost_scene
+	track_loader_scene = _track_loader_scene
 	track_res = t
 
 func mkghost() -> void:
@@ -45,7 +47,6 @@ func mkcar() -> void:
 	car.visible = false
 	add_child(car)
 	car.rotation = track.start_rot + Vector3(0, PI, -PI/2)
-	# car.set_deferred(&"rotation", track.start_rot + Vector3(0, PI, -PI/2))
 	car.global_position = track.start_pos + Vector3(0, 2, 0) - (car.ball.global_transform.basis.z * 2) # bump forward a teensy bit
 	car.visible = true
 	created_car.emit(car)
@@ -81,6 +82,7 @@ func passed_finish() -> void:
 		finished.emit()
 		playing = false
 		print("finished")
+		timer.stop()
 		if not best_time_data or data.time < best_time_data.time:
 			print("new pb!")
 			SaveLoad.save(saves % track_res.name, data.data())

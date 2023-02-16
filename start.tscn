@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvfqaoqjsxj73"]
+[gd_scene load_steps=7 format=3 uid="uid://bvfqaoqjsxj73"]
 
 [ext_resource type="Theme" uid="uid://ch2uo5qd8ubx6" path="res://ui/theme.tres" id="1_gm0ws"]
 [ext_resource type="Script" path="res://ui/tracks.gd" id="2_po2ce"]
 [ext_resource type="Resource" uid="uid://crye0ijvmtsyb" path="res://tracks/multilap_test.tres" id="3_0yjp1"]
 [ext_resource type="Resource" uid="uid://de46bcu1ivmtq" path="res://tracks/test.tres" id="4_3xqvr"]
 [ext_resource type="PackedScene" uid="uid://calx1puxr4eng" path="res://scenes/race_high.tscn" id="5_m5kci"]
+[ext_resource type="Resource" uid="uid://crtutccbf1sxh" path="res://tracks/the fallen tramps.tres" id="5_qwie6"]
 
 [node name="start" type="Control"]
 layout_mode = 3
@@ -39,5 +40,5 @@ theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 15
 columns = 5
 script = ExtResource("2_po2ce")
-tracks = Array[Resource("res://classes/track.gd")]([ExtResource("3_0yjp1"), ExtResource("4_3xqvr")])
+tracks = Array[Resource("res://classes/track.gd")]([ExtResource("3_0yjp1"), ExtResource("4_3xqvr"), ExtResource("5_qwie6")])
 race = ExtResource("5_m5kci")
