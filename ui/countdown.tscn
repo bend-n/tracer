@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://clpo7rt0vkudy"]
+
+[sub_resource type="GDScript" id="GDScript_4shhd"]
+resource_name = "countdown"
+script/source = "extends CanvasLayer
+
+signal finished
+
+func finished_anim() -> void:
+	finished.emit()
+"
+
+[sub_resource type="Animation" id="Animation_2si4r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Counter:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["
+"]
+}
+
+[sub_resource type="Animation" id="Animation_uaks0"]
+resource_name = "count_in"
+length = 3.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Counter:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["[center][b]3[/b][/center]", "[center][b]2[/b][/center]
+", "[center][b]1[/b][/center]
+", ""]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Counter:theme_override_colors/default_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0.360784, 0.227451, 1), Color(0.980392, 0.737255, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hplnw"]
+_data = {
+"RESET": SubResource("Animation_2si4r"),
+"count_in": SubResource("Animation_uaks0")
+}
+
+[node name="Countdown" type="CanvasLayer"]
+script = SubResource("GDScript_4shhd")
+
+[node name="CountPlayer" type="AnimationPlayer" parent="."]
+autoplay = "count_in"
+libraries = {
+"": SubResource("AnimationLibrary_hplnw")
+}
+
+[node name="Counter" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(1400, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -700.0
+offset_top = -20.0
+offset_right = 700.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 0.360784, 0.227451, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/bold_font_size = 800
+bbcode_enabled = true
+text = "
+"
+fit_content = true
+
+[connection signal="animation_finished" from="CountPlayer" to="." method="finished_anim" unbinds=1]

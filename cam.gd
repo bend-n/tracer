@@ -1,14 +1,16 @@
 extends Camera3D
+class_name CarCamera
+
+@export var target_distance = 9.0
+@export var target_height = 4.0
 
 var follow_this: Node3D
-@export var target_distance = 3.0
-@export var target_height = 2.0
-
-var last_lookat
+var last_lookat: Vector3
 
 func _ready():
-	set_physics_process(false)
-
+	global_position = follow_this.global_position + (follow_this.global_transform.basis.z * target_distance)
+	look_at(follow_this.global_position)
+	last_lookat = follow_this.global_position
 
 func target() -> Vector3:
 	var delta_v := global_position - follow_this.global_position
@@ -32,9 +34,5 @@ func _physics_process(delta):
 	look_at(last_lookat, Vector3(0.0, 1.0, 0.0))
 
 
-func _on_race_created_car(car: Car) -> void:
+func _init(car: Car) -> void:
 	follow_this = car.car_mesh
-	global_position = follow_this.global_position + (follow_this.global_transform.basis.z * target_distance)
-	look_at(follow_this.global_position)
-	last_lookat = follow_this.global_position
-	set_physics_process(true)

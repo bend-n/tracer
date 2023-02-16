@@ -2,3 +2,6 @@
 movie.*
 *.blend1
 addons/
+*.x86_64
+godot.lock
+export_presets.cfg

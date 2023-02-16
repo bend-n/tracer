@@ -1,29 +1,28 @@
 extends Camera3D
+class_name IntroCam
 
-@export var main_cam: Camera3D
-@export var track: TrackLoader
-@export var count_player: AnimationPlayer
+signal finished
 
-signal race_started
+var track: TrackResource
+var main_cam: Camera3D
 
-var car: Car
+func _init(_track: TrackResource, _main_cam: Camera3D):
+	track = _track
+	main_cam = _main_cam
 
 func _ready() -> void:
+	make_current()
 	var box := AABB()
-	for point in track.track.track.get_baked_points():
-		box = box.expand(point)
+	for i in track.track.point_count:
+		box = box.expand(track.track.get_point_position(i))
 	var box_center := box.get_center()
-	var top_center := Vector3(box_center.x, track.track.overview_height, box_center.z)
+	var top_center := Vector3(box_center.x, track.overview_height, box_center.z)
 	global_position = top_center
+	global_rotation_degrees.x = -90
 	await get_tree().create_timer(2).timeout
 	var tween := get_tree().create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, ^"global_position", main_cam.global_position, 2)
 	tween.tween_property(self, ^"global_rotation", main_cam.global_rotation, 1)
 	await tween.finished
-	count_player.play(&"count_in", -1, 2)
-	await count_player.animation_finished
-	car.ball.freeze = false
-	race_started.emit()
-
-func _on_race_created_car(_car: Car) -> void:
-	car = _car
+	finished.emit()
+	main_cam.make_current()

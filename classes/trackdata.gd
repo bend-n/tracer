@@ -4,7 +4,7 @@ extends Resource
 const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
 
 var time: float
-var checkpoints: Array[PackedFloat32Array]
+var checkpoints: Array#[PackedFloat32Array]
 var positional := {
 	origins = PackedVector3Array(),
 	rotations = PackedVector3Array(),
@@ -17,7 +17,7 @@ func data() -> Dictionary:
 
 func _init(num_checkpoints := 0, laps := 0) -> void:
 	for i in laps:
-		var arr: PackedFloat32Array = []
+		var arr := []
 		arr.resize(num_checkpoints + 1)
 		arr.fill(-1)
 		checkpoints.append(arr)

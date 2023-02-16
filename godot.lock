@@ -3,5 +3,10 @@
     "name": "@bendn/remap",
     "version": "5.0.6",
     "integrity": "sha512-lfB0Vx/fmXhnrTttiG+sr33EFAlAEopDq9lX2bn3z+pp3dzSuMtTaRwbkUN8ndbuwfPa8Dm+NghUX2s3wHQFLQ=="
+  },
+  {
+    "name": "@bendn/splitter",
+    "version": "1.0.3",
+    "integrity": "sha512-A9z9qjP1Zvz3RnRuyRUrCK96ocAFDq3If/Gx+a/GgiGm3RhLIq0O0UWwWihSHEWcQlgZ9yUpLTPosfXEER3mhA=="
   }
 ]

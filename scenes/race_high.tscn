@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://calx1puxr4eng"]
+
+[ext_resource type="Script" path="res://scenes/race_highlevel.gd" id="1_q8hua"]
+[ext_resource type="PackedScene" uid="uid://cech6c4yrmcvq" path="res://race.tscn" id="2_q333e"]
+[ext_resource type="PackedScene" uid="uid://vok7fdcyec68" path="res://ui/hud.tscn" id="3_xp6f0"]
+[ext_resource type="PackedScene" uid="uid://clpo7rt0vkudy" path="res://ui/countdown.tscn" id="4_llox4"]
+
+[node name="race_high" type="Node"]
+script = ExtResource("1_q8hua")
+race_scene = ExtResource("2_q333e")
+hud_scene = ExtResource("3_xp6f0")
+countdown_scene = ExtResource("4_llox4")
+
+[node name="tester" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1038)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

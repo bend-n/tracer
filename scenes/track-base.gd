@@ -111,10 +111,10 @@ func _update():
 	if track.laps == 1:
 		var s: Start = make_follower(track.start_scene, track.start_location, track.start_scale, track.start_needs_collision)
 		start_pos = s.global_position
-		start_rot = s.rotation
+		start_rot = s.global_rotation
 	else:
 		start_pos = finish.global_position
-		start_rot = finish.rotation
+		start_rot = finish.global_rotation
 	start_rot = start_rot.snapped(Vector3(PI/2, PI/2, PI/2))
 
 	# loopage

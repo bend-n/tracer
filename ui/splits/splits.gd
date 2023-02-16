@@ -1,4 +1,5 @@
 extends VBoxContainer
+class_name Splits
 
 @export var diff: PanelContainer
 @export var current: Label

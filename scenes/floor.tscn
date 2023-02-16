@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cd4a5y0hi58ks"]
+
+[ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="1_g7360"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tkhh8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ta0cd"]
+material = ExtResource("1_g7360")
+size = Vector2(5000, 5000)
+
+[node name="Ground" type="StaticBody3D"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("WorldBoundaryShape3D_tkhh8")
+
+[node name="MeshInstance" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_ta0cd")

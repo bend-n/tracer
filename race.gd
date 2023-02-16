@@ -1,17 +1,22 @@
 extends Node3D
+class_name Race
 
 @export var car_scene: PackedScene
 @export var ghost_scene: PackedScene
-@export var track: TrackLoader
-@export var splits: Control
-@export var timer: Control
-@onready var data := TrackSaveableData.new(track.checkpoints.size(), track.track.laps)
-@onready var best_time_data := TrackSaveableData._load(saves % track.track.name)
+@export var track_loader_scene: PackedScene
+
+# in order of initialization
+var track_res: TrackResource
+var track: TrackLoader
+var data: TrackSaveableData
+var best_time_data: TrackSaveableData
 var car: Car
 var ghost: GhostCar
-var current_lap := 0
 var start_frame: int
+
+var current_lap := 0
 var playing := false
+var timer := GameTimer.new()
 
 const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
 const saves := "user://%s.trackdata"
@@ -20,6 +25,10 @@ signal next_lap
 signal created_car(car: Car)
 signal created_ghost(ghost: GhostCar)
 signal finished
+signal split(time: float, prev_time: float)
+
+func initialize(t: TrackResource) -> void:
+	track_res = t
 
 func mkghost() -> void:
 	var g: Node3D = ghost_scene.instantiate()
@@ -28,48 +37,57 @@ func mkghost() -> void:
 	add_child(ghost)
 	ghost.global_position = best_time_data.loadshot(0)[0]
 	ghost.global_rotation = best_time_data.loadshot(0)[1]
+	ghost.hide()
 	created_ghost.emit(ghost)
 
-func _ready() -> void:
-	set_physics_process(false)
-	if best_time_data:
-		mkghost()
+func mkcar() -> void:
 	car = HumanCar.attach(car_scene)
-	add_child(car)
-	car.ball.freeze = true
 	car.visible = false
-	car.global_position = track.start_pos + Vector3.UP * 3.5
-	car.set_deferred(&"rotation", track.start_rot + Vector3.UP * PI)
-	await get_tree().process_frame
-	car.global_position = car.global_position - (car.ball.global_transform.basis.z * 2) # bump forward a teensy bit
+	add_child(car)
+	car.rotation = track.start_rot + Vector3(0, PI, -PI/2)
+	# car.set_deferred(&"rotation", track.start_rot + Vector3(0, PI, -PI/2))
+	car.global_position = track.start_pos + Vector3(0, 2, 0) - (car.ball.global_transform.basis.z * 2) # bump forward a teensy bit
 	car.visible = true
 	created_car.emit(car)
 	print("car created")
-	for i in len(track.checkpoints):
-		track.checkpoints[i].collected.connect(
-			(func passed_cp(cp: int) -> void: if playing and data.checkpoints[current_lap][i] < 0: collect(cp))
-		.bind(i))
 
-	track.finish.collected.connect(
-		func passed_finish() -> void:
-			if !playing: return
-			for i in len(data.checkpoints[current_lap]) - 1:  # no any() function on packedfloat32
-				if data.checkpoints[current_lap][i] < 0:
-					return
-			collect(-1)
-			if track.track.laps - 1 == current_lap:
-				finished.emit()
-				playing = false
-				print("finished")
-				if not best_time_data or data.time < best_time_data.time:
-					print("new pb!")
-					SaveLoad.save(saves % track.track.name, data.data())
-					# best_time_data = data # this messes with the ghost, and doesnt matter yet anyways (until i can reset)
-				data = TrackSaveableData.new(track.checkpoints.size())
-			else:
-				current_lap += 1
-				next_lap.emit()
-	)
+func _ready() -> void:
+	set_physics_process(false)
+	track = track_loader_scene.instantiate()
+	track.track = track_res
+	add_child(track)
+	data = TrackSaveableData.new(track_res.checkpoints.size(), track_res.laps)
+	best_time_data = TrackSaveableData._load(saves % track_res.name)
+	mkcar()
+	if best_time_data:
+		mkghost()
+	connect_checkpoints()
+	add_child(timer)
+
+func connect_checkpoints() -> void:
+	for i in len(track.checkpoints):
+		track.checkpoints[i].collected.connect(passed_cp.bind(i))
+	track.finish.collected.connect(passed_finish)
+
+func passed_cp(cp: int) -> void: if playing and data.checkpoints[current_lap][cp] < 0: collect(cp)
+
+func passed_finish() -> void:
+	if !playing: return
+	for i in len(data.checkpoints[current_lap]) - 1:
+		if data.checkpoints[current_lap][i] < 0:
+			return
+	collect(-1)
+	if track_res.laps - 1 == current_lap:
+		finished.emit()
+		playing = false
+		print("finished")
+		if not best_time_data or data.time < best_time_data.time:
+			print("new pb!")
+			SaveLoad.save(saves % track_res.name, data.data())
+		data = TrackSaveableData.new(track.checkpoints.size())
+	else:
+		current_lap += 1
+		next_lap.emit()
 
 func _physics_process(_delta: float) -> void:
 	data.snapshot(car)
@@ -86,12 +104,14 @@ func _physics_process(_delta: float) -> void:
 
 func collect(cp: int) -> void:
 	var time := best_time_data.get_time(current_lap, cp) if best_time_data else -1.0
-	time = best_time_data.time if (not track.track.laps or track.track.laps == current_lap + 1) and cp == -1 and time != -1.0 else time
-	splits.update(timer.now(), time)
+	time = best_time_data.time if (not track_res.laps or track_res.laps == current_lap + 1) and cp == -1 and time != -1.0 else time
+	split.emit(timer.now(), time)
 	data.collect(current_lap, cp, timer.now())
 
 
-func _on_intro_camera_race_started() -> void:
+func start() -> void:
+	timer.start()
 	start_frame = Engine.get_physics_frames()
 	playing = true
+	car.start()
 	set_physics_process(true)

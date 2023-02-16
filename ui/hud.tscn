@@ -1,0 +1,111 @@
+[gd_scene load_steps=13 format=3 uid="uid://vok7fdcyec68"]
+
+[ext_resource type="Theme" uid="uid://ch2uo5qd8ubx6" path="res://ui/theme.tres" id="1_ie2j2"]
+[ext_resource type="Script" path="res://ui/hud.gd" id="1_sfhpc"]
+[ext_resource type="Script" path="res://ui/speedometer.gd" id="2_cvi37"]
+[ext_resource type="Script" path="res://ui/timer.gd" id="3_poksb"]
+[ext_resource type="Texture2D" uid="uid://bfe4ytl0vjosb" path="res://ui/assets/line.png" id="4_o0swd"]
+[ext_resource type="Script" path="res://ui/map.gd" id="5_blxcm"]
+[ext_resource type="Texture2D" uid="uid://b3nmp7eyu0hjk" path="res://ui/assets/flag.png" id="6_ho2g6"]
+[ext_resource type="Texture2D" uid="uid://b6ad1yrgtg6qk" path="res://ui/assets/player_indicator.png" id="7_wv12s"]
+[ext_resource type="Texture2D" uid="uid://dkbrx7rpa8dvc" path="res://ui/assets/ghost.png" id="8_yfv7r"]
+[ext_resource type="PackedScene" uid="uid://nkh2xi7tnumc" path="res://ui/splits/splits.tscn" id="9_gtkqi"]
+[ext_resource type="Script" path="res://ui/laps.gd" id="10_78pxt"]
+
+[sub_resource type="Gradient" id="Gradient_2kvil"]
+offsets = PackedFloat32Array(0, 0.178744, 0.454106, 0.719807, 1)
+colors = PackedColorArray(0.85098, 0.85098, 0.85098, 1, 0.942823, 0.942823, 0.942822, 1, 0.868985, 0.868985, 0.868985, 1, 0.838897, 0.838897, 0.838897, 1, 0.85098, 0.85098, 0.85098, 1)
+
+[node name="HUD" type="Control" node_paths=PackedStringArray("splits", "laps")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sfhpc")
+splits = NodePath("Splits")
+laps = NodePath("Laps")
+
+[node name="Dashboard" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -105.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_ie2j2")
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Panel" type="PanelContainer" parent="Dashboard"]
+layout_mode = 2
+
+[node name="Speedometer" type="Label" parent="Dashboard/Panel"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "龍 0km/h"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_cvi37")
+
+[node name="Panel2" type="PanelContainer" parent="Dashboard"]
+layout_mode = 2
+
+[node name="Timer" type="Label" parent="Dashboard/Panel2"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "祥 0:00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_poksb")
+
+[node name="MiniMap" type="Line2D" parent="."]
+texture_repeat = 2
+width = 40.0
+default_color = Color(0.854902, 0.854902, 0.854902, 1)
+gradient = SubResource("Gradient_2kvil")
+texture = ExtResource("4_o0swd")
+texture_mode = 1
+antialiased = true
+script = ExtResource("5_blxcm")
+player_color = Color(1, 0.388235, 0.321569, 1)
+finish_indicator = ExtResource("6_ho2g6")
+player_indicator = ExtResource("7_wv12s")
+ghost_indicator = ExtResource("8_yfv7r")
+
+[node name="Splits" parent="." instance=ExtResource("9_gtkqi")]
+visible = false
+layout_mode = 1
+offset_right = 25.0
+
+[node name="Laps" type="PanelContainer" parent="." node_paths=PackedStringArray("label")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -80.0
+offset_right = 105.0
+grow_vertical = 0
+theme = ExtResource("1_ie2j2")
+script = ExtResource("10_78pxt")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="Laps"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = " 1/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="assigned" from="." to="MiniMap" method="assigned"]
+[connection signal="assigned" from="." to="Laps" method="assigned"]
+[connection signal="assigned" from="." to="Dashboard/Panel/Speedometer" method="car_assigned" unbinds=3]
+[connection signal="assigned" from="." to="Dashboard/Panel2/Timer" method="assigned" unbinds=1]
+[connection signal="next_lap" from="." to="Laps" method="increment"]

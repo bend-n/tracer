@@ -28,6 +28,7 @@ var _steering := 0.0
 func _ready():
     $Ball/DebugMesh.visible = show_debug
     ground_ray.add_exception(ball)
+    set_physics_process(false)
 
 func steer(to: float) -> void:
     _steering = clamp(lerpf(_steering, -to, wheel_turn_speed), -max_steering_range, max_steering_range)
@@ -66,9 +67,9 @@ func kph() -> float:
 func spin_kph() -> float:
     return (ball.angular_velocity.length_squared() / 12)
 
-func limit() -> void:
-    ball.linear_damp = max(.1 * (kph() - limit_speed), 0) if kph() > limit_speed else 0.0
-    ball.angular_damp = max(.1 * (spin_kph() - limit_spin), 0) if spin_kph() > limit_spin else 0.0
+func limit(delta: float) -> void:
+    ball.linear_damp = max((.5 * delta) * (kph() - limit_speed), 0) if kph() > limit_speed else 0.0
+    ball.angular_damp = max(5 * (spin_kph() - limit_spin), 0) if spin_kph() > limit_spin else 0.0
 
 func _physics_process(delta: float) -> void:
     move_mesh(delta)
@@ -85,8 +86,7 @@ func _physics_process(delta: float) -> void:
     skid_l.emitting = drift
     skid_r.emitting = drift
 
-    limit()
-
+    limit(delta)
     turn(delta)
     floor_mesh(delta)
 
@@ -95,3 +95,7 @@ func align_with_y(xform: Transform3D, new_y: Vector3) -> Transform3D:
     xform.basis.x = -xform.basis.z.cross(new_y)
     xform.basis = xform.basis.orthonormalized()
     return xform
+
+func start() -> void:
+    ball.freeze = false
+    set_physics_process(true)

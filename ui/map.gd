@@ -2,7 +2,8 @@ extends Line2D
 class_name MiniMap
 
 var path := Path2D.new()
-@export var track: TrackLoader
+var track: TrackLoader
+
 @export var player_color: Color
 @export var finish_indicator: Texture
 @export var player_indicator: Texture
@@ -37,10 +38,10 @@ func _process(_delta: float) -> void:
 			if !follower[0].rotates:
 				(follower[1] as Sprite2D).global_rotation = -follower[2].global_rotation.y - PI/2
 
-func vec(xy: float) -> Vector2:
-	return Vector2(xy, xy)
-
 func mkfollower(node: Node3D, tex: Texture, mod := Color.WHITE, back := false, rotates := false):
+	if !is_instance_valid(node):
+		push_warning("invalid follower")
+		return
 	var follower := PathFollow2D.new()
 	follower.rotates = rotates
 	path.add_child(follower)
@@ -56,8 +57,7 @@ func mkfollower(node: Node3D, tex: Texture, mod := Color.WHITE, back := false, r
 func flatten(v: Vector3) -> Vector2:
 	return Vector2(v.x, v.z)
 
-func _on_race_created_car(car: Car) -> void:
+func assigned(car: Car, ghost: GhostCar, _timer, _track: TrackLoader) -> void:
 	mkfollower(car.car_mesh, player_indicator, player_color)
-
-func _on_race_created_ghost(ghost: GhostCar) -> void:
 	mkfollower(ghost, ghost_indicator, Color(1,1,1,.5), true)
+	track = _track
