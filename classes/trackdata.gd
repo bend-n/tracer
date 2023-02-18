@@ -33,9 +33,9 @@ func get_time(lap: int, cp: int) -> float:
 	return checkpoints[lap][cp]
 
 func snapshot(obj: Car) -> void:
-	positional.origins.append(obj.car_mesh.global_position)
-	positional.rotations.append(obj.car_mesh.global_rotation)
-	positional.steering.append(obj._steering)
+	positional.origins.append(obj.global_position)
+	positional.rotations.append(obj.global_rotation)
+	positional.steering.append(obj.steering)
 	positional.snaps += 1
 
 func loadshot(frame: int) -> Array:

@@ -1,96 +1,97 @@
-extends Node3D
+extends VehicleBody3D
 class_name Car
 
-@onready var ball := $Ball as RigidBody3D
-@onready var car_mesh := $CarMesh as Node3D
-@onready var ground_ray := $CarMesh/GroundRay as RayCast3D
-# mesh references
-@onready var right_wheel := $CarMesh/frontright as MeshInstance3D
-@onready var left_wheel := $CarMesh/frontleft as MeshInstance3D
-@onready var skid_l := $CarMesh/SkidL as GPUParticles3D
-@onready var skid_r := $CarMesh/SkidR as GPUParticles3D
-@onready var body_mesh := $CarMesh/body as MeshInstance3D
-@export var show_debug := false
+@export var STEER_SPEED := 1.0
+@export var steer_curve: Curve = preload("res://assets/cars/kenney_sedan/steer_curve.tres")
 
-var acceleration := 45.0 # ai must change this for randomness
-const limit_speed := 200.0
-const limit_spin := 35.0
-const sphere_offset := Vector3(0, -2.3, 0)
-const max_steering_range := deg_to_rad(40.0)
-const turn_speed := 2.0
-const wheel_turn_speed := 0.2
-const turn_stop_limit := 2
-const body_tilt := 685.0
+var steer_target := 0.0
 
+@export var MAX_ENGINE_FORCE := 1200.0
+@export var MAX_BRAKE_FORCE := 25.0
+@export var reverse_ratio := -2.5
+@export var final_drive_ratio := 3.38
+@export var max_engine_rpm := 8000.0
+@export var gear_shift_time = 0.3
+@export var power_curve: Curve = preload("res://assets/cars/kenney_sedan/power_curve.tres")
+@onready var body_mesh := $body as MeshInstance3D
+
+@onready var wheels := [$bl, $br, $fl, $fr]
+
+var gear_ratios: Array[float] = [ 2.69, 2.01, 1.59, 1.32, 1.13, 1.0 ]
+var current_gear := 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
+var clutch_position := 1 # 0.0 = clutch engaged
+var gear_timer := 0.0
 var throttle := 0.0
-var _steering := 0.0
+var current_speed_mps := 0.0 # meters
+@onready var last_pos = position
 
-func _ready():
-    $Ball/DebugMesh.visible = show_debug
-    ground_ray.add_exception(ball)
-    set_physics_process(false)
+func _ready() -> void:
+	randomize()
+	brake = 15
+	set_physics_process(false)
+
+func kph():
+	return current_speed_mps * 3600.0 / 1000.0
+
+# calculate the RPM of our engine based on the average of the wheels
+func rpm() -> float:
+	var sum := 0.0
+	for wheel in wheels:
+		sum += abs(wheel.get_rpm())
+	return sum / 4
 
 func steer(to: float) -> void:
-    _steering = clamp(lerpf(_steering, -to, wheel_turn_speed), -max_steering_range, max_steering_range)
-    if is_zero_approx(_steering) or (_steering < .05 && _steering > -.05):
-        _steering = 0
-    # rotate wheels for effect
-    right_wheel.rotation.y = _steering * .75
-    left_wheel.rotation.y = _steering * .75
+	if (abs(to) < 0.05):
+		to = 0.0
+	else:
+		to = -steer_curve.sample_baked(-to) if to < 0.0 else steer_curve.sample_baked(to)
 
-func move_mesh(_delta: float) -> void:
-    car_mesh.global_position.x = ball.global_position.x + sphere_offset.x
-    car_mesh.global_position.z = ball.global_position.z + sphere_offset.z
-    car_mesh.global_position.y = ball.global_position.y + sphere_offset.y
-    ball.apply_central_force(-car_mesh.global_transform.basis.z * throttle)
+	steer_target = lerpf(steer_target, to, 10 * get_physics_process_delta_time())
 
-func turn(delta: float) -> void:
-    if kph() > turn_stop_limit:
-        var new_basis := car_mesh.global_transform.basis.rotated(car_mesh.global_transform.basis.y, _steering)
-        car_mesh.global_transform.basis = car_mesh.global_transform.basis.slerp(new_basis, turn_speed * delta)
-        car_mesh.global_transform = car_mesh.global_transform.orthonormalized()
-        # tilt body for effect
-        body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf((-_steering * .2) * ball.linear_velocity.length_squared() / body_tilt, -.4, .4), 10 * delta)
+## virtual (dont return true for more than a frame)
+func shift_down() -> bool:
+	return false
 
-func floor_mesh(delta: float) -> void:
-    var n := ground_ray.get_collision_normal()
-    var xform := align_with_y(car_mesh.global_transform, n.normalized())
-    car_mesh.global_transform = car_mesh.global_transform.interpolate_with(xform, 10 * delta)
+## virtual (dont return true for more than a frame)
+func shift_up() -> bool:
+	return false
 
-# aka arbitrary units/h
-func kph() -> float:
-    return (ball.linear_velocity.length_squared() / 12)
+func _process_gear_inputs(delta: float):
+	if gear_timer > 0.0:
+		gear_timer = max(0.0, gear_timer - delta)
+		clutch_position = 0
+	else:
+		if shift_down() and current_gear > -1:
+			current_gear = current_gear - 1
+			gear_timer = gear_shift_time
+			clutch_position = 0
+		elif shift_up() and current_gear < gear_ratios.size():
+			current_gear = current_gear + 1
+			gear_timer = gear_shift_time
+			clutch_position = 0
+		else:
+			clutch_position = 1
 
-# angular au/h
-func spin_kph() -> float:
-    return (ball.angular_velocity.length_squared() / 12)
+func _process(delta: float):
+	_process_gear_inputs(delta)
 
-func limit(delta: float) -> void:
-    ball.linear_damp = max((.5 * delta) * (kph() - limit_speed), 0) if kph() > limit_speed else 0.0
-    ball.angular_damp = max(5 * (spin_kph() - limit_spin), 0) if spin_kph() > limit_spin else 0.0
+func _physics_process(delta: float):
+	current_speed_mps = (position - last_pos).length() / delta
 
-func _physics_process(delta: float) -> void:
-    move_mesh(delta)
+	var power_factor := power_curve.sample_baked(clampf(rpm() / max_engine_rpm, 0.0, 1.0))
+	if current_gear == -1:
+		engine_force = throttle * power_factor * reverse_ratio * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
+	elif current_gear > 0 and current_gear <= gear_ratios.size():
+		engine_force = throttle * power_factor * gear_ratios[current_gear - 1] * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
+	else:
+		engine_force = 0.0
+	var steer_speed_factor: float = 1 - clampf(current_speed_mps / 150, 0.0, 1.0)
 
-    limit(delta)
-    if not ground_ray.is_colliding():
-        turn(delta/10)
-        return
-
-    # drift particles
-    var drift: bool = kph() > 25 and abs(ball.linear_velocity.normalized().dot(-car_mesh.transform.basis.z)) > .8
-    skid_l.emitting = drift
-    skid_r.emitting = drift
-
-    turn(delta)
-    floor_mesh(delta)
-
-func align_with_y(xform: Transform3D, new_y: Vector3) -> Transform3D:
-    xform.basis.y = new_y
-    xform.basis.x = -xform.basis.z.cross(new_y)
-    xform.basis = xform.basis.orthonormalized()
-    return xform
+	steering = -clampf(steer_target, -.5, .5) * steer_speed_factor
+	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .2) * linear_velocity.length_squared() / 685.0) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
+	# remember where we are
+	last_pos = position
 
 func start() -> void:
-    ball.freeze = false
-    set_physics_process(true)
+	brake = 0
+	set_physics_process(true)

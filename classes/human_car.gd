@@ -6,14 +6,14 @@ static func attach(to: PackedScene) -> HumanCar:
 	car.set_script(load("res://classes/human_car.gd"))
 	return car
 
-
 func _physics_process(delta: float) -> void:
-	throttle = 0
-	throttle -= Input.get_axis("accel", "brake")
-	throttle *= acceleration
-	# Get steering input
-	var steer_val := 0.0
-	steer_val += Input.get_axis("ui_left", "ui_right")
-	steer_val *= max_steering_range
-	steer(steer_val)
+	throttle = Input.get_action_strength("accel")
+	brake = Input.get_action_strength("brake") * MAX_BRAKE_FORCE
+	steer(Input.get_axis("ui_left", "ui_right"))
 	super(delta)
+
+func shift_up():
+	return Input.is_action_just_pressed("shift_up")
+
+func shift_down():
+	return Input.is_action_just_pressed("shift_down")

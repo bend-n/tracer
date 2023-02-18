@@ -47,7 +47,7 @@ func mkcar() -> void:
 	car.visible = false
 	add_child(car)
 	car.rotation = track.start_rot + Vector3(0, PI, -PI/2)
-	car.global_position = track.start_pos + Vector3(0, 2, 0) - (car.ball.global_transform.basis.z * 2) # bump forward a teensy bit
+	car.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2) # bump forward a teensy bit
 	car.visible = true
 	created_car.emit(car)
 	print("car created")
@@ -101,7 +101,7 @@ func _physics_process(_delta: float) -> void:
 			return
 		var shot := best_time_data.loadshot(Engine.get_physics_frames() - start_frame)
 		ghost.update(shot[0], shot[1], shot[2])
-		ghost.visible = (ghost.global_position.distance_squared_to(car.car_mesh.global_position) > 10)
+		ghost.visible = (ghost.global_position.distance_squared_to(car.global_position) > 10)
 
 
 func collect(cp: int) -> void:

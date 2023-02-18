@@ -13,7 +13,7 @@ var nn: NeuralNetwork
 func _ready():
 	super()
 	randomize()
-	acceleration *= randf_range(0.7, 1)
+	engine_force *= randf_range(0.8, 1)
 	add_rays()
 	# +1 for speed
 	nn = NeuralNetwork.new(num_rays + 1, hidden_nodes, output_nodes)
@@ -43,10 +43,10 @@ func get_distances() -> Array[float]:
 
 func _physics_process(delta: float) -> void:
 	var distances := get_distances()
-	distances.append(ball.linear_velocity.length_squared())
+	distances.append(kph())
 	var outputs := nn.predict(distances) # [steer_l, throt, steer_r]
 	print(outputs)
-	var steer_target = (outputs[0] - outputs[2]) * max_steering_range
-	throttle = acceleration * outputs[1]
+	# var steer_target = (outputs[0] - outputs[2]) * max_steering_range
+	# throttle = acceleration * outputs[1]
 	steer(steer_target)
 	super(delta)

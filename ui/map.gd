@@ -28,7 +28,7 @@ func _ready() -> void:
 		add_point(p)
 	path.curve = curve
 	add_child(path)
-	global_position = -box.position + Vector2(50, 50)
+	global_position = -box.position + Vector2(25, 25)
 	mkfollower(track.finish, finish_indicator, Color.WHITE, false, true)
 
 func _process(_delta: float) -> void:
@@ -58,6 +58,6 @@ func flatten(v: Vector3) -> Vector2:
 	return Vector2(v.x, v.z)
 
 func assigned(car: Car, ghost: GhostCar, _timer, _track: TrackLoader) -> void:
-	mkfollower(car.car_mesh, player_indicator, player_color)
+	mkfollower(car, player_indicator, player_color)
 	mkfollower(ghost, ghost_indicator, Color(1,1,1,.5), true)
 	track = _track

@@ -1,19 +1,19 @@
 [gd_scene load_steps=10 format=3 uid="uid://clw61td2wh84w"]
 
+[ext_resource type="Curve3D" uid="uid://u2f56xx8h2re" path="res://tracks/multilap_test_curve.tres" id="1_ejp6j"]
 [ext_resource type="Script" path="res://scenes/track-base.gd" id="1_ke7nx"]
-[ext_resource type="Curve3D" uid="uid://2d8xnh5nyjq8" path="res://tracks/the fallen tramps_curve.tres" id="1_obdfl"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="2_2nntu"]
 [ext_resource type="Material" uid="uid://dtpgjplswm6lr" path="res://assets/mats/rail.tres" id="2_3pcob"]
 [ext_resource type="Material" uid="uid://bk4sxd2prmmom" path="res://assets/mats/support.tres" id="3_4570s"]
-[ext_resource type="Resource" uid="uid://crtutccbf1sxh" path="res://tracks/the fallen tramps.tres" id="3_avtir"]
+[ext_resource type="Resource" uid="uid://crye0ijvmtsyb" path="res://tracks/multilap_test.tres" id="3_cdqtb"]
 [ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="7_fidh3"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="8_2nyv3"]
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="9_6ooo5"]
 
 [node name="TrackLoader" type="Path3D"]
-curve = ExtResource("1_obdfl")
+curve = ExtResource("1_ejp6j")
 script = ExtResource("1_ke7nx")
-track = ExtResource("3_avtir")
+track = ExtResource("3_cdqtb")
 metadata/_edit_group_ = true
 
 [node name="Road" type="CSGPolygon3D" parent="."]
@@ -27,7 +27,7 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 0.0
-path_joined = false
+path_joined = true
 material = ExtResource("2_2nntu")
 
 [node name="Rail-L" type="CSGPolygon3D" parent="."]
@@ -41,7 +41,7 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
-path_joined = false
+path_joined = true
 material = ExtResource("2_3pcob")
 
 [node name="Rail-R" type="CSGPolygon3D" parent="."]
@@ -55,7 +55,7 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
-path_joined = false
+path_joined = true
 
 [node name="Support" type="CSGPolygon3D" parent="."]
 polygon = PackedVector2Array(-22, -1, 22, -1, 25.1, -2, -25, -2)
@@ -68,11 +68,17 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
-path_joined = false
+path_joined = true
 material = ExtResource("3_4570s")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.992546, -0.0211624, 0.120018, -4.42191e-09, 0.984808, 0.173648, -0.121869, 0.172354, -0.977467, 0, 0, 0)
+transform = Transform3D(1, 4.49013e-09, 0, -2.8862e-09, 0.642788, 0.766044, 3.43964e-09, -0.766044, 0.642788, 0, 0, 0)
+light_energy = 1.083
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_blur = 1.5
+directional_shadow_mode = 0
+directional_shadow_max_distance = 300.0
 
 [node name="Env" type="WorldEnvironment" parent="."]
 environment = ExtResource("8_2nyv3")
@@ -92,9 +98,9 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
-path_joined = false
+path_joined = true
 
 [node name="Ground" parent="." instance=ExtResource("7_fidh3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
 
 [connection signal="curve_changed" from="." to="." method="_on_curve_changed"]

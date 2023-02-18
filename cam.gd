@@ -36,4 +36,4 @@ func _physics_process(delta):
 
 
 func _init(car: Car) -> void:
-	follow_this = car.car_mesh
+	follow_this = car
