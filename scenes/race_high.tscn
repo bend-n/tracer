@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/race_highlevel.gd" id="1_q8hua"]
 [ext_resource type="PackedScene" uid="uid://vok7fdcyec68" path="res://ui/hud.tscn" id="3_xp6f0"]
-[ext_resource type="PackedScene" uid="uid://t1r24qnrojl" path="res://assets/cars/kenney_sedan/sedan.tscn" id="4_0jpx1"]
+[ext_resource type="PackedScene" uid="uid://c157wew5y33bo" path="res://assets/cars/kenney_sedan/sedan.tscn" id="4_0jpx1"]
 [ext_resource type="PackedScene" uid="uid://clpo7rt0vkudy" path="res://ui/countdown.tscn" id="4_llox4"]
 [ext_resource type="PackedScene" uid="uid://bbj2agqv581cd" path="res://assets/cars/kenney_sedan/sedan.blend" id="4_waubg"]
 [ext_resource type="PackedScene" uid="uid://clw61td2wh84w" path="res://scenes/track.tscn" id="5_8mqbt"]

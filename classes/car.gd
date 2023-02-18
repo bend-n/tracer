@@ -15,7 +15,9 @@ var steer_target := 0.0
 @export var power_curve: Curve = preload("res://assets/cars/kenney_sedan/power_curve.tres")
 @onready var body_mesh := $body as MeshInstance3D
 
-@onready var wheels := [$bl, $br, $fl, $fr]
+@onready var wheels: Array[VehicleWheel3D] = [$bl as VehicleWheel3D, $br as VehicleWheel3D, $fl as VehicleWheel3D, $fr as VehicleWheel3D]
+
+signal shifted
 
 var gear_ratios: Array[float] = [ 2.69, 2.01, 1.59, 1.32, 1.13, 1.0 ]
 var current_gear := 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
@@ -24,6 +26,18 @@ var gear_timer := 0.0
 var throttle := 0.0
 var current_speed_mps := 0.0 # meters
 @onready var last_pos = position
+
+func ratio() -> float:
+	match current_gear:
+		0: return 0
+		-1: return reverse_ratio
+		_: return gear_ratios[current_gear - 1]
+
+func is_on_ground() -> bool:
+	return wheels.all(func(whl: VehicleWheel3D): return whl.get_contact_body() != null)
+
+func is_not_on_ground() -> bool:
+	return wheels.any(func(whl: VehicleWheel3D): return whl.get_contact_body() == null)
 
 func _ready() -> void:
 	randomize()
@@ -65,10 +79,12 @@ func _process_gear_inputs(delta: float):
 			current_gear = current_gear - 1
 			gear_timer = gear_shift_time
 			clutch_position = 0
+			shifted.emit()
 		elif shift_up() and current_gear < gear_ratios.size():
 			current_gear = current_gear + 1
 			gear_timer = gear_shift_time
 			clutch_position = 0
+			shifted.emit()
 		else:
 			clutch_position = 1
 
