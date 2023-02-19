@@ -6,8 +6,8 @@ class_name Car
 
 var steer_target := 0.0
 
-@export var MAX_ENGINE_FORCE := 1200.0
-@export var MAX_BRAKE_FORCE := 25.0
+@export var MAX_ENGINE_FORCE := 4000.0
+@export var MAX_BRAKE_FORCE := 35.0
 @export var reverse_ratio := -2.5
 @export var final_drive_ratio := 3.38
 @export var max_engine_rpm := 8000.0
@@ -24,8 +24,6 @@ var current_gear := 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
 var clutch_position := 1 # 0.0 = clutch engaged
 var gear_timer := 0.0
 var throttle := 0.0
-var current_speed_mps := 0.0 # meters
-@onready var last_pos = position
 
 func ratio() -> float:
 	match current_gear:
@@ -34,10 +32,10 @@ func ratio() -> float:
 		_: return gear_ratios[current_gear - 1]
 
 func is_on_ground() -> bool:
-	return wheels.all(func(whl: VehicleWheel3D): return whl.get_contact_body() != null)
+	return wheels.all(func(whl: VehicleWheel3D): return whl.is_in_contact() != null)
 
 func is_not_on_ground() -> bool:
-	return wheels.any(func(whl: VehicleWheel3D): return whl.get_contact_body() == null)
+	return wheels.any(func(whl: VehicleWheel3D): return !whl.is_in_contact())
 
 func _ready() -> void:
 	randomize()
@@ -45,7 +43,7 @@ func _ready() -> void:
 	set_physics_process(false)
 
 func kph():
-	return current_speed_mps * 3600.0 / 1000.0
+	return (3 * PI * wheels[0].wheel_radius * rpm()) / 25;
 
 # calculate the RPM of our engine based on the average of the wheels
 func rpm() -> float:
@@ -91,9 +89,11 @@ func _process_gear_inputs(delta: float):
 func _process(delta: float):
 	_process_gear_inputs(delta)
 
-func _physics_process(delta: float):
-	current_speed_mps = (position - last_pos).length() / delta
+func limit(delta: float) -> void:
+	linear_damp = max((.5 * delta) * (kph() - 400), 0) if kph() > 400 else 0.0
+	angular_damp = max(5 * (angular_velocity.length_squared() - 45), 0) if angular_velocity.length_squared() > 45 else 0.0
 
+func _physics_process(delta: float):
 	var power_factor := power_curve.sample_baked(clampf(rpm() / max_engine_rpm, 0.0, 1.0))
 	if current_gear == -1:
 		engine_force = throttle * power_factor * reverse_ratio * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
@@ -101,12 +101,11 @@ func _physics_process(delta: float):
 		engine_force = throttle * power_factor * gear_ratios[current_gear - 1] * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
 	else:
 		engine_force = 0.0
-	var steer_speed_factor: float = 1 - clampf(current_speed_mps / 150, 0.0, 1.0)
+	var steer_speed_factor: float = 1 - clampf(kph() / 600, 0.0, 1.0)
 
 	steering = -clampf(steer_target, -.5, .5) * steer_speed_factor
 	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .2) * linear_velocity.length_squared() / 685.0) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
-	# remember where we are
-	last_pos = position
+	limit(delta)
 
 func start() -> void:
 	brake = 0

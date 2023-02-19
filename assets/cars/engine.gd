@@ -11,19 +11,26 @@ extends Node3D
 
 @export var car: Car
 
+var n: float = 0
+
 func _ready() -> void:
 	await get_tree().physics_frame
 	for p in players: p.play()
 
-func _process(_d: float):
+func _process(d: float):
 	var r := car.rpm()
-	var n := clampf(r / 500.0, 0, 1)
-#	var s := "with n: %.2f" % n
-	for i in 4:
-		players[i].volume_db = (db_curves[i].sample_baked(n) - 50)
-		players[i].pitch_scale = (pitch_curves[i].sample_baked(n) * 2) + .001
-#		s += " | %s's: %.2f (%.2f)" % [players[i].name, players[i].volume_db, players[i].pitch_scale]
-		if n > .9:
-			players[-1].pitch_scale = (car.rpm() / 600) + 1
-#	print(s)
+	if car.engine_force > 0.1 and car.is_on_ground():
+		n = move_toward(n, clampf(r / 700.0, 0, 1), 1 * d)
+		for i in 4:
+			curve_player(i)
+	else:
+		n = move_toward(n, 0, 1 * d)
+		curve_player(0)
+		for i in 4:
+			curve_player(i)
+	if n > .9:
+		players[-1].pitch_scale = (r / 600) + 1
 
+func curve_player(i: int) -> void:
+	players[i].volume_db = db_curves[i].sample_baked(n) - 50
+	players[i].pitch_scale = (pitch_curves[i].sample_baked(n) * 2) + .001

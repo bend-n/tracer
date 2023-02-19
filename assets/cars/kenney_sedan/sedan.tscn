@@ -2,11 +2,7 @@
 
 [ext_resource type="Script" path="res://classes/car.gd" id="1_pdccm"]
 [ext_resource type="Script" path="res://assets/cars/engine.gd" id="2_rxib8"]
-[ext_resource type="AudioStream" uid="uid://dlh4kgp4a23ib" path="res://assets/sounds/engine/high.wav" id="2_xgntt"]
-[ext_resource type="AudioStream" uid="uid://dua01ca8om1md" path="res://assets/sounds/engine/low.wav" id="3_4jicv"]
 [ext_resource type="Curve" uid="uid://f1go1j7raaq1" path="res://assets/cars/sounds/idle_db.tres" id="3_gwsff"]
-[ext_resource type="AudioStream" uid="uid://c8ndjqdhoymmd" path="res://assets/sounds/engine/med.wav" id="4_aqqj1"]
-[ext_resource type="AudioStream" uid="uid://yh1tvvitnvhl" path="res://assets/sounds/engine/idle.wav" id="4_fubff"]
 [ext_resource type="Curve" uid="uid://bq1r63t410ork" path="res://assets/cars/sounds/low_db.tres" id="4_rdkge"]
 [ext_resource type="Curve" uid="uid://d15cjufi3m0wg" path="res://assets/cars/sounds/med_db.tres" id="5_7w6r4"]
 [ext_resource type="Curve" uid="uid://d0rkqfng2uvkw" path="res://assets/cars/sounds/high_db.tres" id="6_h74co"]
@@ -15,7 +11,11 @@
 [ext_resource type="Curve" uid="uid://da7vdsdlv8l70" path="res://assets/cars/sounds/med_pitch.tres" id="9_ret6y"]
 [ext_resource type="Curve" uid="uid://ox0sapaob1jh" path="res://assets/cars/sounds/high_pitch.tres" id="10_28pjg"]
 [ext_resource type="Script" path="res://assets/cars/gearbox.gd" id="11_augb2"]
+[ext_resource type="AudioStream" uid="uid://202hwcsj8a41" path="res://assets/sounds/engine/500.ogg" id="11_ouf2u"]
 [ext_resource type="AudioStream" uid="uid://di8wcnme3mqbf" path="res://assets/sounds/shifts/1.wav" id="11_rwd1j"]
+[ext_resource type="AudioStream" uid="uid://dwbsofhdf1d8i" path="res://assets/sounds/engine/2000.ogg" id="12_lrx8k"]
+[ext_resource type="AudioStream" uid="uid://d1q0xhd5ufguo" path="res://assets/sounds/engine/5000.ogg" id="13_d45jk"]
+[ext_resource type="AudioStream" uid="uid://d4k65y04x6yxg" path="res://assets/sounds/engine/8000.ogg" id="14_cerxx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hs0do"]
 friction = 0.71
@@ -344,7 +344,7 @@ radius = 2.0
 [node name="Sedan" type="VehicleBody3D"]
 collision_layer = 2
 collision_mask = 3
-mass = 400.0
+mass = 1000.0
 center_of_mass_mode = 1
 physics_material_override = SubResource("PhysicsMaterial_hs0do")
 gravity_scale = 3.0
@@ -439,20 +439,21 @@ db_curves = Array[Curve]([ExtResource("3_gwsff"), ExtResource("4_rdkge"), ExtRes
 pitch_curves = Array[Curve]([ExtResource("7_hu8t3"), ExtResource("8_7rdpj"), ExtResource("9_ret6y"), ExtResource("10_28pjg")])
 car = NodePath("..")
 
+[node name="idle" type="AudioStreamPlayer" parent="Engine"]
+stream = ExtResource("11_ouf2u")
+volume_db = -50.0
+
 [node name="low" type="AudioStreamPlayer" parent="Engine"]
-stream = ExtResource("3_4jicv")
-volume_db = -25.0
+stream = ExtResource("12_lrx8k")
+volume_db = -50.0
 
 [node name="med" type="AudioStreamPlayer" parent="Engine"]
-stream = ExtResource("4_aqqj1")
-volume_db = -25.0
+stream = ExtResource("13_d45jk")
+volume_db = -50.0
 
 [node name="high" type="AudioStreamPlayer" parent="Engine"]
-stream = ExtResource("2_xgntt")
-volume_db = -25.0
-
-[node name="idle" type="AudioStreamPlayer" parent="Engine"]
-stream = ExtResource("4_fubff")
+stream = ExtResource("14_cerxx")
+volume_db = -50.0
 
 [node name="Gearbox" type="Node3D" parent="."]
 script = ExtResource("11_augb2")
