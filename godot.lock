@@ -6,7 +6,7 @@
   },
   {
     "name": "@bendn/splitter",
-    "version": "1.0.3",
-    "integrity": "sha512-A9z9qjP1Zvz3RnRuyRUrCK96ocAFDq3If/Gx+a/GgiGm3RhLIq0O0UWwWihSHEWcQlgZ9yUpLTPosfXEER3mhA=="
+    "version": "1.0.6",
+    "integrity": "sha512-HT7q5qv6OEpX95e5r+kAsasoAvH0Mgf+aT4SdKQ18fyDIn1dW02WqbulF0AMwHufgRZkMf9SnQGiAq79P5ZIKQ=="
   }
 ]
