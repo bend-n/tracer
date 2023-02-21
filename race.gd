@@ -105,6 +105,8 @@ func _physics_process(_delta: float) -> void:
 
 
 func collect(cp: int) -> void:
+	if cp != -1:
+		car.checkpoint_sound.play()
 	var time := best_time_data.get_time(current_lap, cp) if best_time_data else -1.0
 	time = best_time_data.time if (not track_res.laps or track_res.laps == current_lap + 1) and cp == -1 and time != -1.0 else time
 	split.emit(timer.now(), time)

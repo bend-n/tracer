@@ -14,12 +14,14 @@ var steer_target := 0.0
 @export var gear_shift_time = 0.3
 @export var power_curve: Curve = preload("res://assets/cars/kenney_sedan/power_curve.tres")
 @onready var body_mesh := $body as MeshInstance3D
+@onready var checkpoint_sound := $checkpoint as AudioStreamPlayer
 
 @onready var wheels: Array[VehicleWheel3D] = [$bl as VehicleWheel3D, $br as VehicleWheel3D, $fl as VehicleWheel3D, $fr as VehicleWheel3D]
+var particles: Array[GPUParticles3D] = []
 
 signal shifted
 
-var gear_ratios: Array[float] = [ 2.69, 2.01, 1.59, 1.32, 1.13, 1.0 ]
+var gear_ratios: Array[float] = [ 5, 2.01, 1.59, 1.32, 1.13, 1.0 ]
 var current_gear := 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
 var clutch_position := 1 # 0.0 = clutch engaged
 var gear_timer := 0.0
@@ -38,6 +40,8 @@ func is_not_on_ground() -> bool:
 	return wheels.any(func(whl: VehicleWheel3D): return !whl.is_in_contact())
 
 func _ready() -> void:
+	for whl in wheels:
+		particles.append(whl.get_node(^"particles"))
 	randomize()
 	brake = 15
 	set_physics_process(false)
@@ -60,11 +64,11 @@ func steer(to: float) -> void:
 
 	steer_target = lerpf(steer_target, to, 10 * get_physics_process_delta_time())
 
-## virtual (dont return true for more than a frame)
+## virtual
 func shift_down() -> bool:
 	return false
 
-## virtual (dont return true for more than a frame)
+## virtual
 func shift_up() -> bool:
 	return false
 
@@ -101,11 +105,15 @@ func _physics_process(delta: float):
 		engine_force = throttle * power_factor * gear_ratios[current_gear - 1] * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
 	else:
 		engine_force = 0.0
-	var steer_speed_factor: float = 1 - clampf(kph() / 600, 0.0, 1.0)
 
-	steering = -clampf(steer_target, -.5, .5) * steer_speed_factor
+	steering = -clampf(steer_target, -.7, .7)
 	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .2) * linear_velocity.length_squared() / 685.0) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
 	limit(delta)
+
+	for i in 4:
+		particles[i].emitting = wheels[i].get_skidinfo() < .5
+		if particles[i].emitting:
+			particles[i].amount = ceil(100 * (1 - wheels[i].get_skidinfo()))
 
 func start() -> void:
 	brake = 0

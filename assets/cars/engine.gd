@@ -28,8 +28,6 @@ func _process(d: float):
 		curve_player(0)
 		for i in 4:
 			curve_player(i)
-	if n > .9:
-		players[-1].pitch_scale = (r / 600) + 1
 
 func curve_player(i: int) -> void:
 	players[i].volume_db = db_curves[i].sample_baked(n) - 50

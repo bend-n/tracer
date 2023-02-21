@@ -1,8 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://c157wew5y33bo"]
+[gd_scene load_steps=36 format=3 uid="uid://c157wew5y33bo"]
 
 [ext_resource type="Script" path="res://classes/car.gd" id="1_pdccm"]
 [ext_resource type="Script" path="res://assets/cars/engine.gd" id="2_rxib8"]
+[ext_resource type="Material" uid="uid://b0t01t5nxdfdp" path="res://assets/cars/skid.tres" id="2_yev8o"]
 [ext_resource type="Curve" uid="uid://f1go1j7raaq1" path="res://assets/cars/sounds/idle_db.tres" id="3_gwsff"]
+[ext_resource type="SphereMesh" uid="uid://cd2plk55q0xr7" path="res://assets/cars/sphere.tres" id="3_wncel"]
 [ext_resource type="Curve" uid="uid://bq1r63t410ork" path="res://assets/cars/sounds/low_db.tres" id="4_rdkge"]
 [ext_resource type="Curve" uid="uid://d15cjufi3m0wg" path="res://assets/cars/sounds/med_db.tres" id="5_7w6r4"]
 [ext_resource type="Curve" uid="uid://d0rkqfng2uvkw" path="res://assets/cars/sounds/high_db.tres" id="6_h74co"]
@@ -16,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://dwbsofhdf1d8i" path="res://assets/sounds/engine/2000.ogg" id="12_lrx8k"]
 [ext_resource type="AudioStream" uid="uid://d1q0xhd5ufguo" path="res://assets/sounds/engine/5000.ogg" id="13_d45jk"]
 [ext_resource type="AudioStream" uid="uid://d4k65y04x6yxg" path="res://assets/sounds/engine/8000.ogg" id="14_cerxx"]
+[ext_resource type="AudioStream" uid="uid://d3rhrhg8srpdg" path="res://assets/sounds/checkpoint.ogg" id="19_stkh0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hs0do"]
 friction = 0.71
@@ -366,7 +369,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.2, 0
 use_as_traction = true
 wheel_radius = 0.8
 wheel_rest_length = 0.4
-wheel_friction_slip = 1.0
+wheel_friction_slip = 1.9
 suspension_travel = 0.2
 suspension_stiffness = 150.0
 suspension_max_force = 18000.0
@@ -378,12 +381,20 @@ transform = Transform3D(-2.33967, 0, -2.0454e-07, 0, 2.33967, 0, 2.0454e-07, 0, 
 mesh = SubResource("ArrayMesh_n2y6h")
 skeleton = NodePath("")
 
+[node name="particles" type="GPUParticles3D" parent="br"]
+emitting = false
+lifetime = 3.0
+explosiveness = 0.1
+randomness = 0.2
+process_material = ExtResource("2_yev8o")
+draw_pass_1 = ExtResource("3_wncel")
+
 [node name="bl" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.2, 0.8, 1.51)
 use_as_traction = true
 wheel_radius = 0.8
 wheel_rest_length = 0.4
-wheel_friction_slip = 1.0
+wheel_friction_slip = 1.9
 suspension_travel = 0.2
 suspension_stiffness = 150.0
 suspension_max_force = 18000.0
@@ -395,12 +406,20 @@ transform = Transform3D(2.33967, -1.78815e-14, -2.0454e-07, 0, 2.33967, -2.0454e
 mesh = SubResource("ArrayMesh_n2y6h")
 skeleton = NodePath("")
 
+[node name="particles" type="GPUParticles3D" parent="bl"]
+emitting = false
+lifetime = 3.0
+explosiveness = 0.1
+randomness = 0.2
+process_material = ExtResource("2_yev8o")
+draw_pass_1 = ExtResource("3_wncel")
+
 [node name="fl" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.2, 0.8, -1.51)
 use_as_steering = true
 wheel_radius = 0.8
 wheel_rest_length = 0.4
-wheel_friction_slip = 1.0
+wheel_friction_slip = 2.0
 suspension_travel = 0.2
 suspension_stiffness = 150.0
 suspension_max_force = 18000.0
@@ -412,12 +431,20 @@ transform = Transform3D(2.33967, -3.08847e-14, -2.0454e-07, 0, 2.33967, -3.5328e
 mesh = SubResource("ArrayMesh_n2y6h")
 skeleton = NodePath("")
 
+[node name="particles" type="GPUParticles3D" parent="fl"]
+emitting = false
+lifetime = 3.0
+explosiveness = 0.1
+randomness = 0.2
+process_material = ExtResource("2_yev8o")
+draw_pass_1 = ExtResource("3_wncel")
+
 [node name="fr" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.2, 0.8, -1.51)
 use_as_steering = true
 wheel_radius = 0.8
 wheel_rest_length = 0.4
-wheel_friction_slip = 1.0
+wheel_friction_slip = 2.0
 suspension_travel = 0.2
 suspension_stiffness = 150.0
 suspension_max_force = 18000.0
@@ -428,6 +455,14 @@ damping_relaxation = 0.9
 transform = Transform3D(-2.33967, 0, -2.0454e-07, 0, 2.33967, 0, 2.0454e-07, 0, -2.33967, 0.5, 0, 1.19209e-07)
 mesh = SubResource("ArrayMesh_n2y6h")
 skeleton = NodePath("")
+
+[node name="particles" type="GPUParticles3D" parent="fr"]
+emitting = false
+lifetime = 3.0
+explosiveness = 0.1
+randomness = 0.2
+process_material = ExtResource("2_yev8o")
+draw_pass_1 = ExtResource("3_wncel")
 
 [node name="Coll" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.43328, 0)
@@ -441,19 +476,15 @@ car = NodePath("..")
 
 [node name="idle" type="AudioStreamPlayer" parent="Engine"]
 stream = ExtResource("11_ouf2u")
-volume_db = -50.0
 
 [node name="low" type="AudioStreamPlayer" parent="Engine"]
 stream = ExtResource("12_lrx8k")
-volume_db = -50.0
 
 [node name="med" type="AudioStreamPlayer" parent="Engine"]
 stream = ExtResource("13_d45jk")
-volume_db = -50.0
 
 [node name="high" type="AudioStreamPlayer" parent="Engine"]
 stream = ExtResource("14_cerxx")
-volume_db = -50.0
 
 [node name="Gearbox" type="Node3D" parent="."]
 script = ExtResource("11_augb2")
@@ -461,5 +492,9 @@ script = ExtResource("11_augb2")
 [node name="Shift1" type="AudioStreamPlayer" parent="Gearbox"]
 stream = ExtResource("11_rwd1j")
 volume_db = -25.0
+
+[node name="checkpoint" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_stkh0")
+volume_db = -10.0
 
 [connection signal="shifted" from="." to="Gearbox" method="_on_sedan_shifted"]
