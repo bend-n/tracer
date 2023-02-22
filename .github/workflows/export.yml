@@ -1,0 +1,22 @@
+name: "export"
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "**.gd"
+      - "**.tscn"
+      - "**.import"
+      - "**.tres"
+      - "**.ttf"
+      - ".github/workflows/export.yml"
+      - "export_presets.cfg"
+    branches:
+      - main
+
+jobs:
+  export:
+    uses: bend-n/godot-actions/.github/workflows/callable-export.yml@main
+    with:
+      export-name: tracer
+      image: ghcr.io/bend-n/godot:4.0.rc
+      platforms: "windows linux mac"

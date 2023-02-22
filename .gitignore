@@ -4,4 +4,3 @@ movie.*
 addons/
 *.x86_64
 godot.lock
-export_presets.cfg
