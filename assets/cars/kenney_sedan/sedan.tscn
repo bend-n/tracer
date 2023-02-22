@@ -367,7 +367,7 @@ skeleton = NodePath("")
 [node name="br" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.2, 0.8, 1.51)
 use_as_traction = true
-wheel_radius = 0.8
+wheel_radius = 0.7
 wheel_rest_length = 0.4
 wheel_friction_slip = 1.9
 suspension_travel = 0.2
@@ -386,13 +386,14 @@ emitting = false
 lifetime = 3.0
 explosiveness = 0.1
 randomness = 0.2
+visibility_aabb = AABB(-3.72308, -2.91366, -16.6076, 7.11382, 10.4403, 19.4272)
 process_material = ExtResource("2_yev8o")
 draw_pass_1 = ExtResource("3_wncel")
 
 [node name="bl" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.2, 0.8, 1.51)
 use_as_traction = true
-wheel_radius = 0.8
+wheel_radius = 0.7
 wheel_rest_length = 0.4
 wheel_friction_slip = 1.9
 suspension_travel = 0.2
@@ -411,13 +412,14 @@ emitting = false
 lifetime = 3.0
 explosiveness = 0.1
 randomness = 0.2
+visibility_aabb = AABB(-3.72308, -2.91366, -16.6076, 7.11382, 10.4403, 19.4272)
 process_material = ExtResource("2_yev8o")
 draw_pass_1 = ExtResource("3_wncel")
 
 [node name="fl" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.2, 0.8, -1.51)
 use_as_steering = true
-wheel_radius = 0.8
+wheel_radius = 0.7
 wheel_rest_length = 0.4
 wheel_friction_slip = 2.0
 suspension_travel = 0.2
@@ -436,13 +438,14 @@ emitting = false
 lifetime = 3.0
 explosiveness = 0.1
 randomness = 0.2
+visibility_aabb = AABB(-3.72308, -2.91366, -16.6076, 7.11382, 10.4403, 19.4272)
 process_material = ExtResource("2_yev8o")
 draw_pass_1 = ExtResource("3_wncel")
 
 [node name="fr" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.2, 0.8, -1.51)
 use_as_steering = true
-wheel_radius = 0.8
+wheel_radius = 0.7
 wheel_rest_length = 0.4
 wheel_friction_slip = 2.0
 suspension_travel = 0.2
@@ -461,6 +464,7 @@ emitting = false
 lifetime = 3.0
 explosiveness = 0.1
 randomness = 0.2
+visibility_aabb = AABB(-3.72308, -2.91366, -16.6076, 7.11382, 10.4403, 19.4272)
 process_material = ExtResource("2_yev8o")
 draw_pass_1 = ExtResource("3_wncel")
 

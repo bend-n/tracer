@@ -1,3 +1,3 @@
 [packages]
-"@bendn/remap" = '5.0.6'
+"@bendn/remap" = '5.0.8'
 "@bendn/splitter" = '1.0.6'

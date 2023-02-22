@@ -1,12 +1,12 @@
 [
   {
-    "name": "@bendn/remap",
-    "version": "5.0.6",
-    "integrity": "sha512-lfB0Vx/fmXhnrTttiG+sr33EFAlAEopDq9lX2bn3z+pp3dzSuMtTaRwbkUN8ndbuwfPa8Dm+NghUX2s3wHQFLQ=="
-  },
-  {
     "name": "@bendn/splitter",
     "version": "1.0.6",
     "integrity": "sha512-HT7q5qv6OEpX95e5r+kAsasoAvH0Mgf+aT4SdKQ18fyDIn1dW02WqbulF0AMwHufgRZkMf9SnQGiAq79P5ZIKQ=="
+  },
+  {
+    "name": "@bendn/remap",
+    "version": "5.0.6",
+    "integrity": "sha512-lfB0Vx/fmXhnrTttiG+sr33EFAlAEopDq9lX2bn3z+pp3dzSuMtTaRwbkUN8ndbuwfPa8Dm+NghUX2s3wHQFLQ=="
   }
 ]
