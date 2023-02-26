@@ -51,7 +51,7 @@ func _update():
 	support.polygon = PackedVector2Array([
 		vec(-thw - 2.0, -1),
 		vec( thw + 2.0, -1),
-		vec( track.lower_support_width + 0.1, -track.support_height),
+		vec( track.lower_support_width, -track.support_height),
 		vec(-track.lower_support_width, -track.support_height)
 	])
 

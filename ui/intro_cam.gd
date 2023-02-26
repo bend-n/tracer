@@ -7,6 +7,8 @@ var track: TrackResource
 var main_cam: Camera3D
 
 func _init(_track: TrackResource, _main_cam: Camera3D):
+	far = 4000
+	near = .2
 	track = _track
 	main_cam = _main_cam
 

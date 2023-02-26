@@ -33,6 +33,9 @@ func ratio() -> float:
 		-1: return reverse_ratio
 		_: return gear_ratios[current_gear - 1]
 
+func downforce(force: float):
+	apply_force(basis * Vector3(0,-force,0), Vector3(0,1.4,2.5))
+
 func is_on_ground() -> bool:
 	return wheels.all(func(whl: VehicleWheel3D): return whl.is_in_contact() != null)
 
@@ -98,6 +101,7 @@ func limit(delta: float) -> void:
 	angular_damp = max(5 * (angular_velocity.length_squared() - 45), 0) if angular_velocity.length_squared() > 45 else 0.0
 
 func _physics_process(delta: float):
+	downforce(5)
 	var power_factor := power_curve.sample_baked(clampf(rpm() / max_engine_rpm, 0.0, 1.0))
 	if current_gear == -1:
 		engine_force = throttle * power_factor * reverse_ratio * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position

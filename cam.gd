@@ -12,6 +12,7 @@ func _ready():
 	look_at(follow_this.global_position)
 	last_lookat = follow_this.global_position
 	far = 2000
+	near = .2
 
 func target() -> Vector3:
 	var delta_v := global_position - follow_this.global_position
