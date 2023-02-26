@@ -21,7 +21,7 @@ var particles: Array[GPUParticles3D] = []
 
 signal shifted
 
-var gear_ratios: Array[float] = [ 5, 2.01, 1.59, 1.32, 1.13, 1.0 ]
+var gear_ratios: Array[float] = [ 5 ]
 var current_gear := 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
 var clutch_position := 1 # 0.0 = clutch engaged
 var gear_timer := 0.0

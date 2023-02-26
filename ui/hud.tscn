@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://vok7fdcyec68"]
+[gd_scene load_steps=17 format=3 uid="uid://vok7fdcyec68"]
 
 [ext_resource type="Theme" uid="uid://ch2uo5qd8ubx6" path="res://ui/theme.tres" id="1_ie2j2"]
 [ext_resource type="Script" path="res://ui/hud.gd" id="1_sfhpc"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://ui/gears.gd" id="5_g6cg4"]
 [ext_resource type="StyleBox" uid="uid://cly1aqudpku5j" path="res://ui/panel_skew_r.tres" id="6_g2n2l"]
 [ext_resource type="Texture2D" uid="uid://b3nmp7eyu0hjk" path="res://ui/assets/flag.png" id="6_ho2g6"]
-[ext_resource type="Script" path="res://ui/revs.gd" id="6_l10wo"]
 [ext_resource type="Texture2D" uid="uid://b6ad1yrgtg6qk" path="res://ui/assets/player_indicator.png" id="7_wv12s"]
 [ext_resource type="Texture2D" uid="uid://dkbrx7rpa8dvc" path="res://ui/assets/ghost.png" id="8_yfv7r"]
 [ext_resource type="PackedScene" uid="uid://nkh2xi7tnumc" path="res://ui/splits/splits.tscn" id="9_gtkqi"]
@@ -119,21 +118,6 @@ bbcode_enabled = true
 text = "[center]  [b][color=#4682b4]N[/color][/b][/center]"
 script = ExtResource("5_g6cg4")
 
-[node name="revs" type="PanelContainer" parent="Dashboard"]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_styles/panel = ExtResource("6_g2n2l")
-
-[node name="revs" type="Label" parent="Dashboard/revs"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 60
-text = " 0rpm"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("6_l10wo")
-
 [node name="MiniMap" type="Line2D" parent="."]
 texture_repeat = 2
 scale = Vector2(0.5, 0.5)
@@ -159,5 +143,4 @@ offset_right = 25.0
 [connection signal="assigned" from="." to="Dashboard/speed/speed" method="car_assigned" unbinds=3]
 [connection signal="assigned" from="." to="Dashboard/timer/time" method="assigned" unbinds=1]
 [connection signal="assigned" from="." to="Dashboard/gears/gears" method="assigned" unbinds=3]
-[connection signal="assigned" from="." to="Dashboard/revs/revs" method="assigned" unbinds=3]
 [connection signal="next_lap" from="." to="Dashboard/laps" method="increment"]
