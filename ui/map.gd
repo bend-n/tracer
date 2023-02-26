@@ -28,7 +28,8 @@ func _ready() -> void:
 		add_point(p)
 	path.curve = curve
 	add_child(path)
-	global_position = -box.position + Vector2(25, 25)
+	global_position = -box.position
+	scale = vec((add((get_parent() as Container).get_rect().size) / add(box.size))/2)
 	mkfollower(track.finish, finish_indicator, Color.WHITE, false, true)
 
 func _process(_delta: float) -> void:
@@ -53,6 +54,12 @@ func mkfollower(node: Node3D, tex: Texture, mod := Color.WHITE, back := false, r
 		followers.push_front([follower, sprite, node])
 	else:
 		followers.push_back([follower,sprite, node])
+
+func vec(f: float) -> Vector2:
+	return Vector2(f, f)
+
+func add(v: Vector2) -> float:
+	return v.x + v.y
 
 func flatten(v: Vector3) -> Vector2:
 	return Vector2(v.x, v.z)

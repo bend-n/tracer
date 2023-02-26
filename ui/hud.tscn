@@ -49,7 +49,9 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -105.0
+offset_left = 345.0
+offset_top = -130.0
+offset_right = -345.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_ie2j2")
@@ -118,9 +120,16 @@ bbcode_enabled = true
 text = "[center]  [b][color=#4682b4]N[/color][/b][/center]"
 script = ExtResource("5_g6cg4")
 
-[node name="MiniMap" type="Line2D" parent="."]
+[node name="MiniMapContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 1
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 525.0
+offset_bottom = 525.0
+
+[node name="MiniMap" type="Line2D" parent="MiniMapContainer"]
 texture_repeat = 2
-scale = Vector2(0.5, 0.5)
 width = 40.0
 default_color = Color(0.854902, 0.854902, 0.854902, 1)
 gradient = SubResource("Gradient_2kvil")
@@ -139,7 +148,7 @@ layout_mode = 1
 offset_right = 25.0
 
 [connection signal="assigned" from="." to="Dashboard/laps" method="assigned"]
-[connection signal="assigned" from="." to="MiniMap" method="assigned"]
+[connection signal="assigned" from="." to="MiniMapContainer/MiniMap" method="assigned"]
 [connection signal="assigned" from="." to="Dashboard/speed/speed" method="car_assigned" unbinds=3]
 [connection signal="assigned" from="." to="Dashboard/timer/time" method="assigned" unbinds=1]
 [connection signal="assigned" from="." to="Dashboard/gears/gears" method="assigned" unbinds=3]
