@@ -85,8 +85,7 @@ func passed_finish() -> void:
 		timer.stop()
 		if not best_time_data or data.time < best_time_data.time:
 			print("new pb!")
-			SaveLoad.save(saves % track_res.name, data.data())
-		data = TrackSaveableData.new(track.checkpoints.size())
+			data.save(saves % track_res.name)
 	else:
 		current_lap += 1
 		next_lap.emit()
@@ -102,7 +101,6 @@ func _physics_process(_delta: float) -> void:
 		var shot := best_time_data.loadshot(Engine.get_physics_frames() - start_frame)
 		ghost.update(shot[0], shot[1], shot[2])
 		ghost.visible = (ghost.global_position.distance_squared_to(car.global_position) > 10)
-
 
 func collect(cp: int) -> void:
 	if cp != -1:

@@ -1,8 +1,6 @@
 class_name TrackSaveableData
 extends Resource
 
-const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
-
 var time: float
 var checkpoints: Array#[PackedFloat32Array]
 var positional := {
@@ -12,8 +10,8 @@ var positional := {
 	snaps = 0,
 }
 
-func data() -> Dictionary:
-	return ({time = time, checkpoints = checkpoints, positional = positional})
+func save(path: String) -> void:
+	_save_file(path, {checkpoints = checkpoints, positional = positional, time = time})
 
 func _init(num_checkpoints := 0, laps := 0) -> void:
 	for i in laps:
@@ -35,7 +33,7 @@ func get_time(lap: int, cp: int) -> float:
 func snapshot(obj: Car) -> void:
 	positional.origins.append(obj.global_position)
 	positional.rotations.append(obj.global_rotation)
-	positional.steering.append(obj.steering)
+	positional.steering.append(snappedf(obj.steering, .1)) # FastLZ benefits from repetition
 	positional.snaps += 1
 
 func loadshot(frame: int) -> Array:
@@ -45,16 +43,32 @@ func snaps() -> int:
 	return positional.snaps
 
 static func from_d(d: Dictionary) -> TrackSaveableData:
-	if !d.has_all(["checkpoints", "positional", "time"]) and d.positional.has_all(["origins", "rotations", "steering", "snaps"]):
-		return null
 	var obj := TrackSaveableData.new(0)
-	obj.checkpoints = d.checkpoints
 	obj.time = d.time
+	obj.checkpoints = d.checkpoints
 	obj.positional = d.positional
 	return obj
 
+
+## Saves a basic dictionary to a path.
+static func _save_file(path: String, data: Dictionary) -> void:
+	var file := FileAccess.open_compressed(path, FileAccess.WRITE, FileAccess.COMPRESSION_FASTLZ)
+	file.store_buffer(var_to_bytes(data))
+
+## Loads a basic dictionary out of a file.
+static func _load_file(path: String) -> Dictionary:
+	if FileAccess.file_exists(path):
+		var file := FileAccess.open_compressed(path, FileAccess.READ, FileAccess.COMPRESSION_FASTLZ)
+		var text := file.get_buffer(file.get_length())
+		var dict := {}
+		if text:
+			dict = bytes_to_var(text)
+		return dict
+	_save_file(path, {})  # create file if it doesn't exist
+	return {}
+
 static func _load(path: String) -> TrackSaveableData:
-	var res := SaveLoad.load_file(path)
+	var res := _load_file(path)
 	if res.is_empty():
 		return null
 	return TrackSaveableData.from_d(res)
