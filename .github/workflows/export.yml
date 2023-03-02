@@ -18,5 +18,5 @@ jobs:
     uses: bend-n/godot-actions/.github/workflows/callable-export.yml@main
     with:
       export-name: tracer
-      image: ghcr.io/bend-n/godot:4.0.rc
+      image: ghcr.io/bend-n/godot:4.0
       platforms: "windows linux mac"
