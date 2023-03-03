@@ -368,7 +368,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.2, 0
 use_as_traction = true
 wheel_radius = 0.7
 wheel_rest_length = 0.4
-wheel_friction_slip = 1.9
+wheel_friction_slip = 1.5
 suspension_travel = 0.2
 suspension_stiffness = 150.0
 suspension_max_force = 18000.0
@@ -388,7 +388,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.2, 
 use_as_traction = true
 wheel_radius = 0.7
 wheel_rest_length = 0.4
-wheel_friction_slip = 1.9
+wheel_friction_slip = 1.5
 suspension_travel = 0.2
 suspension_stiffness = 150.0
 suspension_max_force = 18000.0
@@ -401,6 +401,9 @@ mesh = SubResource("ArrayMesh_n2y6h")
 skeleton = NodePath("")
 
 [node name="particles" parent="bl" instance=ExtResource("4_axi2x")]
+
+[node name="Node3D" type="Node3D" parent="bl"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.661287, 0)
 
 [node name="fl" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.2, 0.8, -1.51)

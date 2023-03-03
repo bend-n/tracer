@@ -6,6 +6,7 @@ class_name Car
 
 var steer_target := 0.0
 
+const trail_scene = preload("res://scenes/trail.tscn")
 @export var MAX_ENGINE_FORCE := 4000.0
 @export var MAX_BRAKE_FORCE := 35.0
 @export var reverse_ratio := -2.5
@@ -26,6 +27,8 @@ var current_gear := 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
 var clutch_position := 1 # 0.0 = clutch engaged
 var gear_timer := 0.0
 var throttle := 0.0
+var skids: Array[Array]
+
 
 func ratio() -> float:
 	match current_gear:
@@ -49,6 +52,7 @@ func reset() -> void:
 func _ready() -> void:
 	for whl in wheels:
 		particles.append(whl.get_node(^"particles"))
+		skids.append([{active = false}]) # performance and complexity hack
 	randomize()
 
 func kph():
@@ -117,9 +121,19 @@ func _physics_process(delta: float):
 	limit(delta)
 
 	for i in 4:
-		particles[i].emitting = wheels[i].get_skidinfo() < .5
+		particles[i].emitting = wheels[i].get_skidinfo() < (.2 if i > 2 else .8) and wheels[i].is_in_contact() and kph() > 30
 		if particles[i].emitting:
 			particles[i].amount = ceil(100 * (1 - wheels[i].get_skidinfo()))
+			var init := false
+			if !skids[i][-1].active:
+				init = true
+				skids[i].append(trail_scene.instantiate() as Trail3D)
+				get_parent().add_child(skids[i][-1])
+				(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .661, 0))
+			if not init and Engine.get_physics_frames() % 4 == 0:
+				(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .661, 0))
+		elif skids[i][-1].active:
+				skids[i][-1].active = false
 
 func start() -> void:
 	brake = 0
