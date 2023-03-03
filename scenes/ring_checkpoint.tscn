@@ -18,6 +18,8 @@ script = ExtResource("1_cmmpp")
 
 [node name="Ring" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visibility_range_end_margin = 1000.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("2_xys6y")
 
 [node name="Collision" type="CSGMesh3D" parent="Ring"]

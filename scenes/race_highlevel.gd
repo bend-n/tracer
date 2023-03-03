@@ -13,6 +13,7 @@ var huds: Array[HUD]
 
 func _ready() -> void:
 	race = Race.new(Globals.playing, car_scene, ghost_scene, track_loader_scene)
+	race.reset.connect(count_in)
 	add_child(race)
 	add_player()
 	super()
@@ -29,4 +30,11 @@ func add_player() -> void:
 	v.add_child(hud)
 	race.split.connect(hud.splits.update)
 	race.next_lap.connect(hud.laps.increment)
-	i_cam.finished.connect(func(): var countdown := countdown_scene.instantiate(); v.add_child(countdown); countdown.finished.connect(func(): race.start()))
+	huds.append(hud)
+	i_cam.finished.connect(count_in)
+	race.reset.connect(c_cam.reset)
+
+func count_in():
+	var countdown := countdown_scene.instantiate()
+	huds[0].add_child(countdown)
+	countdown.finished.connect(race.start)

@@ -12,6 +12,10 @@ func start() -> void:
 func stop() -> void:
 	set_process(false)
 
+func reset() -> void:
+	stop()
+	elapsed_time = 0.0
+
 func now() -> float:
 	return elapsed_time
 

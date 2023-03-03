@@ -8,11 +8,14 @@ var follow_this: Node3D
 var last_lookat: Vector3
 
 func _ready():
+	reset()
+	far = 2000
+	near = .2
+
+func reset():
 	global_position = follow_this.global_position + (follow_this.global_transform.basis.z * target_distance)
 	look_at(follow_this.global_position)
 	last_lookat = follow_this.global_position
-	far = 2000
-	near = .2
 
 func target() -> Vector3:
 	var delta_v := global_position - follow_this.global_position

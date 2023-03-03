@@ -28,7 +28,7 @@ func _ready() -> void:
 		add_point(p)
 	path.curve = curve
 	add_child(path)
-	global_position = -box.position
+	position = -box.position
 	scale = vec((add((get_parent() as Container).get_rect().size) / add(box.size))/2)
 	mkfollower(track.finish, finish_indicator, Color.WHITE, false, true)
 

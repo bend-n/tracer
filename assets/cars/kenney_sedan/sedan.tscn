@@ -20,8 +20,8 @@
 [ext_resource type="AudioStream" uid="uid://d3rhrhg8srpdg" path="res://assets/sounds/checkpoint.ogg" id="19_stkh0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hs0do"]
-friction = 0.71
-bounce = 0.2
+friction = 0.7
+bounce = 0.7
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8bpd4"]
 resource_name = "plastic"

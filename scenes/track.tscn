@@ -58,7 +58,7 @@ path_u_distance = 1.0
 path_joined = true
 
 [node name="Support" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(-22, -1, 22, -1, 25.1, -2, -25, -2)
+polygon = PackedVector2Array(-22, -1, 22, -1, 25, -2, -25, -2)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0

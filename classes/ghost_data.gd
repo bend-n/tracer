@@ -1,17 +1,25 @@
-class_name TrackSaveableData
+class_name GhostData
 extends Resource
 
 var time: float
-var checkpoints: Array#[PackedFloat32Array]
-var positional := {
-	origins = PackedVector3Array(),
-	rotations = PackedVector3Array(),
-	steering = PackedFloat32Array(),
-	snaps = 0,
-}
+var checkpoints: Array
+var positions: PackedVector3Array = []
+var rotations: PackedVector3Array = []
+var steering: PackedFloat32Array = []
+var snaps := 0
+
+func snapshot(obj: Car):
+	positions.append(obj.global_position)
+	rotations.append(obj.global_rotation)
+	steering.append(snappedf(obj.steering, .1)) # FastLZ benefits from repetition
+	snaps += 1
+
+## returns [position, rotation, steering]
+func load_snap(i: int) -> Array:
+	return [positions[i], rotations[i], steering[i]]
 
 func save(path: String) -> void:
-	_save_file(path, {checkpoints = checkpoints, positional = positional, time = time})
+	_save_file(path, {checkpoints = checkpoints, positions = positions, rotations = rotations, steering = steering, time = time, snaps = snaps})
 
 func _init(num_checkpoints := 0, laps := 0) -> void:
 	for i in laps:
@@ -20,6 +28,15 @@ func _init(num_checkpoints := 0, laps := 0) -> void:
 		arr.fill(-1)
 		checkpoints.append(arr)
 
+func clear() -> void:
+	for lap in checkpoints:
+		lap.fill(-1)
+	positions = []
+	rotations = []
+	steering = []
+	time = 0
+	snaps = 0
+
 func collect(lap: int, cp: int, now: float) -> void:
 	if lap == len(checkpoints) - 1 && cp == -1:
 		checkpoints[lap][cp] = now
@@ -27,28 +44,21 @@ func collect(lap: int, cp: int, now: float) -> void:
 	else:
 		checkpoints[lap][cp] = now
 
+func has_collected(lap: int, cp: int) -> bool:
+	return checkpoints[lap][cp] != -1
+
 func get_time(lap: int, cp: int) -> float:
 	return checkpoints[lap][cp]
 
-func snapshot(obj: Car) -> void:
-	positional.origins.append(obj.global_position)
-	positional.rotations.append(obj.global_rotation)
-	positional.steering.append(snappedf(obj.steering, .1)) # FastLZ benefits from repetition
-	positional.snaps += 1
-
-func loadshot(frame: int) -> Array:
-	return [positional.origins[frame], positional.rotations[frame], positional.steering[frame]]
-
-func snaps() -> int:
-	return positional.snaps
-
-static func from_d(d: Dictionary) -> TrackSaveableData:
-	var obj := TrackSaveableData.new(0)
+static func from_d(d: Dictionary) -> GhostData:
+	var obj := GhostData.new()
 	obj.time = d.time
 	obj.checkpoints = d.checkpoints
-	obj.positional = d.positional
+	obj.positions = d.positions
+	obj.rotations = d.rotations
+	obj.steering = d.steering
+	obj.snaps = d.snaps
 	return obj
-
 
 ## Saves a basic dictionary to a path.
 static func _save_file(path: String, data: Dictionary) -> void:
@@ -67,8 +77,9 @@ static func _load_file(path: String) -> Dictionary:
 	_save_file(path, {})  # create file if it doesn't exist
 	return {}
 
-static func _load(path: String) -> TrackSaveableData:
+## Creates a [GhostData] from a file
+static func _load(path: String) -> GhostData:
 	var res := _load_file(path)
 	if res.is_empty():
 		return null
-	return TrackSaveableData.from_d(res)
+	return GhostData.from_d(res)

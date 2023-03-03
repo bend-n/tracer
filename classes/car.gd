@@ -42,12 +42,14 @@ func is_on_ground() -> bool:
 func is_not_on_ground() -> bool:
 	return wheels.any(func(whl: VehicleWheel3D): return !whl.is_in_contact())
 
+func reset() -> void:
+	brake = 15
+	set_physics_process(false)
+
 func _ready() -> void:
 	for whl in wheels:
 		particles.append(whl.get_node(^"particles"))
 	randomize()
-	brake = 15
-	set_physics_process(false)
 
 func kph():
 	return (3 * PI * wheels[0].wheel_radius * rpm()) / 25;
