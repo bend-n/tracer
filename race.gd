@@ -23,9 +23,9 @@ const saves := "user://%s.ghost"
 signal next_lap
 signal created_car(car: Car)
 signal created_ghost(ghost: GhostCar)
-signal finished
+signal finished(time: float, prev_time: float)
 signal split(time: float, prev_time: float)
-signal reset
+signal did_reset
 
 func _init(t: TrackResource, _car_scene, _ghost_scene, _track_loader_scene) -> void:
 	car_scene = _car_scene
@@ -80,15 +80,18 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action("reset") and playing:
-		playing = false
-		if best_time_data:
-			if ghost:
-				reset_ghost()
-		await reset_car()
-		set_physics_process(false)
-		data.clear()
-		timer.reset()
-		reset.emit()
+		reset()
+
+func reset() -> void:
+	playing = false
+	if best_time_data:
+		if ghost:
+			reset_ghost()
+	await reset_car()
+	set_physics_process(false)
+	data.clear()
+	timer.reset()
+	did_reset.emit()
 
 func connect_checkpoints() -> void:
 	for i in len(track.checkpoints):
@@ -104,13 +107,17 @@ func passed_finish() -> void:
 			return
 	collect(-1)
 	if track_res.laps - 1 == current_lap:
-		finished.emit()
 		playing = false
 		print("finished")
 		timer.stop()
 		if not best_time_data or data.time < best_time_data.time:
 			print("new pb!")
+			finished.emit(data.time, -1)
 			data.save(saves % track_res.name)
+			best_time_data = data
+		else:
+			finished.emit(data.time, best_time_data.time)
+		data = GhostData.new(track_res.checkpoints.size(), track_res.laps)
 	else:
 		current_lap += 1
 		next_lap.emit()

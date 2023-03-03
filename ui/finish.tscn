@@ -1,0 +1,147 @@
+[gd_scene load_steps=12 format=3 uid="uid://cr1mgp6bgxh64"]
+
+[ext_resource type="Theme" uid="uid://ecnruuyrc8m" path="res://ui/theme.tres" id="1_aykd4"]
+[ext_resource type="Script" path="res://ui/finish.gd" id="1_crs2w"]
+[ext_resource type="Script" path="res://ui/diff.gd" id="2_gtres"]
+[ext_resource type="StyleBox" uid="uid://bxi4jeh5lf468" path="res://ui/assets/wide_button_focus.stylebox" id="4_dck0l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgqa0"]
+bg_color = Color(0.027451, 0.211765, 0.258824, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.513726, 0.580392, 0.588235, 1)
+corner_radius_top_left = 150
+corner_radius_top_right = 150
+corner_radius_bottom_right = 150
+corner_radius_bottom_left = 150
+corner_detail = 18
+anti_aliasing_size = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_f3a8x"]
+line_spacing = 0.0
+font_size = 200
+font_color = Color(0.933333, 0.909804, 0.835294, 1)
+outline_size = 25
+outline_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_0mxmp"]
+font_names = PackedStringArray("Cascadia Code")
+font_weight = 700
+oversampling = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_m62vt"]
+font = SubResource("SystemFont_0mxmp")
+font_size = 100
+font_color = Color(0.992157, 0.964706, 0.890196, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_22wem"]
+content_margin_left = 250.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_irfee"]
+font = SubResource("SystemFont_0mxmp")
+font_size = 50
+font_color = Color(0.921569, 0.32549, 0.317647, 1)
+
+[sub_resource type="GDScript" id="GDScript_ihn3u"]
+resource_name = "retry_button"
+script/source = "extends Button
+
+func _on_finish_difference(diff: SplitsDifference.Change) -> void:
+	match diff:
+		SplitsDifference.Change.GAIN: text = \"play again\"
+		SplitsDifference.Change.LOSS: text = \"try again\"
+"
+
+[node name="finish" type="ColorRect" node_paths=PackedStringArray("diff", "time_", "flag", "focus")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_aykd4")
+color = Color(0.121569, 0.121569, 0.121569, 0.709804)
+script = ExtResource("1_crs2w")
+diff = NodePath("center/panel/container/splits/diff")
+time_ = NodePath("center/panel/container/splits/hcontainer/time")
+flag = NodePath("center/panel/container/splits/hcontainer/flag")
+focus = NodePath("center/panel/container/buttons/retry")
+
+[node name="center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="panel" type="PanelContainer" parent="center"]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bgqa0")
+
+[node name="container" type="VBoxContainer" parent="center/panel"]
+layout_mode = 2
+
+[node name="splits" type="VBoxContainer" parent="center/panel/container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = -70
+
+[node name="hcontainer" type="HBoxContainer" parent="center/panel/container/splits"]
+custom_minimum_size = Vector2(0, 240)
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="flag" type="Label" parent="center/panel/container/splits/hcontainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "󰮚"
+label_settings = SubResource("LabelSettings_f3a8x")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="time" type="Label" parent="center/panel/container/splits/hcontainer"]
+layout_mode = 2
+text = "1:24.187"
+label_settings = SubResource("LabelSettings_m62vt")
+
+[node name="diff" type="Label" parent="center/panel/container/splits"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_22wem")
+text = "+0:00.125"
+label_settings = SubResource("LabelSettings_irfee")
+script = ExtResource("2_gtres")
+gain_color = Color(0.521569, 0.6, 0, 1)
+loss_color = Color(0.921569, 0.32549, 0.317647, 1)
+
+[node name="spacer" type="Control" parent="center/panel/container"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="buttons" type="VBoxContainer" parent="center/panel/container"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="retry" type="Button" parent="center/panel/container/buttons"]
+layout_mode = 2
+theme_override_styles/focus = ExtResource("4_dck0l")
+text = "play again"
+script = SubResource("GDScript_ihn3u")
+
+[node name="next" type="Button" parent="center/panel/container/buttons"]
+layout_mode = 2
+theme_override_styles/focus = ExtResource("4_dck0l")
+text = "next map"
+
+[node name="quit" type="Button" parent="center/panel/container/buttons"]
+layout_mode = 2
+theme_override_styles/focus = ExtResource("4_dck0l")
+text = "exit"
+
+[connection signal="difference" from="." to="center/panel/container/buttons/retry" method="_on_finish_difference"]
+[connection signal="pressed" from="center/panel/container/buttons/retry" to="." method="emit_signal" binds= [&"retry"]]
+[connection signal="pressed" from="center/panel/container/buttons/next" to="." method="emit_signal" binds= [&"next"]]
+[connection signal="pressed" from="center/panel/container/buttons/quit" to="." method="emit_signal" binds= [&"quit"]]

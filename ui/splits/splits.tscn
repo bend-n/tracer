@@ -19,31 +19,26 @@ grow_vertical = 2
 theme = ExtResource("1_m5q5h")
 script = ExtResource("2_2frki")
 diff = NodePath("Difference")
-current = NodePath("Current/Label")
+current = NodePath("Current")
 
-[node name="Current" type="PanelContainer" parent="."]
+[node name="Current" type="Label" parent="."]
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="Current"]
-custom_minimum_size = Vector2(160, 0)
-layout_mode = 2
+theme_override_styles/normal = ExtResource("4_ebhpa")
 text = "0:00.00"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Difference" type="PanelContainer" parent="." node_paths=PackedStringArray("label")]
+[node name="Difference" type="Label" parent="."]
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_styles/normal = ExtResource("4_ebhpa")
+text = "+0:00.00"
+horizontal_alignment = 2
+vertical_alignment = 1
 script = ExtResource("3_4w6ms")
 gain_style = ExtResource("4_uicx0")
 loss_style = ExtResource("4_5hoie")
 neutral_style = ExtResource("4_ebhpa")
-label = NodePath("Label")
-
-[node name="Label" type="Label" parent="Difference"]
-custom_minimum_size = Vector2(160, 0)
-layout_mode = 2
-text = "+0:00.00"
-horizontal_alignment = 2
-vertical_alignment = 1

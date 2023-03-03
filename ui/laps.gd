@@ -14,3 +14,6 @@ func assigned(_car, _ghost, _timer, _track: TrackLoader) -> void:
 	track = _track
 	visible = track.track.laps > 1
 	increment()
+
+func reset() -> void:
+	lap = 1

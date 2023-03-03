@@ -1,7 +1,7 @@
 extends VBoxContainer
 class_name Splits
 
-@export var diff: PanelContainer
+@export var diff: SplitsDifference
 @export var current: Label
 
 var timer: SceneTreeTimer

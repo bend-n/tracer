@@ -2,3 +2,4 @@
 
 [resource]
 font_names = PackedStringArray("UbuntuMono Nerd Font")
+oversampling = 3.0

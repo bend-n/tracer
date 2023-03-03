@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bvfqaoqjsxj73"]
 
-[ext_resource type="Theme" uid="uid://ch2uo5qd8ubx6" path="res://ui/theme.tres" id="1_gm0ws"]
+[ext_resource type="Theme" uid="uid://ecnruuyrc8m" path="res://ui/theme.tres" id="1_gm0ws"]
 [ext_resource type="Script" path="res://ui/tracks.gd" id="2_po2ce"]
 [ext_resource type="Resource" uid="uid://crye0ijvmtsyb" path="res://tracks/multilap_test.tres" id="3_0yjp1"]
 [ext_resource type="Resource" uid="uid://de46bcu1ivmtq" path="res://tracks/test.tres" id="4_3xqvr"]

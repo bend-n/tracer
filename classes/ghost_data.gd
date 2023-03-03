@@ -19,7 +19,7 @@ func load_snap(i: int) -> Array:
 	return [positions[i], rotations[i], steering[i]]
 
 func save(path: String) -> void:
-	_save_file(path, {checkpoints = checkpoints, positions = positions, rotations = rotations, steering = steering, time = time, snaps = snaps})
+	GhostData._save_file(path, {checkpoints = checkpoints, positions = positions, rotations = rotations, steering = steering, time = time, snaps = snaps})
 
 func _init(num_checkpoints := 0, laps := 0) -> void:
 	for i in laps:
@@ -38,6 +38,7 @@ func clear() -> void:
 	snaps = 0
 
 func collect(lap: int, cp: int, now: float) -> void:
+	now = snappedf(now, .001) # 3dec precision
 	if lap == len(checkpoints) - 1 && cp == -1:
 		checkpoints[lap][cp] = now
 		time = now
@@ -48,7 +49,7 @@ func has_collected(lap: int, cp: int) -> bool:
 	return checkpoints[lap][cp] != -1
 
 func get_time(lap: int, cp: int) -> float:
-	return checkpoints[lap][cp]
+	return snappedf(checkpoints[lap][cp], .001) # ive noticed compression can add .00000157 so we snap it back down
 
 static func from_d(d: Dictionary) -> GhostData:
 	var obj := GhostData.new()
