@@ -9,7 +9,7 @@ static func attach(to: PackedScene) -> HumanCar:
 func _physics_process(delta: float) -> void:
 	throttle = Input.get_action_strength("accel")
 	brake = Input.get_action_strength("brake") * MAX_BRAKE_FORCE
-	steer(Input.get_axis("ui_left", "ui_right"))
+	steer(Input.get_axis("left", "right"))
 	super(delta)
 
 func shift_up():

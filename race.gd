@@ -89,6 +89,7 @@ func reset() -> void:
 			reset_ghost()
 	await reset_car()
 	set_physics_process(false)
+	current_lap = 0
 	data.clear()
 	timer.reset()
 	did_reset.emit()
@@ -112,7 +113,7 @@ func passed_finish() -> void:
 		timer.stop()
 		if not best_time_data or data.time < best_time_data.time:
 			print("new pb!")
-			finished.emit(data.time, -1)
+			finished.emit(data.time, best_time_data.time if best_time_data else -1)
 			data.save(saves % track_res.name)
 			best_time_data = data
 		else:
