@@ -51,11 +51,9 @@ func reset_car() -> void:
 	await get_tree().physics_frame
 	car.rotation = track.start_rot + Vector3(0, PI, -PI/2)
 	car.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2) # bump forward a teensy bit
-	car.engine_force = 0
-	car.current_gear = 0
 	car.linear_velocity = Vector3.ZERO
 	car.angular_velocity = Vector3.ZERO
-	car.steering = 0
+	car.current_gear = 0
 	for p in car.particles:
 		p.emitting = false
 	car.reset()
@@ -108,9 +106,10 @@ func passed_finish() -> void:
 			return
 	collect(-1)
 	if track_res.laps - 1 == current_lap:
-		playing = false
 		print("finished")
+		playing = false
 		timer.stop()
+		car.reset()
 		if not best_time_data or data.time < best_time_data.time:
 			print("new pb!")
 			finished.emit(data.time, best_time_data.time if best_time_data else -1)

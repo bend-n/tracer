@@ -9,17 +9,18 @@ class_name FinishUI
 signal retry
 signal next
 signal quit
-signal difference(diff: SplitsDifference.Change)
+signal difference(diff: int)
 
 func set_time(time: float, prev_time: float):
 	time_.text = GameTimer.format_precise(time)
-	if prev_time < 0 or SplitsDifference.diff(time, prev_time) == SplitsDifference.Change.EQUAL:
+	var d := SplitsDifference.diff(time, prev_time)
+	if prev_time < 0 or d == SplitsDifference.Change.EQUAL:
 		diff.hide()
 		flag.text = "󰈻"
 		flag.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+		difference.emit(-1 if prev_time < 0 else d)
 	else:
 		flag.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-		var d := SplitsDifference.diff(time, prev_time);
 		match d:
 			SplitsDifference.Change.LOSS: flag.text = "󰮙"
 			SplitsDifference.Change.GAIN: flag.text = "󰮚"

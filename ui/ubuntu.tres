@@ -1,5 +1,5 @@
-[gd_resource type="SystemFont" format=3 uid="uid://xriuk0v4f6wj"]
+[gd_resource type="SystemFont" format=3 uid="uid://bkjqtc5i64r3j"]
 
 [resource]
-font_names = PackedStringArray("UbuntuMono Nerd Font")
+font_names = PackedStringArray("Ubuntu")
 oversampling = 3.0

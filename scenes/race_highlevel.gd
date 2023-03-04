@@ -38,13 +38,13 @@ func add_player() -> void:
 	race.did_reset.connect(c_cam.reset)
 	race.did_reset.connect(hud.laps.reset)
 	race.finished.connect(func(t: float, p_t: float):
-#		get_tree().paussed = true
 		var finish: FinishUI = finish_scene.instantiate()
 		hud.add_child(finish)
 		finish.set_time(t, p_t)
 		finish.retry.connect(func():
 			race.reset()
 			finish.queue_free()
+			get_tree().paused = false
 		)
 	)
 

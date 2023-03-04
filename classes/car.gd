@@ -46,6 +46,9 @@ func is_not_on_ground() -> bool:
 	return wheels.any(func(whl: VehicleWheel3D): return !whl.is_in_contact())
 
 func reset() -> void:
+	steering = 0
+	throttle = 0
+	engine_force = 0
 	brake = 15
 	set_physics_process(false)
 

@@ -1,22 +1,18 @@
-[gd_scene load_steps=12 format=3 uid="uid://cr1mgp6bgxh64"]
+[gd_scene load_steps=16 format=3 uid="uid://cr1mgp6bgxh64"]
 
-[ext_resource type="Theme" uid="uid://ecnruuyrc8m" path="res://ui/theme.tres" id="1_aykd4"]
+[ext_resource type="Theme" path="res://ui/theme.tres" id="1_aykd4"]
 [ext_resource type="Script" path="res://ui/finish.gd" id="1_crs2w"]
 [ext_resource type="Script" path="res://ui/diff.gd" id="2_gtres"]
 [ext_resource type="StyleBox" uid="uid://bxi4jeh5lf468" path="res://ui/assets/wide_button_focus.stylebox" id="4_dck0l"]
+[ext_resource type="SystemFont" uid="uid://bkjqtc5i64r3j" path="res://ui/ubuntu.tres" id="5_llemr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgqa0"]
 bg_color = Color(0.027451, 0.211765, 0.258824, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.513726, 0.580392, 0.588235, 1)
-corner_radius_top_left = 150
-corner_radius_top_right = 150
-corner_radius_bottom_right = 150
-corner_radius_bottom_left = 150
-corner_detail = 18
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+anti_aliasing = false
 anti_aliasing_size = 1.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_f3a8x"]
@@ -25,6 +21,9 @@ font_size = 200
 font_color = Color(0.933333, 0.909804, 0.835294, 1)
 outline_size = 25
 outline_color = Color(0.25098, 0.25098, 0.25098, 1)
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 0.392157)
+shadow_offset = Vector2(10, 10)
 
 [sub_resource type="SystemFont" id="SystemFont_0mxmp"]
 font_names = PackedStringArray("Cascadia Code")
@@ -35,6 +34,9 @@ oversampling = 5.0
 font = SubResource("SystemFont_0mxmp")
 font_size = 100
 font_color = Color(0.992157, 0.964706, 0.890196, 1)
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 0.27451)
+shadow_offset = Vector2(5, 10)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_22wem"]
 content_margin_left = 250.0
@@ -42,7 +44,10 @@ content_margin_left = 250.0
 [sub_resource type="LabelSettings" id="LabelSettings_irfee"]
 font = SubResource("SystemFont_0mxmp")
 font_size = 50
-font_color = Color(0.921569, 0.32549, 0.317647, 1)
+font_color = Color(0.521569, 0.6, 0, 1)
+shadow_size = 12
+shadow_color = Color(0, 0, 0, 0.27451)
+shadow_offset = Vector2(2, 5)
 
 [sub_resource type="GDScript" id="GDScript_ihn3u"]
 resource_name = "retry_button"
@@ -52,7 +57,80 @@ func _on_finish_difference(diff: SplitsDifference.Change) -> void:
 	match diff:
 		SplitsDifference.Change.GAIN: text = \"play again\"
 		SplitsDifference.Change.LOSS: text = \"try again\"
+		_: text = \"play again\"
 "
+
+[sub_resource type="LabelSettings" id="LabelSettings_uqsxe"]
+font = ExtResource("5_llemr")
+font_size = 25
+font_color = Color(0.992157, 0.964706, 0.890196, 1)
+shadow_size = 4
+shadow_color = Color(0.168627, 0.168627, 0.168627, 0.568627)
+
+[sub_resource type="GDScript" id="GDScript_fnuhm"]
+resource_name = "helpfull"
+script/source = "extends Label
+
+var db := {
+	SplitsDifference.Change.GAIN: PackedStringArray([
+		\"nice time\",
+		\"great job\",
+		\"groundbreaking time\",
+		\"couldnt do better myself\",
+		\"motivational message\",
+		\"see you on the next map\",
+		\"that corner was perfect\",
+		\"such speed\"
+	]),
+	SplitsDifference.Change.LOSS:
+		PackedStringArray([
+			\"theres always next time\",
+			\"maybe take that corner tighter\", # i love it when the game backseats me
+			\"if you take that turn wider youll get more speed\",
+			\"that corner was rough\",
+			\"too much speed, eh\",
+			\"i hate it when things go wrong for a inexplicable reason\",
+			\"better luck next time\",
+			\"the great thing about video games is you can try again\",
+			\"sad times\",
+			\"wow, thats a good ghost\"
+		]),
+	SplitsDifference.Change.EQUAL:
+		PackedStringArray([
+			\"wow, you matched that time\",
+			\"1/100 moment\",
+			\"get the camera, the time was matched\",
+			\"its not even like theres a deterministic physics engine\"
+		]),
+	-1:
+		PackedStringArray([
+			\"good first try\",
+			\"a decent attempt\",
+			\"wr pace next attempt\",
+			\"hard map innit\",
+			\"are you going to go again\"
+		])
+
+}
+
+
+func _on_finish_difference(diff) -> void:
+	text = db[diff][randi() % len(db[diff])]
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hc6gh"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.576471, 0.631373, 0.631373, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 12
+anti_aliasing = false
 
 [node name="finish" type="ColorRect" node_paths=PackedStringArray("diff", "time_", "flag", "focus")]
 anchors_preset = 15
@@ -77,7 +155,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="panel" type="PanelContainer" parent="center"]
-custom_minimum_size = Vector2(1280, 720)
+clip_children = 2
+custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bgqa0")
 
@@ -111,22 +190,23 @@ label_settings = SubResource("LabelSettings_m62vt")
 [node name="diff" type="Label" parent="center/panel/container/splits"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_22wem")
-text = "+0:00.125"
+text = "-0:00.125"
 label_settings = SubResource("LabelSettings_irfee")
 script = ExtResource("2_gtres")
 gain_color = Color(0.521569, 0.6, 0, 1)
 loss_color = Color(0.921569, 0.32549, 0.317647, 1)
 
 [node name="spacer" type="Control" parent="center/panel/container"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
 [node name="buttons" type="VBoxContainer" parent="center/panel/container"]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 5
 
 [node name="retry" type="Button" parent="center/panel/container/buttons"]
 layout_mode = 2
+tooltip_text = "go for another go?"
 theme_override_styles/focus = ExtResource("4_dck0l")
 text = "play again"
 script = SubResource("GDScript_ihn3u")
@@ -141,7 +221,22 @@ layout_mode = 2
 theme_override_styles/focus = ExtResource("4_dck0l")
 text = "exit"
 
+[node name="helpfull" type="Label" parent="center/panel/container"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "hi"
+label_settings = SubResource("LabelSettings_uqsxe")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_fnuhm")
+
+[node name="border" type="Panel" parent="center/panel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hc6gh")
+
 [connection signal="difference" from="." to="center/panel/container/buttons/retry" method="_on_finish_difference"]
+[connection signal="difference" from="." to="center/panel/container/helpfull" method="_on_finish_difference"]
 [connection signal="pressed" from="center/panel/container/buttons/retry" to="." method="emit_signal" binds= [&"retry"]]
 [connection signal="pressed" from="center/panel/container/buttons/next" to="." method="emit_signal" binds= [&"next"]]
 [connection signal="pressed" from="center/panel/container/buttons/quit" to="." method="emit_signal" binds= [&"quit"]]
