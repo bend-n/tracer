@@ -112,7 +112,7 @@ func passed_finish() -> void:
 		car.reset()
 		if not best_time_data or data.time < best_time_data.time:
 			print("new pb!")
-			finished.emit(data.time, best_time_data.time if best_time_data else -1)
+			finished.emit(data.time, best_time_data.time if best_time_data else -1.0)
 			data.save(saves % track_res.name)
 			best_time_data = data
 		else:

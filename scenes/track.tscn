@@ -17,6 +17,7 @@ track = ExtResource("3_cdqtb")
 metadata/_edit_group_ = true
 
 [node name="Road" type="CSGPolygon3D" parent="."]
+calculate_tangents = false
 polygon = PackedVector2Array(-20, 0, -20, -0.1, 20, -0.1, 20, 0)
 mode = 2
 path_node = NodePath("..")
@@ -31,6 +32,7 @@ path_joined = true
 material = ExtResource("2_2nntu")
 
 [node name="Rail-L" type="CSGPolygon3D" parent="."]
+calculate_tangents = false
 polygon = PackedVector2Array(23, 0.5, 22.95, 0.47, 22.95, 0.43, 23, 0.4, 23, 0.55, 22.95, 0.32, 22.95, 0.28, 23, 0.25, 23.05, 0.25, 23.05, 0.5)
 mode = 2
 path_node = NodePath("..")
@@ -45,6 +47,7 @@ path_joined = true
 material = ExtResource("2_3pcob")
 
 [node name="Rail-R" type="CSGPolygon3D" parent="."]
+calculate_tangents = false
 polygon = PackedVector2Array(-23, 0.5, -22.95, 0.47, -22.95, 0.43, -23, 0.4, -23, 0.55, -22.95, 0.32, -22.95, 0.28, -23, 0.25, -23.05, 0.25, -23.05, 0.5)
 mode = 2
 path_node = NodePath("..")
@@ -87,7 +90,9 @@ camera_attributes = ExtResource("9_6ooo5")
 [node name="CollisionShape" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.165113, 0)
 visible = false
+calculate_tangents = false
 use_collision = true
+collision_mask = 0
 polygon = PackedVector2Array(-23, 0, 23, 0, 23, 5, 26, 5, 26, -1, -26, -1, -26, 5, -23, 5)
 mode = 2
 path_node = NodePath("..")

@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://1ubjbdg0envl"]
+[gd_scene load_steps=4 format=3 uid="uid://1ubjbdg0envl"]
 
 [ext_resource type="Script" path="res://scenes/trail.gd" id="1_xpxgt"]
+[ext_resource type="Texture2D" uid="uid://b5uvv50vmoxiu" path="res://assets/textures/slide.png" id="2_cw5i2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgr6r"]
 transparency = 1
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.188235, 0.188235, 0.188235, 0.517647)
+albedo_color = Color(1, 1, 1, 0.737255)
+albedo_texture = ExtResource("2_cw5i2")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 0
 disable_receive_shadows = true
 
 [node name="trail" type="Path3D"]
@@ -15,6 +19,7 @@ script = ExtResource("1_xpxgt")
 
 [node name="trail" type="CSGPolygon3D" parent="."]
 cast_shadow = 0
+calculate_tangents = false
 polygon = PackedVector2Array(0, 0, 0, 0, 0.5, 0, 0.5, 0)
 mode = 2
 path_node = NodePath("..")

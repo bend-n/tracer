@@ -29,7 +29,6 @@ var gear_timer := 0.0
 var throttle := 0.0
 var skids: Array[Array]
 
-
 func ratio() -> float:
 	match current_gear:
 		0: return 0
@@ -124,17 +123,15 @@ func _physics_process(delta: float):
 	limit(delta)
 
 	for i in 4:
-		particles[i].emitting = wheels[i].get_skidinfo() < (.2 if i > 2 else .8) and wheels[i].is_in_contact() and kph() > 30
+		particles[i].emitting = wheels[i].get_skidinfo() < (.2 if i > 2 else .99) and wheels[i].is_in_contact() and kph() > 30
 		if particles[i].emitting:
-			particles[i].amount = ceil(100 * (1 - wheels[i].get_skidinfo()))
+			particles[i].amount = clampf(ceil(150 * (1 - wheels[i].get_skidinfo())) * 1 if i > 2 else 8, 0, 150)
 			var init := false
 			if !skids[i][-1].active:
 				init = true
 				skids[i].append(trail_scene.instantiate() as Trail3D)
 				get_parent().add_child(skids[i][-1])
-				(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .661, 0))
-			if not init and Engine.get_physics_frames() % 4 == 0:
-				(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .661, 0))
+			(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .661, 0))
 		elif skids[i][-1].active:
 				skids[i][-1].active = false
 
