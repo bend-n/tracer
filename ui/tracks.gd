@@ -2,13 +2,14 @@ extends GridContainer
 
 @export var tracks: Array[TrackResource]
 @export var race: PackedScene
+@export var trackbutton: PackedScene
 
 func _ready() -> void:
 	for track in tracks:
-		var button := Button.new()
+		var button := trackbutton.instantiate()
 		add_child(button)
-		button.name = track.name
-		button.text = track.name
+		var ghost := GhostData._load(Globals.SAVES % track.name)
+		button.init(ghost.time if ghost else -1, track.name)
 		button.pressed.connect(track_selected.bind(track))
 
 func track_selected(track: TrackResource) -> void:

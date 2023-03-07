@@ -18,7 +18,6 @@ var playing := false
 var timer := GameTimer.new()
 
 const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
-const saves := "user://%s.ghost"
 
 signal next_lap
 signal created_car(car: Car)
@@ -71,7 +70,7 @@ func _ready() -> void:
 	track.track = track_res
 	add_child(track)
 	data = GhostData.new(track_res.checkpoints.size(), track_res.laps)
-	best_time_data = GhostData._load(saves % track_res.name)
+	best_time_data = GhostData._load(Globals.SAVES % track_res.name)
 	mkcar()
 	mkghost()
 	connect_checkpoints()
@@ -114,7 +113,7 @@ func passed_finish() -> void:
 		if not best_time_data or data.time < best_time_data.time:
 			print("new pb!")
 			finished.emit(data.time, best_time_data.time if best_time_data else -1.0)
-			data.save(saves % track_res.name)
+			data.save(Globals.SAVES % track_res.name)
 			best_time_data = data
 		else:
 			finished.emit(data.time, best_time_data.time)

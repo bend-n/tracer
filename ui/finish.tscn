@@ -1,8 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://cr1mgp6bgxh64"]
 
-[ext_resource type="Theme" path="res://ui/theme.tres" id="1_aykd4"]
+[ext_resource type="Theme" uid="uid://cru1d7n2ftrfm" path="res://ui/theme.tres" id="1_aykd4"]
 [ext_resource type="Script" path="res://ui/finish.gd" id="1_crs2w"]
 [ext_resource type="Script" path="res://ui/diff.gd" id="2_gtres"]
+[ext_resource type="SystemFont" uid="uid://d2klp6vxh5l2d" path="res://ui/cascadiabold.tres" id="3_qktla"]
 [ext_resource type="StyleBox" uid="uid://bxi4jeh5lf468" path="res://ui/assets/wide_button_focus.stylebox" id="4_dck0l"]
 [ext_resource type="SystemFont" uid="uid://bkjqtc5i64r3j" path="res://ui/ubuntu.tres" id="5_llemr"]
 
@@ -25,13 +26,8 @@ shadow_size = 20
 shadow_color = Color(0, 0, 0, 0.392157)
 shadow_offset = Vector2(10, 10)
 
-[sub_resource type="SystemFont" id="SystemFont_0mxmp"]
-font_names = PackedStringArray("Cascadia Code")
-font_weight = 700
-oversampling = 5.0
-
 [sub_resource type="LabelSettings" id="LabelSettings_m62vt"]
-font = SubResource("SystemFont_0mxmp")
+font = ExtResource("3_qktla")
 font_size = 100
 font_color = Color(0.992157, 0.964706, 0.890196, 1)
 shadow_size = 20
@@ -42,7 +38,7 @@ shadow_offset = Vector2(5, 10)
 content_margin_left = 250.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_irfee"]
-font = SubResource("SystemFont_0mxmp")
+font = ExtResource("3_qktla")
 font_size = 50
 font_color = Color(0.521569, 0.6, 0, 1)
 shadow_size = 12

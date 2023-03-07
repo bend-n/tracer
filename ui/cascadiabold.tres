@@ -1,0 +1,6 @@
+[gd_resource type="SystemFont" format=3 uid="uid://d2klp6vxh5l2d"]
+
+[resource]
+font_names = PackedStringArray("Cascadia Code")
+font_weight = 700
+oversampling = 5.0

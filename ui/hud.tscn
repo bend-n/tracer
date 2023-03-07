@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://vok7fdcyec68"]
 
-[ext_resource type="Theme" path="res://ui/theme.tres" id="1_ie2j2"]
+[ext_resource type="Theme" uid="uid://cru1d7n2ftrfm" path="res://ui/theme.tres" id="1_ie2j2"]
 [ext_resource type="Script" path="res://ui/hud.gd" id="1_sfhpc"]
 [ext_resource type="Script" path="res://ui/speedometer.gd" id="2_cvi37"]
 [ext_resource type="Script" path="res://ui/timer.gd" id="3_poksb"]

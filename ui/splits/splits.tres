@@ -1,10 +1,10 @@
-[gd_resource type="Theme" load_steps=3 format=3]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bsf7ap656ac0x"]
 
-[ext_resource type="SystemFont" uid="uid://xriuk0v4f6wj" path="res://ui/ubuntu_mononf.tres" id="1_feesq"]
 [ext_resource type="StyleBox" uid="uid://dddpw6gu8fex7" path="res://ui/splits/neutral.tres" id="1_fv505"]
+[ext_resource type="SystemFont" uid="uid://de68sch0febc8" path="res://ui/cascadiaregu.tres" id="2_d3ff1"]
 
 [resource]
-default_font = ExtResource("1_feesq")
+default_font = ExtResource("2_d3ff1")
 default_font_size = 40
 PanelContainer/styles/panel = ExtResource("1_fv505")
 VBoxContainer/constants/separation = 0

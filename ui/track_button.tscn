@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfvtugujgcjcw"]
+
+[ext_resource type="Script" path="res://ui/trackbutton.gd" id="2_bcpuy"]
+[ext_resource type="FontVariation" uid="uid://ba8ab6dti2fvo" path="res://ui/boldsans.tres" id="2_gctvu"]
+[ext_resource type="SystemFont" uid="uid://d2klp6vxh5l2d" path="res://ui/cascadiabold.tres" id="3_suph6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sa0e6"]
+font = ExtResource("2_gctvu")
+font_size = 45
+font_color = Color(0.933333, 0.909804, 0.835294, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7u0yx"]
+font = ExtResource("3_suph6")
+font_size = 45
+font_color = Color(0.933333, 0.909804, 0.835294, 1)
+
+[node name="trackbutton" type="Button"]
+custom_minimum_size = Vector2(450, 150)
+offset_right = 200.0
+offset_bottom = 100.0
+script = ExtResource("2_bcpuy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="name" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "trambler 42"
+label_settings = SubResource("LabelSettings_sa0e6")
+horizontal_alignment = 1
+
+[node name="time" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "no time set"
+label_settings = SubResource("LabelSettings_7u0yx")
+horizontal_alignment = 1
