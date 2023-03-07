@@ -333,6 +333,7 @@ radius = 2.0
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_qo6ul"]
 mix_rate = 30000.0
+buffer_length = 0.2
 
 [node name="Sedan" type="VehicleBody3D"]
 collision_layer = 2
