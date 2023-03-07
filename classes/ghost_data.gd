@@ -3,23 +3,20 @@ extends Resource
 
 var time: float
 var checkpoints: Array
-var positions: PackedVector3Array = []
-var rotations: PackedVector3Array = []
-var steering: PackedFloat32Array = []
-var snaps := 0
+# i hope this is performant
+var snaps: Array#[Dictionary]
+var snap_count := 0
 
 func snapshot(obj: Car):
-	positions.append(obj.global_position)
-	rotations.append(obj.global_rotation)
-	steering.append(snappedf(obj.steering, .1)) # FastLZ benefits from repetition
-	snaps += 1
+	snaps.append(CarVars.new(obj).to_dict())
+	snap_count += 1
 
-## returns [position, rotation, steering]
-func load_snap(i: int) -> Array:
-	return [positions[i], rotations[i], steering[i]]
+## returns a CarVars dictionary
+func load_snap(i: int) -> Dictionary:
+	return snaps[i]
 
 func save(path: String) -> void:
-	GhostData._save_file(path, {checkpoints = checkpoints, positions = positions, rotations = rotations, steering = steering, time = time, snaps = snaps})
+	GhostData._save_file(path, {checkpoints = checkpoints, time = time, snaps = snaps, snap_count = snap_count})
 
 func _init(num_checkpoints := 0, laps := 0) -> void:
 	for i in laps:
@@ -31,11 +28,9 @@ func _init(num_checkpoints := 0, laps := 0) -> void:
 func clear() -> void:
 	for lap in checkpoints:
 		lap.fill(-1)
-	positions = []
-	rotations = []
-	steering = []
+	snaps.clear()
 	time = 0
-	snaps = 0
+	snap_count = 0
 
 func collect(lap: int, cp: int, now: float) -> void:
 	now = snappedf(now, .001) # 3dec precision
@@ -49,15 +44,13 @@ func has_collected(lap: int, cp: int) -> bool:
 	return checkpoints[lap][cp] != -1
 
 func get_time(lap: int, cp: int) -> float:
-	return snappedf(checkpoints[lap][cp], .001) # ive noticed compression can add .00000157 so we snap it back down
+	return checkpoints[lap][cp]
 
 static func from_d(d: Dictionary) -> GhostData:
 	var obj := GhostData.new()
 	obj.time = d.time
 	obj.checkpoints = d.checkpoints
-	obj.positions = d.positions
-	obj.rotations = d.rotations
-	obj.steering = d.steering
+	obj.snap_count = d.snap_count
 	obj.snaps = d.snaps
 	return obj
 

@@ -41,8 +41,11 @@ func mkghost() -> void:
 
 func reset_ghost() -> void:
 	if best_time_data:
-		ghost.global_position = best_time_data.load_snap(0)[0]
-		ghost.global_rotation = best_time_data.load_snap(0)[1]
+		ghost.global_position = best_time_data.load_snap(0).position
+		ghost.global_rotation = best_time_data.load_snap(0).rotation
+	else:
+		ghost.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2)
+		ghost.rotation = track.start_rot + Vector3(0, PI, -PI/2)
 	ghost.hide()
 
 func reset_car() -> void:
@@ -123,13 +126,12 @@ func passed_finish() -> void:
 func _physics_process(_delta: float) -> void:
 	data.snapshot(car)
 	if best_time_data:
-		if best_time_data.snaps - 1 < Engine.get_physics_frames() - start_frame:
+		if best_time_data.snap_count - 1 < Engine.get_physics_frames() - start_frame:
 			if ghost.visible:
 				print("ran out of snaps, hiding ghost")
 				ghost.hide()
 			return
-		var shot := best_time_data.load_snap(Engine.get_physics_frames() - start_frame)
-		ghost.update(shot[0], shot[1], shot[2])
+		ghost.update(best_time_data.load_snap(Engine.get_physics_frames() - start_frame))
 		ghost.visible = (ghost.global_position.distance_squared_to(car.global_position) > 10)
 
 func collect(cp: int) -> void:

@@ -6,7 +6,6 @@ class_name Car
 
 var steer_target := 0.0
 
-const trail_scene = preload("res://scenes/trail.tscn")
 @export var MAX_ENGINE_FORCE := 4000.0
 @export var MAX_BRAKE_FORCE := 35.0
 @export var reverse_ratio := -2.5
@@ -18,6 +17,7 @@ const trail_scene = preload("res://scenes/trail.tscn")
 @onready var checkpoint_sound := $checkpoint as AudioStreamPlayer
 
 @onready var wheels: Array[VehicleWheel3D] = [$bl as VehicleWheel3D, $br as VehicleWheel3D, $fl as VehicleWheel3D, $fr as VehicleWheel3D]
+@onready var wheel_radius: float = wheels[0].wheel_radius
 var particles: Array[GPUParticles3D] = []
 
 signal shifted
@@ -27,7 +27,13 @@ var current_gear := 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
 var clutch_position := 1 # 0.0 = clutch engaged
 var gear_timer := 0.0
 var throttle := 0.0
+var engine_rpm := 800.0 # currently cosmetic
+var wheel_rpm := 0.0
+var can_shift := true
+var can_accelerate := false
+
 const inactive = {active = false};
+const trail_scene = preload("res://scenes/trail.tscn")
 var skids: Array[Array]
 
 func ratio() -> float:
@@ -46,11 +52,14 @@ func is_not_on_ground() -> bool:
 	return wheels.any(func(whl: VehicleWheel3D): return !whl.is_in_contact())
 
 func reset() -> void:
+	gear_timer = 0
+	clutch_position = 0
 	steering = 0
 	throttle = 0
 	engine_force = 0
-	brake = 15
-	set_physics_process(false)
+	brake = MAX_BRAKE_FORCE
+	can_shift = true
+	can_accelerate = false
 	for wheel in skids:
 		if wheel:
 			for skid in wheel:
@@ -64,11 +73,11 @@ func _ready() -> void:
 		particles.append(whl.get_node(^"particles"))
 	randomize()
 
-func kph():
-	return (3 * PI * wheels[0].wheel_radius * rpm()) / 25;
+func kph() -> float:
+	return (3 * PI * wheel_radius * wheel_rpm) / 25;
 
-# calculate the RPM of our engine based on the average of the wheels
-func rpm() -> float:
+# calculate the RPM of wheels
+func whl_rpm() -> float:
 	var sum := 0.0
 	for wheel in wheels:
 		sum += abs(wheel.get_rpm())
@@ -80,7 +89,7 @@ func steer(to: float) -> void:
 	else:
 		to = -steer_curve.sample_baked(-to) if to < 0.0 else steer_curve.sample_baked(to)
 
-	steer_target = lerpf(steer_target, to, 10 * get_physics_process_delta_time())
+	steer_target = clampf(lerpf(steer_target, to, 10 * get_physics_process_delta_time()), -.7, .7)
 
 ## virtual
 func shift_down() -> bool:
@@ -109,39 +118,44 @@ func _process_gear_inputs(delta: float):
 			clutch_position = 1
 
 func _process(delta: float):
-	_process_gear_inputs(delta)
+	if can_shift:
+		_process_gear_inputs(delta)
+	steering = -steer_target
+	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .2) * linear_velocity.length_squared() / 685.0) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
+	engine_rpm = move_toward(engine_rpm, (wheel_rpm * engine_force * 0.0015) + 800, 800)
 
 func limit(delta: float) -> void:
 	linear_damp = max((.5 * delta) * (kph() - 400), 0) if kph() > 400 else 0.0
 	angular_damp = max(5 * (angular_velocity.length_squared() - 45), 0) if angular_velocity.length_squared() > 45 else 0.0
 
 func _physics_process(delta: float):
-	downforce(5)
-	var power_factor := power_curve.sample_baked(clampf(rpm() / max_engine_rpm, 0.0, 1.0))
-	if current_gear == -1:
-		engine_force = throttle * power_factor * reverse_ratio * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
-	elif current_gear > 0 and current_gear <= gear_ratios.size():
-		engine_force = throttle * power_factor * gear_ratios[current_gear - 1] * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
-	else:
-		engine_force = 0.0
+	if can_accelerate:
+		var power_factor := power_curve.sample_baked(clampf(wheel_rpm / max_engine_rpm, 0.0, 1.0))
+		if current_gear == -1:
+			engine_force = throttle * power_factor * reverse_ratio * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
+		elif current_gear > 0 and current_gear <= gear_ratios.size():
+			engine_force = throttle * power_factor * gear_ratios[current_gear - 1] * final_drive_ratio * MAX_ENGINE_FORCE * clutch_position
+		else:
+			engine_force = 0.0
 
-	steering = -clampf(steer_target, -.7, .7)
-	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .2) * linear_velocity.length_squared() / 685.0) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
+	wheel_rpm = whl_rpm()
+
 	limit(delta)
+	downforce(5)
 
 	for i in 4:
 		particles[i].emitting = wheels[i].get_skidinfo() < (.2 if i > 2 else .99) and wheels[i].is_in_contact() and kph() > 30
 		if particles[i].emitting:
+			@warning_ignore("narrowing_conversion")
 			particles[i].amount = clampf(ceil(150 * (1 - wheels[i].get_skidinfo())) * 1 if i > 2 else 8, 0, 150)
-			var init := false
 			if !skids[i][-1].active:
-				init = true
 				skids[i].append(trail_scene.instantiate() as Trail3D)
 				get_parent().add_child(skids[i][-1])
 			(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .661, 0))
 		elif skids[i][-1].active:
-				skids[i][-1].active = false
+			skids[i][-1].active = false
 
 func start() -> void:
 	brake = 0
-	set_physics_process(true)
+	can_shift = true
+	can_accelerate = true

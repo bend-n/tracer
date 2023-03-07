@@ -150,7 +150,6 @@ player_indicator = ExtResource("7_wv12s")
 ghost_indicator = ExtResource("8_yfv7r")
 
 [node name="Splits" parent="." instance=ExtResource("9_gtkqi")]
-visible = false
 layout_mode = 1
 offset_right = 25.0
 

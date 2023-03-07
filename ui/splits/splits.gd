@@ -12,3 +12,6 @@ func update(time: float, prev_time: float) -> void:
 	current.text = GameTimer.format(time)
 	timer = get_tree().create_timer(5)
 	timer.timeout.connect(hide)
+
+func _ready() -> void:
+	hide()
