@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://u8m366adrlqr"]
+
+[ext_resource type="PackedScene" uid="uid://bbj2agqv581cd" path="res://assets/cars/kenney_sedan/sedan.blend" id="1_larot"]
+[ext_resource type="Script" path="res://classes/ghost.gd" id="2_owhnn"]
+[ext_resource type="Material" uid="uid://cqm6nr0j5lo0o" path="res://assets/cars/kenney_sedan/blue_paint.tres" id="2_w22b1"]
+
+[node name="SedanSports" instance=ExtResource("1_larot")]
+script = ExtResource("2_owhnn")
+
+[node name="body" parent="." index="0"]
+surface_material_override/2 = ExtResource("2_w22b1")
+
+[node name="spoiler" parent="body" index="0"]
+surface_material_override/1 = ExtResource("2_w22b1")

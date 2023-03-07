@@ -34,9 +34,7 @@ func _init(t: TrackResource, _car_scene, _ghost_scene, _track_loader_scene) -> v
 	track_res = t
 
 func mkghost() -> void:
-	var g: Node3D = ghost_scene.instantiate()
-	g.set_script(load("res://classes/ghost.gd"))
-	ghost = g
+	ghost = ghost_scene.instantiate()
 	add_child(ghost)
 	reset_ghost()
 	created_ghost.emit(ghost)
