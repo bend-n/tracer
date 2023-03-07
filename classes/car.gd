@@ -27,6 +27,7 @@ var current_gear := 0 # -1 reverse, 0 = neutral, 1 - 6 = gear 1 to 6.
 var clutch_position := 1 # 0.0 = clutch engaged
 var gear_timer := 0.0
 var throttle := 0.0
+const inactive = {active = false};
 var skids: Array[Array]
 
 func ratio() -> float:
@@ -50,11 +51,17 @@ func reset() -> void:
 	engine_force = 0
 	brake = 15
 	set_physics_process(false)
+	for wheel in skids:
+		if wheel:
+			for skid in wheel:
+				if skid is Trail3D:
+					skid.queue_free()
+			wheel.clear()
+	skids = [[inactive], [inactive], [inactive], [inactive]] # performance and complexity hack
 
 func _ready() -> void:
 	for whl in wheels:
 		particles.append(whl.get_node(^"particles"))
-		skids.append([{active = false}]) # performance and complexity hack
 	randomize()
 
 func kph():
