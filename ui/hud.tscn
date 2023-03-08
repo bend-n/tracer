@@ -151,7 +151,8 @@ ghost_indicator = ExtResource("8_yfv7r")
 
 [node name="Splits" parent="." instance=ExtResource("9_gtkqi")]
 layout_mode = 1
-offset_right = 25.0
+offset_top = -403.0
+offset_bottom = -303.0
 
 [connection signal="assigned" from="." to="Dashboard/laps" method="assigned"]
 [connection signal="assigned" from="." to="MiniMapContainer/MiniMap" method="assigned"]

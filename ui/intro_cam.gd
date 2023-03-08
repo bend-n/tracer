@@ -6,11 +6,13 @@ signal finished
 var track: TrackResource
 var main_cam: Camera3D
 
+# if main_cam null, dont animate
 func _init(_track: TrackResource, _main_cam: Camera3D):
 	far = 4000
 	near = .2
 	track = _track
 	main_cam = _main_cam
+	attributes = CameraAttributesPractical.new()
 
 func _ready() -> void:
 	make_current()
@@ -21,10 +23,11 @@ func _ready() -> void:
 	var top_center := Vector3(box_center.x, track.overview_height, box_center.z)
 	global_position = top_center
 	global_rotation_degrees.x = -90
-	await get_tree().create_timer(2).timeout
-	var tween := get_tree().create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(self, ^"global_position", main_cam.global_position, 2)
-	tween.tween_property(self, ^"global_rotation", main_cam.global_rotation, 1)
-	await tween.finished
-	finished.emit()
-	main_cam.make_current()
+	if is_instance_valid(main_cam):
+		await get_tree().create_timer(2).timeout
+		var tween := get_tree().create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(self, ^"global_position", main_cam.global_position, 2)
+		tween.tween_property(self, ^"global_rotation", main_cam.global_rotation, 1)
+		await tween.finished
+		finished.emit()
+		main_cam.make_current()

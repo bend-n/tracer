@@ -9,7 +9,7 @@ func _ready() -> void:
 		var button := trackbutton.instantiate()
 		add_child(button)
 		var ghost := GhostData._load(Globals.SAVES % track.name)
-		button.init(ghost.time if ghost else -1, track.name)
+		await button.init(track, ghost)
 		button.pressed.connect(track_selected.bind(track))
 
 func track_selected(track: TrackResource) -> void:

@@ -2,10 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://cru1d7n2ftrfm" path="res://ui/theme.tres" id="1_gm0ws"]
 [ext_resource type="Script" path="res://ui/tracks.gd" id="2_po2ce"]
-[ext_resource type="Resource" uid="uid://crye0ijvmtsyb" path="res://tracks/multilap_test.tres" id="3_0yjp1"]
-[ext_resource type="Resource" uid="uid://de46bcu1ivmtq" path="res://tracks/test.tres" id="4_3xqvr"]
+[ext_resource type="Resource" path="res://tracks/multilap_test.tres" id="3_0yjp1"]
+[ext_resource type="Resource" path="res://tracks/test.tres" id="4_3xqvr"]
 [ext_resource type="PackedScene" uid="uid://dhiei0g5tr74s" path="res://scenes/race_high.tscn" id="5_m5kci"]
-[ext_resource type="Resource" uid="uid://crtutccbf1sxh" path="res://tracks/the fallen tramps.tres" id="5_qwie6"]
+[ext_resource type="Resource" path="res://tracks/the fallen tramps.tres" id="5_qwie6"]
 [ext_resource type="PackedScene" uid="uid://dfvtugujgcjcw" path="res://ui/track_button.tscn" id="7_pchkj"]
 
 [node name="start" type="Control"]

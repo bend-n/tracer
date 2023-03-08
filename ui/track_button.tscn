@@ -1,43 +1,89 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfvtugujgcjcw"]
+[gd_scene load_steps=8 format=3 uid="uid://dfvtugujgcjcw"]
 
+[ext_resource type="Theme" uid="uid://cru1d7n2ftrfm" path="res://ui/theme.tres" id="1_noykn"]
 [ext_resource type="Script" path="res://ui/trackbutton.gd" id="2_bcpuy"]
 [ext_resource type="FontVariation" uid="uid://ba8ab6dti2fvo" path="res://ui/boldsans.tres" id="2_gctvu"]
 [ext_resource type="SystemFont" uid="uid://d2klp6vxh5l2d" path="res://ui/cascadiabold.tres" id="3_suph6"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fymg3"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_sa0e6"]
 font = ExtResource("2_gctvu")
-font_size = 45
+font_size = 25
 font_color = Color(0.933333, 0.909804, 0.835294, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_7u0yx"]
 font = ExtResource("3_suph6")
-font_size = 45
+font_size = 25
 font_color = Color(0.933333, 0.909804, 0.835294, 1)
 
-[node name="trackbutton" type="Button"]
-custom_minimum_size = Vector2(450, 150)
+[node name="trackbutton" type="PanelContainer"]
+custom_minimum_size = Vector2(450, 243)
 offset_right = 200.0
 offset_bottom = 100.0
+theme = ExtResource("1_noykn")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fymg3")
 script = ExtResource("2_bcpuy")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="port" type="SubViewport" parent="."]
+unique_name_in_owner = true
+msaa_3d = 3
+screen_space_aa = 1
+size = Vector2i(450, 200)
+render_target_update_mode = 1
+
+[node name="v" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="h" type="HBoxContainer" parent="v"]
+layout_mode = 2
 mouse_filter = 2
+theme_override_constants/separation = 10
 alignment = 1
 
-[node name="name" type="Label" parent="VBoxContainer"]
+[node name="name" type="Label" parent="v/h"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "trambler 42"
 label_settings = SubResource("LabelSettings_sa0e6")
 horizontal_alignment = 1
 
-[node name="time" type="Label" parent="VBoxContainer"]
+[node name="bar" type="Label" parent="v/h"]
+layout_mode = 2
+text = "|"
+label_settings = SubResource("LabelSettings_sa0e6")
+horizontal_alignment = 1
+
+[node name="time" type="Label" parent="v/h"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "no time set"
 label_settings = SubResource("LabelSettings_7u0yx")
 horizontal_alignment = 1
+
+[node name="thumb" type="TextureRect" parent="v"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(450, 200)
+layout_mode = 2
+stretch_mode = 2
+
+[node name="h2" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="play" type="Button" parent="h2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = " "
+
+[node name="spacer" type="Control" parent="h2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="watch" type="Button" parent="h2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "󰿎 "
+
+[connection signal="pressed" from="h2/play" to="." method="emit_signal" binds= [&"pressed"]]
