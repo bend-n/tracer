@@ -38,7 +38,6 @@ func clear() -> void:
 	snap_count = 0
 
 func collect(lap: int, cp: int, now: float) -> void:
-	now = snappedf(now, .001) # 3dec precision
 	checkpoints[lap][cp] = now
 	snapped_checkpoints[lap][cp] = snap_count
 	if lap == len(checkpoints) - 1 && cp == -1:

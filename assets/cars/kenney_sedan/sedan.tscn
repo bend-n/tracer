@@ -323,8 +323,8 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8qmjc")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_t532n"]
-radius = 2.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_cknfd"]
+size = Vector3(2.9, 2.1, 5.5)
 
 [node name="Sedan" type="VehicleBody3D"]
 collision_layer = 2
@@ -353,7 +353,7 @@ wheel_radius = 0.7
 wheel_rest_length = 0.4
 wheel_friction_slip = 1.8
 suspension_travel = 0.2
-suspension_stiffness = 150.0
+suspension_stiffness = 50.0
 suspension_max_force = 18000.0
 damping_compression = 0.8
 damping_relaxation = 0.9
@@ -373,7 +373,7 @@ wheel_radius = 0.7
 wheel_rest_length = 0.4
 wheel_friction_slip = 1.8
 suspension_travel = 0.2
-suspension_stiffness = 150.0
+suspension_stiffness = 50.0
 suspension_max_force = 18000.0
 damping_compression = 0.8
 damping_relaxation = 0.9
@@ -395,7 +395,7 @@ wheel_radius = 0.7
 wheel_rest_length = 0.4
 wheel_friction_slip = 2.0
 suspension_travel = 0.2
-suspension_stiffness = 150.0
+suspension_stiffness = 50.0
 suspension_max_force = 18000.0
 damping_compression = 0.8
 damping_relaxation = 0.9
@@ -414,7 +414,7 @@ wheel_radius = 0.7
 wheel_rest_length = 0.4
 wheel_friction_slip = 2.0
 suspension_travel = 0.2
-suspension_stiffness = 150.0
+suspension_stiffness = 50.0
 suspension_max_force = 18000.0
 damping_compression = 0.8
 damping_relaxation = 0.9
@@ -427,8 +427,8 @@ skeleton = NodePath("")
 [node name="particles" parent="fr" instance=ExtResource("4_axi2x")]
 
 [node name="Coll" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.43328, 0)
-shape = SubResource("SphereShape3D_t532n")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48339, 0)
+shape = SubResource("BoxShape3D_cknfd")
 
 [node name="Engine" parent="." instance=ExtResource("4_gseqg")]
 
@@ -442,7 +442,5 @@ volume_db = -25.0
 [node name="checkpoint" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_stkh0")
 volume_db = -10.0
-
-[node name="Camera3D" type="Camera3D" parent="."]
 
 [connection signal="shifted" from="." to="Gearbox" method="_on_sedan_shifted"]

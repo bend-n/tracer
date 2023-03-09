@@ -139,8 +139,8 @@ func collect(cp: int) -> void:
 		car.checkpoint_sound.play()
 	var time := best_time_data.get_time(current_lap, cp) if best_time_data else -1.0
 	time = best_time_data.time if (not track_res.laps or track_res.laps == current_lap + 1) and cp == -1 and time != -1.0 else time
-	split.emit(timer.now(), time)
-	data.collect(current_lap, cp, timer.now())
+	split.emit(snappedf(timer.now(), .001), time)
+	data.collect(current_lap, cp, snappedf(timer.now(), .001))
 
 func start() -> void:
 	timer.start()
