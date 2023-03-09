@@ -46,6 +46,7 @@ func add_player() -> void:
 			finish.queue_free()
 			get_tree().paused = false
 		)
+		finish.quit.connect(queue_free)
 	)
 
 func count_in():

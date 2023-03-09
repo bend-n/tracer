@@ -56,6 +56,7 @@ func _physics_process(delta: float) -> void:
 		timer.stop()
 		finished.emit()
 		ghost.reset(false)
+		queue_free()
 		return
 
 	ghost.update(Globals.ghost.load_snap(frame), delta)

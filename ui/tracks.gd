@@ -18,10 +18,16 @@ func play(track: TrackResource, ghost: GhostData) -> void:
 	print("play %s" % track.name)
 	Globals.playing = track
 	Globals.ghost = ghost
-	get_tree().change_scene_to_packed(race)
+	add_to_main(race)
 
 func watch(track: TrackResource, ghost: GhostData) -> void:
 	print("watch %s" % track.name)
 	Globals.playing = track
 	Globals.ghost = ghost
-	get_tree().change_scene_to_packed(ghost_watch)
+	add_to_main(ghost_watch)
+
+func add_to_main(p: PackedScene) -> void:
+	owner.hide()
+	var c := p.instantiate()
+	get_viewport().add_child(c)
+	c.tree_exited.connect(owner.show)
