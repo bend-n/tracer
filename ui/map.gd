@@ -64,7 +64,8 @@ func add(v: Vector2) -> float:
 func flatten(v: Vector3) -> Vector2:
 	return Vector2(v.x, v.z)
 
-func assigned(car: Car, ghost: GhostCar, _timer, _track: TrackLoader) -> void:
-	mkfollower(car, player_indicator, player_color)
+func assigned(car, ghost: GhostCar, _timer, _track: TrackLoader) -> void:
 	mkfollower(ghost, ghost_indicator, Color(1,1,1,.5), true)
+	if car != ghost:
+		mkfollower(car, player_indicator, player_color)
 	track = _track

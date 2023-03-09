@@ -66,12 +66,15 @@ func reset() -> void:
 				if skid is Trail3D:
 					skid.queue_free()
 			wheel.clear()
+	for p in particles:
+		p.emitting = false
 	skids = [[inactive], [inactive], [inactive], [inactive]] # performance and complexity hack
 
 func _ready() -> void:
 	for whl in wheels:
 		particles.append(whl.get_node(^"particles"))
 	randomize()
+	reset()
 
 func kph() -> float:
 	return (3 * PI * wheel_radius * wheel_rpm) / 25;
@@ -121,8 +124,8 @@ func _process(delta: float):
 	if can_shift:
 		_process_gear_inputs(delta)
 	steering = -steer_target
-	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .2) * linear_velocity.length_squared() / 685.0) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
-	engine_rpm = move_toward(engine_rpm, (wheel_rpm * engine_force * 0.0015) + 800, 800)
+	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .001) * whl_rpm()) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
+	engine_rpm = clampf(move_toward(engine_rpm, (wheel_rpm * engine_force * 0.0015), 800), 800, MAX_ENGINE_FORCE)
 
 func limit(delta: float) -> void:
 	linear_damp = max((.5 * delta) * (kph() - 400), 0) if kph() > 400 else 0.0

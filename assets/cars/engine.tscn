@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceocarryg6o86"]
+
+[ext_resource type="Script" path="res://assets/cars/engine.gd" id="1_12n5h"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_qo6ul"]
+mix_rate = 30000.0
+buffer_length = 0.2
+
+[sub_resource type="GDScript" id="GDScript_dvwcc"]
+resource_name = "engine_inbetween"
+script/source = "extends AudioStreamPlayer3D
+
+@onready var gen: EngineNoise = $generator
+
+@onready var volume: float: # not decibels
+	set(v):
+		volume = v
+		gen.set_volume(v)
+"
+
+[node name="Engine" type="AudioStreamPlayer3D"]
+stream = SubResource("AudioStreamGenerator_qo6ul")
+doppler_tracking = 2
+script = SubResource("GDScript_dvwcc")
+
+[node name="generator" type="EngineNoise" parent="."]
+script = ExtResource("1_12n5h")

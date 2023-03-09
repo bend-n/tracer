@@ -1,10 +1,10 @@
 extends Label
 
 @export var f_string = "龍 %dkm/h"
-var car: Car
+var car
 
 func _process(_delta: float) -> void:
 	text = f_string % car.kph()
 
-func car_assigned(_car: Car) -> void:
+func car_assigned(_car) -> void:
 	car = _car

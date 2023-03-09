@@ -1,18 +1,21 @@
 extends Control
+class_name TrackButton
 
 const trackloader_scn = preload("res://scenes/track.tscn")
 const thumbnail_path = "user://%s.thumb"
 
-signal pressed
+signal play
+signal watch
 
 func init(t: TrackResource, g: GhostData) -> void:
 	%name.text = t.name
 	if g == null:
+		%watch.hide()
 		%time.text = "no time set"
 	else:
 		%time.text = GameTimer.format_precise(g.time)
 	var p: String = thumbnail_path % t.name
-	if FileAccess.file_exists(p) and Time.get_unix_time_from_system() - FileAccess.get_modified_time(p) < 40000: # ~5days
+	if FileAccess.file_exists(p) and Time.get_unix_time_from_system() - FileAccess.get_modified_time(p) < 400000: # ~5days
 		print("loading thumb")
 		var f := FileAccess.open(p, FileAccess.READ)
 		var img := Image.new()

@@ -26,11 +26,12 @@ signal finished(time: float, prev_time: float)
 signal split(time: float, prev_time: float)
 signal did_reset
 
-func _init(t: TrackResource, _car_scene, _ghost_scene, _track_loader_scene) -> void:
+func _init(t: TrackResource, ghost_data: GhostData, _car_scene, _ghost_scene, _track_loader_scene) -> void:
 	car_scene = _car_scene
 	ghost_scene = _ghost_scene
 	track_loader_scene = _track_loader_scene
 	track_res = t
+	best_time_data = ghost_data
 
 func mkghost() -> void:
 	ghost = ghost_scene.instantiate()
@@ -40,11 +41,13 @@ func mkghost() -> void:
 
 func reset_ghost() -> void:
 	if best_time_data:
-		ghost.global_position = best_time_data.load_snap(0).position
-		ghost.global_rotation = best_time_data.load_snap(0).rotation
+		ghost.update(best_time_data.load_snap(0), -1)
+		ghost.engine.volume = .1
 	else:
+		ghost.engine.volume = 0
 		ghost.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2)
 		ghost.rotation = track.start_rot + Vector3(0, PI, -PI/2)
+	ghost.reset()
 	ghost.hide()
 
 func reset_car() -> void:
@@ -54,8 +57,6 @@ func reset_car() -> void:
 	car.linear_velocity = Vector3.ZERO
 	car.angular_velocity = Vector3.ZERO
 	car.current_gear = 0
-	for p in car.particles:
-		p.emitting = false
 	car.reset()
 
 func mkcar() -> void:
@@ -70,7 +71,6 @@ func _ready() -> void:
 	track.track = track_res
 	add_child(track)
 	data = GhostData.new(track_res.checkpoints.size(), track_res.laps)
-	best_time_data = GhostData._load(Globals.SAVES % track_res.name)
 	mkcar()
 	mkghost()
 	connect_checkpoints()
@@ -122,7 +122,7 @@ func passed_finish() -> void:
 		current_lap += 1
 		next_lap.emit()
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	data.snapshot(car)
 	if best_time_data:
 		if best_time_data.snap_count - 1 < Engine.get_physics_frames() - start_frame:
@@ -130,8 +130,9 @@ func _physics_process(_delta: float) -> void:
 				print("ran out of snaps, hiding ghost")
 				ghost.hide()
 			return
-		ghost.update(best_time_data.load_snap(Engine.get_physics_frames() - start_frame))
+		ghost.update(best_time_data.load_snap(Engine.get_physics_frames() - start_frame), delta)
 		ghost.visible = (ghost.global_position.distance_squared_to(car.global_position) > 10)
+		ghost.engine.volume = lerpf(ghost.engine.volume, .7, delta) if (ghost.global_position.distance_squared_to(car.global_position) > 20) else lerpf(ghost.engine.volume, .2, delta * 3)
 
 func collect(cp: int) -> void:
 	if cp != -1:
@@ -140,7 +141,6 @@ func collect(cp: int) -> void:
 	time = best_time_data.time if (not track_res.laps or track_res.laps == current_lap + 1) and cp == -1 and time != -1.0 else time
 	split.emit(timer.now(), time)
 	data.collect(current_lap, cp, timer.now())
-
 
 func start() -> void:
 	timer.start()

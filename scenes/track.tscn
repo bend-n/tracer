@@ -1,19 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://clw61td2wh84w"]
+[gd_scene load_steps=8 format=3 uid="uid://clw61td2wh84w"]
 
-[ext_resource type="Curve3D" uid="uid://u2f56xx8h2re" path="res://tracks/multilap_test_curve.tres" id="1_ejp6j"]
 [ext_resource type="Script" path="res://scenes/track-base.gd" id="1_ke7nx"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="2_2nntu"]
 [ext_resource type="Material" uid="uid://dtpgjplswm6lr" path="res://assets/mats/rail.tres" id="2_3pcob"]
 [ext_resource type="Material" uid="uid://bk4sxd2prmmom" path="res://assets/mats/support.tres" id="3_4570s"]
-[ext_resource type="Resource" uid="uid://crye0ijvmtsyb" path="res://tracks/multilap_test.tres" id="3_cdqtb"]
 [ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="7_fidh3"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="8_2nyv3"]
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="9_6ooo5"]
 
 [node name="TrackLoader" type="Path3D"]
-curve = ExtResource("1_ejp6j")
 script = ExtResource("1_ke7nx")
-track = ExtResource("3_cdqtb")
 metadata/_edit_group_ = true
 
 [node name="Road" type="CSGPolygon3D" parent="."]

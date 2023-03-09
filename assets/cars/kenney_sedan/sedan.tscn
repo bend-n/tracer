@@ -1,9 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://c157wew5y33bo"]
+[gd_scene load_steps=23 format=3 uid="uid://c157wew5y33bo"]
 
 [ext_resource type="Script" path="res://classes/car.gd" id="1_pdccm"]
 [ext_resource type="Material" uid="uid://b6d4vebgc2y88" path="res://assets/cars/kenney_sedan/red_paint.tres" id="2_luxc5"]
-[ext_resource type="Script" path="res://assets/cars/engine.gd" id="2_rxib8"]
 [ext_resource type="PackedScene" uid="uid://c5kk8cn8ipuy1" path="res://scenes/skid_particles.tscn" id="4_axi2x"]
+[ext_resource type="PackedScene" uid="uid://ceocarryg6o86" path="res://assets/cars/engine.tscn" id="4_gseqg"]
 [ext_resource type="Script" path="res://assets/cars/gearbox.gd" id="11_augb2"]
 [ext_resource type="AudioStream" uid="uid://di8wcnme3mqbf" path="res://assets/sounds/shifts/1.wav" id="11_rwd1j"]
 [ext_resource type="AudioStream" uid="uid://d3rhrhg8srpdg" path="res://assets/sounds/checkpoint.ogg" id="19_stkh0"]
@@ -326,10 +326,6 @@ shadow_mesh = SubResource("ArrayMesh_8qmjc")
 [sub_resource type="SphereShape3D" id="SphereShape3D_t532n"]
 radius = 2.0
 
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_qo6ul"]
-mix_rate = 30000.0
-buffer_length = 0.2
-
 [node name="Sedan" type="VehicleBody3D"]
 collision_layer = 2
 collision_mask = 3
@@ -434,12 +430,7 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.43328, 0)
 shape = SubResource("SphereShape3D_t532n")
 
-[node name="Engine" type="EngineNoise" parent="."]
-script = ExtResource("2_rxib8")
-
-[node name="Player" type="AudioStreamPlayer" parent="Engine"]
-stream = SubResource("AudioStreamGenerator_qo6ul")
-autoplay = true
+[node name="Engine" parent="." instance=ExtResource("4_gseqg")]
 
 [node name="Gearbox" type="Node3D" parent="."]
 script = ExtResource("11_augb2")
@@ -451,5 +442,7 @@ volume_db = -25.0
 [node name="checkpoint" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_stkh0")
 volume_db = -10.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
 
 [connection signal="shifted" from="." to="Gearbox" method="_on_sedan_shifted"]

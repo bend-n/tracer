@@ -14,7 +14,7 @@ var race: Race
 var huds: Array[HUD]
 
 func _ready() -> void:
-	race = Race.new(Globals.playing, car_scene, ghost_scene, track_loader_scene)
+	race = Race.new(Globals.playing, Globals.ghost, car_scene, ghost_scene, track_loader_scene)
 	race.did_reset.connect(count_in)
 	add_child(race)
 	add_player()

@@ -34,10 +34,10 @@ func target() -> Vector3:
 
 
 func _physics_process(delta):
-	global_position = global_position.lerp(target(), delta * 20.0)
-	last_lookat = last_lookat.lerp(follow_this.global_position, delta * 20.0)
+	global_position = global_position.lerp(target(), delta * 50.0)
+	last_lookat = last_lookat.lerp(follow_this.global_position, delta * 50.0)
 	look_at(last_lookat, Vector3(0.0, 1.0, 0.0))
 
 
-func _init(car: Car) -> void:
+func _init(car) -> void:
 	follow_this = car

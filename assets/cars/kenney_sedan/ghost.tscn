@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://u8m366adrlqr"]
+[gd_scene load_steps=19 format=3 uid="uid://u8m366adrlqr"]
 
 [ext_resource type="Script" path="res://classes/ghost.gd" id="2_owhnn"]
 [ext_resource type="Material" uid="uid://cqm6nr0j5lo0o" path="res://assets/cars/kenney_sedan/blue_paint.tres" id="2_w22b1"]
 [ext_resource type="PackedScene" uid="uid://c5kk8cn8ipuy1" path="res://scenes/skid_particles.tscn" id="4_4uffx"]
+[ext_resource type="PackedScene" uid="uid://ceocarryg6o86" path="res://assets/cars/engine.tscn" id="4_ku3bs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_odiep"]
 resource_name = "plastic"
@@ -337,10 +338,10 @@ skeleton = NodePath("")
 surface_material_override/1 = ExtResource("2_w22b1")
 
 [node name="br" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.2, 0.8, 1.51)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0.8, 1.51)
 
 [node name="backright" type="MeshInstance3D" parent="br"]
-transform = Transform3D(-2.33967, 0, -2.0454e-07, 0, 2.33967, 0, 2.0454e-07, 0, -2.33967, 0.5, 0, 0)
+transform = Transform3D(2.33967, 0, 0, 0, 2.33967, 0, 0, 0, 2.33967, -0.5, 0, 0)
 mesh = SubResource("ArrayMesh_qyvuj")
 skeleton = NodePath("")
 
@@ -348,10 +349,10 @@ skeleton = NodePath("")
 transform = Transform3D(2.33967, 0, 0, 0, 2.33967, 0, 0, 0, 2.33967, -0.4981, -0.0980995, 0.034181)
 
 [node name="bl" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1.2, 0.8, 1.51)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0.8, 1.51)
 
 [node name="backleft" type="MeshInstance3D" parent="bl"]
-transform = Transform3D(2.33967, 2.0454e-07, 0, -2.0454e-07, 2.33967, 0, 0, 0, -2.33967, -0.5, 0, 0)
+transform = Transform3D(-2.33967, 2.0454e-07, 2.0454e-07, 2.0454e-07, 2.33967, 0, 2.0454e-07, -1.78815e-14, 2.33967, 0.5, 0, 0)
 mesh = SubResource("ArrayMesh_qyvuj")
 skeleton = NodePath("")
 
@@ -362,7 +363,7 @@ transform = Transform3D(2.33967, 0, 2.0454e-07, 0, 2.33967, 0, 2.0454e-07, 0, -2
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.2, 0.8, -1.51)
 
 [node name="frontleft" type="MeshInstance3D" parent="fl"]
-transform = Transform3D(2.33967, -1.78815e-14, -2.0454e-07, 0, 2.33967, -2.0454e-07, -2.0454e-07, -2.0454e-07, -2.33967, -0.5, 0, 0)
+transform = Transform3D(2.33967, 2.0454e-07, 0, -2.0454e-07, 2.33967, 0, 0, 0, -2.33967, -0.5, 0, 0)
 mesh = SubResource("ArrayMesh_qyvuj")
 skeleton = NodePath("")
 
@@ -373,9 +374,11 @@ transform = Transform3D(2.33967, -1.78815e-14, -2.0454e-07, 0, 2.33967, -2.0454e
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.2, 0.8, -1.51)
 
 [node name="frontright" type="MeshInstance3D" parent="fr"]
-transform = Transform3D(2.33967, 0, 0, 0, 2.33967, 0, 0, 0, 2.33967, -0.5, 0, 0)
+transform = Transform3D(-2.33967, 0, -2.0454e-07, 0, 2.33967, 0, 2.0454e-07, 0, -2.33967, 0.5, 0, 0)
 mesh = SubResource("ArrayMesh_qyvuj")
 skeleton = NodePath("")
 
 [node name="particles" parent="fr" instance=ExtResource("4_4uffx")]
 transform = Transform3D(2.33967, 0, 0, 0, 2.33967, 0, 0, 0, 2.33967, 0.7019, 0.7019, -1.54418)
+
+[node name="Engine" parent="." instance=ExtResource("4_ku3bs")]

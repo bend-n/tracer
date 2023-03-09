@@ -82,8 +82,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="watch" type="Button" parent="h2"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "󰿎 "
 
-[connection signal="pressed" from="h2/play" to="." method="emit_signal" binds= [&"pressed"]]
+[connection signal="pressed" from="h2/play" to="." method="emit_signal" binds= [&"play"]]
+[connection signal="pressed" from="h2/watch" to="." method="emit_signal" binds= [&"watch"]]

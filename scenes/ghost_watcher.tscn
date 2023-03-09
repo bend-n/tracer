@@ -1,0 +1,12 @@
+[gd_scene load_steps=5 format=3 uid="uid://demunxvqkmtwa"]
+
+[ext_resource type="Script" path="res://scenes/ghost_watcher.gd" id="1_7ws8b"]
+[ext_resource type="PackedScene" uid="uid://clw61td2wh84w" path="res://scenes/track.tscn" id="1_syr3w"]
+[ext_resource type="PackedScene" uid="uid://u8m366adrlqr" path="res://assets/cars/kenney_sedan/ghost.tscn" id="2_ooh8d"]
+[ext_resource type="PackedScene" uid="uid://vok7fdcyec68" path="res://ui/hud.tscn" id="4_255eg"]
+
+[node name="GhostWatcher" type="Node3D"]
+script = ExtResource("1_7ws8b")
+ghost_scene = ExtResource("2_ooh8d")
+track_loader_scene = ExtResource("1_syr3w")
+hud_scene = ExtResource("4_255eg")
