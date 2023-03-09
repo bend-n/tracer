@@ -17,9 +17,8 @@ class_name TrackLoader
 			call_deferred("_update")
 
 @onready var road := $Road as CSGPolygon3D
-@onready var support := $Support as CSGPolygon3D
-@onready var rail_l := $"Rail-L" as CSGPolygon3D
-@onready var rail_r := $"Rail-R" as CSGPolygon3D
+@onready var rail_l := $WallL as CSGPolygon3D
+@onready var rail_r := $WallR as CSGPolygon3D
 @onready var collision := $CollisionShape as CSGPolygon3D
 @onready var sun := $Sun as DirectionalLight3D
 @onready var ground := $Ground as StaticBody3D
@@ -47,53 +46,35 @@ func _update():
 
 	# update our track
 	var thw := track.track_width * 0.5 # track half width
-	road.polygon = PackedVector2Array([vec(-thw), vec(-thw, -0.1), vec(thw, -0.1), vec(thw)])
-	support.polygon = PackedVector2Array([
-		vec(-thw - 2.0, -1),
-		vec( thw + 2.0, -1),
-		vec( track.lower_support_width, -track.support_height),
-		vec(-track.lower_support_width, -track.support_height)
-	])
+	road.polygon = PackedVector2Array([vec(-thw), vec(-thw), vec(thw), vec(thw)])
 
 	# update our rails
-	var rp := thw + track.rail_distance # rail position
+	var outer := thw + track.barrier_width
 	rail_l.polygon = PackedVector2Array([
-		vec(rp, 0.5),
-		vec(rp - 0.05, 0.47),
-		vec(rp - 0.05, 0.43),
-		vec(rp, 0.4),
-		vec(rp, 0.55),
-		vec(rp - 0.05, 0.32),
-		vec(rp - 0.05, 0.28),
-		vec(rp, 0.25),
-		vec(rp  + 0.05, 0.25),
-		vec(rp + 0.05, 0.5)
+		vec(outer, 2),
+		vec(thw - .1, 2),
+		vec(thw - .1),
+		vec(outer)
 	])
 	rail_l.visible = track.left_barrier
 	rail_r.polygon = PackedVector2Array([
-		vec(-rp, 0.5),
-		vec(-rp + 0.05, 0.47),
-		vec(-rp + 0.05, 0.43),
-		vec(-rp, 0.4),
-		vec(-rp, 0.55),
-		vec(-rp + 0.05, 0.32),
-		vec(-rp + 0.05, 0.28),
-		vec(-rp, 0.25),
-		vec(-rp - 0.05, 0.25),
-		vec(-rp - 0.05, .5)
+		vec(-outer, 2),
+		vec(-thw + .1, 2),
+		vec(-thw + .1),
+		vec(-outer)
 	])
 	rail_r.visible = track.right_barrier
 
 	# update our collision
 	collision.polygon = PackedVector2Array([
-		vec(-rp, 0.0),
-		vec(rp, 0.0),
-		vec(rp, 5.0),
-		vec(rp + 3.0, 5.0),
-		vec(rp + 3.0, -1.0),
-		vec(-rp - 3.0, -1.0),
-		vec(-rp - 3.0, 5.0),
-		vec(-rp, 5.0),
+		vec(-thw),
+		vec(thw),
+		vec(thw, 5.0),
+		vec(outer, 5.0),
+		vec(outer, -1.0),
+		vec(-outer, -1.0),
+		vec(-outer, 5.0),
+		vec(-thw, 5.0),
 	])
 	# objects
 	for child in get_children():
@@ -119,7 +100,6 @@ func _update():
 	rail_r.path_joined = track.is_loop
 	collision.path_joined = track.is_loop
 	road.path_joined = track.is_loop
-	support.path_joined = track.is_loop
 
 	# offset
 	ground.global_position = track.offset

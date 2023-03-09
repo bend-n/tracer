@@ -3,8 +3,6 @@ class_name TrackResource
 @export_group("Road")
 ## Width of road
 @export var track_width := 40.0
-## Distance between rails and road
-@export var rail_distance := 3.0
 ## Support base width
 @export var lower_support_width := 25.0
 ## Height of supports
@@ -16,6 +14,8 @@ class_name TrackResource
 @export var left_barrier := true
 ## Right barrier? (does not change collisions). see also [member left_barrier]
 @export var right_barrier := true
+## Barrier width
+@export var barrier_width := 4.0
 @export_group("Sun position")
 ## Sun x rotation
 @export_range(-360, 360) var sun_x := -90

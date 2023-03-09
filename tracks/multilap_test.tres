@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TrackResource" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="TrackResource" load_steps=6 format=3 uid="uid://dwojilpcrv8me"]
 
 [ext_resource type="Script" path="res://classes/track.gd" id="1_c5h3o"]
 [ext_resource type="PackedScene" uid="uid://d4a3e1w62m3ck" path="res://scenes/ring_checkpoint.tscn" id="1_ehf5p"]
@@ -9,13 +9,13 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_c5h3o")
-track_width = 40.0
-rail_distance = 3.0
+track_width = 25.0
 lower_support_width = 25.0
 support_height = 2.0
 track = ExtResource("2_33qpi")
 left_barrier = true
 right_barrier = true
+barrier_width = 2.0
 sun_x = -50
 sun_y = 0
 overview_height = 250.0

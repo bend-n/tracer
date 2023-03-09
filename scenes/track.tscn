@@ -1,20 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://clw61td2wh84w"]
+[gd_scene load_steps=9 format=3 uid="uid://ep3a5q3nkb7m"]
 
 [ext_resource type="Script" path="res://scenes/track-base.gd" id="1_ke7nx"]
+[ext_resource type="Curve3D" uid="uid://u2f56xx8h2re" path="res://tracks/multilap_test_curve.tres" id="1_ktkvl"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="2_2nntu"]
-[ext_resource type="Material" uid="uid://dtpgjplswm6lr" path="res://assets/mats/rail.tres" id="2_3pcob"]
-[ext_resource type="Material" uid="uid://bk4sxd2prmmom" path="res://assets/mats/support.tres" id="3_4570s"]
+[ext_resource type="Resource" uid="uid://dwojilpcrv8me" path="res://tracks/multilap_test.tres" id="3_uxk1w"]
+[ext_resource type="Material" path="res://assets/mats/wall.tres" id="5_8gm6o"]
 [ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="7_fidh3"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="8_2nyv3"]
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="9_6ooo5"]
 
 [node name="TrackLoader" type="Path3D"]
+curve = ExtResource("1_ktkvl")
 script = ExtResource("1_ke7nx")
+track = ExtResource("3_uxk1w")
 metadata/_edit_group_ = true
 
 [node name="Road" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(-20, 0, -20, -0.1, 20, -0.1, 20, 0)
+polygon = PackedVector2Array(-12.5, 0, -12.5, 0, 12.5, 0, 12.5, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -27,9 +30,9 @@ path_u_distance = 0.0
 path_joined = true
 material = ExtResource("2_2nntu")
 
-[node name="Rail-L" type="CSGPolygon3D" parent="."]
+[node name="WallL" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(23, 0.5, 22.95, 0.47, 22.95, 0.43, 23, 0.4, 23, 0.55, 22.95, 0.32, 22.95, 0.28, 23, 0.25, 23.05, 0.25, 23.05, 0.5)
+polygon = PackedVector2Array(-14.5, 2, -12.4, 2, -12.4, 0, -14.5, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -40,11 +43,11 @@ path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = true
-material = ExtResource("2_3pcob")
+material = ExtResource("5_8gm6o")
 
-[node name="Rail-R" type="CSGPolygon3D" parent="."]
+[node name="WallR" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(-23, 0.5, -22.95, 0.47, -22.95, 0.43, -23, 0.4, -23, 0.55, -22.95, 0.32, -22.95, 0.28, -23, 0.25, -23.05, 0.25, -23.05, 0.5)
+polygon = PackedVector2Array(14.5, 2, 12.4, 2, 12.4, 0, 14.5, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -55,20 +58,7 @@ path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = true
-
-[node name="Support" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(-22, -1, 22, -1, 25, -2, -25, -2)
-mode = 2
-path_node = NodePath("..")
-path_interval_type = 0
-path_interval = 1.0
-path_simplify_angle = 5.0
-path_rotation = 2
-path_local = false
-path_continuous_u = true
-path_u_distance = 1.0
-path_joined = true
-material = ExtResource("3_4570s")
+material = ExtResource("5_8gm6o")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 4.49013e-09, 0, -2.8862e-09, 0.642788, 0.766044, 3.43964e-09, -0.766044, 0.642788, 0, 0, 0)
@@ -89,7 +79,7 @@ visible = false
 calculate_tangents = false
 use_collision = true
 collision_mask = 0
-polygon = PackedVector2Array(-23, 0, 23, 0, 23, 5, 26, 5, 26, -1, -26, -1, -26, 5, -23, 5)
+polygon = PackedVector2Array(-12.5, 0, 12.5, 0, 12.5, 5, 14.5, 5, 14.5, -1, -14.5, -1, -14.5, 5, -12.5, 5)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
