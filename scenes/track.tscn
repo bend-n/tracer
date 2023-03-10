@@ -32,7 +32,7 @@ material = ExtResource("2_2nntu")
 
 [node name="WallL" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(-14.5, 2, -12.4, 2, -12.4, 0, -14.5, 0)
+polygon = PackedVector2Array(14.5, 2, 12.4, 2, 12.4, 0, 14.5, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -47,7 +47,7 @@ material = ExtResource("5_8gm6o")
 
 [node name="WallR" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(14.5, 2, 12.4, 2, 12.4, 0, 14.5, 0)
+polygon = PackedVector2Array(-14.5, 2, -12.4, 2, -12.4, 0, -14.5, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0

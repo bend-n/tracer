@@ -5,15 +5,15 @@ var time: float
 var checkpoints: Array
 var snapped_checkpoints: Array
 # i hope this is performant
-var snaps: Array#[Dictionary]
+var snaps: Array# it doesnt let me type it
 var snap_count := 0
 
 func snapshot(obj: Car):
-	snaps.append(CarVars.new(obj).to_dict())
+	snaps.append(CarVars.create(obj))
 	snap_count += 1
 
-## returns a CarVars dictionary
-func load_snap(i: int) -> Dictionary:
+## returns a CarVars array
+func load_snap(i: int) -> PackedFloat32Array:
 	return snaps[i]
 
 func save(path: String) -> void:
