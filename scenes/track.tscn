@@ -10,6 +10,7 @@
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="9_6ooo5"]
 
 [node name="TrackLoader" type="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00882721, 0, -0.103973)
 curve = ExtResource("1_ktkvl")
 script = ExtResource("1_ke7nx")
 track = ExtResource("3_uxk1w")
@@ -32,12 +33,12 @@ material = ExtResource("2_2nntu")
 
 [node name="WallL" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(14.5, 2, 12.4, 2, 12.4, 0, 14.5, 0)
+polygon = PackedVector2Array(14.5, 2, 12.5, 2, 12.5, 0, 14.5, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
 path_interval = 1.0
-path_simplify_angle = 4.0
+path_simplify_angle = 3.0
 path_rotation = 2
 path_local = false
 path_continuous_u = true
@@ -47,12 +48,12 @@ material = ExtResource("5_8gm6o")
 
 [node name="WallR" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(-14.5, 2, -12.4, 2, -12.4, 0, -14.5, 0)
+polygon = PackedVector2Array(-14.5, 2, -12.5, 2, -12.5, 0, -14.5, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
 path_interval = 1.0
-path_simplify_angle = 4.0
+path_simplify_angle = 3.0
 path_rotation = 2
 path_local = false
 path_continuous_u = true
@@ -84,7 +85,7 @@ mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
 path_interval = 1.0
-path_simplify_angle = 5.0
+path_simplify_angle = 3.0
 path_rotation = 2
 path_local = false
 path_continuous_u = true
@@ -92,6 +93,6 @@ path_u_distance = 1.0
 path_joined = true
 
 [node name="Ground" parent="." instance=ExtResource("7_fidh3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00882721, -2, 0.103973)
 
 [connection signal="curve_changed" from="." to="." method="_on_curve_changed"]

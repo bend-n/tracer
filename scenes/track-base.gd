@@ -52,29 +52,29 @@ func _update():
 	var outer := thw + track.barrier_width
 	rail_l.polygon = PackedVector2Array([
 		vec(outer, 2),
-		vec(thw - .1, 2),
-		vec(thw - .1),
+		vec(thw, 2), # widen
+		vec(thw), # widen
 		vec(outer)
 	])
 	rail_l.visible = track.left_barrier
 	rail_r.polygon = PackedVector2Array([
 		vec(-outer, 2),
-		vec(-thw + .1, 2),
-		vec(-thw + .1),
+		vec(-thw, 2), # widen
+		vec(-thw), # widen
 		vec(-outer)
 	])
 	rail_r.visible = track.right_barrier
 
 	# update our collision
 	collision.polygon = PackedVector2Array([
-		vec(-thw),
-		vec(thw),
-		vec(thw, 5.0),
+		vec(-thw), # widen
+		vec(thw), # widen
+		vec(thw, 5.0), # widen
 		vec(outer, 5.0),
 		vec(outer, -1.0),
 		vec(-outer, -1.0),
 		vec(-outer, 5.0),
-		vec(-thw, 5.0),
+		vec(-thw, 5.0), # widen
 	])
 	# objects
 	for child in get_children():
