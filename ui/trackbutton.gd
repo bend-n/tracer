@@ -4,6 +4,7 @@ class_name TrackButton
 const trackloader_scn = preload("res://scenes/track.tscn")
 const thumbnail_path = "user://%s.thumb"
 
+@export var button: Button
 signal play
 signal watch
 

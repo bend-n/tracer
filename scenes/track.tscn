@@ -93,6 +93,6 @@ path_u_distance = 1.0
 path_joined = true
 
 [node name="Ground" parent="." instance=ExtResource("7_fidh3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00882721, -2, 0.103973)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
 
 [connection signal="curve_changed" from="." to="." method="_on_curve_changed"]

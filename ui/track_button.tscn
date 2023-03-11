@@ -18,13 +18,14 @@ font = ExtResource("3_suph6")
 font_size = 25
 font_color = Color(0.933333, 0.909804, 0.835294, 1)
 
-[node name="trackbutton" type="PanelContainer"]
+[node name="trackbutton" type="PanelContainer" node_paths=PackedStringArray("button")]
 custom_minimum_size = Vector2(450, 243)
 offset_right = 200.0
 offset_bottom = 100.0
 theme = ExtResource("1_noykn")
 theme_override_styles/panel = SubResource("StyleBoxFlat_fymg3")
 script = ExtResource("2_bcpuy")
+button = NodePath("h2/play")
 
 [node name="port" type="SubViewport" parent="."]
 unique_name_in_owner = true
