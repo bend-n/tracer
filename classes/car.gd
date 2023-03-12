@@ -92,7 +92,7 @@ func steer(to: float) -> void:
 	else:
 		to = -steer_curve.sample_baked(-to) if to < 0.0 else steer_curve.sample_baked(to)
 
-	steer_target = clampf(lerpf(steer_target, to, 10 * get_physics_process_delta_time()), -.7, .7)
+	steer_target = clampf(lerpf(steer_target, to, 10 * get_physics_process_delta_time()), -1, 1) * .75
 
 ## virtual
 func shift_down() -> bool:
