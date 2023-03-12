@@ -1,24 +1,37 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://cru1d7n2ftrfm"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d3ywcokn5ddy8"]
 
 [ext_resource type="SystemFont" uid="uid://xriuk0v4f6wj" path="res://ui/ubuntu_mononf.tres" id="1_37cf0"]
 [ext_resource type="StyleBox" uid="uid://cdth5nc7lbx1v" path="res://ui/panel_skewed.tres" id="1_g8q83"]
 [ext_resource type="StyleBox" uid="uid://bkxlhm4hc5lco" path="res://ui/assets/button_focus.stylebox" id="1_t7nt0"]
+[ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="2_0o40a"]
 [ext_resource type="FontVariation" uid="uid://ba8ab6dti2fvo" path="res://ui/boldsans.tres" id="3_fpgf0"]
 
 [resource]
 default_font = ExtResource("1_37cf0")
-default_font_size = 76
+default_font_size = 25
 Button/colors/font_color = Color(0.933333, 0.909804, 0.835294, 1)
 Button/colors/font_focus_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/colors/font_hover_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/colors/font_hover_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/colors/font_pressed_color = Color(0.576471, 0.631373, 0.631373, 1)
 Button/styles/focus = ExtResource("1_t7nt0")
+ItemList/colors/guide_color = Color(0, 0, 0, 0)
+ItemList/constants/line_separation = 0
+ItemList/styles/panel = ExtResource("2_0o40a")
 Label/colors/font_color = Color(0.933333, 0.909804, 0.835294, 1)
 Label/font_sizes/font_size = 76
 Label/fonts/font = ExtResource("1_37cf0")
+Panel/styles/panel = ExtResource("2_0o40a")
 PanelContainer/styles/panel = ExtResource("1_g8q83")
 RichTextLabel/font_sizes/bold_font_size = 76
 RichTextLabel/font_sizes/normal_font_size = 76
 RichTextLabel/fonts/bold_font = ExtResource("3_fpgf0")
 RichTextLabel/fonts/normal_font = ExtResource("1_37cf0")
+Tree/colors/font_color = Color(0.576471, 0.631373, 0.631373, 1)
+Tree/colors/font_selected_color = Color(0.933333, 0.909804, 0.835294, 1)
+Tree/colors/parent_hl_line_color = Color(0.396078, 0.482353, 0.513726, 1)
+Tree/colors/relationship_line_color = Color(0.345098, 0.431373, 0.458824, 1)
+Tree/constants/draw_guides = 0
+Tree/constants/draw_relationship_lines = 1
+Tree/constants/item_margin = 11
+Tree/styles/panel = ExtResource("2_0o40a")

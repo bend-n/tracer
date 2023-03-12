@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeakLink" load_steps=2 format=3 uid="uid://gk5cc3f5d44e"]
+
+[ext_resource type="Script" path="res://classes/resources/link.gd" id="1_e3dgv"]
+
+[resource]
+script = ExtResource("1_e3dgv")
+file = "res://assets/mats/grass.tres"
+type = 2

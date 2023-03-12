@@ -1,0 +1,123 @@
+[gd_scene load_steps=12 format=3 uid="uid://loghhcbgmrbu"]
+
+[ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
+[ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
+[ext_resource type="StyleBox" uid="uid://dxtsrhgnyr80k" path="res://ui/panel_dark.stylebox" id="2_l1cwd"]
+[ext_resource type="Script" path="res://ui/editor/items.gd" id="2_q16oo"]
+[ext_resource type="Script" path="res://ui/editor/track_editor.gd" id="3_50gj4"]
+[ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="3_d4avg"]
+[ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="3_hon87"]
+[ext_resource type="Script" path="res://ui/editor/cam.gd" id="6_o7q05"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bugq"]
+bg_color = Color(0.027451, 0.211765, 0.258824, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jhg56"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="World3D" id="World3D_mumko"]
+environment = ExtResource("3_d4avg")
+
+[node name="TrackEditor" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_cc7dd")
+theme_override_styles/panel = ExtResource("2_l1cwd")
+script = ExtResource("3_50gj4")
+
+[node name="split" type="HSplitContainer" parent="."]
+layout_mode = 2
+
+[node name="left dock" type="VSplitContainer" parent="split"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="node tree" type="Tree" parent="split/left dock"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="fs" type="VSplitContainer" parent="split/left dock"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.29
+
+[node name="fs tree" type="Tree" parent="split/left dock/fs"]
+layout_mode = 2
+size_flags_vertical = 3
+hide_root = true
+scroll_horizontal_enabled = false
+script = ExtResource("1_65spq")
+root_dir = "res://ui/editor/fs"
+
+[node name="items" type="ItemList" parent="split/left dock/fs" node_paths=PackedStringArray("t", "world")]
+layout_mode = 2
+size_flags_vertical = 3
+max_columns = 3
+icon_mode = 0
+fixed_icon_size = Vector2i(100, 100)
+script = ExtResource("2_q16oo")
+t = NodePath("../fs tree")
+world = NodePath("../../../split2/middle dock/viewport/container/viewport")
+
+[node name="split2" type="HSplitContainer" parent="split"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.45
+
+[node name="middle dock" type="VBoxContainer" parent="split/split2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.72
+theme_override_constants/separation = 0
+
+[node name="buttons" type="PanelContainer" parent="split/split2/middle dock"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1bugq")
+
+[node name="container" type="HFlowContainer" parent="split/split2/middle dock/buttons"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="viewport" type="PanelContainer" parent="split/split2/middle dock"]
+clip_children = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_jhg56")
+
+[node name="container" type="SubViewportContainer" parent="split/split2/middle dock/viewport"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="viewport" type="SubViewport" parent="split/split2/middle dock/viewport/container"]
+own_world_3d = true
+world_3d = SubResource("World3D_mumko")
+handle_input_locally = false
+size = Vector2i(1067, 1010)
+render_target_update_mode = 4
+
+[node name="cam" type="Camera3D" parent="split/split2/middle dock/viewport/container/viewport" node_paths=PackedStringArray("ground")]
+transform = Transform3D(0.999998, 0.000602101, -0.00161431, 0, 0.93695, 0.349462, 0.00172294, -0.349461, 0.936949, 4.01291, 343.102, 937.865)
+script = ExtResource("6_o7q05")
+layer = 1
+ground = NodePath("../Ground")
+
+[node name="Ground" parent="split/split2/middle dock/viewport/container/viewport" instance=ExtResource("3_hon87")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="split/split2/middle dock/viewport/container/viewport"]
+transform = Transform3D(0.877983, -0.478692, 2.55287e-08, 0.0267213, 0.0490103, 0.998441, -0.477945, -0.876614, 0.0558215, 0, 0, 0)
+
+[node name="right dock" type="VBoxContainer" parent="split/split2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/items" method="fs_dir_selected"]
+[connection signal="item_selected" from="split/left dock/fs/items" to="split/left dock/fs/items" method="on_selected"]

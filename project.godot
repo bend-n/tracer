@@ -35,6 +35,10 @@ movie_writer/movie_file="/home/bendn/Documents/tracer/movie.avi"
 movie_writer/disable_vsync=true
 movie_writer/fps=15
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/zylann.editor_debugger/plugin.cfg")
+
 [importer_defaults]
 
 texture={

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeakLink" load_steps=2 format=3 uid="uid://dn6i3gxgcssq4"]
+
+[ext_resource type="Script" path="res://classes/resources/link.gd" id="1_4hp1u"]
+
+[resource]
+script = ExtResource("1_4hp1u")
+file = "res://scenes/ring_finish.tscn"
+type = 1
+has_needs_collision_prop = true

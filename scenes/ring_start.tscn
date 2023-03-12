@@ -2,12 +2,7 @@
 
 [ext_resource type="TorusMesh" uid="uid://cwiqggu3nwbyh" path="res://assets/meshes/ring_start.tres" id="1_ksild"]
 [ext_resource type="Script" path="res://scenes/ring_start.gd" id="1_kvj6d"]
-
-[sub_resource type="TorusMesh" id="TorusMesh_e4fn4"]
-inner_radius = 25.0
-outer_radius = 40.0
-rings = 10
-ring_segments = 4
+[ext_resource type="Shape3D" uid="uid://bvnblxuykg6m6" path="res://scenes/ring_collision.shape" id="3_kk0l0"]
 
 [node name="ring_start" type="PathFollow3D"]
 script = ExtResource("1_kvj6d")
@@ -16,8 +11,9 @@ script = ExtResource("1_kvj6d")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 mesh = ExtResource("1_ksild")
 
-[node name="Collision" type="CSGMesh3D" parent="Ring"]
-transform = Transform3D(1, 0, 0, 0, 1, -8.35187e-23, 0, -8.35187e-23, 1, 0, 0, 0)
-visible = false
-use_collision = true
-mesh = SubResource("TorusMesh_e4fn4")
+[node name="Collision" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="shape" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = ExtResource("3_kk0l0")

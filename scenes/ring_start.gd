@@ -1,5 +1,5 @@
 extends Start
 
 func _ready() -> void:
-    if not needs_collision:
-        $Ring/Collision.queue_free()
+		if not needs_collision:
+				$Collision.queue_free()
