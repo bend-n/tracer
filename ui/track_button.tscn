@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfvtugujgcjcw"]
+[gd_scene load_steps=9 format=3 uid="uid://dfvtugujgcjcw"]
 
 [ext_resource type="Theme" uid="uid://cru1d7n2ftrfm" path="res://ui/theme.tres" id="1_noykn"]
 [ext_resource type="Script" path="res://ui/trackbutton.gd" id="2_bcpuy"]
@@ -7,6 +7,8 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fymg3"]
 bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+
+[sub_resource type="World3D" id="World3D_vgauv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sa0e6"]
 font = ExtResource("2_gctvu")
@@ -29,6 +31,8 @@ button = NodePath("h2/play")
 
 [node name="port" type="SubViewport" parent="."]
 unique_name_in_owner = true
+own_world_3d = true
+world_3d = SubResource("World3D_vgauv")
 msaa_3d = 3
 screen_space_aa = 1
 size = Vector2i(450, 200)

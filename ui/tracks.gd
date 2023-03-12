@@ -10,7 +10,7 @@ func _ready() -> void:
 		var button: TrackButton = trackbutton.instantiate()
 		add_child(button)
 		var ghost := GhostData._load(Globals.SAVES % track.name)
-		await button.init(track, ghost)
+		button.init(track, ghost)
 		button.play.connect(play.bind(track, ghost))
 		button.watch.connect(watch.bind(track, ghost))
 	(get_child(0) as TrackButton).button.grab_focus()
