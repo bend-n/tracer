@@ -23,6 +23,7 @@ func populate(path: String, parent: TreeItem):
 			var item := create_item(parent)
 			item.set_text(0, file_name)
 			item.set_meta(&"full_path", full_path)
+			item.collapsed = true
 			populate(full_path, item)
 		else: pass # we dont do files here
 		file_name = dir.get_next()

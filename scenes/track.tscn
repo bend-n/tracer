@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ep3a5q3nkb7m"]
+[gd_scene load_steps=8 format=3 uid="uid://ep3a5q3nkb7m"]
 
 [ext_resource type="Script" path="res://scenes/track-base.gd" id="1_ke7nx"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="2_2nntu"]
+[ext_resource type="PackedScene" uid="uid://crc02shshycvq" path="res://scenes/sun.tscn" id="4_y5lth"]
 [ext_resource type="Material" path="res://assets/mats/wall.tres" id="5_8gm6o"]
 [ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="7_fidh3"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="8_2nyv3"]
@@ -57,14 +58,8 @@ path_u_distance = 1.0
 path_joined = true
 material = ExtResource("5_8gm6o")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 4.49013e-09, 0, -2.8862e-09, 0.642788, 0.766044, 3.43964e-09, -0.766044, 0.642788, 0, 0, 0)
-light_energy = 1.083
-light_volumetric_fog_energy = 0.0
-shadow_enabled = true
-shadow_blur = 1.5
-directional_shadow_mode = 0
-directional_shadow_max_distance = 300.0
+[node name="Sun" parent="." instance=ExtResource("4_y5lth")]
+transform = Transform3D(1, 4.49013e-09, -8.64158e-15, 4.07275e-09, -0.907044, 0.421036, 1.8905e-09, -0.421036, -0.907044, 0, 0, 0)
 
 [node name="Env" type="WorldEnvironment" parent="."]
 environment = ExtResource("8_2nyv3")

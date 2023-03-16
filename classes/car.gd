@@ -127,6 +127,7 @@ func _process(delta: float):
 	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .001) * whl_rpm()) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
 	engine_rpm = clampf(move_toward(engine_rpm, (wheel_rpm * engine_force * 0.0015), 800), 800, MAX_ENGINE_FORCE)
 
+
 func limit(delta: float) -> void:
 	linear_damp = max((.5 * delta) * (kph() - 400), 0) if kph() > 400 else 0.0
 	angular_damp = max(5 * (angular_velocity.length_squared() - 45), 0) if angular_velocity.length_squared() > 45 else 0.0

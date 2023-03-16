@@ -19,16 +19,19 @@ func fs_dir_selected() -> void:
 
 func on_selected(index: int) -> void:
 	var weak_link: WeakLink = load(real_paths[index])
-	match weak_link.type:
-		WeakLink.Type.Scene:
-			var scn: PackedScene = load(weak_link.file)
-			var selected = scn.instantiate() as Node3D
-			if weak_link.has_needs_collision_prop:
-				selected.needs_collision = true
-				print("need collision!")
+	if weak_link == null: # directory
+		pass
+	else:
+		match weak_link.type:
+			WeakLink.Type.Scene:
+				var scn: PackedScene = load(weak_link.file)
+				var selected = scn.instantiate() as Node3D
+				if weak_link.has_needs_collision_prop:
+					selected.needs_collision = true
+					print("need collision!")
 
-			world.add_child(selected)
-			selected.global_position = world.get_camera_3d().project_position(world.size / 2, 50).snapped(Vector3.ONE * 10) # put it forth
-			selected.look_at(world.get_camera_3d().global_position)
-			selected.global_rotation = selected.global_rotation.snapped(Vector3.ONE * 90)
-			print("instantiated scn %s" % weak_link.file)
+				world.add_child(selected)
+				selected.global_position = world.get_camera_3d().project_position(world.size / 2, 50).snapped(Vector3.ONE * 10) # put it forth
+				selected.look_at(world.get_camera_3d().global_position)
+				selected.global_rotation = selected.global_rotation.snapped(Vector3.ONE * 90)
+				print("instantiated scn %s" % weak_link.file)

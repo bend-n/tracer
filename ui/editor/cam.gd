@@ -4,7 +4,7 @@ var freelook := false;
 
 signal selected(object);
 
-@export_flags_3d_physics var layer;
+@export_flags_3d_physics var layer = 0xFFFFFFFF;
 @export var ground: PhysicsBody3D
 
 const CONTROL_SPEED = 10;
@@ -43,7 +43,7 @@ func process_movement(delta):
 	global_position += global_transform.basis.x * movement_vector.x * movement_speed * delta
 
 
-func _input(event):
+func _input(event: InputEvent):
 	if freelook:
 		if event is InputEventMouseMotion:
 			rotation.x = clamp(rotation.x + (-event.relative.y * MOUSE_SENSITIVTY), -CAMERA_MAX_ROTATION_ANGLE, CAMERA_MAX_ROTATION_ANGLE);
@@ -56,7 +56,7 @@ func _input(event):
 		send_raycast = true;
 
 
-func _physics_process(delta):
+func _physics_process(_delta: float) -> void:
 	if (send_raycast == true):
 		send_raycast = false;
 
@@ -70,6 +70,5 @@ func _physics_process(delta):
 		var result = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(raycast_from, raycast_to, layer, [self, ground]))
 
 		if not result.is_empty():
-			selected_node = result.collider;
+			selected_node = result.collider.owner;
 		selected.emit(selected_node)
-		print(result)

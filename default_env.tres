@@ -4,6 +4,7 @@
 
 [sub_resource type="Sky" id="Sky_r1yiu"]
 sky_material = ExtResource("1_jcf87")
+radiance_size = 1
 
 [resource]
 background_mode = 2
@@ -23,4 +24,4 @@ fog_height = -638.24
 fog_height_density = 0.8369
 adjustment_enabled = true
 adjustment_contrast = 1.1
-adjustment_saturation = 1.1
+adjustment_saturation = 1.01

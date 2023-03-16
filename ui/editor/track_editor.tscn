@@ -1,26 +1,69 @@
-[gd_scene load_steps=12 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=25 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
 [ext_resource type="StyleBox" uid="uid://dxtsrhgnyr80k" path="res://ui/panel_dark.stylebox" id="2_l1cwd"]
 [ext_resource type="Script" path="res://ui/editor/items.gd" id="2_q16oo"]
 [ext_resource type="Script" path="res://ui/editor/track_editor.gd" id="3_50gj4"]
-[ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="3_d4avg"]
 [ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="3_hon87"]
 [ext_resource type="Script" path="res://ui/editor/cam.gd" id="6_o7q05"]
+[ext_resource type="ButtonGroup" uid="uid://oio3aly7aeny" path="res://ui/editor/group.tres" id="6_vgj8v"]
+[ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="9_3idtj"]
+[ext_resource type="PackedScene" uid="uid://crc02shshycvq" path="res://scenes/sun.tscn" id="10_bbsj1"]
+[ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="10_ig0rw"]
+[ext_resource type="PackedScene" uid="uid://l7yfnjxyqh1y" path="res://ui/editor/gizmos/translate.tscn" id="11_rjygk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bugq"]
 bg_color = Color(0.027451, 0.211765, 0.258824, 1)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jhg56"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5lacw"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_1uiy5"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_w2y01"]
+device = -1
+keycode = 81
+unicode = 113
+
+[sub_resource type="Shortcut" id="Shortcut_5skl8"]
+events = [SubResource("InputEventKey_w2y01")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_yfrw1"]
+device = -1
+keycode = 87
+unicode = 119
+
+[sub_resource type="Shortcut" id="Shortcut_njwdg"]
+events = [SubResource("InputEventKey_yfrw1")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_wcb2q"]
+device = -1
+keycode = 69
+unicode = 101
+
+[sub_resource type="Shortcut" id="Shortcut_tekm2"]
+events = [SubResource("InputEventKey_wcb2q")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_d78cb"]
+device = -1
+keycode = 83
+unicode = 115
+
+[sub_resource type="Shortcut" id="Shortcut_tet3e"]
+events = [SubResource("InputEventKey_d78cb")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7qcnf"]
 bg_color = Color(0, 0, 0, 1)
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
-
-[sub_resource type="World3D" id="World3D_mumko"]
-environment = ExtResource("3_d4avg")
+corner_detail = 12
+anti_aliasing_size = 0.397
 
 [node name="TrackEditor" type="PanelContainer"]
 anchors_preset = 15
@@ -28,9 +71,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_cc7dd")
 theme_override_styles/panel = ExtResource("2_l1cwd")
 script = ExtResource("3_50gj4")
+group = ExtResource("6_vgj8v")
 
 [node name="split" type="HSplitContainer" parent="."]
 layout_mode = 2
@@ -64,7 +109,7 @@ icon_mode = 0
 fixed_icon_size = Vector2i(100, 100)
 script = ExtResource("2_q16oo")
 t = NodePath("../fs tree")
-world = NodePath("../../../split2/middle dock/viewport/container/viewport")
+world = NodePath("")
 
 [node name="split2" type="HSplitContainer" parent="split"]
 layout_mode = 2
@@ -75,6 +120,7 @@ size_flags_stretch_ratio = 3.45
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.72
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="buttons" type="PanelContainer" parent="split/split2/middle dock"]
@@ -84,36 +130,141 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_1bugq")
 [node name="container" type="HFlowContainer" parent="split/split2/middle dock/buttons"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_constants/h_separation = 0
+
+[node name="select" type="Button" parent="split/split2/middle dock/buttons/container"]
+custom_minimum_size = Vector2(40, 50)
+layout_mode = 2
+tooltip_text = "Select mode (Q)"
+theme_override_colors/font_color = Color(0.872204, 0.830355, 0.699233, 1)
+theme_override_colors/font_pressed_color = Color(0.14902, 0.545098, 0.823529, 1)
+theme_override_colors/font_hover_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_colors/font_focus_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5lacw")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_1uiy5")
+shortcut = SubResource("Shortcut_5skl8")
+shortcut_in_tooltip = false
+text = "󰇀"
+
+[node name="sep" type="VSeparator" parent="split/split2/middle dock/buttons/container"]
+layout_mode = 2
+
+[node name="move" type="Button" parent="split/split2/middle dock/buttons/container"]
+custom_minimum_size = Vector2(40, 50)
+layout_mode = 2
+tooltip_text = "Move Mode (W)"
+theme_override_colors/font_color = Color(0.872204, 0.830355, 0.699233, 1)
+theme_override_colors/font_pressed_color = Color(0.14902, 0.545098, 0.823529, 1)
+theme_override_colors/font_hover_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_colors/font_focus_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5lacw")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_1uiy5")
+shortcut = SubResource("Shortcut_njwdg")
+shortcut_in_tooltip = false
+text = "󰆾"
+
+[node name="rotate" type="Button" parent="split/split2/middle dock/buttons/container"]
+custom_minimum_size = Vector2(40, 50)
+layout_mode = 2
+tooltip_text = "Rotate Mode (E)"
+theme_override_colors/font_color = Color(0.872204, 0.830355, 0.699233, 1)
+theme_override_colors/font_pressed_color = Color(0.14902, 0.545098, 0.823529, 1)
+theme_override_colors/font_hover_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_colors/font_focus_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5lacw")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_1uiy5")
+shortcut = SubResource("Shortcut_tekm2")
+shortcut_in_tooltip = false
+text = "󰶘"
+
+[node name="scale" type="Button" parent="split/split2/middle dock/buttons/container"]
+custom_minimum_size = Vector2(40, 50)
+layout_mode = 2
+tooltip_text = "Scale Mode (S)"
+theme_override_colors/font_color = Color(0.872204, 0.830355, 0.699233, 1)
+theme_override_colors/font_pressed_color = Color(0.14902, 0.545098, 0.823529, 1)
+theme_override_colors/font_hover_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_colors/font_focus_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5lacw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5lacw")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_1uiy5")
+shortcut = SubResource("Shortcut_tet3e")
+shortcut_in_tooltip = false
+text = "󰘖"
+
+[node name="spacer" type="Control" parent="split/split2/middle dock/buttons/container"]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
+
+[node name="sep2" type="VSeparator" parent="split/split2/middle dock/buttons/container"]
+layout_mode = 2
 
 [node name="viewport" type="PanelContainer" parent="split/split2/middle dock"]
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_jhg56")
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7qcnf")
 
-[node name="container" type="SubViewportContainer" parent="split/split2/middle dock/viewport"]
+[node name="view" type="SubViewportContainer" parent="split/split2/middle dock/viewport"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 stretch = true
 
-[node name="viewport" type="SubViewport" parent="split/split2/middle dock/viewport/container"]
-own_world_3d = true
-world_3d = SubResource("World3D_mumko")
+[node name="port" type="SubViewport" parent="split/split2/middle dock/viewport/view"]
 handle_input_locally = false
+physics_object_picking = true
 size = Vector2i(1067, 1010)
 render_target_update_mode = 4
 
-[node name="cam" type="Camera3D" parent="split/split2/middle dock/viewport/container/viewport" node_paths=PackedStringArray("ground")]
-transform = Transform3D(0.999998, 0.000602101, -0.00161431, 0, 0.93695, 0.349462, 0.00172294, -0.349461, 0.936949, 4.01291, 343.102, 937.865)
+[node name="CSGBox3D2" type="CSGBox3D" parent="split/split2/middle dock/viewport/view/port"]
+transform = Transform3D(1, 0, 0, 0, -0.999986, -0.00523604, 0, 0.00523604, -0.999986, -4.24897, 0, 0)
+
+[node name="translate" parent="split/split2/middle dock/viewport/view/port/CSGBox3D2" instance=ExtResource("11_rjygk")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="split/split2/middle dock/viewport/view/port"]
+
+[node name="translate" parent="split/split2/middle dock/viewport/view/port/CSGBox3D" instance=ExtResource("11_rjygk")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0)
+
+[node name="cam" type="Camera3D" parent="split/split2/middle dock/viewport/view/port" node_paths=PackedStringArray("ground")]
+transform = Transform3D(0.877582, -0.229849, 0.420736, 0, 0.877582, 0.479426, -0.479426, -0.420736, 0.770151, 1.68294, 1.9177, 3.0806)
 script = ExtResource("6_o7q05")
-layer = 1
 ground = NodePath("../Ground")
 
-[node name="Ground" parent="split/split2/middle dock/viewport/container/viewport" instance=ExtResource("3_hon87")]
+[node name="Sun" parent="split/split2/middle dock/viewport/view/port" instance=ExtResource("10_bbsj1")]
+transform = Transform3D(1, 4.49013e-09, -3.0204e-15, -2.8862e-09, 0.642788, 0.766044, 3.43964e-09, -0.766044, 0.642788, 0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="split/split2/middle dock/viewport/container/viewport"]
-transform = Transform3D(0.877983, -0.478692, 2.55287e-08, 0.0267213, 0.0490103, 0.998441, -0.477945, -0.876614, 0.0558215, 0, 0, 0)
+[node name="env" type="WorldEnvironment" parent="split/split2/middle dock/viewport/view/port"]
+environment = ExtResource("9_3idtj")
+camera_attributes = ExtResource("10_ig0rw")
+
+[node name="Ground" parent="split/split2/middle dock/viewport/view/port" instance=ExtResource("3_hon87")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
 
 [node name="right dock" type="VBoxContainer" parent="split/split2"]
 layout_mode = 2

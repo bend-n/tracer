@@ -1,10 +1,18 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d3ywcokn5ddy8"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://d3ywcokn5ddy8"]
 
 [ext_resource type="SystemFont" uid="uid://xriuk0v4f6wj" path="res://ui/ubuntu_mononf.tres" id="1_37cf0"]
 [ext_resource type="StyleBox" uid="uid://cdth5nc7lbx1v" path="res://ui/panel_skewed.tres" id="1_g8q83"]
 [ext_resource type="StyleBox" uid="uid://bkxlhm4hc5lco" path="res://ui/assets/button_focus.stylebox" id="1_t7nt0"]
 [ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="2_0o40a"]
 [ext_resource type="FontVariation" uid="uid://ba8ab6dti2fvo" path="res://ui/boldsans.tres" id="3_fpgf0"]
+[ext_resource type="Texture2D" uid="uid://vck01c83m1x3" path="res://ui/assets/arrow.png" id="6_uqp3t"]
+[ext_resource type="Texture2D" uid="uid://buwxt5g5y761m" path="res://ui/assets/arrow_collapsed.png" id="7_raqbt"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_vr8fs"]
+color = Color(0.345098, 0.431373, 0.458824, 1)
+grow_begin = -10.0
+grow_end = -10.0
+vertical = true
 
 [resource]
 default_font = ExtResource("1_37cf0")
@@ -27,11 +35,20 @@ RichTextLabel/font_sizes/bold_font_size = 76
 RichTextLabel/font_sizes/normal_font_size = 76
 RichTextLabel/fonts/bold_font = ExtResource("3_fpgf0")
 RichTextLabel/fonts/normal_font = ExtResource("1_37cf0")
-Tree/colors/font_color = Color(0.576471, 0.631373, 0.631373, 1)
+Tree/colors/children_hl_line_color = Color(0.396078, 0.482353, 0.513726, 1)
+Tree/colors/font_color = Color(0.501961, 0.596078, 0.627451, 1)
 Tree/colors/font_selected_color = Color(0.933333, 0.909804, 0.835294, 1)
-Tree/colors/parent_hl_line_color = Color(0.396078, 0.482353, 0.513726, 1)
+Tree/colors/parent_hl_line_color = Color(0.345098, 0.431373, 0.458824, 1)
 Tree/colors/relationship_line_color = Color(0.345098, 0.431373, 0.458824, 1)
+Tree/constants/children_hl_line_width = 3
 Tree/constants/draw_guides = 0
 Tree/constants/draw_relationship_lines = 1
-Tree/constants/item_margin = 11
+Tree/constants/item_margin = 10
+Tree/constants/parent_hl_line_width = 3
+Tree/constants/relationship_line_width = 2
+Tree/constants/v_separation = 1
+Tree/icons/arrow = ExtResource("6_uqp3t")
+Tree/icons/arrow_collapsed = ExtResource("7_raqbt")
 Tree/styles/panel = ExtResource("2_0o40a")
+VSeparator/constants/separation = 0
+VSeparator/styles/separator = SubResource("StyleBoxLine_vr8fs")

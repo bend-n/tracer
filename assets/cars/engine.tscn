@@ -12,10 +12,11 @@ script/source = "extends AudioStreamPlayer3D
 
 @onready var gen: EngineNoise = $generator
 
-@onready var volume: float: # not decibels
+@onready var volume: float = 1.0: # not decibels
 	set(v):
 		volume = v
 		gen.set_volume(v)
+
 "
 
 [node name="Engine" type="AudioStreamPlayer3D"]

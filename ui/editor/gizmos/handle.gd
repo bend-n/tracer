@@ -36,7 +36,6 @@ func _ready() -> void:
 func click(camera: Camera3D, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		dragged = true
-		#Get the plane on which to move the object on
 		var mp := get_viewport().get_mouse_position()
 		var vertical_vector = camera.project_ray_normal(mp).normalized().cross(drag_direction)
 		var plane_normal := drag_direction.cross(vertical_vector)
