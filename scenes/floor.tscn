@@ -9,6 +9,7 @@ material = ExtResource("1_g7360")
 size = Vector2(5000, 5000)
 
 [node name="Ground" type="StaticBody3D"]
+collision_mask = 0
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 

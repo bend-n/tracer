@@ -20,8 +20,8 @@ func _process(_delta: float):
 		var mp := get_viewport().get_mouse_position()
 
 		var from := cam.project_ray_origin(mp)
-		var dir := cam.project_ray_normal(mp)
-		var intersection_of_movement_point = click_plane.intersects_ray(from, dir)
+		var toward := cam.project_ray_normal(mp)
+		var intersection_of_movement_point = click_plane.intersects_ray(from, toward)
 		if intersection_of_movement_point == null:
 			# dont move if its exactly parallel to plane
 			return

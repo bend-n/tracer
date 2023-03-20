@@ -2,4 +2,5 @@
 entry_symbol = "gdextension_rust_init"
 
 [libraries]
-linux.64 = "res://enginesound/target/release/libenginesound.so"
+linux.release.x86_64 = "res://enginesound/target/release/libenginesound.so"
+linux.debug.x86_64 = "res://enginesound/target/release/libenginesound.so"

@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="WeakLink" load_steps=2 format=3 uid="uid://cq8e5q084tynd"]
+[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://cq8e5q084tynd"]
 
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="1_x3r2o"]
+[ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="1_x4jlj"]
 
 [resource]
 script = ExtResource("1_x3r2o")
-file = "res://assets/mats/road.tres"
-type = 2
+material = ExtResource("1_x4jlj")
+type = 3
+verts = PackedVector3Array()
+primitive_type = 3

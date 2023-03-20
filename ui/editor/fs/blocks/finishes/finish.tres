@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="WeakLink" load_steps=2 format=3 uid="uid://dn6i3gxgcssq4"]
+[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://dn6i3gxgcssq4"]
 
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="1_4hp1u"]
+[ext_resource type="PackedScene" uid="uid://t8ywjcjgw322" path="res://scenes/ring_finish.tscn" id="1_345t0"]
 
 [resource]
 script = ExtResource("1_4hp1u")
-file = "res://scenes/ring_finish.tscn"
-type = 1
-has_needs_collision_prop = true
+scene = ExtResource("1_345t0")
+type = 2
+verts = PackedVector3Array()
+primitive_type = 3

@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://ep3a5q3nkb7m"]
+[gd_scene load_steps=9 format=3 uid="uid://ep3a5q3nkb7m"]
 
+[ext_resource type="Curve3D" uid="uid://2d8xnh5nyjq8" path="res://tracks/the fallen tramps_curve.tres" id="1_665v1"]
 [ext_resource type="Script" path="res://scenes/track-base.gd" id="1_ke7nx"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="2_2nntu"]
 [ext_resource type="PackedScene" uid="uid://crc02shshycvq" path="res://scenes/sun.tscn" id="4_y5lth"]
@@ -9,13 +10,13 @@
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="9_6ooo5"]
 
 [node name="TrackLoader" type="Path3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00882721, 0, -0.103973)
+curve = ExtResource("1_665v1")
 script = ExtResource("1_ke7nx")
 metadata/_edit_group_ = true
 
 [node name="Road" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(-12.5, 0, -12.5, 0, 12.5, 0, 12.5, 0)
+polygon = PackedVector2Array(-20, 0, -20, 0, 20, 0, 20, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -25,12 +26,12 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 0.0
-path_joined = true
+path_joined = false
 material = ExtResource("2_2nntu")
 
 [node name="WallL" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(14.5, 2, 12.5, 2, 12.5, 0, 14.5, 0)
+polygon = PackedVector2Array(24, 2, 20, 2, 20, 0, 24, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -40,12 +41,12 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
-path_joined = true
+path_joined = false
 material = ExtResource("5_8gm6o")
 
 [node name="WallR" type="CSGPolygon3D" parent="."]
 calculate_tangents = false
-polygon = PackedVector2Array(-14.5, 2, -12.5, 2, -12.5, 0, -14.5, 0)
+polygon = PackedVector2Array(-24, 2, -20, 2, -20, 0, -24, 0)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -55,11 +56,11 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
-path_joined = true
+path_joined = false
 material = ExtResource("5_8gm6o")
 
 [node name="Sun" parent="." instance=ExtResource("4_y5lth")]
-transform = Transform3D(1, 4.49013e-09, -8.64158e-15, 4.07275e-09, -0.907044, 0.421036, 1.8905e-09, -0.421036, -0.907044, 0, 0, 0)
+transform = Transform3D(0.992546, 0.0211625, 0.120018, 8.60946e-08, -0.984808, 0.173648, 0.121869, -0.172354, -0.977467, 0, 0, 0)
 
 [node name="Env" type="WorldEnvironment" parent="."]
 environment = ExtResource("8_2nyv3")
@@ -71,7 +72,7 @@ visible = false
 calculate_tangents = false
 use_collision = true
 collision_mask = 0
-polygon = PackedVector2Array(-12.5, 0, 12.5, 0, 12.5, 5, 14.5, 5, 14.5, -1, -14.5, -1, -14.5, 5, -12.5, 5)
+polygon = PackedVector2Array(-20, 0, 20, 0, 20, 5, 24, 5, 24, -1, -24, -1, -24, 5, -20, 5)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -81,9 +82,9 @@ path_rotation = 2
 path_local = false
 path_continuous_u = true
 path_u_distance = 1.0
-path_joined = true
+path_joined = false
 
 [node name="Ground" parent="." instance=ExtResource("7_fidh3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00882721, -2, 0.103973)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
 
 [connection signal="curve_changed" from="." to="." method="_on_curve_changed"]

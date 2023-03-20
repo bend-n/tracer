@@ -1,5 +1,7 @@
 extends CheckPoint
 
 func _ready() -> void:
-		if not needs_collision:
-				$Collision.queue_free()
+	collision = $Collision
+	super()
+	if editor:
+		$PlayerDetector.queue_free()

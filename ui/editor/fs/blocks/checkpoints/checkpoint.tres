@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="WeakLink" load_steps=2 format=3 uid="uid://c6jo53ku16772"]
+[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://c6jo53ku16772"]
 
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="1_7um7c"]
+[ext_resource type="PackedScene" uid="uid://d4a3e1w62m3ck" path="res://scenes/ring_checkpoint.tscn" id="1_qhreo"]
 
 [resource]
 script = ExtResource("1_7um7c")
-file = "res://scenes/ring_checkpoint.tscn"
-type = 1
-has_needs_collision_prop = true
+scene = ExtResource("1_qhreo")
+type = 2
+verts = PackedVector3Array()
+primitive_type = 3
