@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://dqp2acju6h4jc"]
+
+[ext_resource type="Script" path="res://classes/resources/link.gd" id="1_3tu2t"]
+[ext_resource type="PackedScene" uid="uid://bkbp38xlmtln2" path="res://assets/blocks/platform_turn.tscn" id="1_s5pqn"]
+
+[resource]
+script = ExtResource("1_3tu2t")
+scene = ExtResource("1_s5pqn")
+type = 0

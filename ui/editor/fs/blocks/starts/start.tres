@@ -1,11 +1,9 @@
-[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://d4d5vwqqeben"]
+[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="1_bf211"]
-[ext_resource type="PackedScene" uid="uid://bsftidvcmsha0" path="res://scenes/ring_start.tscn" id="1_vsvb2"]
+[ext_resource type="PackedScene" path="res://assets/blocks/ring_start.tscn" id="1_vsvb2"]
 
 [resource]
 script = ExtResource("1_bf211")
 scene = ExtResource("1_vsvb2")
-type = 2
-verts = PackedVector3Array()
-primitive_type = 3
+type = 0

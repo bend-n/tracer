@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="TrackResource" load_steps=6 format=3 uid="uid://dwojilpcrv8me"]
+[gd_resource type="Resource" script_class="TrackResource" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://classes/track.gd" id="1_c5h3o"]
-[ext_resource type="PackedScene" uid="uid://d4a3e1w62m3ck" path="res://scenes/ring_checkpoint.tscn" id="1_ehf5p"]
+[ext_resource type="PackedScene" path="res://assets/blocks/ring_checkpoint.tscn" id="1_ehf5p"]
 [ext_resource type="Curve3D" uid="uid://u2f56xx8h2re" path="res://tracks/multilap_test_curve.tres" id="2_33qpi"]
-[ext_resource type="PackedScene" uid="uid://t8ywjcjgw322" path="res://scenes/ring_finish.tscn" id="2_lfdrw"]
-[ext_resource type="PackedScene" uid="uid://bsftidvcmsha0" path="res://scenes/ring_start.tscn" id="4_awtsk"]
+[ext_resource type="PackedScene" path="res://assets/blocks/ring_finish.tscn" id="2_lfdrw"]
+[ext_resource type="PackedScene" path="res://assets/blocks/ring_start.tscn" id="4_awtsk"]
 
 [resource]
 resource_local_to_scene = true

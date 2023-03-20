@@ -6,6 +6,4 @@
 [resource]
 script = ExtResource("1_x3r2o")
 material = ExtResource("1_x4jlj")
-type = 3
-verts = PackedVector3Array()
-primitive_type = 3
+type = 1

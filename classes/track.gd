@@ -37,7 +37,7 @@ class_name TrackResource
 ## Place the path offsets of checkpoint locations in this array
 @export var checkpoints: Array[float] = []
 ## The checkpoint scene
-@export var checkpoint_scene: PackedScene = preload("res://scenes/ring_checkpoint.tscn")
+@export var checkpoint_scene: PackedScene = preload("res://assets/blocks/ring_checkpoint.tscn")
 ## How much to scale each checkpoint
 @export var checkpoint_scale := Vector3.ONE
 @export var checkpoint_needs_collision := false
@@ -45,7 +45,7 @@ class_name TrackResource
 ## Finish (or lap cp) location in path offset
 @export var finish_location: float = 0.0
 ## The finish scene
-@export var finish_scene: PackedScene = preload("res://scenes/ring_finish.tscn")
+@export var finish_scene: PackedScene = preload("res://assets/blocks/ring_finish.tscn")
 ## How much to scale the finish
 @export var finish_scale := Vector3.ONE
 @export var finish_needs_collision := false
@@ -53,7 +53,7 @@ class_name TrackResource
 ## Start location in path offset (unused if [member laps] > 1)
 @export var start_location: float = 0.0
 ## Start scene (disregarded if [member laps] > 1)
-@export var start_scene: PackedScene = preload("res://scenes/ring_start.tscn")
+@export var start_scene: PackedScene = preload("res://assets/blocks/ring_start.tscn")
 ## How much to scale the start (see above)
 @export var start_scale := Vector3.ONE
 @export var start_needs_collision := false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=25 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -12,6 +12,7 @@
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="9_3idtj"]
 [ext_resource type="PackedScene" uid="uid://crc02shshycvq" path="res://scenes/sun.tscn" id="10_bbsj1"]
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="10_ig0rw"]
+[ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="13_cyvq7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bugq"]
 bg_color = Color(0.027451, 0.211765, 0.258824, 1)
@@ -102,9 +103,10 @@ root_dir = "res://ui/editor/fs"
 [node name="items" type="ItemList" parent="split/left dock/fs" node_paths=PackedStringArray("t", "world")]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
 max_columns = 3
 icon_mode = 0
-fixed_icon_size = Vector2i(100, 100)
+fixed_icon_size = Vector2i(64, 64)
 script = ExtResource("2_q16oo")
 t = NodePath("../fs tree")
 world = NodePath("../../../split2/middle dock/viewport/view/port")
@@ -260,8 +262,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="inspector" type="PanelContainer" parent="split/split2/right dock"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("13_cyvq7")
+
 [connection signal="make_gizmo" from="." to="split/split2/middle dock/viewport/view/port" method="update_gizmo"]
+[connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="expand_selected"]
 [connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/items" method="fs_dir_selected"]
+[connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected"]
 [connection signal="item_selected" from="split/left dock/fs/items" to="split/left dock/fs/items" method="on_selected"]
 [connection signal="selected_node" from="split/left dock/fs/items" to="." method="_on_selected_node"]
 [connection signal="input_event" from="split/split2/middle dock/viewport/view/port/base/floor" to="split/left dock/fs/items" method="_on_floor_input_event" unbinds=3]

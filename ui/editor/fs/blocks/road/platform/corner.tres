@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="WeakLink" load_steps=2 format=3 uid="uid://b0h65ymnxiavb"]
+[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://b0h65ymnxiavb"]
 
+[ext_resource type="PackedScene" uid="uid://cmfn6h56d77wb" path="res://assets/blocks/platform_corner.tscn" id="1_f1jwm"]
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="1_lt2yq"]
 
 [resource]
 script = ExtResource("1_lt2yq")
-type = 1
-vertices = PackedVector3Array(5, 0, 0, 2, 0, 0, 4, 0, 0, 9, 0, 0)
-primitive_type = 3
+scene = ExtResource("1_f1jwm")
+type = 0

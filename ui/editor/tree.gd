@@ -21,10 +21,14 @@ func populate(path: String, parent: TreeItem):
 		var full_path := "%s/%s" % [dir.get_current_dir(), file_name]
 		if dir.current_is_dir():
 			var item := create_item(parent)
+			item.set_icon(0, preload("res://ui/assets/folder.png"))
+			item.set_icon_max_width(0, 24)
 			item.set_text(0, file_name)
 			item.set_meta(&"full_path", full_path)
 			item.collapsed = true
 			populate(full_path, item)
-		else: pass # we dont do files here
+		else: pass # we dont do files here (that responsibility goes to items)
 		file_name = dir.get_next()
 
+func expand_selected() -> void:
+	get_selected().collapsed = false
