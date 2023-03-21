@@ -1,41 +1,34 @@
 extends Camera3D
 
 var freelook := false;
-
-const CONTROL_SPEED = 10;
-const MOVE_SPEED = 50;
-const SHIFT_SPEED = 100;
-
-const MOUSE_SENSITIVTY = 0.04;
-
+var panning := false;
+var mp_before_freelook := Vector2.ZERO;
+const MOUSE_SENSITIVTY = 0.02;
+const PAN_SENSITIVITY = 0.005;
+const SCROLL_SENS = 2;
 const CAMERA_MAX_ROTATION_ANGLE = deg_to_rad(70);
 
 func _process(delta):
-	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)):
-		if (Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+			mp_before_freelook = get_viewport().get_mouse_position()
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
-		freelook = true;
+			freelook = true;
+	elif Input.is_action_pressed("ui_pan"):
+		var vel := Input.get_last_mouse_velocity() * PAN_SENSITIVITY
+		global_position += Vector3(vel.x, -vel.y, 0)
 	else:
-		if (Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE):
+		if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-		freelook = false;
-
-	process_movement(delta);
-
-func process_movement(delta):
-	var movement_vector := Vector3(Input.get_axis("ui_left", "ui_right"), 0, Input.get_axis("ui_down", "ui_up"))
-	var movement_speed := MOVE_SPEED;
-
-	if (Input.is_key_pressed(KEY_SHIFT)):
-		movement_speed = SHIFT_SPEED;
-	elif (Input.is_key_pressed(KEY_CTRL)):
-		movement_speed = CONTROL_SPEED;
-
-	global_position += -global_transform.basis.z * movement_vector.z * movement_speed * delta
-	global_position += global_transform.basis.x * movement_vector.x * movement_speed * delta
-
+			freelook = false;
+			get_viewport().warp_mouse(mp_before_freelook)
 
 func _input(event: InputEvent):
 	if freelook and event is InputEventMouseMotion:
 		rotation.x = clamp(rotation.x + (-event.relative.y * MOUSE_SENSITIVTY), -CAMERA_MAX_ROTATION_ANGLE, CAMERA_MAX_ROTATION_ANGLE);
 		rotation.y += -event.relative.x * MOUSE_SENSITIVTY;
+	elif event is InputEventMouseButton:
+		match event.button_index:
+			# camera zoom
+			MOUSE_BUTTON_WHEEL_UP: global_position -= global_transform.basis.z * SCROLL_SENS
+			MOUSE_BUTTON_WHEEL_DOWN: global_position += global_transform.basis.z * SCROLL_SENS

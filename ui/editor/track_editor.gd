@@ -22,7 +22,7 @@ func _on_selected_node(node: Node3D) -> void:
 		return
 	selected = node
 #	mode = Mode.Select
-	group.get_buttons()[mode].button_pressed = true
+#	group.get_buttons()[mode].button_pressed = true
 	print("object: %s selected! mode: %s" % [node, mode])
 	make_gizmo.emit(mode)
 
