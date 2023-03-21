@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dgsvy527w3yt3"]
 
 [ext_resource type="Material" uid="uid://b58fjwm8y5kbv" path="res://ui/assets/materials/center.material" id="1_v8n64"]
-[ext_resource type="Script" path="res://ui/editor/gizmos/gizmo.gd" id="2_445iq"]
+[ext_resource type="Script" path="res://ui/editor/gizmos/selection_marker.gd" id="2_pp4qy"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_8slg5"]
 material = ExtResource("1_v8n64")
@@ -10,4 +10,4 @@ size = Vector3(10, 10, 10)
 [node name="selection marker" type="MeshInstance3D"]
 mesh = SubResource("BoxMesh_8slg5")
 skeleton = NodePath("../..")
-script = ExtResource("2_445iq")
+script = ExtResource("2_pp4qy")

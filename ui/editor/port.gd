@@ -20,7 +20,8 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 				print("create gizmo!")
 				current = map[mode].instantiate()
 				current.snapping = editor.snapping
-				editor.selected.add_child(current)
+				current.path = editor.selected.get_path()
+				add_child(current)
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	if current != null:
