@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://l7yfnjxyqh1y"]
+[gd_scene load_steps=12 format=3 uid="uid://l7yfnjxyqh1y"]
 
 [ext_resource type="Script" path="res://ui/editor/gizmos/gizmo.gd" id="1_3pwvt"]
 [ext_resource type="Shape3D" uid="uid://k6i72vyyvx5a" path="res://ui/editor/gizmos/translate_arm.shape" id="2_fnl4w"]
@@ -7,6 +7,8 @@
 [ext_resource type="Material" uid="uid://6jcpuce3rdka" path="res://ui/assets/materials/z.material" id="5_4yd1l"]
 [ext_resource type="Material" uid="uid://cw2wr7aj6g53o" path="res://ui/assets/materials/x.material" id="6_qv6ny"]
 [ext_resource type="Material" uid="uid://okgh4dgd5sml" path="res://ui/assets/materials/y.material" id="7_jee6e"]
+[ext_resource type="CylinderMesh" uid="uid://c3hxlx3k1jmfb" path="res://ui/editor/gizmos/cylinder.tres" id="7_nrphe"]
+[ext_resource type="CylinderMesh" uid="uid://cd0844dj635dv" path="res://ui/editor/gizmos/point.tres" id="8_m13bo"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rttof"]
 material = ExtResource("3_yj0f1")
@@ -14,18 +16,6 @@ size = Vector3(10, 10, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tep2a"]
 size = Vector3(10, 10, 10)
-
-[sub_resource type="BoxMesh" id="BoxMesh_vufty"]
-material = ExtResource("7_jee6e")
-size = Vector3(2, 2, 10)
-
-[sub_resource type="BoxMesh" id="BoxMesh_r08mc"]
-material = ExtResource("6_qv6ny")
-size = Vector3(2, 2, 10)
-
-[sub_resource type="BoxMesh" id="BoxMesh_nk1ll"]
-material = ExtResource("5_4yd1l")
-size = Vector3(2, 2, 10)
 
 [node name="translate" type="Node3D"]
 script = ExtResource("1_3pwvt")
@@ -39,6 +29,7 @@ mesh = SubResource("BoxMesh_rttof")
 skeleton = NodePath("../..")
 
 [node name="collider" type="CollisionShape3D" parent="center"]
+visible = false
 shape = SubResource("BoxShape3D_tep2a")
 disabled = true
 
@@ -49,11 +40,20 @@ collision_mask = 0
 script = ExtResource("2_wavrl")
 dir = 2
 
-[node name="mesh" type="MeshInstance3D" parent="handle_y"]
-mesh = SubResource("BoxMesh_vufty")
+[node name="cylinder" type="MeshInstance3D" parent="handle_y"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("7_nrphe")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("7_jee6e")
+
+[node name="point" type="MeshInstance3D" parent="handle_y"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, -6)
+mesh = ExtResource("8_m13bo")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("7_jee6e")
 
 [node name="collider" type="CollisionShape3D" parent="handle_y"]
+visible = false
 shape = ExtResource("2_fnl4w")
 
 [node name="handle_x" type="StaticBody3D" parent="."]
@@ -63,11 +63,20 @@ collision_mask = 0
 script = ExtResource("2_wavrl")
 dir = 0
 
-[node name="mesh" type="MeshInstance3D" parent="handle_x"]
-mesh = SubResource("BoxMesh_r08mc")
+[node name="cylinder" type="MeshInstance3D" parent="handle_x"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("7_nrphe")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("6_qv6ny")
+
+[node name="point" type="MeshInstance3D" parent="handle_x"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 6)
+mesh = ExtResource("8_m13bo")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("6_qv6ny")
 
 [node name="collider" type="CollisionShape3D" parent="handle_x"]
+visible = false
 shape = ExtResource("2_fnl4w")
 
 [node name="handle_z" type="StaticBody3D" parent="."]
@@ -77,9 +86,18 @@ collision_mask = 0
 script = ExtResource("2_wavrl")
 dir = 1
 
-[node name="mesh" type="MeshInstance3D" parent="handle_z"]
-mesh = SubResource("BoxMesh_nk1ll")
+[node name="cylinder" type="MeshInstance3D" parent="handle_z"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("7_nrphe")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_4yd1l")
+
+[node name="point" type="MeshInstance3D" parent="handle_z"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 6)
+mesh = ExtResource("8_m13bo")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_4yd1l")
 
 [node name="collider" type="CollisionShape3D" parent="handle_z"]
+visible = false
 shape = ExtResource("2_fnl4w")
