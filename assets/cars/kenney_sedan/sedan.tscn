@@ -333,6 +333,8 @@ mass = 1000.0
 center_of_mass_mode = 1
 physics_material_override = SubResource("PhysicsMaterial_hs0do")
 gravity_scale = 3.0
+max_contacts_reported = 4
+contact_monitor = true
 can_sleep = false
 script = ExtResource("1_pdccm")
 

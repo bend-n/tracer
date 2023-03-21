@@ -3,6 +3,7 @@ class_name Car
 
 @export var STEER_SPEED := 1.0
 @export var steer_curve: Curve = preload("res://assets/cars/kenney_sedan/steer_curve.tres")
+const sparks := preload("res://assets/cars/sparks.tscn")
 
 var steer_target := 0.0
 
@@ -92,7 +93,7 @@ func steer(to: float) -> void:
 	else:
 		to = -steer_curve.sample_baked(-to) if to < 0.0 else steer_curve.sample_baked(to)
 
-	steer_target = clampf(lerpf(steer_target, to, 10 * get_physics_process_delta_time()), -1, 1) * .75
+	steer_target = clampf(lerpf(steer_target, to, 10 * get_physics_process_delta_time()), -1, 1) * .9
 
 ## virtual
 func shift_down() -> bool:
@@ -163,3 +164,16 @@ func start() -> void:
 	brake = 0
 	can_shift = true
 	can_accelerate = true
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	if kph() < 100:
+		return
+	var contact := state.get_contact_count()
+	while contact > 0:
+			contact -= 1
+			var p := state.get_contact_local_position(contact) # it says local, but its global.
+			var direction := state.get_contact_local_normal(contact)
+			var sparks := sparks.instantiate()
+			(sparks.process_material as ParticleProcessMaterial).direction = direction
+			get_parent().add_child(sparks)
+			sparks.global_position = p
