@@ -6,6 +6,7 @@ class_name TrackEditor
 enum Mode { Select, Move, Rotate, Scale }
 var mode: Mode
 var selected: Node
+var snapping := true
 signal make_gizmo(mode: Mode)
 
 func _ready() -> void:
@@ -20,7 +21,10 @@ func _on_selected_node(node: Node3D) -> void:
 	if selected == node:
 		return
 	selected = node
-	mode = Mode.Select
+#	mode = Mode.Select
 	group.get_buttons()[mode].button_pressed = true
 	print("object: %s selected! mode: %s" % [node, mode])
 	make_gizmo.emit(mode)
+
+func _on_snapping_toggled(button_pressed: bool) -> void:
+	snapping = button_pressed

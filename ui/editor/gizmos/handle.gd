@@ -27,8 +27,10 @@ func _process(_delta: float):
 			return
 		var dist = intersection_of_movement_point - clicked_position
 		var displacement: Vector3 = dist.project(drag_direction)
-		get_parent().object.global_transform = original_transform
-		get_parent().object.translate_object_local(displacement)
+		owner.object.global_transform = original_transform
+		owner.object.translate_object_local(displacement)
+		if owner.snapping:
+			owner.object.global_position = (owner.object.global_position as Vector3).snapped(Vector3.ONE*10)
 
 func _ready() -> void:
 	input_event.connect(click)
@@ -43,5 +45,5 @@ func click(camera: Camera3D, event: InputEvent, click_position: Vector3, _click_
 		click_plane = Plane(plane_normal, distance)
 
 		clicked_position = click_position
-		original_transform = get_parent().object.global_transform
+		original_transform = owner.object.global_transform
 

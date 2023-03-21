@@ -37,7 +37,7 @@ movie_writer/fps=15
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-editor-icons-previewer-gd4/addons/editor_icon_previewer/plugin.cfg")
+enabled=PackedStringArray()
 
 [importer_defaults]
 

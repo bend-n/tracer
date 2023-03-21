@@ -45,9 +45,11 @@ func on_selected(index: int) -> void:
 			if selected.get_script() != null:
 				selected.editor = true
 			world.add_child(selected)
-			selected.global_position = world.get_camera_3d().project_position(world.size / 2, 50).snapped(Vector3.ONE * 10) # put it forth
+			if owner.snapping:
+				selected.global_position = world.get_camera_3d().project_position(world.size / 2, 50).snapped(Vector3.ONE * 10) # put it forth
 			selected.look_at(world.get_camera_3d().global_position)
-			selected.global_rotation = selected.global_rotation.snapped(Vector3.ONE * 90)
+			if owner.snapping:
+				selected.global_rotation = selected.global_rotation.snapped(Vector3.ONE * 90)
 			var collider: PhysicsBody3D = selected if selected is PhysicsBody3D else selected.collision
 			collider.input_event.connect((
 			## i dont know how to use unbinds in signals connected in code

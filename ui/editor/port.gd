@@ -1,6 +1,6 @@
 extends SubViewport
 
-@export var editor: TrackEditor
+@onready var editor: TrackEditor = owner
 
 const map = {
 	TrackEditor.Mode.Select: preload("res://ui/editor/gizmos/selection_marker.tscn"),
@@ -19,4 +19,9 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 			if editor.selected != null:
 				print("create gizmo!")
 				current = map[mode].instantiate()
+				current.snapping = editor.snapping
 				editor.selected.add_child(current)
+
+func _on_snapping_toggled(button_pressed: bool) -> void:
+	if current != null:
+		current.snapping = button_pressed
