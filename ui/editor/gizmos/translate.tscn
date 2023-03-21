@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://l7yfnjxyqh1y"]
+[gd_scene load_steps=13 format=3 uid="uid://l7yfnjxyqh1y"]
 
 [ext_resource type="Script" path="res://ui/editor/gizmos/gizmo.gd" id="1_3pwvt"]
 [ext_resource type="Shape3D" uid="uid://k6i72vyyvx5a" path="res://ui/editor/gizmos/translate_arm.shape" id="2_fnl4w"]
 [ext_resource type="Script" path="res://ui/editor/gizmos/handle.gd" id="2_wavrl"]
+[ext_resource type="Script" path="res://ui/editor/gizmos/center.gd" id="2_weeof"]
 [ext_resource type="Material" uid="uid://b58fjwm8y5kbv" path="res://ui/assets/materials/center.material" id="3_yj0f1"]
 [ext_resource type="Material" uid="uid://6jcpuce3rdka" path="res://ui/assets/materials/z.material" id="5_4yd1l"]
 [ext_resource type="Material" uid="uid://cw2wr7aj6g53o" path="res://ui/assets/materials/x.material" id="6_qv6ny"]
@@ -21,21 +22,20 @@ size = Vector3(10, 10, 10)
 script = ExtResource("1_3pwvt")
 
 [node name="center" type="StaticBody3D" parent="."]
-collision_layer = 524288
+collision_layer = 2147483648
 collision_mask = 0
+script = ExtResource("2_weeof")
 
 [node name="mesh" type="MeshInstance3D" parent="center"]
 mesh = SubResource("BoxMesh_rttof")
 skeleton = NodePath("../..")
 
 [node name="collider" type="CollisionShape3D" parent="center"]
-visible = false
 shape = SubResource("BoxShape3D_tep2a")
-disabled = true
 
 [node name="handle_y" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 10, 0)
-collision_layer = 524288
+collision_layer = 2147483648
 collision_mask = 0
 script = ExtResource("2_wavrl")
 dir = 2
@@ -58,7 +58,7 @@ shape = ExtResource("2_fnl4w")
 
 [node name="handle_x" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, 0)
-collision_layer = 524288
+collision_layer = 2147483648
 collision_mask = 0
 script = ExtResource("2_wavrl")
 dir = 0
@@ -81,7 +81,7 @@ shape = ExtResource("2_fnl4w")
 
 [node name="handle_z" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
-collision_layer = 524288
+collision_layer = 2147483648
 collision_mask = 0
 script = ExtResource("2_wavrl")
 dir = 1
