@@ -42,7 +42,7 @@ func mkghost() -> void:
 func reset_ghost() -> void:
 	if best_time_data:
 		ghost.update(best_time_data.load_snap(0), -1)
-		ghost.engine.volume = .1
+		ghost.engine.volume = .2
 	else:
 		ghost.engine.volume = 0
 		ghost.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2)

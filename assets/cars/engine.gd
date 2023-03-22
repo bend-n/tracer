@@ -1,7 +1,7 @@
 extends EngineNoise
 
-@onready var car = get_parent().get_parent();
-@onready var player: AudioStreamPlayer3D = get_parent();
+@onready var car := owner.get_parent();
+@onready var player: AudioStreamPlayer3D = owner;
 
 func _ready() -> void:
 	set_process(false)

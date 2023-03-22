@@ -1,14 +1,24 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvfqaoqjsxj73"]
+[gd_scene load_steps=12 format=3 uid="uid://bvfqaoqjsxj73"]
 
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_gm0ws"]
 [ext_resource type="Script" path="res://ui/tracks.gd" id="2_po2ce"]
-[ext_resource type="Resource" uid="uid://ck62cvv2t8inu" path="res://tracks/multilap_test.tres" id="3_0yjp1"]
-[ext_resource type="Resource" path="res://tracks/test.tres" id="4_3xqvr"]
 [ext_resource type="PackedScene" uid="uid://dhiei0g5tr74s" path="res://scenes/race_high.tscn" id="5_m5kci"]
-[ext_resource type="Resource" uid="uid://4abjgxeq1j7i" path="res://tracks/the fallen tramps.tres" id="5_qwie6"]
+[ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="6_e1quy"]
 [ext_resource type="PackedScene" uid="uid://demunxvqkmtwa" path="res://scenes/ghost_watcher.tscn" id="7_6ph7w"]
 [ext_resource type="PackedScene" uid="uid://dfvtugujgcjcw" path="res://ui/track_button.tscn" id="7_pchkj"]
+[ext_resource type="Script" path="res://ui/multi_button.gd" id="7_rhu6g"]
+[ext_resource type="Script" path="res://ui/editor/track_select.gd" id="8_v6p1s"]
 [ext_resource type="AudioStream" uid="uid://bwiyphl31lwu6" path="res://assets/sounds/music.ogg" id="9_ma7kx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ohli"]
+font_size = 24
+outline_size = 12
+outline_color = Color(0, 0.168627, 0.211765, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qgtcj"]
+font_size = 24
+outline_size = 20
+outline_color = Color(0, 0.168627, 0.211765, 1)
 
 [node name="start" type="Control"]
 layout_mode = 3
@@ -43,10 +53,64 @@ theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 15
 columns = 5
 script = ExtResource("2_po2ce")
-tracks = Array[Resource("res://classes/track.gd")]([ExtResource("3_0yjp1"), ExtResource("4_3xqvr"), ExtResource("5_qwie6")])
 race = ExtResource("5_m5kci")
 ghost_watch = ExtResource("7_6ph7w")
 trackbutton = ExtResource("7_pchkj")
+
+[node name="create" type="VBoxContainer" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="buttons" type="HFlowContainer" parent="MarginContainer/TabContainer/create"]
+layout_mode = 2
+theme = ExtResource("6_e1quy")
+
+[node name="new" type="Button" parent="MarginContainer/TabContainer/create/buttons" node_paths=PackedStringArray("secondary")]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+action_mode = 0
+text = "󰈔"
+script = ExtResource("7_rhu6g")
+secondary = NodePath("plus")
+
+[node name="plus" type="Label" parent="MarginContainer/TabContainer/create/buttons/new"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -24.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 0
+grow_vertical = 0
+text = ""
+label_settings = SubResource("LabelSettings_8ohli")
+
+[node name="import" type="Button" parent="MarginContainer/TabContainer/create/buttons" node_paths=PackedStringArray("secondary")]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+action_mode = 0
+text = "󰈔"
+script = ExtResource("7_rhu6g")
+secondary = NodePath("arrow")
+
+[node name="arrow" type="Label" parent="MarginContainer/TabContainer/create/buttons/import"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 25.0
+offset_right = 64.0
+offset_bottom = 50.3333
+text = ""
+label_settings = SubResource("LabelSettings_qgtcj")
+
+[node name="tracks_owned" type="GridContainer" parent="MarginContainer/TabContainer/create"]
+layout_mode = 2
+script = ExtResource("8_v6p1s")
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_ma7kx")

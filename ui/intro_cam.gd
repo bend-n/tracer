@@ -17,8 +17,8 @@ func _init(_track: TrackResource, _main_cam: Camera3D):
 func _ready() -> void:
 	make_current()
 	var box := AABB()
-	for i in track.track.point_count:
-		box = box.expand(track.track.get_point_position(i))
+	for block in track.blocks:
+		box = box.expand(block.live_node.global_position)
 	var box_center := box.get_center()
 	var top_center := Vector3(box_center.x, track.overview_height, box_center.z)
 	global_position = top_center

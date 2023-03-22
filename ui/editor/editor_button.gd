@@ -1,0 +1,3 @@
+extends TrackButton
+
+signal edit

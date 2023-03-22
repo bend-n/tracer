@@ -6,6 +6,7 @@ var weak_links: Array = []
 
 signal selected_node(node: Node3D)
 signal dir_selected()
+signal created(object: TrackObject)
 
 const icon_table = {
 	WeakLink.Type.Scene: preload("res://ui/assets/block.png"),
@@ -57,6 +58,7 @@ func on_selected(index: int) -> void:
 				if is_left_click(e):
 					selected_node.emit(node)
 			).bind(selected))
+			created.emit(TrackObject.new(scn, selected))
 			print("instantiated scn %s" % weak_link.scene.resource_path)
 
 func is_left_click(e: InputEvent) -> bool:

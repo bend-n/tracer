@@ -28,6 +28,7 @@ radial_segments = 8
 
 [node name="crash" type="GPUParticles3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98517, 2.26511, 0)
+emitting = false
 amount = 10
 lifetime = 2.0
 one_shot = true

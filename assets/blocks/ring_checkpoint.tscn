@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://behu0a0iegwov"]
 
 [ext_resource type="Script" path="res://assets/blocks/ring_checkpoint.gd" id="1_cmmpp"]
 [ext_resource type="TorusMesh" uid="uid://dlbpusye3e33p" path="res://assets/meshes/checkpoint.tres" id="2_xys6y"]
@@ -9,9 +9,10 @@ data = PackedVector3Array(-6, 0, -10.3923, 0, 2.5, -14.5, 0, 0, -12, -6, 0, -10.
 [sub_resource type="BoxShape3D" id="BoxShape3D_k77jm"]
 size = Vector3(52, 52, 3)
 
-[node name="Checkpoint" type="PathFollow3D"]
+[node name="Checkpoint" type="PathFollow3D" node_paths=PackedStringArray("mesh")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_cmmpp")
+mesh = NodePath("Ring")
 
 [node name="Ring" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)

@@ -1,12 +1,25 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://d3ywcokn5ddy8"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://d3ywcokn5ddy8"]
 
 [ext_resource type="SystemFont" uid="uid://xriuk0v4f6wj" path="res://ui/ubuntu_mononf.tres" id="1_37cf0"]
 [ext_resource type="StyleBox" uid="uid://cdth5nc7lbx1v" path="res://ui/panel_skewed.tres" id="1_g8q83"]
 [ext_resource type="StyleBox" uid="uid://bkxlhm4hc5lco" path="res://ui/assets/button_focus.stylebox" id="1_t7nt0"]
 [ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="2_0o40a"]
 [ext_resource type="FontVariation" uid="uid://ba8ab6dti2fvo" path="res://ui/boldsans.tres" id="3_fpgf0"]
+[ext_resource type="StyleBox" uid="uid://dxtsrhgnyr80k" path="res://ui/panel_dark.stylebox" id="4_mx083"]
 [ext_resource type="Texture2D" uid="uid://vck01c83m1x3" path="res://ui/assets/arrow.png" id="6_uqp3t"]
 [ext_resource type="Texture2D" uid="uid://buwxt5g5y761m" path="res://ui/assets/arrow_collapsed.png" id="7_raqbt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ki0ve"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0.168627, 0.211765, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 12
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_vr8fs"]
 color = Color(0.345098, 0.431373, 0.458824, 1)
@@ -29,12 +42,14 @@ ItemList/styles/panel = ExtResource("2_0o40a")
 Label/colors/font_color = Color(0.933333, 0.909804, 0.835294, 1)
 Label/font_sizes/font_size = 25
 Label/fonts/font = ExtResource("1_37cf0")
+LineEdit/styles/normal = ExtResource("4_mx083")
 Panel/styles/panel = ExtResource("2_0o40a")
 PanelContainer/styles/panel = ExtResource("1_g8q83")
 RichTextLabel/font_sizes/bold_font_size = 76
 RichTextLabel/font_sizes/normal_font_size = 76
 RichTextLabel/fonts/bold_font = ExtResource("3_fpgf0")
 RichTextLabel/fonts/normal_font = ExtResource("1_37cf0")
+TabContainer/styles/panel = SubResource("StyleBoxFlat_ki0ve")
 Tree/colors/children_hl_line_color = Color(0.396078, 0.482353, 0.513726, 1)
 Tree/colors/font_color = Color(0.501961, 0.596078, 0.627451, 1)
 Tree/colors/font_selected_color = Color(0.933333, 0.909804, 0.835294, 1)

@@ -16,7 +16,7 @@ func _process(delta):
 			freelook = true;
 	elif Input.is_action_pressed("ui_pan"):
 		var vel := Input.get_last_mouse_velocity() * PAN_SENSITIVITY
-		global_position += Vector3(vel.x, -vel.y, 0)
+		global_position += Vector3(vel.x, vel.y, 0)
 	else:
 		if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);

@@ -1,3 +1,4 @@
+@tool
 extends GridContainer
 
 @export var tracks: Array[TrackResource]
@@ -13,7 +14,8 @@ func _ready() -> void:
 		button.init(track, ghost)
 		button.play.connect(play.bind(track, ghost))
 		button.watch.connect(watch.bind(track, ghost))
-	(get_child(0) as TrackButton).button.grab_focus()
+	if get_child_count() > 0:
+		(get_child(0) as TrackButton).button.grab_focus()
 
 func play(track: TrackResource, ghost: GhostData) -> void:
 	print("play %s" % track.name)

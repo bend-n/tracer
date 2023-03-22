@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bds815vxta4ma"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rrkw8"]
+
+[resource]
+Button/colors/font_color = Color(0.870588, 0.831373, 0.698039, 1)
+Button/colors/font_focus_color = Color(0.992157, 0.964706, 0.890196, 1)
+Button/colors/font_hover_color = Color(0.992157, 0.964706, 0.890196, 1)
+Button/colors/font_hover_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
+Button/colors/font_pressed_color = Color(0.14902, 0.545098, 0.823529, 1)
+Button/styles/disabled = SubResource("StyleBoxEmpty_rrkw8")
+Button/styles/focus = SubResource("StyleBoxEmpty_rrkw8")
+Button/styles/hover = SubResource("StyleBoxEmpty_rrkw8")
+Button/styles/normal = SubResource("StyleBoxEmpty_rrkw8")
+Button/styles/pressed = SubResource("StyleBoxEmpty_rrkw8")

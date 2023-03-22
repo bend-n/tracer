@@ -6,6 +6,7 @@ signal collected
 var collision: PhysicsBody3D
 @export var needs_collision := true
 var editor := false
+@export var mesh: MeshInstance3D
 
 func enter() -> void:
 	collected.emit()

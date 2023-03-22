@@ -60,7 +60,11 @@ static func from_d(d: Dictionary) -> GhostData:
 
 ## Saves a basic dictionary to a path.
 static func _save_file(path: String, data: Dictionary) -> void:
+	if !DirAccess.dir_exists_absolute(path.get_base_dir()):
+		DirAccess.make_dir_recursive_absolute(path.get_base_dir())
 	var file := FileAccess.open_compressed(path, FileAccess.WRITE, FileAccess.COMPRESSION_ZSTD)
+	if file == null:
+		push_error(FileAccess.get_open_error())
 	file.store_buffer(var_to_bytes(data))
 
 ## Loads a basic dictionary out of a file.

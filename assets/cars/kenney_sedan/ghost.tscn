@@ -381,4 +381,7 @@ skeleton = NodePath("")
 [node name="particles" parent="fr" instance=ExtResource("4_4uffx")]
 transform = Transform3D(2.33967, 0, 0, 0, 2.33967, 0, 0, 0, 2.33967, 0.7019, 0.7019, -1.54418)
 
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.34778, -0.676755, 0.648885, 0, 0.692088, 0.721814, -0.937576, -0.251032, 0.240694, 2.04217, 2.1612, 3.66584)
+
 [node name="Engine" parent="." instance=ExtResource("4_ku3bs")]

@@ -11,7 +11,6 @@ resource_name = "engine_inbetween"
 script/source = "extends AudioStreamPlayer3D
 
 @onready var gen: EngineNoise = $generator
-
 @onready var volume: float = 1.0: # not decibels
 	set(v):
 		volume = v

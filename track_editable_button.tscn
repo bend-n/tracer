@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://qn4624dyuudu"]
+
+[ext_resource type="PackedScene" uid="uid://dfvtugujgcjcw" path="res://ui/track_button.tscn" id="1_cjdas"]
+[ext_resource type="Script" path="res://ui/editor/editor_button.gd" id="2_0jg6b"]
+
+[node name="track_editable_button" instance=ExtResource("1_cjdas")]
+script = ExtResource("2_0jg6b")
+
+[node name="edit" type="Button" parent="h2" index="1"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "󰛿 "
+alignment = 2
+
+[connection signal="pressed" from="h2/edit" to="." method="emit_signal" binds= [&"edit"]]
