@@ -1,20 +1,16 @@
-[gd_scene load_steps=32 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=28 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
 [ext_resource type="StyleBox" uid="uid://dxtsrhgnyr80k" path="res://ui/panel_dark.stylebox" id="2_l1cwd"]
 [ext_resource type="Script" path="res://ui/editor/items.gd" id="2_q16oo"]
 [ext_resource type="Script" path="res://ui/editor/track_editor.gd" id="3_50gj4"]
-[ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="3_hon87"]
 [ext_resource type="Script" path="res://ui/editor/propertys.gd" id="5_v84um"]
 [ext_resource type="Script" path="res://ui/editor/cam.gd" id="6_o7q05"]
 [ext_resource type="ButtonGroup" uid="uid://oio3aly7aeny" path="res://ui/editor/group.tres" id="6_vgj8v"]
 [ext_resource type="Script" path="res://ui/editor/port.gd" id="7_ftio3"]
 [ext_resource type="Script" path="res://ui/editor/save.gd" id="7_saajs"]
-[ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="9_3idtj"]
 [ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="9_x2saf"]
-[ext_resource type="PackedScene" uid="uid://crc02shshycvq" path="res://scenes/sun.tscn" id="10_bbsj1"]
-[ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="10_ig0rw"]
 [ext_resource type="Script" path="res://ui/multi_button.gd" id="11_nar81"]
 [ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="13_cyvq7"]
 
@@ -131,6 +127,7 @@ shortcut_in_tooltip = false
 text = "󰈝"
 
 [node name="propertys" type="Tree" parent="split/left dock/data/container"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 columns = 2
@@ -151,6 +148,7 @@ script = ExtResource("1_65spq")
 root_dir = "res://ui/editor/fs"
 
 [node name="items" type="ItemList" parent="split/left dock/fs" node_paths=PackedStringArray("t", "world")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
@@ -278,26 +276,16 @@ layout_mode = 2
 stretch = true
 
 [node name="port" type="SubViewport" parent="split/split2/middle dock/viewport/view"]
+unique_name_in_owner = true
 handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(1067, 1010)
 render_target_update_mode = 4
 script = ExtResource("7_ftio3")
 
-[node name="base" type="Node3D" parent="split/split2/middle dock/viewport/view/port"]
-
-[node name="cam" type="Camera3D" parent="split/split2/middle dock/viewport/view/port/base"]
+[node name="cam" type="Camera3D" parent="split/split2/middle dock/viewport/view/port"]
 transform = Transform3D(0.877582, -0.229849, 0.420736, 0, 0.877582, 0.479426, -0.479426, -0.420736, 0.770151, 1.68294, 1.9177, 3.0806)
 script = ExtResource("6_o7q05")
-
-[node name="sun" parent="split/split2/middle dock/viewport/view/port/base" instance=ExtResource("10_bbsj1")]
-transform = Transform3D(1, 4.49013e-09, -2.93217e-15, -2.8862e-09, 0.642788, 0.766044, 3.43964e-09, -0.766044, 0.642788, 0, 0, 0)
-
-[node name="env" type="WorldEnvironment" parent="split/split2/middle dock/viewport/view/port/base"]
-environment = ExtResource("9_3idtj")
-camera_attributes = ExtResource("10_ig0rw")
-
-[node name="floor" parent="split/split2/middle dock/viewport/view/port/base" instance=ExtResource("3_hon87")]
 
 [node name="right dock" type="VBoxContainer" parent="split/split2"]
 layout_mode = 2
@@ -320,4 +308,3 @@ theme_override_styles/panel = ExtResource("13_cyvq7")
 [connection signal="selected_node" from="split/left dock/fs/items" to="." method="_on_selected_node"]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="." method="_on_snapping_toggled"]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="split/split2/middle dock/viewport/view/port" method="_on_snapping_toggled"]
-[connection signal="input_event" from="split/split2/middle dock/viewport/view/port/base/floor" to="split/left dock/fs/items" method="_on_floor_input_event" unbinds=3]

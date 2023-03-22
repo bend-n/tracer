@@ -33,7 +33,9 @@ static func from_d(d: Dictionary) -> TrackObject:
 
 func set_live(p_live: Node):
 	live_node = p_live
-	material = null
-	transform = Transform3D()
+	# we dont need these: this information should be transfered to the live node.
+	# but i pass around my tracks too much, and build them, that this will be a problem.
+	# material = null
+	# transform = Transform3D()
 
 

@@ -17,6 +17,9 @@ var finish: Finish
 var start_rot: Vector3
 var start_pos: Vector3
 var is_dirty := true
+var editor := false
+
+signal loaded
 
 func vec(x := 0.0, y := 0.0) -> Vector2:
 	return Vector2(x, y)
@@ -27,12 +30,15 @@ func _update():
 	ground.global_position = track.offset
 	for block in track.blocks:
 		var node: Node3D = block.base_scene.instantiate()
+		if editor:
+			node.editor = true
 		add_child(node)
 		(node.mesh as MeshInstance3D).set_surface_override_material(0, block.material)
 		(node as Node3D).global_transform = block.transform
-		block.set_live(node) # this discards transform and material data
+		if editor:
+			block.set_live(node)
 	print("created track!")
+	loaded.emit()
 
 func _ready():
 	_update()
-

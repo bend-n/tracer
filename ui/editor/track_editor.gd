@@ -10,7 +10,30 @@ var snapping := true
 var objects: Array[TrackObject] = []
 signal make_gizmo(mode: Mode)
 
+const loader := preload("res://scenes/track.tscn")
+
 func _ready() -> void:
+	var data := Globals.editing
+	var l: TrackLoader = loader.instantiate()
+	l.editor = true
+	l.track = data
+	add_child(l)
+#		await l.loaded
+	# move over the loaders children
+	for c in l.get_children():
+		l.remove_child(c)
+		%port.add_child(c)
+		if c is Floor:
+			c.input_event.connect(%items._on_floor_input_event)
+		elif not c is WorldEnvironment and not c is DirectionalLight3D:
+			var collider: PhysicsBody3D = c if c is PhysicsBody3D else c
+			collider.input_event.connect(%items.node_input.bind(c))
+	# the loader has loaded, get rid of it
+	l.queue_free()
+	objects = data.blocks # please be reference
+	%propertys.set_n(data.name)
+
+
 	group.pressed.connect(
 		func pressed(b: Button) -> void:
 			mode = Mode[b.name.to_pascal_case()]

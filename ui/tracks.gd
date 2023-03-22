@@ -1,5 +1,6 @@
 @tool
 extends GridContainer
+class_name TrackSelect
 
 @export var tracks: Array[TrackResource]
 @export var race: PackedScene
@@ -12,7 +13,7 @@ func _ready() -> void:
 		add_child(button)
 		var ghost := GhostData._load(Globals.SAVES % track.name)
 		button.init(track, ghost)
-		button.play.connect(play.bind(track, ghost))
+		button.play.connect(play.bind(tracks, ghost))
 		button.watch.connect(watch.bind(track, ghost))
 	if get_child_count() > 0:
 		(get_child(0) as TrackButton).button.grab_focus()

@@ -52,12 +52,7 @@ func on_selected(index: int) -> void:
 			if owner.snapping:
 				selected.global_rotation = selected.global_rotation.snapped(Vector3.ONE * 90)
 			var collider: PhysicsBody3D = selected if selected is PhysicsBody3D else selected.collision
-			collider.input_event.connect((
-			## i dont know how to use unbinds in signals connected in code
-			func(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s: int, node: Node3D):
-				if is_left_click(e):
-					selected_node.emit(node)
-			).bind(selected))
+			collider.input_event.connect(node_input.bind(selected))
 			created.emit(TrackObject.new(scn, selected))
 			print("instantiated scn %s" % weak_link.scene.resource_path)
 
@@ -69,6 +64,11 @@ func is_left_click(e: InputEvent) -> bool:
 	)
 
 ## if the floor gets picked, that means the ray didnt hit anything else, so deselect the current selected node
-func _on_floor_input_event(_c: Node, e: InputEvent) -> void:
+func _on_floor_input_event(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s: int) -> void:
 	if is_left_click(e):
 		selected_node.emit(null)
+
+## i dont know how to use unbinds in signals connected in code
+func node_input(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s: int, node: Node3D):
+	if is_left_click(e):
+		selected_node.emit(node)

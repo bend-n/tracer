@@ -14,3 +14,6 @@ func _ready() -> void:
 
 func _on_item_edited() -> void:
 	name_changed.emit(name_button.get_text(1))
+
+func set_n(n: String) -> void:
+	name_button.set_text(1, n)

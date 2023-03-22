@@ -108,9 +108,10 @@ offset_bottom = 50.3333
 text = ""
 label_settings = SubResource("LabelSettings_qgtcj")
 
-[node name="tracks_owned" type="GridContainer" parent="MarginContainer/TabContainer/create"]
+[node name="tracks_owned" type="GridContainer" parent="MarginContainer/TabContainer/create" node_paths=PackedStringArray("other_track_select")]
 layout_mode = 2
 script = ExtResource("8_v6p1s")
+other_track_select = NodePath("../../play/tracks")
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_ma7kx")
