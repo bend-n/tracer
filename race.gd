@@ -45,15 +45,15 @@ func reset_ghost() -> void:
 		ghost.engine.volume = .2
 	else:
 		ghost.engine.volume = 0
-		ghost.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2)
-		ghost.rotation = track.start_rot + Vector3(0, PI, -PI/2)
+		ghost.global_position = track.start_transf.origin + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2)
+		ghost.rotation = track.start_transf.basis.get_euler() + Vector3(0, PI, -PI/2)
 	ghost.reset()
 	ghost.hide()
 
 func reset_car() -> void:
 	await get_tree().physics_frame
-	car.rotation = track.start_rot + Vector3(0, PI, -PI/2)
-	car.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2) # bump forward a teensy bit
+	car.rotation = track.start_transf.basis.get_euler() + Vector3(0, PI, -PI/2)
+	car.global_position = track.start_transf.origin + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2) # bump forward a teensy bit
 	car.linear_velocity = Vector3.ZERO
 	car.angular_velocity = Vector3.ZERO
 	car.current_gear = 0
@@ -70,7 +70,7 @@ func _ready() -> void:
 	track = track_loader_scene.instantiate()
 	track.track = track_res
 	add_child(track)
-	data = GhostData.new(track_res.checkpoints.size(), track_res.laps)
+	data = GhostData.new(track.checkpoints.size(), track_res.laps)
 	mkcar()
 	mkghost()
 	connect_checkpoints()
@@ -117,7 +117,7 @@ func passed_finish() -> void:
 			best_time_data = data
 		else:
 			finished.emit(data.time, best_time_data.time)
-		data = GhostData.new(track_res.checkpoints.size(), track_res.laps)
+		data = GhostData.new(track.checkpoints.size(), track_res.laps)
 	else:
 		current_lap += 1
 		next_lap.emit()

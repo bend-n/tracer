@@ -8,7 +8,7 @@ const PAN_SENSITIVITY = 0.005;
 const SCROLL_SENS = 2;
 const CAMERA_MAX_ROTATION_ANGLE = deg_to_rad(70);
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 			mp_before_freelook = get_viewport().get_mouse_position()
@@ -16,7 +16,8 @@ func _process(delta):
 			freelook = true;
 	elif Input.is_action_pressed("ui_pan"):
 		var vel := Input.get_last_mouse_velocity() * PAN_SENSITIVITY
-		global_position += Vector3(vel.x, vel.y, 0)
+		position -= (transform.basis.x * vel.x)
+		position += (transform.basis.y * vel.y)
 	else:
 		if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);

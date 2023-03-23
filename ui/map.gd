@@ -13,16 +13,16 @@ var followers: Array = [] # Array[[PathFollow2D, Sprite2D, Node3D]]
 
 func _ready() -> void:
 	clear_points()
-	width = track.track.track_width
-	if !track.track.is_loop:
-		end_cap_mode = LINE_CAP_ROUND
-		begin_cap_mode = LINE_CAP_ROUND
+	width = 10
+#	if !track.track.is_loop:
+#		end_cap_mode = LINE_CAP_ROUND
+#		begin_cap_mode = LINE_CAP_ROUND
 
 	var curve := Curve2D.new()
 	curve.bake_interval = 200 # already baked
 	var box := Rect2()
-	for point_3d in track.curve.get_baked_points():
-		var p := flatten(point_3d)
+	for block in track.track.blocks:
+		var p := flatten(block.transform.origin)
 		curve.add_point(p)
 		box = box.expand(p)
 		add_point(p)
@@ -33,27 +33,29 @@ func _ready() -> void:
 	mkfollower(track.finish, finish_indicator, Color.WHITE, false, true)
 
 func _process(_delta: float) -> void:
-	for follower in followers:
-		if is_instance_valid(follower[2]):
-			(follower[0] as PathFollow2D).progress = track.curve.get_closest_offset((follower[2] as Node3D).global_position)
-			if !follower[0].rotates:
-				(follower[1] as Sprite2D).global_rotation = -follower[2].global_rotation.y - PI/2
+	return
+#	for follower in followers:
+#		if is_instance_valid(follower[2]):
+#			(follower[0] as PathFollow2D).progress = track.curve.get_closest_offset((follower[2] as Node3D).global_position)
+#			if !follower[0].rotates:
+#				(follower[1] as Sprite2D).global_rotation = -follower[2].global_rotation.y - PI/2
 
 func mkfollower(node: Node3D, tex: Texture, mod := Color.WHITE, back := false, rotates := false):
-	if !is_instance_valid(node):
-		push_warning("invalid follower")
-		return
-	var follower := PathFollow2D.new()
-	follower.rotates = rotates
-	path.add_child(follower)
-	var sprite := Sprite2D.new()
-	sprite.modulate = mod
-	sprite.texture = tex
-	follower.add_child(sprite)
-	if back:
-		followers.push_front([follower, sprite, node])
-	else:
-		followers.push_back([follower,sprite, node])
+	return
+#	if !is_instance_valid(node):
+#		push_warning("invalid follower")
+#		return
+#	var follower := PathFollow2D.new()
+#	follower.rotates = rotates
+#	path.add_child(follower)
+#	var sprite := Sprite2D.new()
+#	sprite.modulate = mod
+#	sprite.texture = tex
+#	follower.add_child(sprite)
+#	if back:
+#		followers.push_front([follower, sprite, node])
+#	else:
+#		followers.push_back([follower,sprite, node])
 
 func vec(f: float) -> Vector2:
 	return Vector2(f, f)

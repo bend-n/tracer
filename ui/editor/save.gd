@@ -11,3 +11,7 @@ func _on_pressed() -> void:
 	if FileAccess.file_exists(Globals.TRACKS % data.name):
 		pass
 	data.save(Globals.TRACKS % data.name)
+	unsaved = false
+
+func set_unsaved() -> void:
+	unsaved = true

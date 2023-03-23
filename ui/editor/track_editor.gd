@@ -13,12 +13,11 @@ signal make_gizmo(mode: Mode)
 const loader := preload("res://scenes/track.tscn")
 
 func _ready() -> void:
-	var data := Globals.editing
+	var data := Globals.editing if Globals.editing else TrackResource.new([])
 	var l: TrackLoader = loader.instantiate()
 	l.editor = true
 	l.track = data
 	add_child(l)
-#		await l.loaded
 	# move over the loaders children
 	for c in l.get_children():
 		l.remove_child(c)
@@ -26,13 +25,13 @@ func _ready() -> void:
 		if c is Floor:
 			c.input_event.connect(%items._on_floor_input_event)
 		elif not c is WorldEnvironment and not c is DirectionalLight3D:
-			var collider: PhysicsBody3D = c if c is PhysicsBody3D else c
+			var collider: PhysicsBody3D = c if c is PhysicsBody3D else c.collision
 			collider.input_event.connect(%items.node_input.bind(c))
 	# the loader has loaded, get rid of it
 	l.queue_free()
 	objects = data.blocks # please be reference
 	%propertys.set_n(data.name)
-
+	%cam.global_transform = IntroCam.get_origin(data) # put the camera up high, looking straight down
 
 	group.pressed.connect(
 		func pressed(b: Button) -> void:

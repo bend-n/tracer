@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://behu0a0iegwov"]
 
-[ext_resource type="Script" path="res://assets/blocks/ring_checkpoint.gd" id="1_cmmpp"]
+[ext_resource type="Script" path="res://classes/checkpoint.gd" id="1_rlrel"]
 [ext_resource type="TorusMesh" uid="uid://dlbpusye3e33p" path="res://assets/meshes/checkpoint.tres" id="2_xys6y"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_c3er2"]
@@ -9,30 +9,28 @@ data = PackedVector3Array(-6, 0, -10.3923, 0, 2.5, -14.5, 0, 0, -12, -6, 0, -10.
 [sub_resource type="BoxShape3D" id="BoxShape3D_k77jm"]
 size = Vector3(52, 52, 3)
 
-[node name="Checkpoint" type="PathFollow3D" node_paths=PackedStringArray("mesh")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-script = ExtResource("1_cmmpp")
-mesh = NodePath("Ring")
-
-[node name="Ring" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-visibility_range_end_margin = 1000.0
-visibility_range_fade_mode = 1
-mesh = ExtResource("2_xys6y")
-
-[node name="Collision" type="StaticBody3D" parent="."]
+[node name="ring_checkpoint" type="StaticBody3D" node_paths=PackedStringArray("mesh", "player_detector")]
 collision_mask = 0
+script = ExtResource("1_rlrel")
+mesh = NodePath("mesh")
+player_detector = NodePath("PlayerDetector")
 
-[node name="shape" type="CollisionShape3D" parent="Collision"]
+[node name="shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_c3er2")
 
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
+visibility_range_end_margin = 1000.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("2_xys6y")
+skeleton = NodePath("")
+
 [node name="PlayerDetector" type="Area3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
 [node name="Area" type="CollisionShape3D" parent="PlayerDetector"]
 shape = SubResource("BoxShape3D_k77jm")
-
-[connection signal="body_entered" from="PlayerDetector" to="." method="enter" unbinds=1]

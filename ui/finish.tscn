@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://cr1mgp6bgxh64"]
 
-[ext_resource type="Theme" uid="uid://cru1d7n2ftrfm" path="res://ui/theme.tres" id="1_aykd4"]
+[ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_aykd4"]
 [ext_resource type="Script" path="res://ui/finish.gd" id="1_crs2w"]
 [ext_resource type="Script" path="res://ui/diff.gd" id="2_gtres"]
 [ext_resource type="SystemFont" uid="uid://d2klp6vxh5l2d" path="res://ui/cascadiabold.tres" id="3_qktla"]
@@ -8,7 +8,7 @@
 [ext_resource type="SystemFont" uid="uid://bkjqtc5i64r3j" path="res://ui/ubuntu.tres" id="5_llemr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgqa0"]
-bg_color = Color(0.027451, 0.211765, 0.258824, 1)
+bg_color = Color(0, 0.168627, 0.211765, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100

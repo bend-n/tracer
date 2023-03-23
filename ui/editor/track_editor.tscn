@@ -284,7 +284,7 @@ render_target_update_mode = 4
 script = ExtResource("7_ftio3")
 
 [node name="cam" type="Camera3D" parent="split/split2/middle dock/viewport/view/port"]
-transform = Transform3D(0.877582, -0.229849, 0.420736, 0, 0.877582, 0.479426, -0.479426, -0.420736, 0.770151, 1.68294, 1.9177, 3.0806)
+unique_name_in_owner = true
 script = ExtResource("6_o7q05")
 
 [node name="right dock" type="VBoxContainer" parent="split/split2"]
@@ -303,8 +303,10 @@ theme_override_styles/panel = ExtResource("13_cyvq7")
 [connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="expand_selected"]
 [connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/items" method="fs_dir_selected"]
 [connection signal="created" from="split/left dock/fs/items" to="." method="_on_items_created"]
+[connection signal="created" from="split/left dock/fs/items" to="split/left dock/data/container/buttons/save" method="set_unsaved" unbinds=1]
 [connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected"]
 [connection signal="item_selected" from="split/left dock/fs/items" to="split/left dock/fs/items" method="on_selected"]
 [connection signal="selected_node" from="split/left dock/fs/items" to="." method="_on_selected_node"]
+[connection signal="selected_node" from="split/left dock/fs/items" to="split/left dock/data/container/buttons/save" method="set_unsaved" unbinds=1]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="." method="_on_snapping_toggled"]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="split/split2/middle dock/viewport/view/port" method="_on_snapping_toggled"]

@@ -67,3 +67,9 @@ func save(path: String) -> void:
 		blocks = b
 	}
 	GhostData._save_file(path, d)
+
+func get_aabb() -> AABB:
+	var box := AABB()
+	for block in blocks:
+		box = box.expand(block.transform.origin)
+	return box

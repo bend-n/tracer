@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://d3ywcokn5ddy8"]
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://d3ywcokn5ddy8"]
 
 [ext_resource type="SystemFont" uid="uid://xriuk0v4f6wj" path="res://ui/ubuntu_mononf.tres" id="1_37cf0"]
 [ext_resource type="StyleBox" uid="uid://cdth5nc7lbx1v" path="res://ui/panel_skewed.tres" id="1_g8q83"]
@@ -9,17 +9,81 @@
 [ext_resource type="Texture2D" uid="uid://vck01c83m1x3" path="res://ui/assets/arrow.png" id="6_uqp3t"]
 [ext_resource type="Texture2D" uid="uid://buwxt5g5y761m" path="res://ui/assets/arrow_collapsed.png" id="7_raqbt"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pmkpt"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.027451, 0.211765, 0.258824, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.396078, 0.482353, 0.513726, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayve0"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.027451, 0.211765, 0.258824, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcupl"]
+bg_color = Color(0.345098, 0.431373, 0.458824, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.14902, 0.545098, 0.823529, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 12
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ki0ve"]
 content_margin_left = 10.0
 content_margin_top = 10.0
 content_margin_right = 10.0
 content_margin_bottom = 10.0
 bg_color = Color(0, 0.168627, 0.211765, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y04f3"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.027451, 0.211765, 0.258824, 1)
+border_width_top = 2
+border_color = Color(0.14902, 0.545098, 0.823529, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_detail = 1
+expand_margin_top = 3.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0gry"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0.109804, 0.145098, 1)
+corner_radius_top_left = 53
+corner_radius_top_right = 53
+corner_detail = 1
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_vr8fs"]
 color = Color(0.345098, 0.431373, 0.458824, 1)
@@ -34,8 +98,11 @@ Button/colors/font_color = Color(0.933333, 0.909804, 0.835294, 1)
 Button/colors/font_focus_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/colors/font_hover_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/colors/font_hover_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
-Button/colors/font_pressed_color = Color(0.576471, 0.631373, 0.631373, 1)
+Button/colors/font_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/styles/focus = ExtResource("1_t7nt0")
+Button/styles/hover = SubResource("StyleBoxFlat_pmkpt")
+Button/styles/normal = SubResource("StyleBoxFlat_ayve0")
+Button/styles/pressed = SubResource("StyleBoxFlat_vcupl")
 ItemList/colors/guide_color = Color(0, 0, 0, 0)
 ItemList/constants/line_separation = 0
 ItemList/styles/panel = ExtResource("2_0o40a")
@@ -49,7 +116,11 @@ RichTextLabel/font_sizes/bold_font_size = 76
 RichTextLabel/font_sizes/normal_font_size = 76
 RichTextLabel/fonts/bold_font = ExtResource("3_fpgf0")
 RichTextLabel/fonts/normal_font = ExtResource("1_37cf0")
+TabContainer/font_sizes/font_size = 32
 TabContainer/styles/panel = SubResource("StyleBoxFlat_ki0ve")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_y04f3")
+TabContainer/styles/tab_unselected = ExtResource("4_mx083")
+TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_m0gry")
 Tree/colors/children_hl_line_color = Color(0.396078, 0.482353, 0.513726, 1)
 Tree/colors/font_color = Color(0.501961, 0.596078, 0.627451, 1)
 Tree/colors/font_selected_color = Color(0.933333, 0.909804, 0.835294, 1)
