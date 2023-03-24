@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=16 format=3 uid="uid://d3ywcokn5ddy8"]
+[gd_resource type="Theme" load_steps=17 format=3 uid="uid://d3ywcokn5ddy8"]
 
 [ext_resource type="SystemFont" uid="uid://xriuk0v4f6wj" path="res://ui/ubuntu_mononf.tres" id="1_37cf0"]
 [ext_resource type="StyleBox" uid="uid://cdth5nc7lbx1v" path="res://ui/panel_skewed.tres" id="1_g8q83"]
@@ -8,6 +8,8 @@
 [ext_resource type="StyleBox" uid="uid://dxtsrhgnyr80k" path="res://ui/panel_dark.stylebox" id="4_mx083"]
 [ext_resource type="Texture2D" uid="uid://vck01c83m1x3" path="res://ui/assets/arrow.png" id="6_uqp3t"]
 [ext_resource type="Texture2D" uid="uid://buwxt5g5y761m" path="res://ui/assets/arrow_collapsed.png" id="7_raqbt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lyybj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pmkpt"]
 content_margin_left = 5.0
@@ -26,17 +28,7 @@ corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
 corner_detail = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayve0"]
-content_margin_left = 5.0
-content_margin_top = 5.0
-content_margin_right = 5.0
-content_margin_bottom = 5.0
-bg_color = Color(0.027451, 0.211765, 0.258824, 1)
-corner_radius_top_left = 9
-corner_radius_top_right = 9
-corner_radius_bottom_right = 9
-corner_radius_bottom_left = 9
-corner_detail = 12
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kd5uw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcupl"]
 bg_color = Color(0.345098, 0.431373, 0.458824, 1)
@@ -95,13 +87,15 @@ vertical = true
 default_font = ExtResource("1_37cf0")
 default_font_size = 25
 Button/colors/font_color = Color(0.933333, 0.909804, 0.835294, 1)
+Button/colors/font_disabled_color = Color(0.396078, 0.482353, 0.513726, 1)
 Button/colors/font_focus_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/colors/font_hover_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/colors/font_hover_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
 Button/colors/font_pressed_color = Color(0.992157, 0.964706, 0.890196, 1)
+Button/styles/disabled = SubResource("StyleBoxEmpty_lyybj")
 Button/styles/focus = ExtResource("1_t7nt0")
 Button/styles/hover = SubResource("StyleBoxFlat_pmkpt")
-Button/styles/normal = SubResource("StyleBoxFlat_ayve0")
+Button/styles/normal = SubResource("StyleBoxEmpty_kd5uw")
 Button/styles/pressed = SubResource("StyleBoxFlat_vcupl")
 ItemList/colors/guide_color = Color(0, 0, 0, 0)
 ItemList/constants/line_separation = 0

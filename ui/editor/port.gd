@@ -9,8 +9,6 @@ const map = {
 
 var current: Gizmo
 var gizmo_mover: RemoteTransform3D
-@export var delete: InputEvent
-signal deleted
 
 func update_gizmo(mode: TrackEditor.Mode) -> void:
 	if current != null:
@@ -39,8 +37,6 @@ func _on_snapping_toggled(button_pressed: bool) -> void:
 	if current != null:
 		current.snapping = button_pressed
 
-func _input(event: InputEvent) -> void:
-	if event.is_match(delete) and current != null:
-		current.queue_free()
-		current = null
-		deleted.emit()
+func _on_delete_pressed() -> void:
+	current.queue_free()
+	current = null

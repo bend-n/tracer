@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=33 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://ui/editor/save.gd" id="7_saajs"]
 [ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="9_x2saf"]
 [ext_resource type="Script" path="res://ui/multi_button.gd" id="11_nar81"]
+[ext_resource type="Script" path="res://ui/editor/delete.gd" id="13_agg2r"]
 [ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="13_cyvq7"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_8ix4j"]
@@ -71,16 +72,23 @@ font_color = Color(0.14902, 0.545098, 0.823529, 1)
 outline_size = 10
 outline_color = Color(0.027451, 0.211765, 0.258824, 1)
 
+[sub_resource type="InputEventKey" id="InputEventKey_53uh0"]
+device = -1
+keycode = 4194308
+
+[sub_resource type="InputEventKey" id="InputEventKey_uh7no"]
+device = -1
+keycode = 4194312
+
+[sub_resource type="Shortcut" id="Shortcut_4byk3"]
+events = [SubResource("InputEventKey_53uh0"), SubResource("InputEventKey_uh7no")]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7qcnf"]
 bg_color = Color(0, 0, 0, 1)
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 12
 anti_aliasing_size = 0.397
-
-[sub_resource type="InputEventKey" id="InputEventKey_vdag7"]
-device = -1
-keycode = 4194308
 
 [node name="TrackEditor" type="PanelContainer"]
 anchors_preset = 15
@@ -194,6 +202,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_1bugq")
 [node name="container" type="HFlowContainer" parent="split/split2/middle dock/buttons"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("9_x2saf")
 theme_override_constants/h_separation = 0
 
 [node name="select" type="Button" parent="split/split2/middle dock/buttons/container"]
@@ -280,6 +289,18 @@ rotation = 3.14159
 text = "󰍇"
 label_settings = SubResource("LabelSettings_6nqim")
 
+[node name="spacer2" type="Control" parent="split/split2/middle dock/buttons/container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="delete" type="Button" parent="split/split2/middle dock/buttons/container"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+disabled = true
+shortcut = SubResource("Shortcut_4byk3")
+text = " "
+script = ExtResource("13_agg2r")
+
 [node name="viewport" type="PanelContainer" parent="split/split2/middle dock"]
 clip_children = 1
 layout_mode = 2
@@ -298,7 +319,6 @@ physics_object_picking = true
 size = Vector2i(1067, 1010)
 render_target_update_mode = 4
 script = ExtResource("7_ftio3")
-delete = SubResource("InputEventKey_vdag7")
 
 [node name="cam" type="Camera3D" parent="split/split2/middle dock/viewport/view/port"]
 unique_name_in_owner = true
@@ -326,7 +346,9 @@ theme_override_styles/panel = ExtResource("13_cyvq7")
 [connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected"]
 [connection signal="item_selected" from="split/left dock/fs/items" to="split/left dock/fs/items" method="on_selected"]
 [connection signal="selected_node" from="split/left dock/fs/items" to="." method="_on_selected_node"]
+[connection signal="selected_node" from="split/left dock/fs/items" to="split/split2/middle dock/buttons/container/delete" method="_on_items_selected_node"]
 [connection signal="selected_node" from="split/left dock/fs/items" to="split/left dock/data/container/buttons/save" method="set_unsaved" unbinds=1]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="." method="_on_snapping_toggled"]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="split/split2/middle dock/viewport/view/port" method="_on_snapping_toggled"]
-[connection signal="deleted" from="split/split2/middle dock/viewport/view/port" to="." method="_on_port_deleted"]
+[connection signal="pressed" from="split/split2/middle dock/buttons/container/delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="split/split2/middle dock/buttons/container/delete" to="split/split2/middle dock/viewport/view/port" method="_on_delete_pressed"]

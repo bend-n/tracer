@@ -72,3 +72,4 @@ func _on_floor_input_event(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s
 func node_input(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s: int, node: Node3D):
 	if is_left_click(e):
 		selected_node.emit(node)
+
