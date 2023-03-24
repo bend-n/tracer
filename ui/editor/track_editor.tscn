@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=34 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -19,14 +19,20 @@
 [sub_resource type="InputEventKey" id="InputEventKey_8ix4j"]
 device = -1
 ctrl_pressed = true
-keycode = 69
-unicode = 101
+keycode = 83
+unicode = 115
 
 [sub_resource type="Shortcut" id="Shortcut_3gcv0"]
 events = [SubResource("InputEventKey_8ix4j")]
 
-[sub_resource type="Shortcut" id="Shortcut_di8jb"]
-events = [SubResource("InputEventKey_8ix4j")]
+[sub_resource type="InputEventKey" id="InputEventKey_tmkac"]
+device = -1
+ctrl_pressed = true
+keycode = 69
+unicode = 101
+
+[sub_resource type="Shortcut" id="Shortcut_uhpqg"]
+events = [SubResource("InputEventKey_tmkac")]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bugq"]
 bg_color = Color(0.027451, 0.211765, 0.258824, 1)
@@ -145,7 +151,7 @@ script = ExtResource("7_saajs")
 custom_minimum_size = Vector2(20, 50)
 layout_mode = 2
 tooltip_text = "Export track (Ctrl+E)"
-shortcut = SubResource("Shortcut_di8jb")
+shortcut = SubResource("Shortcut_uhpqg")
 shortcut_in_tooltip = false
 text = "󰈝"
 
