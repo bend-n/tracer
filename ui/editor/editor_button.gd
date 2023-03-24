@@ -22,5 +22,5 @@ func _on_delete_pressed() -> void:
 	dialog.show()
 	dialog.confirmed.connect(emit_signal.bind(&"delete"))
 	dialog.canceled.connect(dialog.queue_free)
-	dialog.confirmed.connect(dialog.queue_free)
+	dialog.confirmed.connect(queue_free)
 

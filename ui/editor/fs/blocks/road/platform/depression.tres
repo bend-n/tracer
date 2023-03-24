@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://bqo6a0whny1po"]
+
+[ext_resource type="PackedScene" uid="uid://dis4x1q6yancv" path="res://assets/blocks/platform_depression.tscn" id="1_jie5w"]
+[ext_resource type="Script" path="res://classes/resources/link.gd" id="2_kcu76"]
+
+[resource]
+script = ExtResource("2_kcu76")
+scene = ExtResource("1_jie5w")
+type = 0

@@ -48,4 +48,3 @@ func delete(track: TrackResource):
 	DirAccess.remove_absolute(Globals.TRACKS % track.name)
 	if FileAccess.file_exists(Globals.THUMBS % track.name):
 		DirAccess.remove_absolute(Globals.THUMBS % track.name)
-	queue_free()
