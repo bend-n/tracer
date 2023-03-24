@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=29 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://ui/editor/cam.gd" id="6_o7q05"]
 [ext_resource type="ButtonGroup" uid="uid://oio3aly7aeny" path="res://ui/editor/group.tres" id="6_vgj8v"]
 [ext_resource type="Script" path="res://ui/editor/port.gd" id="7_ftio3"]
+[ext_resource type="Script" path="res://ui/editor/back_button.gd" id="7_r0vjt"]
 [ext_resource type="Script" path="res://ui/editor/save.gd" id="7_saajs"]
 [ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="9_x2saf"]
 [ext_resource type="Script" path="res://ui/multi_button.gd" id="11_nar81"]
@@ -108,7 +109,17 @@ layout_mode = 2
 layout_mode = 2
 theme = ExtResource("9_x2saf")
 
+[node name="back" type="Button" parent="split/left dock/data/container/buttons"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = " "
+script = ExtResource("7_r0vjt")
+
+[node name="vsep" type="VSeparator" parent="split/left dock/data/container/buttons"]
+layout_mode = 2
+
 [node name="save" type="Button" parent="split/left dock/data/container/buttons"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 50)
 layout_mode = 2
 tooltip_text = "Save track (Ctrl+S)"
@@ -297,6 +308,8 @@ size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("13_cyvq7")
 
 [connection signal="make_gizmo" from="." to="split/split2/middle dock/viewport/view/port" method="update_gizmo"]
+[connection signal="back" from="split/left dock/data/container/buttons/back" to="." method="queue_free"]
+[connection signal="pressed" from="split/left dock/data/container/buttons/back" to="split/left dock/data/container/buttons/back" method="_on_pressed"]
 [connection signal="pressed" from="split/left dock/data/container/buttons/save" to="split/left dock/data/container/buttons/save" method="_on_pressed"]
 [connection signal="item_edited" from="split/left dock/data/container/propertys" to="split/left dock/data/container/propertys" method="_on_item_edited"]
 [connection signal="name_changed" from="split/left dock/data/container/propertys" to="." method="_on_propertys_name_changed"]

@@ -31,7 +31,11 @@ func _ready() -> void:
 	l.queue_free()
 	objects = data.blocks # please be reference
 	%propertys.set_n(data.name)
+	n = data.name
 	%cam.global_transform = IntroCam.get_origin(data) # put the camera up high, looking straight down
+
+	if not FileAccess.file_exists(Globals.TRACKS % data.name):
+		%save.set_unsaved()
 
 	group.pressed.connect(
 		func pressed(b: Button) -> void:

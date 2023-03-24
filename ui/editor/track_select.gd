@@ -38,7 +38,7 @@ func _on_new_pressed() -> void:
 	var n := 0
 	while FileAccess.file_exists(Globals.TRACKS % ("untitled track %d" % n if n != 0 else "untitled track")):
 		n+=1
-	var nam := "untitled track %d" % n
+	var nam := "untitled track %d" % n if n != 0 else "untitled track"
 	res.name = nam
 	edit(res)
 
