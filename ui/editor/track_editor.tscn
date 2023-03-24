@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=30 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -77,6 +77,10 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 12
 anti_aliasing_size = 0.397
+
+[sub_resource type="InputEventKey" id="InputEventKey_vdag7"]
+device = -1
+keycode = 4194308
 
 [node name="TrackEditor" type="PanelContainer"]
 anchors_preset = 15
@@ -294,6 +298,7 @@ physics_object_picking = true
 size = Vector2i(1067, 1010)
 render_target_update_mode = 4
 script = ExtResource("7_ftio3")
+delete = SubResource("InputEventKey_vdag7")
 
 [node name="cam" type="Camera3D" parent="split/split2/middle dock/viewport/view/port"]
 unique_name_in_owner = true
@@ -324,3 +329,4 @@ theme_override_styles/panel = ExtResource("13_cyvq7")
 [connection signal="selected_node" from="split/left dock/fs/items" to="split/left dock/data/container/buttons/save" method="set_unsaved" unbinds=1]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="." method="_on_snapping_toggled"]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="split/split2/middle dock/viewport/view/port" method="_on_snapping_toggled"]
+[connection signal="deleted" from="split/split2/middle dock/viewport/view/port" to="." method="_on_port_deleted"]
