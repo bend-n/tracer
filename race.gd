@@ -46,13 +46,13 @@ func reset_ghost() -> void:
 	else:
 		ghost.engine.volume = 0
 		ghost.global_position = track.start_transf.origin + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2)
-		ghost.rotation = track.start_transf.basis.get_euler() + Vector3(0, PI, -PI/2)
+		ghost.rotation = track.start_transf.basis.get_euler()# + Vector3(0, PI, -PI/2)
 	ghost.reset()
 	ghost.hide()
 
 func reset_car() -> void:
 	await get_tree().physics_frame
-	car.rotation = track.start_transf.basis.get_euler() + Vector3(0, PI, -PI/2)
+	car.rotation = track.start_transf.basis.get_euler()# + Vector3(0, PI, -PI/2)
 	car.global_position = track.start_transf.origin + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2) # bump forward a teensy bit
 	car.linear_velocity = Vector3.ZERO
 	car.angular_velocity = Vector3.ZERO
