@@ -46,4 +46,6 @@ func _on_new_pressed() -> void:
 func delete(track: TrackResource):
 #	OS.move_to_trash(Globals.TRACKS % track.name)
 	DirAccess.remove_absolute(Globals.TRACKS % track.name)
+	if FileAccess.file_exists(Globals.THUMBS % track.name):
+		DirAccess.remove_absolute(Globals.THUMBS % track.name)
 	queue_free()
