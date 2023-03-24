@@ -33,7 +33,7 @@ func _init(p_blocks: Array[TrackObject]) -> void:
 	blocks = p_blocks
 
 static func from_d(d: Dictionary) -> TrackResource:
-	var blocs: Array[TrackObject]
+	var blocs: Array[TrackObject] = []
 	for block in d.blocks:
 		blocs.append(TrackObject.from_d(block))
 	var obj := TrackResource.new(blocs)
@@ -54,7 +54,7 @@ static func _load(path: String) -> TrackResource:
 
 
 func save(path: String) -> void:
-	var b: Array[Dictionary] # i know map() exists, but it didnt work
+	var b: Array[Dictionary] = [] # i know map() exists, but it didnt work
 	for i in blocks:
 		b.append(i.exprt())
 	var d := {

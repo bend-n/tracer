@@ -29,7 +29,7 @@ func add_player() -> void:
 	v.viewport.add_child(c_cam)
 	v.viewport.add_child(i_cam)
 	var hud = hud_scene.instantiate()
-	hud.assigned.emit(race.car, race.ghost, race.timer, race.track)
+	hud.assigned.emit(race.car, race.timer, race.track)
 	v.add_child(hud)
 	race.split.connect(hud.splits.update)
 	race.next_lap.connect(hud.laps.increment)
