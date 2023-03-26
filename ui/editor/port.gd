@@ -38,6 +38,6 @@ func _on_snapping_toggled(button_pressed: bool) -> void:
 	if current != null:
 		current.snapping = button_pressed
 
-func _on_delete_pressed() -> void:
+func remove_current() -> void:
 	current.queue_free()
 	current = null
