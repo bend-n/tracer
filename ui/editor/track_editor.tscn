@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=41 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -14,7 +14,9 @@
 [ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="9_x2saf"]
 [ext_resource type="Script" path="res://ui/multi_button.gd" id="11_nar81"]
 [ext_resource type="Script" path="res://ui/editor/delete.gd" id="13_agg2r"]
+[ext_resource type="Script" path="res://ui/editor/undo.gd" id="13_bgr8w"]
 [ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="13_cyvq7"]
+[ext_resource type="Script" path="res://ui/editor/redo.gd" id="14_2ypjq"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_8ix4j"]
 device = -1
@@ -77,6 +79,31 @@ font_size = 12
 font_color = Color(0.14902, 0.545098, 0.823529, 1)
 outline_size = 10
 outline_color = Color(0.027451, 0.211765, 0.258824, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_eddoh"]
+device = -1
+ctrl_pressed = true
+keycode = 90
+unicode = 122
+
+[sub_resource type="Shortcut" id="Shortcut_kampb"]
+events = [SubResource("InputEventKey_eddoh")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_r2b0g"]
+device = -1
+ctrl_pressed = true
+keycode = 89
+unicode = 121
+
+[sub_resource type="InputEventKey" id="InputEventKey_m7yhl"]
+device = -1
+shift_pressed = true
+ctrl_pressed = true
+keycode = 90
+unicode = 90
+
+[sub_resource type="Shortcut" id="Shortcut_6jonl"]
+events = [SubResource("InputEventKey_r2b0g"), SubResource("InputEventKey_m7yhl")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_53uh0"]
 device = -1
@@ -299,11 +326,33 @@ label_settings = SubResource("LabelSettings_6nqim")
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="undo" type="Button" parent="split/split2/middle dock/buttons/container"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+tooltip_text = "Undo (Ctrl + Z)"
+disabled = true
+shortcut = SubResource("Shortcut_kampb")
+shortcut_in_tooltip = false
+text = "󰕌"
+script = ExtResource("13_bgr8w")
+
+[node name="redo" type="Button" parent="split/split2/middle dock/buttons/container"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+tooltip_text = "Redo (Ctrl + Y | Ctrl + Shift + Z)"
+disabled = true
+shortcut = SubResource("Shortcut_6jonl")
+shortcut_in_tooltip = false
+text = "󰑎 "
+script = ExtResource("14_2ypjq")
+
 [node name="delete" type="Button" parent="split/split2/middle dock/buttons/container"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+tooltip_text = "Delete selected object (Backspace | Delete)"
 disabled = true
 shortcut = SubResource("Shortcut_4byk3")
+shortcut_in_tooltip = false
 text = " "
 script = ExtResource("13_agg2r")
 
@@ -351,6 +400,7 @@ theme_override_styles/panel = ExtResource("13_cyvq7")
 [connection signal="created" from="split/left dock/fs/items" to="split/left dock/data/container/buttons/save" method="set_unsaved" unbinds=1]
 [connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected"]
 [connection signal="item_selected" from="split/left dock/fs/items" to="split/left dock/fs/items" method="on_selected"]
+[connection signal="remove_tobj" from="split/left dock/fs/items" to="." method="_on_items_remove_tobj"]
 [connection signal="selected_node" from="split/left dock/fs/items" to="." method="_on_selected_node"]
 [connection signal="selected_node" from="split/left dock/fs/items" to="split/split2/middle dock/buttons/container/delete" method="_on_items_selected_node"]
 [connection signal="selected_node" from="split/left dock/fs/items" to="split/left dock/data/container/buttons/save" method="set_unsaved" unbinds=1]

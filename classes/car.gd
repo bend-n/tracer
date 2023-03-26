@@ -173,7 +173,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			contact -= 1
 			var p := state.get_contact_local_position(contact) # it says local, but its global.
 			var direction := state.get_contact_local_normal(contact)
-			var sparks := sparks.instantiate()
-			(sparks.process_material as ParticleProcessMaterial).direction = direction
-			get_parent().add_child(sparks)
-			sparks.global_position = p
+			var sprk := sparks.instantiate()
+			(sprk.process_material as ParticleProcessMaterial).direction = direction
+			get_parent().add_child(sprk)
+			sprk.global_position = p

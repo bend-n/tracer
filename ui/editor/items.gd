@@ -3,10 +3,12 @@ extends ItemList
 
 var weak_links: Array = []
 @export var world: SubViewport # TODO: make this use drag and drop
+@onready var history: UndoRedo = owner.history
 
 signal selected_node(node: Node3D)
 signal dir_selected()
 signal created(object: TrackObject)
+signal remove_tobj(tobj: TrackObject                               )
 
 const icon_table = {
 	WeakLink.Type.Scene: preload("res://ui/assets/block.png"),
@@ -39,22 +41,36 @@ func on_selected(index: int) -> void:
 		open_dir(weak_links[index])
 		return
 	var weak_link: WeakLink = weak_links[index]
-	match weak_link.type:
+	make_obj(weak_link)
+
+func make_obj(link: WeakLink):
+	match link.type:
 		WeakLink.Type.Scene:
-			var scn := weak_link.scene
+			var scn := link.scene
 			var selected = scn.instantiate() as Node3D
 			if selected.get_script() != null:
 				selected.editor = true
-			world.add_child(selected)
-			selected.global_position = world.get_camera_3d().project_position(world.size / 2, 50)
-			if owner.snapping:
-				selected.global_position = selected.global_position.snapped(Vector3.ONE * 10) # put it forth
-			selected.look_at(world.get_camera_3d().global_position)
-			selected.global_rotation = selected.global_rotation.snapped(Vector3.ONE * 90)
 			var collider: PhysicsBody3D = selected if selected is PhysicsBody3D else selected.collision
 			collider.input_event.connect(node_input.bind(selected))
-			created.emit(TrackObject.new(scn, selected))
-			print("instantiated scn %s" % weak_link.scene.resource_path)
+			var obj := TrackObject.new(scn, selected)
+			obj.set_meta(&"id", len((owner as TrackEditor).objects))
+			history.create_action("add block");
+			history.add_do_method(add_obj.bind(obj, selected))
+			history.add_do_reference(selected)
+			history.add_undo_method(remove_obj.bind(obj, selected))
+			var origin := world.get_camera_3d().project_position(world.size / 2, 50)
+			if owner.snapping:
+				origin = origin.snapped(Vector3.ONE * 10) # snap it
+			history.add_do_property(selected, &"global_transform", Transform3D(Basis(), origin))
+			history.commit_action()
+
+func add_obj(o: TrackObject, n: Node):
+	world.add_child(n)
+	created.emit(o)
+
+func remove_obj(obj: TrackObject, n: Node):
+	emit_signal(&"remove_tobj", obj)
+	world.remove_child(n)
 
 func is_left_click(e: InputEvent) -> bool:
 	return (

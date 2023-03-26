@@ -8,6 +8,7 @@ var mode: Mode
 var selected: Node
 var snapping := true
 var objects: Array[TrackObject] = []
+var history := UndoRedo.new()
 signal make_gizmo(mode: Mode)
 
 const loader := preload("res://scenes/track.tscn")
@@ -75,3 +76,6 @@ func _on_delete_pressed() -> void:
 	objects.remove_at(index)
 	selected.queue_free()
 	selected = null
+
+func _on_items_remove_tobj(tobj: TrackObject) -> void:
+	objects.erase(tobj)
