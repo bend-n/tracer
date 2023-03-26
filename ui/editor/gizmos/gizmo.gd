@@ -3,6 +3,7 @@ class_name Gizmo
 
 @onready var camera := get_viewport().get_camera_3d()
 var snapping := false
+var hist: UndoRedo
 
 func _physics_process(_delta: float) -> void:
 	var distance := (camera.global_position - global_position).length()

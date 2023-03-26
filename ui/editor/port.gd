@@ -25,6 +25,7 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 				current = map[mode].instantiate()
 				current.snapping = editor.snapping
 				current.path = editor.selected.get_path()
+				current.hist = owner.history
 				gizmo_mover = RemoteTransform3D.new()
 				gizmo_mover.update_rotation = false
 				gizmo_mover.update_scale = false
