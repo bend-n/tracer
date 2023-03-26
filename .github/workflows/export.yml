@@ -10,13 +10,11 @@ on:
       - "**.ttf"
       - ".github/workflows/export.yml"
       - "export_presets.cfg"
-    branches:
-      - main
 
 jobs:
   export:
     uses: bend-n/godot-actions/.github/workflows/callable-export.yml@main
     with:
       export-name: tracer
-      image: ghcr.io/bend-n/godot:4.0
+      image: ghcr.io/bend-n/godot:4.0.1
       platforms: "windows linux mac"
