@@ -67,14 +67,13 @@ var n: String
 func _on_propertys_name_changed(p_name: String) -> void:
 	n = p_name
 
+func tobj_from_node(n: Node) -> TrackObject:
+	for o in objects:
+		if o.live_node == n:
+			return o
+	return null
+
 func _on_delete_pressed() -> void:
-	var index := 0
-	for i in len(objects):
-		if objects[i].live_node == selected:
-			index = i
-			break
-	objects.remove_at(index)
-	selected.queue_free()
 	selected = null
 
 func _on_items_remove_tobj(tobj: TrackObject) -> void:

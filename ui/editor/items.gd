@@ -2,13 +2,13 @@ extends ItemList
 @export var t: Tree
 
 var weak_links: Array = []
-@export var world: SubViewport # TODO: make this use drag and drop
+@onready var world: SubViewport = %port # TODO: make this use drag and drop
 @onready var history: UndoRedo = owner.history
 
 signal selected_node(node: Node3D)
 signal dir_selected()
 signal created(object: TrackObject)
-signal remove_tobj(tobj: TrackObject                               )
+signal remove_tobj(tobj: TrackObject)
 
 const icon_table = {
 	WeakLink.Type.Scene: preload("res://ui/assets/block.png"),
