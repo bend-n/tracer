@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2s65aeicfsrh"]
+
+[ext_resource type="Script" path="res://ui/editor/gizmos/gizmo.gd" id="1_qxsjm"]
+[ext_resource type="Script" path="res://ui/editor/gizmos/translate/handle.gd" id="3_qujuv"]
+[ext_resource type="CylinderMesh" uid="uid://lc08lgqf086" path="res://ui/editor/gizmos/scale/cylinder.tres" id="3_ybbe0"]
+[ext_resource type="Material" uid="uid://okgh4dgd5sml" path="res://ui/assets/materials/y.material" id="5_mvu5g"]
+[ext_resource type="BoxMesh" uid="uid://dqf33w5edcobv" path="res://ui/editor/gizmos/scale/box.tres" id="6_8ik8b"]
+[ext_resource type="Shape3D" uid="uid://k6i72vyyvx5a" path="res://ui/editor/gizmos/translate/translate_arm.shape" id="7_jmnc7"]
+[ext_resource type="Material" uid="uid://cw2wr7aj6g53o" path="res://ui/assets/materials/x.material" id="8_k5avi"]
+[ext_resource type="Material" uid="uid://6jcpuce3rdka" path="res://ui/assets/materials/z.material" id="10_n5hvu"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qsd58"]
+radius = 1.0
+height = 2.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yrage"]
+render_priority = 4
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0.811765, 0.776471, 0, 1)
+
+[node name="scale" type="Node3D"]
+script = ExtResource("1_qxsjm")
+
+[node name="handle_y" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 10, 0)
+collision_layer = 2147483648
+collision_mask = 0
+script = ExtResource("3_qujuv")
+dir = 2
+mode = 1
+
+[node name="cylinder" type="MeshInstance3D" parent="handle_y"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.31134e-07, 3)
+mesh = ExtResource("3_ybbe0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_mvu5g")
+
+[node name="point" type="MeshInstance3D" parent="handle_y"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, -2.84217e-14, -5)
+mesh = ExtResource("6_8ik8b")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_mvu5g")
+
+[node name="collider" type="CollisionShape3D" parent="handle_y"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.37114e-08, 1)
+visible = false
+shape = ExtResource("7_jmnc7")
+
+[node name="handle_x" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, 0)
+collision_layer = 2147483648
+collision_mask = 0
+script = ExtResource("3_qujuv")
+dir = 0
+mode = 1
+
+[node name="cylinder" type="MeshInstance3D" parent="handle_x"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.31134e-07, 0, -3)
+mesh = ExtResource("3_ybbe0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("8_k5avi")
+
+[node name="point" type="MeshInstance3D" parent="handle_x"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 5)
+mesh = ExtResource("6_8ik8b")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("8_k5avi")
+
+[node name="collider" type="CollisionShape3D" parent="handle_x"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.37114e-08, 0, -1)
+visible = false
+shape = ExtResource("7_jmnc7")
+
+[node name="handle_z" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+collision_layer = 2147483648
+collision_mask = 0
+script = ExtResource("3_qujuv")
+dir = 1
+mode = 1
+
+[node name="cylinder" type="MeshInstance3D" parent="handle_z"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -3)
+mesh = ExtResource("3_ybbe0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("10_n5hvu")
+
+[node name="point" type="MeshInstance3D" parent="handle_z"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 5)
+mesh = ExtResource("6_8ik8b")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("10_n5hvu")
+
+[node name="collider" type="CollisionShape3D" parent="handle_z"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+visible = false
+shape = ExtResource("7_jmnc7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_qsd58")
+surface_material_override/0 = SubResource("StandardMaterial3D_yrage")

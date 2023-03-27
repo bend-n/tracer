@@ -4,7 +4,8 @@ extends SubViewport
 
 const map = {
 	TrackEditor.Mode.Select: preload("res://ui/editor/gizmos/selection_marker.tscn"),
-	TrackEditor.Mode.Move: preload("res://ui/editor/gizmos/translate/translate.tscn")
+	TrackEditor.Mode.Move: preload("res://ui/editor/gizmos/translate/translate.tscn"),
+	TrackEditor.Mode.Scale: preload("res://ui/editor/gizmos/scale/scale.tscn")
 }
 
 var current: Gizmo

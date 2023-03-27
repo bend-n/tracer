@@ -11,8 +11,11 @@ var dragged := false
 var clicked_position := Vector3.ZERO
 var click_plane: Plane
 var original_transform: Transform3D
+var original_scale: Vector3
 
 @onready var gizmo: Gizmo = owner
+enum Mode { Translate, Scale }
+@export var mode: Mode
 
 func _process(_delta: float):
 	if dragged and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -29,12 +32,24 @@ func _process(_delta: float):
 			return
 		var dist = intersection_of_movement_point - clicked_position
 		var displacement: Vector3 = dist.project(drag_direction)
-		var transf := original_transform.translated_local(displacement)
-		if owner.snapping:
-			transf.origin = transf.origin.snapped(Vector3.ONE*10)
-		gizmo.hist.create_action("move object", UndoRedo.MERGE_ENDS)
-		gizmo.hist.add_do_property(owner.object, &"global_transform", transf)
-		gizmo.hist.add_undo_property(owner.object, &"global_transform", original_transform)
+		match mode:
+			Mode.Translate:
+				var transf := original_transform.translated_local(displacement)
+				gizmo.hist.create_action("move object", UndoRedo.MERGE_ENDS)
+				transf = original_transform.translated_local(displacement)
+				if owner.snapping:
+					transf.origin = transf.origin.snapped(Vector3.ONE*10)
+				gizmo.hist.add_do_property(owner.object, &"global_transform", transf)
+				gizmo.hist.add_undo_property(owner.object, &"global_transform", original_transform)
+			Mode.Scale:
+				gizmo.hist.create_action("scale object", UndoRedo.MERGE_ENDS)
+				var scl: Vector3 = original_scale + displacement
+				if owner.snapping:
+					scl = scl.snapped(Vector3.ONE)
+				if scl.x <= 0 || scl.y <= 0: # pls no flip
+					scl = Vector3.ONE
+				gizmo.hist.add_do_property(owner.object, &"scale", scl)
+				gizmo.hist.add_undo_property(owner.object, &"scale", original_scale)
 		gizmo.hist.commit_action()
 
 func _ready() -> void:
@@ -51,4 +66,5 @@ func click(camera: Camera3D, event: InputEvent, click_position: Vector3, _click_
 
 		clicked_position = click_position
 		original_transform = gizmo.object.global_transform
+		original_scale = gizmo.object.scale
 
