@@ -1,30 +1,30 @@
-[gd_scene load_steps=13 format=3 uid="uid://l7yfnjxyqh1y"]
+[gd_scene load_steps=13 format=3 uid="uid://d3enn4l4tqhe8"]
 
-[ext_resource type="Script" path="res://ui/editor/gizmos/gizmo.gd" id="1_3pwvt"]
-[ext_resource type="Shape3D" uid="uid://k6i72vyyvx5a" path="res://ui/editor/gizmos/translate_arm.shape" id="2_fnl4w"]
-[ext_resource type="Script" path="res://ui/editor/gizmos/handle.gd" id="2_wavrl"]
-[ext_resource type="Script" path="res://ui/editor/gizmos/center.gd" id="2_weeof"]
-[ext_resource type="Material" uid="uid://b58fjwm8y5kbv" path="res://ui/assets/materials/center.material" id="3_yj0f1"]
-[ext_resource type="Material" uid="uid://6jcpuce3rdka" path="res://ui/assets/materials/z.material" id="5_4yd1l"]
-[ext_resource type="Material" uid="uid://cw2wr7aj6g53o" path="res://ui/assets/materials/x.material" id="6_qv6ny"]
-[ext_resource type="Material" uid="uid://okgh4dgd5sml" path="res://ui/assets/materials/y.material" id="7_jee6e"]
-[ext_resource type="CylinderMesh" uid="uid://c3hxlx3k1jmfb" path="res://ui/editor/gizmos/cylinder.tres" id="7_nrphe"]
-[ext_resource type="CylinderMesh" uid="uid://cd0844dj635dv" path="res://ui/editor/gizmos/point.tres" id="8_m13bo"]
+[ext_resource type="Script" path="res://ui/editor/gizmos/gizmo.gd" id="1_ikuqi"]
+[ext_resource type="Script" path="res://ui/editor/gizmos/translate/center.gd" id="2_xatqc"]
+[ext_resource type="Material" uid="uid://b58fjwm8y5kbv" path="res://ui/assets/materials/center.material" id="3_e2dsi"]
+[ext_resource type="Script" path="res://ui/editor/gizmos/translate/handle.gd" id="4_xrsu0"]
+[ext_resource type="CylinderMesh" uid="uid://c3hxlx3k1jmfb" path="res://ui/editor/gizmos/translate/cylinder.tres" id="5_enebv"]
+[ext_resource type="Material" uid="uid://okgh4dgd5sml" path="res://ui/assets/materials/y.material" id="6_4pex0"]
+[ext_resource type="CylinderMesh" uid="uid://cd0844dj635dv" path="res://ui/editor/gizmos/translate/point.tres" id="7_6fpx1"]
+[ext_resource type="Shape3D" uid="uid://k6i72vyyvx5a" path="res://ui/editor/gizmos/translate/translate_arm.shape" id="8_duaca"]
+[ext_resource type="Material" uid="uid://cw2wr7aj6g53o" path="res://ui/assets/materials/x.material" id="9_yvnr5"]
+[ext_resource type="Material" uid="uid://6jcpuce3rdka" path="res://ui/assets/materials/z.material" id="10_f15yq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rttof"]
-material = ExtResource("3_yj0f1")
+material = ExtResource("3_e2dsi")
 size = Vector3(10, 10, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tep2a"]
 size = Vector3(10, 10, 10)
 
 [node name="translate" type="Node3D"]
-script = ExtResource("1_3pwvt")
+script = ExtResource("1_ikuqi")
 
 [node name="center" type="StaticBody3D" parent="."]
 collision_layer = 2147483648
 collision_mask = 0
-script = ExtResource("2_weeof")
+script = ExtResource("2_xatqc")
 
 [node name="mesh" type="MeshInstance3D" parent="center"]
 mesh = SubResource("BoxMesh_rttof")
@@ -37,67 +37,67 @@ shape = SubResource("BoxShape3D_tep2a")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 10, 0)
 collision_layer = 2147483648
 collision_mask = 0
-script = ExtResource("2_wavrl")
+script = ExtResource("4_xrsu0")
 dir = 2
 
 [node name="cylinder" type="MeshInstance3D" parent="handle_y"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-mesh = ExtResource("7_nrphe")
+mesh = ExtResource("5_enebv")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("7_jee6e")
+surface_material_override/0 = ExtResource("6_4pex0")
 
 [node name="point" type="MeshInstance3D" parent="handle_y"]
 transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, -6)
-mesh = ExtResource("8_m13bo")
+mesh = ExtResource("7_6fpx1")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("7_jee6e")
+surface_material_override/0 = ExtResource("6_4pex0")
 
 [node name="collider" type="CollisionShape3D" parent="handle_y"]
 visible = false
-shape = ExtResource("2_fnl4w")
+shape = ExtResource("8_duaca")
 
 [node name="handle_x" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, 0)
 collision_layer = 2147483648
 collision_mask = 0
-script = ExtResource("2_wavrl")
+script = ExtResource("4_xrsu0")
 dir = 0
 
 [node name="cylinder" type="MeshInstance3D" parent="handle_x"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-mesh = ExtResource("7_nrphe")
+mesh = ExtResource("5_enebv")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("6_qv6ny")
+surface_material_override/0 = ExtResource("9_yvnr5")
 
 [node name="point" type="MeshInstance3D" parent="handle_x"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 6)
-mesh = ExtResource("8_m13bo")
+mesh = ExtResource("7_6fpx1")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("6_qv6ny")
+surface_material_override/0 = ExtResource("9_yvnr5")
 
 [node name="collider" type="CollisionShape3D" parent="handle_x"]
 visible = false
-shape = ExtResource("2_fnl4w")
+shape = ExtResource("8_duaca")
 
 [node name="handle_z" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 collision_layer = 2147483648
 collision_mask = 0
-script = ExtResource("2_wavrl")
+script = ExtResource("4_xrsu0")
 dir = 1
 
 [node name="cylinder" type="MeshInstance3D" parent="handle_z"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-mesh = ExtResource("7_nrphe")
+mesh = ExtResource("5_enebv")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("5_4yd1l")
+surface_material_override/0 = ExtResource("10_f15yq")
 
 [node name="point" type="MeshInstance3D" parent="handle_z"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 6)
-mesh = ExtResource("8_m13bo")
+mesh = ExtResource("7_6fpx1")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("5_4yd1l")
+surface_material_override/0 = ExtResource("10_f15yq")
 
 [node name="collider" type="CollisionShape3D" parent="handle_z"]
 visible = false
-shape = ExtResource("2_fnl4w")
+shape = ExtResource("8_duaca")

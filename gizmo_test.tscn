@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://domyoa17b231n"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="1_1kys7"]
 [ext_resource type="PackedScene" uid="uid://crc02shshycvq" path="res://scenes/sun.tscn" id="2_qpxj4"]
 [ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="3_2dhxm"]
 [ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="4_qhhmo"]
-[ext_resource type="PackedScene" uid="uid://l7yfnjxyqh1y" path="res://ui/editor/gizmos/translate.tscn" id="5_rrfeo"]
+[ext_resource type="PackedScene" uid="uid://d3enn4l4tqhe8" path="res://ui/editor/gizmos/translate/translate.tscn" id="5_rrfeo"]
 
 [node name="Node3D" type="Node3D"]
 

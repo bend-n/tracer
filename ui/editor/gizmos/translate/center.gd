@@ -1,11 +1,6 @@
 extends StaticBody3D
 class_name TranslateGizmoCenter
 
-
-#					current_position += editor_viewport.gizmo_camera.global_transform.basis.y * -mouse_delta.y;
-
-#                    current_position += editor_viewport.gizmo_camera.global_transform.basis.x * mouse_delta.x;
-
 var dragged := false
 var clicked_position := Vector3.ZERO
 var click_plane: Plane
