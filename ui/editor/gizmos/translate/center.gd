@@ -20,10 +20,15 @@ func _process(_delta: float):
 			# dont move if its exactly parallel to plane
 			return
 		var displacement: Vector3 = intersection_of_movement_point - clicked_position
-		owner.object.global_transform = original_transform
-		owner.object.translate_object_local(displacement)
+		var transf := original_transform.translated_local(displacement)
+		owner.hist.create_action("move object", UndoRedo.MERGE_ENDS)
+		transf = original_transform.translated_local(displacement)
 		if owner.snapping:
-			owner.object.global_position = (owner.object.global_position as Vector3).snapped(Vector3.ONE*10)
+			transf.origin = transf.origin.snapped(Vector3.ONE*10)
+		owner.hist.add_do_property(owner.object, &"global_transform", transf)
+		owner.hist.add_undo_property(owner.object, &"global_transform", original_transform)
+		owner.object.translate_object_local(displacement)
+		owner.hist.commit_action()
 
 func _ready() -> void:
 	input_event.connect(click)
