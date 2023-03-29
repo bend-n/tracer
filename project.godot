@@ -169,6 +169,7 @@ rotate_ccw={
 [physics]
 
 3d/run_on_separate_thread=true
+common/enable_object_picking=false
 
 [rendering]
 

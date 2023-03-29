@@ -33,7 +33,12 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 				gizmo_mover.update_position = true
 				add_child(current)
 				gizmo_mover.remote_path = current.get_path()
+				current.global_position = editor.selected.global_position
 				editor.selected.add_child(gizmo_mover)
+			for o in editor.objects:
+				var node: Node3D = (o as TrackObject).live_node
+				var coll: CollisionObject3D = node.collision if not node is CollisionObject3D else node
+				coll.input_ray_pickable = mode == TrackEditor.Mode.Select || editor.selected == null
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	if current != null:

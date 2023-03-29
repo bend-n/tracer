@@ -5,7 +5,7 @@ class_name TrackEditor
 
 enum Mode { Select, Move, Rotate, Scale }
 var mode: Mode
-var selected: Node
+var selected: Node3D
 var snapping := true
 var objects: Array[TrackObject] = []
 var history := UndoRedo.new()
