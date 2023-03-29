@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dfvtugujgcjcw"]
+[gd_scene load_steps=14 format=3 uid="uid://dfvtugujgcjcw"]
 
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_noykn"]
 [ext_resource type="Script" path="res://ui/trackbutton.gd" id="2_bcpuy"]
@@ -19,6 +19,32 @@ font_color = Color(0.933333, 0.909804, 0.835294, 1)
 font = ExtResource("3_suph6")
 font_size = 25
 font_color = Color(0.933333, 0.909804, 0.835294, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sad5x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcebg"]
+bg_color = Color(0.0431373, 0.270588, 0.32549, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 12
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fayhu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qw0k4"]
+bg_color = Color(0.14902, 0.545098, 0.823529, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 12
+
+[sub_resource type="Theme" id="Theme_vsupn"]
+Button/styles/focus = SubResource("StyleBoxEmpty_sad5x")
+Button/styles/hover = SubResource("StyleBoxFlat_vcebg")
+Button/styles/normal = SubResource("StyleBoxEmpty_fayhu")
+Button/styles/pressed = SubResource("StyleBoxFlat_qw0k4")
 
 [node name="trackbutton" type="PanelContainer" node_paths=PackedStringArray("button")]
 custom_minimum_size = Vector2(450, 243)
@@ -76,11 +102,14 @@ stretch_mode = 2
 [node name="h2" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 8
+theme = SubResource("Theme_vsupn")
 
 [node name="play" type="Button" parent="h2"]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = " "
+alignment = 2
 
 [node name="spacer" type="Control" parent="h2"]
 layout_mode = 2
@@ -88,9 +117,11 @@ size_flags_horizontal = 3
 
 [node name="watch" type="Button" parent="h2"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "󰿎 "
+alignment = 2
 
 [connection signal="pressed" from="h2/play" to="." method="emit_signal" binds= [&"play"]]
 [connection signal="pressed" from="h2/watch" to="." method="emit_signal" binds= [&"watch"]]
