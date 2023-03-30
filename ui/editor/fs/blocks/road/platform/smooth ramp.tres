@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://pn7sqx4csa76"]
-
-[ext_resource type="PackedScene" uid="uid://dahes4mwjfo64" path="res://assets/blocks/platform_smooth_ramp.tscn" id="1_qq32l"]
-[ext_resource type="Script" path="res://classes/resources/link.gd" id="2_xalbu"]
-
-[resource]
-script = ExtResource("2_xalbu")
-scene = ExtResource("1_qq32l")
-type = 0

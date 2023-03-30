@@ -1,12 +1,12 @@
 extends ItemList
 @export var t: Tree
 
-var weak_links: Array = []
+var selected: DirRes
 @onready var world: SubViewport = %port # TODO: make this use drag and drop
 @onready var history: UndoRedo = owner.history
 
 signal selected_node(node: Node3D)
-signal dir_selected()
+signal dir_selected(i: int)
 signal created(object: TrackObject)
 signal remove_tobj(tobj: TrackObject)
 
@@ -16,32 +16,20 @@ const icon_table = {
 	-1: preload("res://ui/assets/folder.png")
 }
 
-func fs_dir_selected() -> void:
-	open_dir(t.get_selected().get_meta(&"full_path"))
-
-func open_dir(path: String):
+func open_dir(dir: DirRes):
 	clear()
-	weak_links.clear()
-	var dir := DirAccess.open(path)
-	dir.list_dir_begin()
-
-	var file_name := dir.get_next()
-	while not file_name.is_empty():
-		if dir.current_is_dir():
-			weak_links.append(path.path_join(file_name))
-		else:
-			weak_links.append(load(path.path_join(file_name)))
-		add_item(file_name.replacen(".tres", ""), icon_table[weak_links[-1].type if weak_links[-1] is WeakLink else -1])
-		file_name = dir.get_next()
+	selected = dir
+	for file in dir.files:
+		add_item(file.resource_name, icon_table[file.type if file is WeakLink else -1])
 
 func on_selected(index: int) -> void:
-	if not weak_links[index] is WeakLink:
+	var f := selected.files[index]
+	if not f is WeakLink:
 		clear()
-		dir_selected.emit()
-		open_dir(weak_links[index])
+		dir_selected.emit(index)
+		open_dir(f)
 		return
-	var weak_link: WeakLink = weak_links[index]
-	make_obj(weak_link)
+	make_obj(f)
 
 func make_obj(link: WeakLink):
 	match link.type:
@@ -88,4 +76,3 @@ func _on_floor_input_event(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s
 func node_input(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s: int, node: Node3D):
 	if is_left_click(e):
 		selected_node.emit(node)
-

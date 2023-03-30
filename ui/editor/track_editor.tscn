@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://loghhcbgmrbu"]
+[gd_scene load_steps=42 format=3 uid="uid://loghhcbgmrbu"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://ui/editor/back_button.gd" id="7_r0vjt"]
 [ext_resource type="Script" path="res://ui/editor/save.gd" id="7_saajs"]
 [ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="9_x2saf"]
+[ext_resource type="Resource" uid="uid://bu4ppf8uslxq3" path="res://ui/editor/editor_fs.tres" id="11_ijop2"]
 [ext_resource type="Script" path="res://ui/multi_button.gd" id="11_nar81"]
 [ext_resource type="Script" path="res://ui/editor/delete.gd" id="13_agg2r"]
 [ext_resource type="Script" path="res://ui/editor/undo.gd" id="13_bgr8w"]
@@ -201,7 +202,7 @@ size_flags_vertical = 3
 hide_root = true
 scroll_horizontal_enabled = false
 script = ExtResource("1_65spq")
-root_dir = "res://ui/editor/fs"
+root_fs = ExtResource("11_ijop2")
 
 [node name="items" type="ItemList" parent="split/left dock/fs" node_paths=PackedStringArray("t")]
 unique_name_in_owner = true
@@ -395,10 +396,12 @@ theme_override_styles/panel = ExtResource("13_cyvq7")
 [connection signal="item_edited" from="split/left dock/data/container/propertys" to="split/left dock/data/container/propertys" method="_on_item_edited"]
 [connection signal="name_changed" from="split/left dock/data/container/propertys" to="." method="_on_propertys_name_changed"]
 [connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="expand_selected"]
-[connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/items" method="fs_dir_selected"]
+[connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="_on_cell_selected"]
+[connection signal="selected_dir" from="split/left dock/fs/fs tree" to="split/left dock/fs/items" method="open_dir"]
 [connection signal="created" from="split/left dock/fs/items" to="." method="_on_items_created"]
 [connection signal="created" from="split/left dock/fs/items" to="split/left dock/data/container/buttons/save" method="set_unsaved" unbinds=1]
-[connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected"]
+[connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="_on_items_dir_selected"]
+[connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected" unbinds=1]
 [connection signal="item_selected" from="split/left dock/fs/items" to="split/left dock/fs/items" method="on_selected"]
 [connection signal="remove_tobj" from="split/left dock/fs/items" to="." method="_on_items_remove_tobj"]
 [connection signal="remove_tobj" from="split/left dock/fs/items" to="split/split2/middle dock/viewport/view/port" method="remove_current" unbinds=1]

@@ -67,9 +67,9 @@ var n: String
 func _on_propertys_name_changed(p_name: String) -> void:
 	n = p_name
 
-func tobj_from_node(n: Node) -> TrackObject:
+func tobj_from_node(node: Node) -> TrackObject:
 	for o in objects:
-		if o.live_node == n:
+		if o.live_node == node:
 			return o
 	return null
 
