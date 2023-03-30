@@ -35,21 +35,21 @@ func make_obj(link: WeakLink):
 	match link.type:
 		WeakLink.Type.Scene:
 			var scn := link.scene
-			var selected = scn.instantiate() as Node3D
-			if selected.get_script() != null:
-				selected.editor = true
-			var collider: PhysicsBody3D = selected if selected is PhysicsBody3D else selected.collision
-			collider.input_event.connect(node_input.bind(selected))
-			var obj := TrackObject.new(scn, selected)
+			var node := scn.instantiate() as Node3D
+			if node.get_script() != null:
+				node.editor = true
+			var collider: PhysicsBody3D = node if node is PhysicsBody3D else node.collision
+			collider.input_event.connect(node_input.bind(node))
+			var obj := TrackObject.new(scn, node)
 			obj.set_meta(&"id", len((owner as TrackEditor).objects))
 			history.create_action("add block");
-			history.add_do_method(add_obj.bind(obj, selected))
-			history.add_do_reference(selected)
-			history.add_undo_method(remove_obj.bind(obj, selected))
+			history.add_do_method(add_obj.bind(obj, node))
+			history.add_do_reference(node)
+			history.add_undo_method(remove_obj.bind(obj, node))
 			var origin := world.get_camera_3d().project_position(world.size / 2, 50)
 			if owner.snapping:
 				origin = origin.snapped(Vector3.ONE * 10) # snap it
-			history.add_do_property(selected, &"global_transform", Transform3D(Basis(), origin))
+			history.add_do_property(node, &"global_transform", Transform3D(Basis(), origin))
 			history.commit_action()
 
 func add_obj(o: TrackObject, n: Node):

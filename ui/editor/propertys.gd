@@ -1,4 +1,3 @@
-@tool
 extends Tree
 
 signal name_changed(n: String)
