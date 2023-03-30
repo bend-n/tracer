@@ -1,3 +1,4 @@
+@icon("res://ui/assets/block.png")
 extends FileItem
 class_name WeakLink
 
