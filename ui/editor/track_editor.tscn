@@ -204,7 +204,7 @@ scroll_horizontal_enabled = false
 script = ExtResource("1_65spq")
 root_fs = ExtResource("11_ijop2")
 
-[node name="items" type="ItemList" parent="split/left dock/fs" node_paths=PackedStringArray("t")]
+[node name="items" type="ItemList" parent="split/left dock/fs"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -214,7 +214,6 @@ max_columns = 3
 icon_mode = 0
 fixed_icon_size = Vector2i(64, 64)
 script = ExtResource("2_q16oo")
-t = NodePath("../fs tree")
 
 [node name="split2" type="HSplitContainer" parent="split"]
 layout_mode = 2

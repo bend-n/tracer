@@ -1,5 +1,4 @@
 extends ItemList
-@export var t: Tree
 
 var selected: DirRes
 @onready var world: SubViewport = %port # TODO: make this use drag and drop
