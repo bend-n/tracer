@@ -57,7 +57,7 @@ func update(car_vars: PackedFloat32Array, delta: float) -> void:
 			if !skids[i][-1].active:
 				skids[i].append(trail_scene.instantiate() as Trail3D)
 				get_parent().add_child(skids[i][-1])
-			(skids[i][-1] as Trail3D).add(to_global(CarVars.arr2vec(v, CarVars.WHEEL_POSITION_START + (i * 3))) - Vector3(0, .661, 0))
+			(skids[i][-1] as Trail3D).add(to_global(CarVars.arr2vec(v, CarVars.WHEEL_POSITION_START + (i * 3))) - Vector3(0, .561, 0))
 		elif skids[i][-1].active:
 			skids[i][-1].active = false
 

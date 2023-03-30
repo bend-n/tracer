@@ -125,9 +125,8 @@ func _process(delta: float):
 	if can_shift:
 		_process_gear_inputs(delta)
 	steering = -steer_target
-	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .001) * whl_rpm()) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
+	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf((-steering * .001 + randf_range(-0.0005,0.0005)) * whl_rpm(), -.3, .3), 2 * delta)
 	engine_rpm = clampf(move_toward(engine_rpm, (wheel_rpm * engine_force * 0.0015), 800), 800, MAX_ENGINE_FORCE)
-
 
 func limit(delta: float) -> void:
 	linear_damp = max((.5 * delta) * (kph() - 400), 0) if kph() > 400 else 0.0
@@ -156,7 +155,7 @@ func _physics_process(delta: float):
 			if !skids[i][-1].active:
 				skids[i].append(trail_scene.instantiate() as Trail3D)
 				get_parent().add_child(skids[i][-1])
-			(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .661, 0))
+			(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .561, 0))
 		elif skids[i][-1].active:
 			skids[i][-1].active = false
 
