@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeakLink" load_steps=3 format=3 uid="uid://bxhfcghapy7g3"]
 
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="1_7um7c"]
-[ext_resource type="PackedScene" path="res://assets/blocks/ring_checkpoint.tscn" id="1_orkha"]
+[ext_resource type="PackedScene" uid="uid://behu0a0iegwov" path="res://assets/blocks/ring_checkpoint.tscn" id="1_orkha"]
 
 [resource]
 script = ExtResource("1_7um7c")
