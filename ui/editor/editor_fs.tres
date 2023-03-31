@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DirRes" load_steps=45 format=3 uid="uid://bu4ppf8uslxq3"]
+[gd_resource type="Resource" script_class="DirRes" load_steps=47 format=3 uid="uid://bu4ppf8uslxq3"]
 
 [ext_resource type="PackedScene" uid="uid://cy2ialm17md6c" path="res://assets/blocks/ring_start.tscn" id="1_obh5s"]
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="2_vbck3"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://enkf5y6y66cx" path="res://assets/blocks/platform_square.tscn" id="12_aumqd"]
 [ext_resource type="PackedScene" uid="uid://bkbp38xlmtln2" path="res://assets/blocks/platform_turn.tscn" id="13_gt2n1"]
 [ext_resource type="PackedScene" uid="uid://dtnqoxp58aipn" path="res://assets/blocks/platform_wall.tscn" id="14_nyuku"]
+[ext_resource type="PackedScene" uid="uid://da3kwx63ins6k" path="res://assets/blocks/platform_booster.tscn" id="15_22aj3"]
 [ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="15_a3etn"]
 [ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="16_aluwl"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="17_slejy"]
@@ -100,10 +101,15 @@ resource_name = "x"
 script = ExtResource("2_vbck3")
 scene = ExtResource("7_2mb8w")
 
+[sub_resource type="Resource" id="Resource_l415k"]
+resource_name = "booster"
+script = ExtResource("2_vbck3")
+scene = ExtResource("15_22aj3")
+
 [sub_resource type="Resource" id="Resource_xovbr"]
 resource_name = "platform"
 script = ExtResource("3_5we13")
-files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_1w0pw"), SubResource("Resource_23jh3"), SubResource("Resource_4d15v"), SubResource("Resource_5ko53"), SubResource("Resource_vs7si"), SubResource("Resource_hk5rh")])
+files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_1w0pw"), SubResource("Resource_23jh3"), SubResource("Resource_4d15v"), SubResource("Resource_5ko53"), SubResource("Resource_vs7si"), SubResource("Resource_hk5rh"), SubResource("Resource_l415k")])
 
 [sub_resource type="Resource" id="Resource_ax7gx"]
 resource_name = "road"

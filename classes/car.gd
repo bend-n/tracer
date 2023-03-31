@@ -12,7 +12,8 @@ var steer_target := 0.0
 @export var reverse_ratio := -2.5
 @export var final_drive_ratio := 3.38
 @export var max_engine_rpm := 8000.0
-@export var gear_shift_time = 0.3
+@export var gear_shift_time := 0.3
+@export var BOOSTER_FORCE := 25000
 @export var power_curve: Curve = preload("res://assets/cars/kenney_sedan/power_curve.tres")
 @onready var body_mesh := $body as MeshInstance3D
 @onready var checkpoint_sound := $checkpoint as AudioStreamPlayer
@@ -148,6 +149,9 @@ func _physics_process(delta: float):
 	downforce(5)
 
 	for i in 4:
+		if wheels[i].get_contact_body() is Booster:
+			apply_central_force((wheels[i].get_contact_body() as Booster).dir * BOOSTER_FORCE)
+
 		particles[i].emitting = wheels[i].get_skidinfo() < (.2 if i > 2 else .99) and wheels[i].is_in_contact() and kph() > 30
 		if particles[i].emitting:
 			@warning_ignore("narrowing_conversion")

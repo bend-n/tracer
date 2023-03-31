@@ -1,0 +1,219 @@
+[gd_scene load_steps=12 format=3 uid="uid://da3kwx63ins6k"]
+
+[ext_resource type="Script" path="res://classes/booster.gd" id="1_xsyb5"]
+[ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="2_7slgu"]
+[ext_resource type="Material" uid="uid://cpqd2somc06dx" path="res://assets/blocks/arrow.material" id="3_0ymhr"]
+[ext_resource type="ArrayMesh" uid="uid://dpryebqcookr2" path="res://assets/meshes/arrow.mesh" id="3_hvb8d"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yy48c"]
+material = ExtResource("2_7slgu")
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0mmg7"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t325e"]
+transparency = 1
+albedo_color = Color(0.929412, 0.796078, 0.196078, 1)
+metallic = 0.1
+metallic_specular = 1.0
+roughness = 0.0
+disable_receive_shadows = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_djys4"]
+transparency = 1
+albedo_color = Color(0.93, 0.795305, 0.1953, 1)
+metallic = 0.1
+metallic_specular = 1.0
+roughness = 0.0
+disable_receive_shadows = true
+
+[sub_resource type="Animation" id="Animation_h17yr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("arrow1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.58947, 1.1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("arrow2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(4.24211, 1.1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("arrow3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.06316, 1.1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("arrow1:surface_material_override/0:albedo_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.929412, 0.796078, 0.196078, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("arrow2:surface_material_override/0:albedo_color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.929412, 0.796078, 0.196078, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("arrow3:surface_material_override/0:albedo_color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.93, 0.795305, 0.1953, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_26wkv"]
+resource_name = "move"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("arrow1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-2.2, 1.1, 0), Vector3(5, 1.1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("arrow2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-2.2, 1.1, 0), Vector3(5, 1.1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("arrow2:surface_material_override/0:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(2, 0.5, 2, 0.5),
+"update": 0,
+"values": [Color(0.929412, 0.796078, 0.196078, 1), Color(0.929412, 0.796078, 0.196078, 0), Color(0.929412, 0.796078, 0.196078, 0), Color(0.929412, 0.796078, 0.196078, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("arrow3:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-2.2, 1.1, 0), Vector3(5, 1.1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("arrow3:surface_material_override/0:albedo_color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.3, 1.4, 1.5, 1.6),
+"transitions": PackedFloat32Array(2, 0.5, 2, 0.5),
+"update": 0,
+"values": [Color(0.93, 0.795305, 0.1953, 1), Color(0.929412, 0.796078, 0.196078, 0), Color(0.929412, 0.796078, 0.196078, 0), Color(0.93, 0.795305, 0.1953, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("arrow1:surface_material_override/0:albedo_color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(2, 0.5, 2, 0.5),
+"update": 0,
+"values": [Color(0.929412, 0.796078, 0.196078, 1), Color(0.929412, 0.796078, 0.196078, 0), Color(0.929412, 0.796078, 0.196078, 0), Color(0.929412, 0.796078, 0.196078, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vxlkq"]
+_data = {
+"RESET": SubResource("Animation_h17yr"),
+"move": SubResource("Animation_26wkv")
+}
+
+[node name="platform_booster" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+script = ExtResource("1_xsyb5")
+dir = Vector3(-1, 0, 0)
+mesh = NodePath("mesh")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_yy48c")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_0mmg7")
+
+[node name="arrow1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.41421, 0, 1.41421, 0, 0.7, 0, -1.41421, 0, 1.41421, 1.58947, 1.1, 0)
+mesh = ExtResource("3_hvb8d")
+surface_material_override/0 = ExtResource("3_0ymhr")
+
+[node name="arrow2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.41421, 0, 1.41421, 0, 0.7, 0, -1.41421, 0, 1.41421, 4.24211, 1.1, 0)
+mesh = ExtResource("3_hvb8d")
+surface_material_override/0 = SubResource("StandardMaterial3D_t325e")
+
+[node name="arrow3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.41421, 0, 1.41421, 0, 0.7, 0, -1.41421, 0, 1.41421, -1.06316, 1.1, 0)
+mesh = ExtResource("3_hvb8d")
+surface_material_override/0 = SubResource("StandardMaterial3D_djys4")
+
+[node name="animator" type="AnimationPlayer" parent="."]
+autoplay = "move"
+libraries = {
+"": SubResource("AnimationLibrary_vxlkq")
+}
