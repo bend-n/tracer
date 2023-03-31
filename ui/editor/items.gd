@@ -15,11 +15,51 @@ const icon_table = {
 	-1: preload("res://ui/assets/folder.png")
 }
 
+var thread: Thread = Thread.new()
+
 func open_dir(dir: DirRes):
 	clear()
 	selected = dir
-	for file in dir.files:
-		add_item(file.resource_name, icon_table[file.type if file is WeakLink else -1])
+	var needing_thumbs := []
+	for i in dir.files.size():
+		var file := dir.files[i]
+		var thumb: Texture2D = null
+		if file is WeakLink:
+			thumb = icon_table[file.type]
+			if file.type == WeakLink.Type.Scene:
+				var img := Thumbnail._load(Globals.THUMBS % file.resource_name, Thumbnail.hash_b(var_to_bytes(file)))
+				if img:
+					thumb = ImageTexture.create_from_image(img)
+				else:
+					needing_thumbs.append([i, file])
+		else:
+			thumb = icon_table[-1]
+		add_item(file.resource_name, thumb)
+	if thread.is_started():
+		while thread.is_alive():
+			await Engine.get_main_loop().process_frame
+		thread.wait_to_finish()
+	thread.start(func():
+		for need in needing_thumbs:
+			var file: WeakLink = need[1]
+			match file.type:
+				WeakLink.Type.Scene:
+					var n := file.scene.instantiate()
+					n.add_child(preload("res://scenes/sun.tscn").instantiate())
+					var floor := preload("res://scenes/floor.tscn").instantiate()
+					floor.position.y -= 5
+					n.add_child(floor)
+					var camera := Camera3D.new()
+					camera.position = Vector3(-8, 10,-8)
+					camera.position += camera.transform.basis.z * 2
+					camera.rotation = Vector3(-PI/4, -PI/1.35, 0)
+					var t := await Thumbnail.create_thumb(self, n, camera)
+					var e := Thumbnail.save(t, Globals.THUMBS % file.resource_name, Thumbnail.hash_b(var_to_bytes(file)))
+					if e != OK:
+						push_error("err when thumbnailing %s: %d" % [file.resource_name, e])
+					if item_count > need[0]: # may have switched dirs
+						set_item_icon(need[0], ImageTexture.create_from_image(t))
+	)
 
 func on_selected(index: int) -> void:
 	var f := selected.files[index]

@@ -1,7 +1,8 @@
 extends Object
 class_name Thumbnail
 
-static func _load(p: String, original_p: String, error_if_hash_nomatch := true) -> Image:
+@warning_ignore("shadowed_global_identifier")
+static func _load(p: String, hash: PackedByteArray, error_if_hash_nomatch := true) -> Image:
 	if FileAccess.file_exists(p):
 		var f := FileAccess.open(p, FileAccess.READ)
 		var img := Image.new()
@@ -12,10 +13,9 @@ static func _load(p: String, original_p: String, error_if_hash_nomatch := true) 
 			if e != OK:
 				push_error("error: ", e)
 				return null
-			var f_hash := hash_f(original_p)
-			if dict.h != f_hash:
+			if dict.h != hash:
 				if error_if_hash_nomatch:
-					push_error("error loading thumbnail: hash (thumbnaill hash) %s != (file hash) %s" % [dict.h.hex_encode(), f_hash.hex_encode()])
+					push_error("error loading thumbnail %s: hash (thumbnail hash) %s != (file hash) %s" % [p, dict.h.hex_encode(), hash.hex_encode()])
 				return null
 			return img
 	return null
@@ -46,7 +46,6 @@ static func create_thumb(parent: Node, node: Node3D, cam: Camera3D, size := Vect
 	port.queue_free()
 	return img
 
-## Hash must be finished
 @warning_ignore("shadowed_global_identifier")
 static func save(img: Image, p: String, hash: PackedByteArray) -> Error:
 	if !DirAccess.dir_exists_absolute(p.get_base_dir()):

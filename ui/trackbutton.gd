@@ -15,7 +15,7 @@ func init(t: TrackResource, g: GhostData) -> void:
 	else:
 		%time.text = GameTimer.format_precise(g.time)
 	var p: String = Globals.THUMBS % t.name
-	var tex := Thumbnail._load(p, Globals.TRACKS % t.name)
+	var tex := Thumbnail._load(p, Thumbnail.hash_b(var_to_bytes(t)))
 	if tex == null:
 		var trackloader: TrackLoader = trackloader_scn.instantiate()
 		trackloader.track = t

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="2_vbck3"]
 [ext_resource type="Script" path="res://classes/resources/dir.gd" id="3_5we13"]
 [ext_resource type="PackedScene" uid="uid://behu0a0iegwov" path="res://assets/blocks/ring_checkpoint.tscn" id="4_t7omt"]
-[ext_resource type="PackedScene" uid="uid://cr1mgp6bgxh64" path="res://ui/finish.tscn" id="5_wfu1j"]
+[ext_resource type="PackedScene" uid="uid://bm7dvglsg6cxo" path="res://assets/blocks/ring_finish.tscn" id="5_wj8by"]
 [ext_resource type="PackedScene" uid="uid://cfc05buhbya40" path="res://assets/blocks/platform_corner.tscn" id="6_rprvw"]
 [ext_resource type="PackedScene" uid="uid://dis4x1q6yancv" path="res://assets/blocks/platform_depression.tscn" id="7_2mb8w"]
 [ext_resource type="PackedScene" uid="uid://cwt6qb0suidh5" path="res://assets/blocks/platform_diagonal.tscn" id="8_2o3rf"]
@@ -44,7 +44,7 @@ files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Re
 [sub_resource type="Resource" id="Resource_kvgvy"]
 resource_name = "ring finish"
 script = ExtResource("2_vbck3")
-scene = ExtResource("5_wfu1j")
+scene = ExtResource("5_wj8by")
 
 [sub_resource type="Resource" id="Resource_kak46"]
 resource_name = "finishes"
