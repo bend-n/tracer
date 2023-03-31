@@ -16,10 +16,11 @@ func update():
 	ground.global_position = track.offset
 	for block in track.blocks:
 		var node: Node3D = block.base_scene.instantiate()
-		if editor:
-			node.editor = true
 		add_child(node)
-		(node.mesh as MeshInstance3D).set_surface_override_material(0, block.material)
+		if node.get_script() != null:
+			if node.mesh:
+				(node.mesh as MeshInstance3D).set_surface_override_material(0, block.material)
+			node.editor = editor
 		(node as Node3D).global_transform = block.transform
 		if editor:
 			block.set_live(node)

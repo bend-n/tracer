@@ -13,7 +13,7 @@ func _init(p_base: PackedScene, p_live: Node) -> void:
 func exprt() -> Dictionary:
 	return {
 		# no objects: object = code execution = rm -rf ~
-		material = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path,
+		material = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path if live_node.mesh != null else null,
 		base_scene = base_scene.resource_path,
 		transform = live_node.global_transform,
 	}
@@ -27,7 +27,7 @@ func exprt_imported() -> Dictionary:
 
 static func from_d(d: Dictionary) -> TrackObject:
 	var o := TrackObject.new(load(d.base_scene), null)
-	o.material = load(d.material)
+	o.material = load(d.material) if d.material else null
 	o.transform = d.transform
 	return o
 

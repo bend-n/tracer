@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DirRes" load_steps=42 format=3 uid="uid://bu4ppf8uslxq3"]
+[gd_resource type="Resource" script_class="DirRes" load_steps=45 format=3 uid="uid://bu4ppf8uslxq3"]
 
 [ext_resource type="PackedScene" uid="uid://cy2ialm17md6c" path="res://assets/blocks/ring_start.tscn" id="1_obh5s"]
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="2_vbck3"]
@@ -18,6 +18,7 @@
 [ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="16_aluwl"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="17_slejy"]
 [ext_resource type="Material" uid="uid://dd3673p284fqe" path="res://assets/mats/wall.tres" id="18_osy7q"]
+[ext_resource type="PackedScene" uid="uid://c1h0ic5drv85m" path="res://assets/blocks/tree.tscn" id="19_vck13"]
 
 [sub_resource type="Resource" id="Resource_8f0v1"]
 resource_name = "ring start"
@@ -134,7 +135,17 @@ resource_name = "materials"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_jyrtx"), SubResource("Resource_x8ami"), SubResource("Resource_y68us"), SubResource("Resource_4uj50")])
 
+[sub_resource type="Resource" id="Resource_vtfgn"]
+resource_name = "tree"
+script = ExtResource("2_vbck3")
+scene = ExtResource("19_vck13")
+
+[sub_resource type="Resource" id="Resource_77r1h"]
+resource_name = "decoration"
+script = ExtResource("3_5we13")
+files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_vtfgn")])
+
 [resource]
 resource_name = "editor filesystem"
 script = ExtResource("3_5we13")
-files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_fmplp"), SubResource("Resource_0yv1r"), SubResource("Resource_kak46"), SubResource("Resource_ax7gx"), SubResource("Resource_sbgew")])
+files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_fmplp"), SubResource("Resource_0yv1r"), SubResource("Resource_kak46"), SubResource("Resource_ax7gx"), SubResource("Resource_sbgew"), SubResource("Resource_77r1h")])
