@@ -11,6 +11,7 @@ func _init(p_base: PackedScene, p_live: Node) -> void:
 	live_node = p_live
 
 func exprt() -> Dictionary:
+	@warning_ignore("incompatible_ternary")
 	return {
 		# no objects: object = code execution = rm -rf ~
 		material = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path if live_node.mesh != null else null,

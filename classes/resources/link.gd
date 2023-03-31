@@ -16,4 +16,4 @@ var type: Type:
 			return Type.Texture
 		@warning_ignore("assert_always_false")
 		assert(false, "no resource available")
-		return 0 # smh
+		return Type.Scene # smh
