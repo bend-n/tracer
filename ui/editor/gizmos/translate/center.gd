@@ -26,7 +26,7 @@ func _process(_delta: float):
 		owner.hist.create_action("move object", UndoRedo.MERGE_ENDS)
 		transf = original_transform.translated_local(displacement)
 		if owner.snapping:
-			transf.origin = Globals.snap_v(10, 5, 10, transf.origin)
+			transf.origin = Utils.snap_v(10, 5, 10, transf.origin)
 		owner.hist.add_do_property(owner.object, &"global_transform", transf)
 		owner.hist.add_undo_property(owner.object, &"global_transform", original_transform)
 		owner.object.translate_object_local(displacement)

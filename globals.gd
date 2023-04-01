@@ -1,4 +1,5 @@
 extends Node
+class_name Utils
 
 var playing: TrackResource
 var editing: TrackResource

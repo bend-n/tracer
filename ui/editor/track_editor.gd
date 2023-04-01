@@ -55,7 +55,7 @@ func to_trackdata() -> TrackResource:
 	data.name = n
 	return data
 
-func _on_items_created(object: TrackObject) -> void:
+func _on_item_created(object: TrackObject) -> void:
 	objects.append(object)
 
 var n: String
@@ -71,5 +71,5 @@ func tobj_from_node(node: Node) -> TrackObject:
 func _on_delete_pressed() -> void:
 	selected = null
 
-func _on_items_remove_tobj(tobj: TrackObject) -> void:
+func _on_remove_tobj(tobj: TrackObject) -> void:
 	objects.erase(tobj)

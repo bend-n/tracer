@@ -1,13 +1,9 @@
 extends ItemList
 
 var selected: DirRes
-@onready var world: SubViewport = %port # TODO: make this use drag and drop
-@onready var history: UndoRedo = owner.history
 
 signal selected_node(node: Block)
 signal dir_selected(i: int)
-signal created(object: TrackObject)
-signal remove_tobj(tobj: TrackObject)
 
 const icon_table = {
 	WeakLink.Type.Scene: preload("res://ui/assets/block.png"),
@@ -27,11 +23,12 @@ func open_dir(dir: DirRes):
 		if file is WeakLink:
 			thumb = icon_table[file.type]
 			if file.type == WeakLink.Type.Scene:
-				var img := Thumbnail._load(Globals.THUMBS % file.resource_name, Thumbnail.hash_b(var_to_bytes(file)))
+				var hsh: PackedByteArray = file.hash_s()
+				var img := Thumbnail._load(Globals.THUMBS % file.resource_name, hsh)
 				if img:
 					thumb = ImageTexture.create_from_image(img)
 				else:
-					needing_thumbs.append([i, file])
+					needing_thumbs.append([i, file, hsh])
 		else:
 			thumb = icon_table[-1]
 		add_item(file.resource_name, thumb)
@@ -54,48 +51,28 @@ func open_dir(dir: DirRes):
 					camera.position += camera.transform.basis.z * 2
 					camera.rotation = Vector3(-PI/4, -PI/1.35, 0)
 					var t := await Thumbnail.create_thumb(self, n, camera)
-					var e := Thumbnail.save(t, Globals.THUMBS % file.resource_name, Thumbnail.hash_b(var_to_bytes(file)))
+					var e := Thumbnail.save(t, Globals.THUMBS % file.resource_name, need[2])
 					if e != OK:
 						push_error("err when thumbnailing %s: %d" % [file.resource_name, e])
 					if item_count > need[0]: # may have switched dirs
 						set_item_icon(need[0], ImageTexture.create_from_image(t))
 	)
 
-func on_selected(index: int) -> void:
+func _get_drag_data(at_position: Vector2) -> Variant:
+	var index := get_item_at_position(at_position)
 	var f := selected.files[index]
 	if not f is WeakLink:
 		clear()
 		dir_selected.emit(index)
 		open_dir(f)
-		return
-	make_obj(f)
-
-func make_obj(link: WeakLink):
-	match link.type:
+		return null
+	match f.type:
 		WeakLink.Type.Scene:
-			var scn := link.scene
-			var node := scn.instantiate() as Node3D
-			if node.get_script() != null:
-				node.editor = true
-			var obj := TrackObject.new(scn, node)
-			obj.set_meta(&"id", len((owner as TrackEditor).objects))
-			history.create_action("add block");
-			history.add_do_method(add_obj.bind(obj, node))
-			history.add_do_reference(node)
-			history.add_undo_method(remove_obj.bind(obj, node))
-			var origin := world.get_camera_3d().project_position(world.size / 2, 50)
-			if owner.snapping:
-				origin = origin.snapped(Vector3.ONE * 10) # snap it
-			history.add_do_property(node, &"global_transform", Transform3D(Basis(), origin))
-			history.commit_action()
-
-func add_obj(o: TrackObject, n: Node):
-	world.add_child(n)
-	created.emit(o)
-
-func remove_obj(obj: TrackObject, n: Node):
-	emit_signal(&"remove_tobj", obj)
-	world.remove_child(n)
+			var preview := TextureRect.new()
+			preview.texture = get_item_icon(index)
+			preview.custom_minimum_size = Vector2(64,64)
+			set_drag_preview(preview)
+	return f
 
 func _on_mousecast_miss() -> void:
 	selected_node.emit(null)

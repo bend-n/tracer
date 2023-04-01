@@ -1,5 +1,7 @@
 extends Button
 
+@onready var hist: UndoRedo = owner.history
+
 const icons: PackedStringArray = ['󰆓', '󰽂', '󱣪']
 var unsaved := false:
 	set(un):
@@ -13,5 +15,5 @@ func _on_pressed() -> void:
 	data.save(Globals.TRACKS % data.name)
 	unsaved = false
 
-func set_unsaved() -> void:
-	unsaved = true
+func _ready() -> void:
+	hist.version_changed.connect(func(): unsaved = true)
