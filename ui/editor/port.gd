@@ -13,7 +13,6 @@ var gizmo_mover: RemoteTransform3D
 
 func update_gizmo(mode: TrackEditor.Mode) -> void:
 	if current != null:
-		print("current gizmo exists, freeing")
 		current.queue_free()
 		current = null
 	if gizmo_mover != null:
@@ -22,11 +21,11 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 	match mode:
 		_:
 			if editor.selected != null:
-				print("create gizmo!")
 				current = map[mode].instantiate()
 				current.snapping = editor.snapping
 				current.path = editor.selected.get_path()
 				current.hist = owner.history
+				current.clicked.connect($mousecast.gizmo_clicked)
 				gizmo_mover = RemoteTransform3D.new()
 				gizmo_mover.update_rotation = false
 				gizmo_mover.update_scale = false
@@ -35,10 +34,6 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 				gizmo_mover.remote_path = current.get_path()
 				current.global_position = editor.selected.global_position
 				editor.selected.add_child(gizmo_mover)
-			for o in editor.objects:
-				var node: Node3D = (o as TrackObject).live_node
-				var coll: CollisionObject3D = node.collision if not node is CollisionObject3D else node
-				coll.input_ray_pickable = mode == TrackEditor.Mode.Select || editor.selected == null
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	if current != null:

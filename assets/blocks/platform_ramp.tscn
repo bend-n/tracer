@@ -7,6 +7,8 @@
 points = PackedVector3Array(-5, -0.5, -5, -5, 0.499608, -5, 5, -0.5, -5, -5, -0.5, 5, -5, 0.499608, 5, 5, 5.5, -5, 5, -0.5, 5, 5, 5.5, 5)
 
 [node name="platform_ramp" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
 script = ExtResource("1_3ciq1")
 mesh = NodePath("mesh")
 

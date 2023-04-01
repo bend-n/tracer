@@ -11,6 +11,7 @@ size = Vector3(23, 23, 3)
 
 [node name="ring_finish" type="StaticBody3D" node_paths=PackedStringArray("mesh", "player_detector")]
 collision_mask = 0
+input_ray_pickable = false
 script = ExtResource("1_2c5pp")
 mesh = NodePath("Ring")
 player_detector = NodePath("PlayerDetector")

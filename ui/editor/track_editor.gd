@@ -23,11 +23,6 @@ func _ready() -> void:
 	for c in l.get_children():
 		l.remove_child(c)
 		%port.add_child(c)
-		if c is Floor:
-			c.input_event.connect(%items._on_floor_input_event)
-		elif not c is WorldEnvironment and not c is DirectionalLight3D:
-			var collider: PhysicsBody3D = c if c is PhysicsBody3D else c.collision
-			collider.input_event.connect(%items.node_input.bind(c))
 	# the loader has loaded, get rid of it
 	l.queue_free()
 	objects = data.blocks # please be reference
@@ -38,11 +33,11 @@ func _ready() -> void:
 	if not FileAccess.file_exists(Globals.TRACKS % data.name):
 		%save.set_unsaved()
 
-	group.pressed.connect(
-		func pressed(b: Button) -> void:
-			mode = Mode[b.name.to_pascal_case()]
-			make_gizmo.emit(mode)
-	)
+	group.pressed.connect(pressed)
+
+func pressed(b: Button) -> void:
+	mode = Mode[b.name.to_pascal_case()]
+	make_gizmo.emit(mode)
 
 func _on_selected_node(node: Node3D) -> void:
 	if selected == node:

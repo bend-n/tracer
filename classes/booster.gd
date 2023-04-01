@@ -1,4 +1,4 @@
-extends Platform3D
+extends Block
 class_name Booster
 
 ## constant linear velocity doesnt seem to work on vehiclebodys

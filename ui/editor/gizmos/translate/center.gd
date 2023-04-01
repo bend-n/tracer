@@ -6,6 +6,8 @@ var clicked_position := Vector3.ZERO
 var click_plane: Plane
 var original_transform: Transform3D
 
+signal clicked
+
 func _process(_delta: float):
 	if dragged and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		dragged = false
@@ -35,6 +37,7 @@ func _ready() -> void:
 
 func click(camera: Camera3D, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		clicked.emit()
 		dragged = true
 		var mp := get_viewport().get_mouse_position()
 		var plane_normal := camera.project_ray_normal(mp).normalized()

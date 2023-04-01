@@ -187,6 +187,8 @@ _data = {
 }
 
 [node name="platform_booster" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
 script = ExtResource("1_xsyb5")
 dir = Vector3(-1, 0, 0)
 mesh = NodePath("mesh")

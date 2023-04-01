@@ -11,6 +11,8 @@ size = Vector3(10, 1, 10)
 size = Vector3(10, 1, 10)
 
 [node name="platform_square" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
 script = ExtResource("1_y4r5p")
 mesh = NodePath("mesh")
 

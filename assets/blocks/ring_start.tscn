@@ -33,6 +33,7 @@ radial_segments = 32
 
 [node name="ring_start" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
 collision_mask = 0
+input_ray_pickable = false
 script = SubResource("GDScript_jas2p")
 mesh = NodePath("Ring")
 

@@ -22,7 +22,7 @@ size = Vector3(10, 10, 10)
 script = ExtResource("1_ikuqi")
 
 [node name="center" type="StaticBody3D" parent="."]
-collision_layer = 2147483648
+collision_layer = 1073741824
 collision_mask = 0
 script = ExtResource("2_xatqc")
 
@@ -35,7 +35,7 @@ shape = SubResource("BoxShape3D_tep2a")
 
 [node name="handle_y" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 10, 0)
-collision_layer = 2147483648
+collision_layer = 1073741824
 collision_mask = 0
 script = ExtResource("4_xrsu0")
 dir = 2
@@ -58,7 +58,7 @@ shape = ExtResource("8_duaca")
 
 [node name="handle_x" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, 0)
-collision_layer = 2147483648
+collision_layer = 1073741824
 collision_mask = 0
 script = ExtResource("4_xrsu0")
 dir = 0
@@ -81,7 +81,7 @@ shape = ExtResource("8_duaca")
 
 [node name="handle_z" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
-collision_layer = 2147483648
+collision_layer = 1073741824
 collision_mask = 0
 script = ExtResource("4_xrsu0")
 dir = 1

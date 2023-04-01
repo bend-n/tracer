@@ -7,3 +7,5 @@ const SAVES := "user://ghosts/%s.ghost"
 const TRACKS := "user://player data/tracks/%s.track"
 const THUMBS := "user://thumbs/%s.thumb"
 const DEFAULT_EDITOR_LAYER := 0x80000000
+const GIZMO_LAYER := 0x40000000
+const GIZMO_LAYER_I := 31

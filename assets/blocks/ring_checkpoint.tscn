@@ -9,11 +9,12 @@ data = PackedVector3Array(-6, 0, -10.3923, 0, 2.5, -14.5, 0, 0, -12, -6, 0, -10.
 [sub_resource type="BoxShape3D" id="BoxShape3D_k77jm"]
 size = Vector3(23, 23, 3)
 
-[node name="ring_checkpoint" type="StaticBody3D" node_paths=PackedStringArray("mesh", "player_detector")]
+[node name="ring_checkpoint" type="StaticBody3D" node_paths=PackedStringArray("player_detector", "mesh")]
 collision_mask = 0
+input_ray_pickable = false
 script = ExtResource("1_rlrel")
-mesh = NodePath("mesh")
 player_detector = NodePath("PlayerDetector")
+mesh = NodePath("mesh")
 
 [node name="shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)

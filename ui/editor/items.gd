@@ -4,7 +4,7 @@ var selected: DirRes
 @onready var world: SubViewport = %port # TODO: make this use drag and drop
 @onready var history: UndoRedo = owner.history
 
-signal selected_node(node: Node3D)
+signal selected_node(node: Block)
 signal dir_selected(i: int)
 signal created(object: TrackObject)
 signal remove_tobj(tobj: TrackObject)
@@ -46,9 +46,9 @@ func open_dir(dir: DirRes):
 				WeakLink.Type.Scene:
 					var n := file.scene.instantiate()
 					n.add_child(preload("res://scenes/sun.tscn").instantiate())
-					var floor := preload("res://scenes/floor.tscn").instantiate()
-					floor.position.y -= 5
-					n.add_child(floor)
+					var ground := preload("res://scenes/floor.tscn").instantiate()
+					ground.position.y -= 5
+					n.add_child(ground)
 					var camera := Camera3D.new()
 					camera.position = Vector3(-8, 10,-8)
 					camera.position += camera.transform.basis.z * 2
@@ -77,8 +77,6 @@ func make_obj(link: WeakLink):
 			var node := scn.instantiate() as Node3D
 			if node.get_script() != null:
 				node.editor = true
-			var collider: PhysicsBody3D = node if node is PhysicsBody3D else node.collision
-			collider.input_event.connect(node_input.bind(node))
 			var obj := TrackObject.new(scn, node)
 			obj.set_meta(&"id", len((owner as TrackEditor).objects))
 			history.create_action("add block");
@@ -99,19 +97,8 @@ func remove_obj(obj: TrackObject, n: Node):
 	emit_signal(&"remove_tobj", obj)
 	world.remove_child(n)
 
-func is_left_click(e: InputEvent) -> bool:
-	return (
-		e is InputEventMouseButton
-		and e.is_pressed()
-		and e.button_index == MOUSE_BUTTON_LEFT
-	)
+func _on_mousecast_miss() -> void:
+	selected_node.emit(null)
 
-## if the floor gets picked, that means the ray didnt hit anything else, so deselect the current selected node
-func _on_floor_input_event(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s: int) -> void:
-	if is_left_click(e):
-		selected_node.emit(null)
-
-## i dont know how to use unbinds in signals connected in code
-func node_input(_c: Node, e: InputEvent, _p: Vector3, _n: Vector3, _s: int, node: Node3D):
-	if is_left_click(e):
-		selected_node.emit(node)
+func _on_mousecast_hit(coll: Block) -> void:
+	selected_node.emit(coll)

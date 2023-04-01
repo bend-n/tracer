@@ -7,6 +7,8 @@
 points = PackedVector3Array(5, -0.5, -5, 6, -0.5, -5, 5, -0.5, 5, 5, 2.5, -5, 6, 2.5, -5, 6, -0.5, 5, 5, 2.5, 5, 6, 2.5, 5)
 
 [node name="platform_wall" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
 script = ExtResource("1_ebctu")
 mesh = NodePath("mesh")
 

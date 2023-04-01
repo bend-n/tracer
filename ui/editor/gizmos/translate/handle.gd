@@ -17,6 +17,8 @@ var original_scale: Vector3
 enum Mode { Translate, Scale }
 @export var mode: Mode
 
+signal clicked
+
 func _process(_delta: float):
 	if dragged and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		dragged = false
@@ -57,6 +59,7 @@ func _ready() -> void:
 
 func click(camera: Camera3D, event: InputEvent, click_position: Vector3, _click_normal: Vector3, _shape_idx: int):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		clicked.emit()
 		dragged = true
 		var mp := get_viewport().get_mouse_position()
 		var vertical_vector = camera.project_ray_normal(mp).normalized().cross(drag_direction)
@@ -67,4 +70,3 @@ func click(camera: Camera3D, event: InputEvent, click_position: Vector3, _click_
 		clicked_position = click_position
 		original_transform = gizmo.object.global_transform
 		original_scale = gizmo.object.scale
-

@@ -1,5 +1,2 @@
-extends StaticBody3D
+extends Block
 class_name Platform3D
-
-@export var mesh: MeshInstance3D
-var editor := false
