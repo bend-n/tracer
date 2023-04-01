@@ -68,10 +68,11 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 		return null
 	match f.type:
 		WeakLink.Type.Scene:
-			var preview := TextureRect.new()
-			preview.texture = get_item_icon(index)
-			preview.custom_minimum_size = Vector2(64,64)
-			set_drag_preview(preview)
+			set_drag_preview(
+				preload("res://ui/editor/block_dragdrop_preview.tscn")
+					.instantiate()
+					.init(get_item_icon(index))
+			)
 	return f
 
 func _on_mousecast_miss() -> void:

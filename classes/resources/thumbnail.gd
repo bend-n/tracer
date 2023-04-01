@@ -9,7 +9,7 @@ static func _load(p: String, hash: PackedByteArray, error_if_hash_nomatch := tru
 		var buf := f.get_buffer(f.get_length())
 		if buf:
 			var dict: Dictionary = bytes_to_var(buf)
-			var e := img.load_jpg_from_buffer(dict.b)
+			var e := img.load_png_from_buffer(dict.b)
 			if e != OK:
 				push_error("error: ", e)
 				return null
@@ -53,5 +53,5 @@ static func save(img: Image, p: String, hash: PackedByteArray) -> Error:
 	var file := FileAccess.open(p, FileAccess.WRITE)
 	if file == null:
 		return FileAccess.get_open_error()
-	file.store_buffer(var_to_bytes({ b = img.save_jpg_to_buffer(), h = hash }))
+	file.store_buffer(var_to_bytes({ b = img.save_png_to_buffer(), h = hash }))
 	return OK

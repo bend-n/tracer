@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://br4clathh5ppo"]
+
+[ext_resource type="Texture2D" uid="uid://cvivkif8cfior" path="res://ui/assets/clip.png" id="2_hvrcj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p80jk"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.027451, 0.211765, 0.258824, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="GDScript" id="GDScript_iva8e"]
+resource_name = "dropdrag"
+script/source = "extends PanelContainer
+
+func init(t: Texture2D):
+	%tr.texture = t
+	return self
+"
+
+[node name="preview" type="PanelContainer"]
+clip_children = 2
+offset_right = 74.0
+offset_bottom = 74.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p80jk")
+script = SubResource("GDScript_iva8e")
+
+[node name="clip" type="TextureRect" parent="."]
+clip_children = 1
+layout_mode = 2
+texture = ExtResource("2_hvrcj")
+expand_mode = 1
+
+[node name="tr" type="TextureRect" parent="clip"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 2
