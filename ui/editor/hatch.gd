@@ -24,7 +24,6 @@ func _drop_data(at_position: Vector2, data) -> void:
 			history.add_do_property(node, &"global_transform", Transform3D(Basis(), origin))
 			history.commit_action()
 			%items.selected_node.emit(node)
-			print("dropped! %s" % node)
 
 func add_obj(o: TrackObject, n: Node):
 	%port.add_child(n)

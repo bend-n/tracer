@@ -31,7 +31,6 @@ func update():
 				finish = node
 			elif node is Start:
 				start_transf = block.transform
-	print("created track!")
 
 func _ready():
 	update()

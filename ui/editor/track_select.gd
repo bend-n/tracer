@@ -28,7 +28,6 @@ func _ready() -> void:
 		(get_child(0) as TrackButton).button.grab_focus()
 
 func edit(track: TrackResource) -> void:
-	print("edit %s" % track.name)
 	Globals.editing = track
 	other_track_select.add_to_main(editor)
 

@@ -19,13 +19,11 @@ func _ready() -> void:
 		(get_child(0) as TrackButton).button.grab_focus()
 
 func play(track: TrackResource, ghost: GhostData) -> void:
-	print("play %s" % track.name)
 	Globals.playing = track
 	Globals.ghost = ghost
 	add_to_main(race)
 
 func watch(track: TrackResource, ghost: GhostData) -> void:
-	print("watch %s" % track.name)
 	Globals.playing = track
 	Globals.ghost = ghost
 	add_to_main(ghost_watch)

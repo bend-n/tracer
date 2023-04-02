@@ -106,12 +106,10 @@ func passed_finish() -> void:
 			return
 	collect(-1)
 	if track_res.laps - 1 == current_lap:
-		print("finished")
 		playing = false
 		timer.stop()
 		car.reset()
 		if not best_time_data or data.time < best_time_data.time:
-			print("new pb!")
 			finished.emit(data.time, best_time_data.time if best_time_data else -1.0)
 			data.save(Globals.SAVES % track_res.name)
 			best_time_data = data
@@ -127,12 +125,12 @@ func _physics_process(delta: float) -> void:
 	if best_time_data:
 		if best_time_data.snap_count - 1 < Engine.get_physics_frames() - start_frame:
 			if ghost.visible:
-				print("ran out of snaps, hiding ghost")
 				ghost.hide()
+				ghost.engine.volume = 0
 			return
 		ghost.update(best_time_data.load_snap(Engine.get_physics_frames() - start_frame), delta)
 		ghost.visible = (ghost.global_position.distance_squared_to(car.global_position) > 10)
-		ghost.engine.volume = lerpf(ghost.engine.volume, .7, delta) if (ghost.global_position.distance_squared_to(car.global_position) > 20) else lerpf(ghost.engine.volume, .2, delta * 3)
+		ghost.engine.volume = lerpf(ghost.engine.volume, .7, delta * 3) if (ghost.global_position.distance_squared_to(car.global_position) > 20) else lerpf(ghost.engine.volume, .2, delta * 3)
 
 func collect(cp: int) -> void:
 	if cp != -1:

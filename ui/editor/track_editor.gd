@@ -43,7 +43,6 @@ func _on_selected_node(node: Node3D) -> void:
 	if selected == node:
 		return
 	selected = node
-	print("object: %s selected! mode: %s" % [node, mode])
 	make_gizmo.emit(mode)
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
