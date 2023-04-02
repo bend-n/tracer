@@ -2,7 +2,7 @@ extends Object
 class_name Thumbnail
 
 @warning_ignore("shadowed_global_identifier")
-static func _load(p: String, hash: PackedByteArray, error_if_hash_nomatch := true) -> Image:
+static func _load(p: String, hash: PackedByteArray, error_if_hash_mismatch := true) -> Image:
 	if FileAccess.file_exists(p):
 		var f := FileAccess.open(p, FileAccess.READ)
 		var img := Image.new()
@@ -14,7 +14,7 @@ static func _load(p: String, hash: PackedByteArray, error_if_hash_nomatch := tru
 				push_error("error: ", e)
 				return null
 			if dict.h != hash:
-				if error_if_hash_nomatch:
+				if error_if_hash_mismatch:
 					push_error("error loading thumbnail %s: hash (thumbnail hash) %s != (file hash) %s" % [p, dict.h.hex_encode(), hash.hex_encode()])
 				return null
 			return img

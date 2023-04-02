@@ -33,7 +33,7 @@ func open_dir(dir: DirRes):
 	var needing_thumbs := []
 	for i in dir.files.size():
 		var file := dir.files[i]
-		var thumb := get_thumb(file)
+		var thumb := Items.get_thumb(file)
 		if thumb.size() > 1:
 			needing_thumbs.append([i, file, thumb[-1]])
 		add_item(file.resource_name, thumb[0])

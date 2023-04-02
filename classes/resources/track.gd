@@ -34,15 +34,15 @@ func _init(p_blocks: Array[TrackObject]) -> void:
 
 static func from_d(d: Dictionary) -> TrackResource:
 	var blocs: Array[TrackObject] = []
-	for block in d.blocks:
+	for block in d.b:
 		blocs.append(TrackObject.from_d(block))
 	var obj := TrackResource.new(blocs)
-	obj.sun_x = d.sun_x
-	obj.sun_y = d.sun_y
-	obj.overview_height = d.overview_height
-	obj.name = d.name
-	obj.offset = d.offset
-	obj.laps = d.laps
+	obj.sun_x = d.x
+	obj.sun_y = d.y
+	obj.overview_height = d.h
+	obj.name = d.n
+	obj.offset = d.o
+	obj.laps = d.l
 	return obj
 
 ## Creates a [TrackResource] from a file
@@ -52,21 +52,22 @@ static func _load(path: String) -> TrackResource:
 		return null
 	return TrackResource.from_d(res)
 
-
-func save(path: String) -> void:
+func to_d() -> Dictionary:
 	var b: Array[Dictionary] = [] # i know map() exists, but it didnt work
 	for i in blocks:
 		b.append(i.exprt())
-	var d := {
-		sun_x = sun_x,
-		sun_y = sun_y,
-		overview_height = overview_height,
-		name = name,
-		offset = offset,
-		laps = laps,
-		blocks = b
+	return {
+		x = sun_x,
+		y = sun_y,
+		h = overview_height,
+		n = name,
+		o = offset,
+		l = laps,
+		b = b
 	}
-	GhostData._save_file(path, d)
+
+func save(path: String) -> void:
+	GhostData._save_file(path, to_d())
 
 func get_aabb() -> AABB:
 	var box := AABB()

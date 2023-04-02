@@ -7,17 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://demunxvqkmtwa" path="res://scenes/ghost_watcher.tscn" id="7_6ph7w"]
 [ext_resource type="PackedScene" uid="uid://dfvtugujgcjcw" path="res://ui/track_button.tscn" id="7_pchkj"]
 [ext_resource type="Script" path="res://ui/multi_button.gd" id="7_rhu6g"]
+[ext_resource type="Script" path="res://ui/editor/import.gd" id="8_1f3ce"]
 [ext_resource type="Script" path="res://ui/editor/track_select.gd" id="8_v6p1s"]
 [ext_resource type="AudioStream" uid="uid://bwiyphl31lwu6" path="res://assets/sounds/music.ogg" id="9_ma7kx"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8ohli"]
 font_size = 24
 outline_size = 12
-outline_color = Color(0, 0.168627, 0.211765, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_qgtcj"]
-font_size = 24
-outline_size = 20
 outline_color = Color(0, 0.168627, 0.211765, 1)
 
 [node name="start" type="Control"]
@@ -91,23 +87,14 @@ grow_vertical = 0
 text = ""
 label_settings = SubResource("LabelSettings_8ohli")
 
-[node name="import" type="Button" parent="margin/tabs/create/buttons" node_paths=PackedStringArray("secondary")]
+[node name="import" type="Button" parent="margin/tabs/create/buttons"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 52
+disabled = true
 action_mode = 0
-text = "󰈔"
-script = ExtResource("7_rhu6g")
-secondary = NodePath("arrow")
-
-[node name="arrow" type="Label" parent="margin/tabs/create/buttons/import"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 25.0
-offset_right = 64.0
-offset_bottom = 50.3333
-text = ""
-label_settings = SubResource("LabelSettings_qgtcj")
+text = "󰳸"
+script = ExtResource("8_1f3ce")
 
 [node name="tracks_owned" type="GridContainer" parent="margin/tabs/create" node_paths=PackedStringArray("other_track_select")]
 layout_mode = 2
@@ -121,3 +108,4 @@ autoplay = true
 bus = &"music"
 
 [connection signal="pressed" from="margin/tabs/create/buttons/new" to="margin/tabs/create/tracks_owned" method="_on_new_pressed"]
+[connection signal="import" from="margin/tabs/create/buttons/import" to="margin/tabs/create/tracks_owned" method="_on_import_import"]

@@ -13,13 +13,16 @@ func _init(p_base: PackedScene, p_live: Node, p_link: WeakLink) -> void:
 	live_node = p_live
 
 func exprt() -> Dictionary:
-	@warning_ignore("incompatible_ternary")
-	return {
-		# no objects: object = code execution = rm -rf ~
-		material = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path if live_node.mesh != null else null,
-		base_scene = base_scene.resource_path,
-		transform = live_node.global_transform,
-	}
+	if live_node:
+		@warning_ignore("incompatible_ternary")
+		return {
+			# no objects: object = code execution = rm -rf ~
+			material = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path if live_node.mesh != null else null,
+			base_scene = base_scene.resource_path,
+			transform = live_node.global_transform,
+		}
+	else:
+		return exprt_imported()
 
 func exprt_imported() -> Dictionary:
 	return {

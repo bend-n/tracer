@@ -31,7 +31,7 @@ func _ready() -> void:
 	%cam.global_transform = IntroCam.get_origin(data) # put the camera up high, looking straight down
 
 	if not FileAccess.file_exists(Globals.TRACKS % data.name):
-		%save.set_unsaved()
+		%save.unsaved = true
 
 	group.pressed.connect(pressed)
 
