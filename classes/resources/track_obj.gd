@@ -5,8 +5,10 @@ var base_scene: PackedScene
 var live_node: Node3D
 var material: Material
 var transform: Transform3D
+var link: WeakLink
 
-func _init(p_base: PackedScene, p_live: Node) -> void:
+func _init(p_base: PackedScene, p_live: Node, p_link: WeakLink) -> void:
+	link = p_link
 	base_scene = p_base
 	live_node = p_live
 
@@ -27,7 +29,7 @@ func exprt_imported() -> Dictionary:
 	}
 
 static func from_d(d: Dictionary) -> TrackObject:
-	var o := TrackObject.new(load(d.base_scene), null)
+	var o := TrackObject.new(load(d.base_scene), null, null)
 	o.material = load(d.material) if d.material else null
 	o.transform = d.transform
 	return o

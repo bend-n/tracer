@@ -34,6 +34,7 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 				gizmo_mover.remote_path = current.get_path()
 				current.global_position = editor.selected.global_position
 				editor.selected.add_child(gizmo_mover)
+				current.update_scale()
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	if current != null:

@@ -1,4 +1,5 @@
 extends ItemList
+class_name Items
 
 var selected: DirRes
 
@@ -13,25 +14,29 @@ const icon_table = {
 
 var thread: Thread = Thread.new()
 
+static func get_thumb(f: FileItem) -> Array:
+	var thumb: Texture2D = icon_table[-1]
+	if f is WeakLink:
+		thumb = icon_table[f.type]
+		if f.type == WeakLink.Type.Scene:
+			var hsh: PackedByteArray = f.hash_s()
+			var img := Thumbnail._load(Globals.THUMBS % f.resource_name, hsh)
+			if img:
+				return [ImageTexture.create_from_image(img)]
+			else:
+				return [thumb, hsh]
+	return [thumb]
+
 func open_dir(dir: DirRes):
 	clear()
 	selected = dir
 	var needing_thumbs := []
 	for i in dir.files.size():
 		var file := dir.files[i]
-		var thumb: Texture2D = null
-		if file is WeakLink:
-			thumb = icon_table[file.type]
-			if file.type == WeakLink.Type.Scene:
-				var hsh: PackedByteArray = file.hash_s()
-				var img := Thumbnail._load(Globals.THUMBS % file.resource_name, hsh)
-				if img:
-					thumb = ImageTexture.create_from_image(img)
-				else:
-					needing_thumbs.append([i, file, hsh])
-		else:
-			thumb = icon_table[-1]
-		add_item(file.resource_name, thumb)
+		var thumb := get_thumb(file)
+		if thumb.size() > 1:
+			needing_thumbs.append([i, file, thumb[-1]])
+		add_item(file.resource_name, thumb[0])
 	if thread.is_started():
 		while thread.is_alive():
 			await Engine.get_main_loop().process_frame

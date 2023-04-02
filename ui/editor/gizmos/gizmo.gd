@@ -8,6 +8,9 @@ var snapping := false
 var hist: UndoRedo
 
 func _physics_process(_delta: float) -> void:
+	update_scale()
+
+func update_scale():
 	var distance := (camera.global_position - global_position).length()
 	var size := distance * .00015 * camera.fov
 	scale = size * Vector3.ONE

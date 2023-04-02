@@ -14,9 +14,8 @@ func _drop_data(at_position: Vector2, data) -> void:
 		WeakLink.Type.Scene:
 			var scn := link.scene
 			var node := scn.instantiate() as Block
-			if node.get_script() != null:
-				node.editor = true
-			var obj := TrackObject.new(scn, node)
+			node.editor = true
+			var obj := TrackObject.new(scn, node, link)
 			history.create_action("add block");
 			history.add_do_method(add_obj.bind(obj, node))
 			history.add_do_reference(node)
@@ -24,6 +23,8 @@ func _drop_data(at_position: Vector2, data) -> void:
 			var origin: Vector3 = Utils.snap_v(10, 5, 10, %cam.project_position(at_position, 50))
 			history.add_do_property(node, &"global_transform", Transform3D(Basis(), origin))
 			history.commit_action()
+			%items.selected_node.emit(node)
+			print("dropped! %s" % node)
 
 func add_obj(o: TrackObject, n: Node):
 	%port.add_child(n)

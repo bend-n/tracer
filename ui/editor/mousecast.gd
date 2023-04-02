@@ -4,6 +4,7 @@ class_name MouseCast
 @onready var v := get_viewport()
 @onready var c := v.get_camera_3d()
 var gizmo_just_hit := false
+var viewport_just_dropped := false
 var cast_ray := false
 const depth := 2000.0
 
@@ -24,8 +25,9 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(_delta: float) -> void:
 	set_physics_process(false)
-	if gizmo_just_hit:
+	if gizmo_just_hit || viewport_just_dropped:
 		gizmo_just_hit = false
+		viewport_just_dropped = false
 		return
 	force_raycast_update()
 	if is_colliding():
@@ -36,3 +38,6 @@ func _physics_process(_delta: float) -> void:
 
 func gizmo_clicked() -> void:
 	gizmo_just_hit = true
+
+func _on_view_created() -> void:
+	viewport_just_dropped = true

@@ -2,6 +2,9 @@ extends Button
 
 @onready var hist: UndoRedo = owner.history
 
+func _ready() -> void:
+	%items.selected_node.connect(_on_items_selected_node)
+
 func _on_items_selected_node(node: Node) -> void:
 	disabled = node == null
 
