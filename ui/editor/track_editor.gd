@@ -5,29 +5,23 @@ class_name TrackEditor
 
 enum Mode { Select, Move, Rotate, Scale }
 var mode: Mode
-var selected: Node3D:
+var selected: Array[Block]:
 	set(s):
 		if s != selected:
-			if s is Node3D:
-				selected = s
-				return
-			elif s == null:
-				selected.un_highlight()
-				selected = null
-			else:
-				selected = s
-				s.highlight()
+			for b in selected: # easier than finding the items that are not in selected but are in s
+				b.un_highlight()
+			selected = s
+			for b in selected:
+				b.highlight()
+			make_gizmo.emit(mode)
 var snapping := true
 var objects: Array[TrackObject] = []
 var history := UndoRedo.new()
-var selection_parent := Node3D.new()
 signal make_gizmo(mode: Mode)
 
 const loader := preload("res://scenes/track.tscn")
 
 func _ready() -> void:
-	selection_parent.name = "selection parent"
-	%port.add_child(selection_parent)
 	var data := Globals.editing if Globals.editing else TrackResource.new([])
 	var l: TrackLoader = loader.instantiate()
 	l.editor = true
@@ -54,22 +48,7 @@ func pressed(b: Button) -> void:
 	make_gizmo.emit(mode)
 
 func _on_mousecast_hit(colls: Array[Block]) -> void:
-	if colls.size() == 0:
-		selected = null
-	elif colls.size() == 1:
-		if selected == colls[0]:
-			return
-		selected = colls[0]
-	elif colls.size() > 1:
-		var v: EditorViewport = %port
-		for c in selection_parent.get_children(): # clear the parent
-			selection_parent.remove_child(c)
-			v.add_child(c)
-		for coll in colls: # set up the parent
-			v.remove_child(coll)
-			selection_parent.add_child(coll)
-		selected = selection_parent
-	make_gizmo.emit(mode)
+	selected = colls
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	snapping = button_pressed
@@ -82,8 +61,7 @@ func to_trackdata() -> TrackResource:
 
 func _on_item_created(object: TrackObject) -> void:
 	objects.append(object)
-	selected = object.live_node
-	make_gizmo.emit(mode)
+	selected = [object.live_node]
 
 var n: String
 func _on_propertys_name_changed(p_name: String) -> void:
@@ -96,7 +74,7 @@ func tobj_from_node(node: Node) -> TrackObject:
 	return null
 
 func _on_delete_pressed() -> void:
-	selected = null
+	selected = []
 
 func _on_remove_tobj(tobj: TrackObject) -> void:
 	objects.erase(tobj)

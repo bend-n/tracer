@@ -10,8 +10,6 @@ var direction2vector := { Direction.X: Vector3.RIGHT, Direction.Y: Vector3.UP, D
 var dragged := false
 var clicked_position := Vector3.ZERO
 var click_plane: Plane
-var original_transform: Transform3D
-var original_scale: Vector3
 
 @onready var gizmo: Gizmo = owner
 enum Mode { Translate, Scale }
@@ -22,6 +20,7 @@ signal clicked
 func _process(_delta: float):
 	if dragged and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		dragged = false
+		gizmo.finalize.emit()
 	if dragged:
 		var cam := get_viewport().get_camera_3d()
 		var mp := get_viewport().get_mouse_position()
@@ -36,23 +35,15 @@ func _process(_delta: float):
 		var displacement: Vector3 = dist.project(drag_direction)
 		match mode:
 			Mode.Translate:
-				var transf := original_transform.translated_local(displacement)
-				gizmo.hist.create_action("move object", UndoRedo.MERGE_ENDS)
-				transf = original_transform.translated_local(displacement)
-				if owner.snapping:
-					transf.origin = Utils.snap_v(10, 5, 10, transf.origin)
-				gizmo.hist.add_do_property(owner.object, &"global_transform", transf)
-				gizmo.hist.add_undo_property(owner.object, &"global_transform", original_transform)
+				gizmo.displaced.emit(displacement)
+#				if owner.snapping:
+#					transf.origin = Utils.snap_v(10, 5, 10, transf.origin)
 			Mode.Scale:
-				gizmo.hist.create_action("scale object", UndoRedo.MERGE_ENDS)
-				var scl: Vector3 = original_scale + displacement
-				if owner.snapping:
-					scl = scl.snapped(Vector3.ONE)
-				if scl.x <= 0 || scl.y <= 0: # pls no flip
-					scl = Vector3.ONE
-				gizmo.hist.add_do_property(owner.object, &"scale", scl)
-				gizmo.hist.add_undo_property(owner.object, &"scale", original_scale)
-		gizmo.hist.commit_action()
+#				if owner.snapping:
+#					scl = scl.snapped(Vector3.ONE)
+#				if scl.x <= 0 || scl.y <= 0: # pls no flip
+#					scl = Vector3.ONE
+				gizmo.scaled.emit(displacement)
 
 func _ready() -> void:
 	input_event.connect(click)
@@ -68,5 +59,3 @@ func click(camera: Camera3D, event: InputEvent, click_position: Vector3, _click_
 		click_plane = Plane(plane_normal, distance)
 
 		clicked_position = click_position
-		original_transform = gizmo.object.global_transform
-		original_scale = gizmo.object.scale

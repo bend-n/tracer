@@ -10,32 +10,103 @@ const map = {
 }
 
 var current: Gizmo
-var gizmo_mover: RemoteTransform3D
+var gizmo_holder := Node3D.new()
+
+var original_gh_p: Vector3
+var original_positions: PackedVector3Array = []
+var original_rotations: PackedVector3Array = []
+var original_scales: PackedVector3Array = []
+
+func _ready() -> void:
+	add_child(gizmo_holder)
+
+func _position_gizmo_holder() -> void:
+	if editor.selected.size() > 1:
+		var box := AABB()
+		for block in editor.selected:
+			box = box.expand(block.global_position)
+		gizmo_holder.global_position = box.position
+	else:
+		gizmo_holder.global_position = editor.selected[0].global_position
+
+func _setup_originals() -> void:
+	original_positions.resize(len(editor.selected))
+	original_rotations.resize(len(editor.selected))
+	original_scales.resize(len(editor.selected))
+	for i in len(editor.selected):
+		original_positions[i] = (editor.selected[i].global_position)
+		original_rotations[i] = (editor.selected[i].global_rotation)
+		original_scales[i] = (editor.selected[i].scale)
+		original_gh_p = gizmo_holder.global_position
 
 func update_gizmo(mode: TrackEditor.Mode) -> void:
 	if current != null:
 		current.queue_free()
 		current = null
-	if gizmo_mover != null:
-		gizmo_mover.queue_free()
-		gizmo_mover = null
+		original_positions.clear()
+		original_rotations.clear()
+		original_scales.clear()
 	match mode:
 		_:
-			if editor.selected != null:
-				current = map[mode].instantiate()
-				current.snapping = editor.snapping
-				current.path = editor.selected.get_path()
-				current.hist = owner.history
-				current.clicked.connect($mousecast.gizmo_clicked)
-				gizmo_mover = RemoteTransform3D.new()
-				gizmo_mover.update_rotation = false
-				gizmo_mover.update_scale = false
-				gizmo_mover.update_position = true
-				add_child(current)
-				gizmo_mover.remote_path = current.get_path()
-				current.global_position = editor.selected.global_position
-				editor.selected.add_child(gizmo_mover)
-				current.update_scale()
+			if editor.selected.size() == 0:
+				return
+			current = map[mode].instantiate()
+			_position_gizmo_holder()
+			gizmo_holder.add_child(current)
+			current.update_scale()
+			_setup_originals()
+			current.finalize.connect(_gizmo_finalize) # trust me this is much easier to read than lambdas
+			current.displaced.connect(_gizmo_displace)
+			current.scaled.connect(_gizmo_scale)
+			current.rotated.connect(_gizmo_rotate)
+			current.clicked.connect(%mousecast.gizmo_clicked)
+
+func _gizmo_displace(offset: Vector3):
+	const prop := &"global_position"
+	editor.history.create_action("move %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
+	for i in len(editor.selected):
+		editor.history.add_do_property(
+			editor.selected[i], prop, original_positions[i] + offset
+		)
+		editor.history.add_undo_property(
+			editor.selected[i], prop, original_positions[i]
+		)
+	editor.history.add_do_property(gizmo_holder, prop, original_gh_p + offset)
+	editor.history.add_undo_property(gizmo_holder, prop, original_gh_p)
+	editor.history.commit_action()
+
+func _gizmo_scale(change: Vector3):
+	const prop := &"scale"
+	editor.history.create_action("scale %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
+	for i in len(editor.selected):
+		editor.history.add_do_property(
+			editor.selected[i], prop, original_scales[i] + change
+		)
+		editor.history.add_undo_property(
+			editor.selected[i], prop, original_scales[i]
+		)
+	editor.history.commit_action()
+
+func _gizmo_rotate(change: Vector3):
+	const prop := &"global_rotation"
+	editor.history.create_action("rotate %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
+	for i in len(editor.selected):
+		editor.history.add_do_property(
+			editor.selected[i], prop, original_rotations[i] + change
+		)
+		editor.history.add_undo_property(
+			editor.selected[i], prop, original_rotations[i]
+		)
+	editor.history.commit_action()
+
+func _gizmo_finalize():
+	for i in len(editor.selected):
+		var o := editor.selected[i]
+		original_positions[i] = o.global_position
+		original_scales[i] = o.scale
+		original_rotations[i] = o.global_rotation
+	original_gh_p = gizmo_holder.global_position
+	print("set gizmo holder p to %s" % original_gh_p)
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	if current != null:

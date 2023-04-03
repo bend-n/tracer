@@ -4,13 +4,13 @@ class_name TranslateGizmoCenter
 var dragged := false
 var clicked_position := Vector3.ZERO
 var click_plane: Plane
-var original_transform: Transform3D
 
 signal clicked
 
 func _process(_delta: float):
 	if dragged and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		dragged = false
+		owner.finalize.emit()
 	if dragged:
 		var cam := get_viewport().get_camera_3d()
 		var mp := get_viewport().get_mouse_position()
@@ -22,15 +22,7 @@ func _process(_delta: float):
 			# dont move if its exactly parallel to plane
 			return
 		var displacement: Vector3 = intersection_of_movement_point - clicked_position
-		var transf := original_transform.translated_local(displacement)
-		owner.hist.create_action("move object", UndoRedo.MERGE_ENDS)
-		transf = original_transform.translated_local(displacement)
-		if owner.snapping:
-			transf.origin = Utils.snap_v(10, 5, 10, transf.origin)
-		owner.hist.add_do_property(owner.object, &"global_transform", transf)
-		owner.hist.add_undo_property(owner.object, &"global_transform", original_transform)
-		owner.object.translate_object_local(displacement)
-		owner.hist.commit_action()
+		owner.displaced.emit(displacement)
 
 func _ready() -> void:
 	input_event.connect(click)
@@ -45,5 +37,4 @@ func click(camera: Camera3D, event: InputEvent, click_position: Vector3, _click_
 		click_plane = Plane(plane_normal, distance)
 
 		clicked_position = click_position
-		original_transform = owner.object.global_transform
 

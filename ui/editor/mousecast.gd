@@ -27,7 +27,7 @@ func _physics_process(_delta: float) -> void:
 		start = get_viewport().get_mouse_position()
 		drag_area.show()
 	elif Input.is_action_just_released("click") and start != null:
-		var selection: Array[Block]
+		var selection: Array[Block] = []
 		var r := Rect2(start, Vector2.ZERO).expand(get_viewport().get_mouse_position())
 		for obj in editor.objects:
 			var origin := obj.transform.origin
