@@ -7,3 +7,6 @@ var editor := false
 func _ready() -> void:
 	if editor:
 		collision_layer = Globals.DEFAULT_EDITOR_LAYER
+
+func get_aabb() -> AABB:
+	return mesh.get_aabb()

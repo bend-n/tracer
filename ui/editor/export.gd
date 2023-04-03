@@ -28,17 +28,17 @@ static func int2hex(num: int) -> String:
 
 static func s2td(s: String) -> TrackResource:
 	var split := s.lstrip('`').rstrip('`').strip_edges().split("|", false, 1)
-	if not split.size():
+	if not split.size() || split[0].length() < 100:
 		return null
 	var buf := Marshalls.base64_to_raw(split[0])
-	var decompressed: PackedByteArray
-	if split.size() > 1:
-		var buffer_s := split[1].hex_to_int()
-		decompressed = buf.decompress(buffer_s, FileAccess.COMPRESSION_DEFLATE)
+	var decompressed: PackedByteArray = []
+	if split.size() > 1 and split[1].length() < 20 and split[1].hex_to_int() > 0:
+		decompressed = buf.decompress(split[1].hex_to_int(), FileAccess.COMPRESSION_DEFLATE)
 	else: # size unknown!
 		decompressed = buf.decompress_dynamic(51200, FileAccess.COMPRESSION_DEFLATE)
+	if decompressed.size() < 4:
+		return null
 	var d = bytes_to_var(decompressed)
 	if d is Dictionary:
-		return TrackResource.from_d(bytes_to_var(decompressed))
-	else:
-		return
+		return TrackResource.from_d(d)
+	return null

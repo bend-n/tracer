@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c1h0ic5drv85m"]
 
-[ext_resource type="Script" path="res://classes/tree.gd" id="1_iq4hk"]
+[ext_resource type="Script" path="res://assets/blocks/tree.gd" id="1_aqri3"]
 [ext_resource type="ArrayMesh" uid="uid://wpn040a4trym" path="res://assets/meshes/tree_bottom.tres" id="1_ynsw3"]
 [ext_resource type="ArrayMesh" uid="uid://dnglrbqb00hnw" path="res://assets/meshes/tree_top.mesh" id="2_aobnj"]
 
@@ -12,7 +12,7 @@ radius = 1.0
 points = PackedVector3Array(0, -1.5, -2.949, -2.08531, -1.5, -2.08531, 0, -0.900059, -2.35955, 2.08474, -1.5, -2.08531, -2.949, -1.5, 0, -2.35955, -0.900059, 0, -1.25165, -0.300117, -1.25165, 0, 0.299824, -1.18006, 1.25107, -0.300117, -1.25165, 2.949, -1.5, 0, -2.08531, -1.5, 2.08474, -1.25165, -0.300117, 1.25107, -1.18006, 0.299824, 0, -0.417409, 0.899765, -0.417409, 0, 1.5, 0, 1.25107, -0.300117, 1.25107, 2.08474, -1.5, 2.08474, 0, -1.5, 2.949)
 
 [node name="tree" type="StaticBody3D"]
-script = ExtResource("1_iq4hk")
+script = ExtResource("1_aqri3")
 
 [node name="trunk" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
