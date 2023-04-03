@@ -5,7 +5,18 @@ class_name TrackEditor
 
 enum Mode { Select, Move, Rotate, Scale }
 var mode: Mode
-var selected: Node3D
+var selected: Node3D:
+	set(s):
+		if s != selected:
+			if s is Node3D:
+				selected = s
+				return
+			elif s == null:
+				selected.un_highlight()
+				selected = null
+			else:
+				selected = s
+				s.highlight()
 var snapping := true
 var objects: Array[TrackObject] = []
 var history := UndoRedo.new()
