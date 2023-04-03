@@ -14,7 +14,7 @@ config/name="tracer"
 run/main_scene="res://start.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="tracer"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.1")
 
 [autoload]
 

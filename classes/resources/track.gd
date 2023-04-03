@@ -72,6 +72,6 @@ func save(path: String) -> void:
 func get_aabb() -> AABB:
 	var box := AABB()
 	for block in blocks:
-		if block.live_node is VisualInstance3D:
+		if block.live_node.mesh is VisualInstance3D:
 			box = box.merge(block.live_node.get_aabb())
 	return box

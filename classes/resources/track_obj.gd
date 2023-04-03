@@ -2,9 +2,14 @@ extends Resource
 class_name TrackObject
 
 var base_scene: PackedScene
-var live_node: Node3D
+var live_node: Block
 var material: Material
-var transform: Transform3D
+var transform: Transform3D:
+	get:
+		if live_node:
+			return live_node.global_transform
+		else:
+			return transform
 var link: WeakLink
 
 func _init(p_base: PackedScene, p_live: Node, p_link: WeakLink) -> void:

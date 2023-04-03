@@ -4,12 +4,12 @@ extends Button
 
 var node: Block
 
-func _ready() -> void:
-	%items.selected_node.connect(_on_items_selected_node)
 
-func _on_items_selected_node(p_node: Block) -> void:
-	disabled = p_node == null
-	node = p_node
+func _ready() -> void:
+	%mousecast.hit.connect(hit)
+
+func hit(nodes: Array[Block]) -> void:
+	disabled = nodes.size() == 0
 
 func _pressed() -> void:
 	var f := editor.tobj_from_node(node).link

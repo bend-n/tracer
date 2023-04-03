@@ -3,7 +3,6 @@ class_name Items
 
 var selected: DirRes
 
-signal selected_node(node: Block)
 signal dir_selected(i: int)
 
 const icon_table = {
@@ -79,9 +78,3 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 					.init(get_item_icon(index))
 			)
 	return f
-
-func _on_mousecast_miss() -> void:
-	selected_node.emit(null)
-
-func _on_mousecast_hit(coll: Block) -> void:
-	selected_node.emit(coll)

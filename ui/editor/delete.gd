@@ -3,10 +3,10 @@ extends Button
 @onready var hist: UndoRedo = owner.history
 
 func _ready() -> void:
-	%items.selected_node.connect(_on_items_selected_node)
+	%mousecast.hit.connect(hit)
 
-func _on_items_selected_node(node: Node) -> void:
-	disabled = node == null
+func hit(nodes: Array[Block]) -> void:
+	disabled = nodes.size() == 0
 
 func _pressed() -> void:
 	var tobj := (owner as TrackEditor).tobj_from_node(owner.selected)

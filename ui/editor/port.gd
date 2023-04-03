@@ -1,4 +1,5 @@
 extends SubViewport
+class_name EditorViewport
 
 @onready var editor: TrackEditor = owner
 
