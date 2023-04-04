@@ -14,10 +14,12 @@ var selected: Array[Block]:
 			for b in selected:
 				b.highlight()
 			make_gizmo.emit(mode)
+			selection_changed.emit(selected)
 var snapping := true
 var objects: Array[TrackObject] = []
 var history := UndoRedo.new()
 signal make_gizmo(mode: Mode)
+signal selection_changed(objects: Array[Block])
 
 const loader := preload("res://scenes/track.tscn")
 
@@ -61,7 +63,6 @@ func to_trackdata() -> TrackResource:
 
 func _on_item_created(object: TrackObject) -> void:
 	objects.append(object)
-	selected = [object.live_node]
 
 var n: String
 func _on_propertys_name_changed(p_name: String) -> void:

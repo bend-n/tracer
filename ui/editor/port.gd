@@ -21,13 +21,10 @@ func _ready() -> void:
 	add_child(gizmo_holder)
 
 func _position_gizmo_holder() -> void:
-	if editor.selected.size() > 1:
-		var box := AABB()
-		for block in editor.selected:
-			box = box.expand(block.global_position)
-		gizmo_holder.global_position = box.position
-	else:
-		gizmo_holder.global_position = editor.selected[0].global_position
+	var sum := Vector3.ZERO
+	for block in editor.selected:
+		sum += block.global_position
+	gizmo_holder.global_position = sum / len(editor.selected)
 
 func _setup_originals() -> void:
 	original_positions.resize(len(editor.selected))
