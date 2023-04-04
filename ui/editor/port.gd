@@ -63,12 +63,14 @@ func _gizmo_displace(offset: Vector3):
 	editor.history.create_action("move %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
 	for i in len(editor.selected):
 		editor.history.add_do_property(
-			editor.selected[i], prop, original_positions[i] + offset
+			editor.selected[i],
+			prop,
+			Utils.snap_v(10, 5, 10, original_positions[i] + offset)
+				if editor.snapping else
+			original_positions[i] + offset
 		)
-		editor.history.add_undo_property(
-			editor.selected[i], prop, original_positions[i]
-		)
-	editor.history.add_do_property(gizmo_holder, prop, original_gh_p + offset)
+		editor.history.add_undo_property(editor.selected[i], prop, original_positions[i])
+	editor.history.add_do_property(gizmo_holder, prop, Utils.snap_v(10, 5, 10, original_gh_p + offset) if editor.snapping else original_gh_p + offset)
 	editor.history.add_undo_property(gizmo_holder, prop, original_gh_p)
 	editor.history.commit_action()
 
@@ -76,12 +78,11 @@ func _gizmo_scale(change: Vector3):
 	const prop := &"scale"
 	editor.history.create_action("scale %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
 	for i in len(editor.selected):
-		editor.history.add_do_property(
-			editor.selected[i], prop, original_scales[i] + change
-		)
-		editor.history.add_undo_property(
-			editor.selected[i], prop, original_scales[i]
-		)
+		var scl := (original_scales[i] + change).snapped(Vector3.ONE) if editor.snapping else original_scales[i] + change
+		if scl.x <= 0 || scl.y <= 0: # pls no flip
+			scl = Vector3.ONE
+		editor.history.add_do_property(editor.selected[i], prop, scl)
+		editor.history.add_undo_property(editor.selected[i], prop, original_scales[i])
 	editor.history.commit_action()
 
 func _gizmo_rotate(change: Vector3):
@@ -103,7 +104,6 @@ func _gizmo_finalize():
 		original_scales[i] = o.scale
 		original_rotations[i] = o.global_rotation
 	original_gh_p = gizmo_holder.global_position
-	print("set gizmo holder p to %s" % original_gh_p)
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	if current != null:

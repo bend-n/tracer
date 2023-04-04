@@ -36,13 +36,7 @@ func _process(_delta: float):
 		match mode:
 			Mode.Translate:
 				gizmo.displaced.emit(displacement)
-#				if owner.snapping:
-#					transf.origin = Utils.snap_v(10, 5, 10, transf.origin)
 			Mode.Scale:
-#				if owner.snapping:
-#					scl = scl.snapped(Vector3.ONE)
-#				if scl.x <= 0 || scl.y <= 0: # pls no flip
-#					scl = Vector3.ONE
 				gizmo.scaled.emit(displacement)
 
 func _ready() -> void:

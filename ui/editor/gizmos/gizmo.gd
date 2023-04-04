@@ -14,7 +14,7 @@ func _physics_process(_delta: float) -> void:
 
 func update_scale():
 	var distance := (camera.global_position - global_position).length()
-	var size := distance * .00015 * camera.fov
+	var size := distance * .00011 * camera.fov
 	scale = size * Vector3.ONE
 
 func _ready() -> void:
