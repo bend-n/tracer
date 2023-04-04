@@ -12,10 +12,5 @@ func _pressed() -> void:
 	match f.type:
 		WeakLink.Type.Scene:
 			var thumb: Texture2D = Items.get_thumb(f)[0]
-			force_drag(
-				f,
-				preload("res://ui/editor/block_dragdrop_preview.tscn")
-					.instantiate()
-					.init(thumb)
-			)
+			force_drag(f, Items.make_drag_preview(thumb))
 		_: push_error("this cannot be")
