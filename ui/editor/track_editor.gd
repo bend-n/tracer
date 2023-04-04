@@ -50,7 +50,7 @@ func pressed(b: Button) -> void:
 	make_gizmo.emit(mode)
 
 func _on_mousecast_hit(colls: Array[Block]) -> void:
-	var new_selected: Array[TrackObject]
+	var new_selected: Array[TrackObject] = []
 	new_selected.resize(colls.size())
 	for i in len(colls):
 		new_selected[i] = tobj_from_node(colls[i])

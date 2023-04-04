@@ -30,19 +30,19 @@ static func get_thumb(f: FileItem) -> Array:
 ## the size of the output may not equal the size of the input,
 ## as it tries to not create duplicates.
 static func get_thumbs(files: Array[FileItem]) -> Array[Texture2D]:
-	var set := []
+	var files_uniq := []
 	for file in files:
-		if not set.has(file):
-			set.append(file)
-	var output: Array[Texture2D]
-	output.resize(len(set))
-	for i in len(set):
+		if not files_uniq.has(file):
+			files_uniq.append(file)
+	var output: Array[Texture2D] = []
+	output.resize(len(files_uniq))
+	for i in len(files_uniq):
 		var thumb: Texture2D = icon_table[-1]
-		if files[i] is WeakLink:
-			thumb = icon_table[files[i].type]
+		if files_uniq[i] is WeakLink:
+			thumb = icon_table[files_uniq[i].type]
 			if files[i].type == WeakLink.Type.Scene:
-				var hsh: PackedByteArray = files[i].hash_s()
-				var img := Thumbnail._load(Globals.THUMBS % files[i].resource_name, hsh)
+				var hsh: PackedByteArray = files_uniq[i].hash_s()
+				var img := Thumbnail._load(Globals.THUMBS % files_uniq[i].resource_name, hsh)
 				if img:
 					thumb = ImageTexture.create_from_image(img)
 				output[i] = thumb

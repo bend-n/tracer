@@ -29,6 +29,7 @@ func init(textures: Array[Texture2D]):
 		t_rect.size_flags_vertical = SIZE_EXPAND
 		t_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t_rect.texture = t
+		@warning_ignore(\"integer_division\")
 		t_rect.custom_minimum_size = Vector2(64/columns, 64/columns)
 		%grid.add_child(t_rect)
 	return self
