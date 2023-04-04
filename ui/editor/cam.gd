@@ -40,11 +40,9 @@ func _input(event: InputEvent):
 			# camera zoom
 			MOUSE_BUTTON_WHEEL_UP: global_position -= global_transform.basis.z * SCROLL_SENS
 			MOUSE_BUTTON_WHEEL_DOWN: global_position += global_transform.basis.z * SCROLL_SENS
-	elif event is InputEventMouseMotion:
+	elif event is InputEventMouseMotion and panning:
 		var v := get_viewport()
-		if not Rect2(Vector2(), v.size).grow(-15).has_point(get_viewport().get_mouse_position()):
-			if panning:
-				var mp := v.get_mouse_position()
-				v.warp_mouse(mp.posmodv(v.size))
-				last_m_pos = mp.posmodv(v.size)
-
+		var mp := v.get_mouse_position()
+		if not Rect2(Vector2(), v.size).grow(-15).has_point(mp):
+			v.warp_mouse(mp.posmodv(v.size))
+			last_m_pos = mp.posmodv(v.size)
