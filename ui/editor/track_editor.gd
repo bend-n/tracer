@@ -5,21 +5,21 @@ class_name TrackEditor
 
 enum Mode { Select, Move, Rotate, Scale }
 var mode: Mode
-var selected: Array[Block]:
+var selected: Array[TrackObject]:
 	set(s):
 		if s != selected:
 			for b in selected: # easier than finding the items that are not in selected but are in s
-				b.un_highlight()
+				b.live_node.un_highlight()
 			selected = s
 			for b in selected:
-				b.highlight()
+				b.live_node.highlight()
 			make_gizmo.emit(mode)
 			selection_changed.emit(selected)
 var snapping := true
 var objects: Array[TrackObject] = []
 var history := UndoRedo.new()
 signal make_gizmo(mode: Mode)
-signal selection_changed(objects: Array[Block])
+signal selection_changed(objects: Array[TrackObject])
 
 const loader := preload("res://scenes/track.tscn")
 
@@ -50,7 +50,11 @@ func pressed(b: Button) -> void:
 	make_gizmo.emit(mode)
 
 func _on_mousecast_hit(colls: Array[Block]) -> void:
-	selected = colls
+	var new_selected: Array[TrackObject]
+	new_selected.resize(colls.size())
+	for i in len(colls):
+		new_selected[i] = tobj_from_node(colls[i])
+	selected = new_selected
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	snapping = button_pressed
@@ -63,12 +67,13 @@ func to_trackdata() -> TrackResource:
 
 func _on_item_created(object: TrackObject) -> void:
 	objects.append(object)
+	print("created")
 
 var n: String
 func _on_propertys_name_changed(p_name: String) -> void:
 	n = p_name
 
-func tobj_from_node(node: Node) -> TrackObject:
+func tobj_from_node(node: Block) -> TrackObject:
 	for o in objects:
 		if o.live_node == node:
 			return o

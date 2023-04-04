@@ -43,7 +43,7 @@ func _physics_process(_delta: float) -> void:
 			force_raycast_update()
 			if is_colliding():
 				selection.append(get_collider())
-				hit.emit(selection)
+			hit.emit(selection)
 			return
 		for obj in editor.objects:
 			var origin := obj.transform.origin

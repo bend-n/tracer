@@ -73,9 +73,10 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	match f.type:
 		WeakLink.Type.Scene:
 			set_drag_preview(make_drag_preview(get_item_icon(index)))
-	return f
+	var objects: Array[TrackObject] = [TrackObject.new(f.scene, null, f)]
+	return objects
 
-static func make_drag_preview(tex: Texture2D) -> Control:
+func make_drag_preview(tex: Texture2D) -> Control:
 	var preview: Control = preload("res://ui/editor/block_dragdrop_preview.tscn").instantiate().init(tex)
 	%view.mouse_entered.connect(preview.hide)
 	%view.mouse_exited.connect(preview.show)

@@ -2,15 +2,13 @@ extends Button
 
 @onready var editor: TrackEditor = owner
 
-var node: Block
-
 func _ready() -> void:
-	editor.selection_changed.connect(func(nodes: Array[Block]): disabled = nodes.size() == 0)
+	editor.selection_changed.connect(func(nodes: Array[TrackObject]): disabled = nodes.size() == 0)
 
 func _pressed() -> void:
-	var f := editor.tobj_from_node(node).link
-	match f.type:
-		WeakLink.Type.Scene:
-			var thumb: Texture2D = Items.get_thumb(f)[0]
-			force_drag(f, Items.make_drag_preview(thumb))
-		_: push_error("this cannot be")
+	var positions: PackedVector3Array
+	positions.resize(len(editor.selected))
+	var first_p := editor.selected[0].live_node.global_position
+	for i in len(editor.selected):
+		positions[i] = editor.selected[i].live_node.global_position - first_p
+	force_drag([editor.selected, positions], %items.make_drag_preview(Items.get_thumb(editor.selected[0].link)[0]))

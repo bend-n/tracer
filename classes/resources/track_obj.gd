@@ -49,4 +49,5 @@ func set_live(p_live: Node):
 	# material = null
 	# transform = Transform3D()
 
-
+func _to_string() -> String:
+	return "TrackObject<%s>" % link.resource_name

@@ -23,7 +23,7 @@ func _ready() -> void:
 func _position_gizmo_holder() -> void:
 	var sum := Vector3.ZERO
 	for block in editor.selected:
-		sum += block.global_position
+		sum += block.live_node.global_position
 	gizmo_holder.global_position = sum / len(editor.selected)
 
 func _setup_originals() -> void:
@@ -31,9 +31,10 @@ func _setup_originals() -> void:
 	original_rotations.resize(len(editor.selected))
 	original_scales.resize(len(editor.selected))
 	for i in len(editor.selected):
-		original_positions[i] = (editor.selected[i].global_position)
-		original_rotations[i] = (editor.selected[i].global_rotation)
-		original_scales[i] = (editor.selected[i].scale)
+		var n := editor.selected[i].live_node
+		original_positions[i] = n.global_position
+		original_rotations[i] = n.global_rotation
+		original_scales[i] = n.scale
 		original_gh_p = gizmo_holder.global_position
 
 func update_gizmo(mode: TrackEditor.Mode) -> void:
@@ -62,14 +63,15 @@ func _gizmo_displace(offset: Vector3):
 	const prop := &"global_position"
 	editor.history.create_action("move %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
 	for i in len(editor.selected):
+		var n := editor.selected[i].live_node
 		editor.history.add_do_property(
-			editor.selected[i],
+			n,
 			prop,
 			Utils.snap_v(10, 5, 10, original_positions[i] + offset)
 				if editor.snapping else
 			original_positions[i] + offset
 		)
-		editor.history.add_undo_property(editor.selected[i], prop, original_positions[i])
+		editor.history.add_undo_property(n, prop, original_positions[i])
 	editor.history.add_do_property(gizmo_holder, prop, Utils.snap_v(10, 5, 10, original_gh_p + offset) if editor.snapping else original_gh_p + offset)
 	editor.history.add_undo_property(gizmo_holder, prop, original_gh_p)
 	editor.history.commit_action()
@@ -78,31 +80,29 @@ func _gizmo_scale(change: Vector3):
 	const prop := &"scale"
 	editor.history.create_action("scale %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
 	for i in len(editor.selected):
+		var n := editor.selected[i].live_node
 		var scl := (original_scales[i] + change).snapped(Vector3.ONE) if editor.snapping else original_scales[i] + change
 		if scl.x <= 0 || scl.y <= 0: # pls no flip
 			scl = Vector3.ONE
-		editor.history.add_do_property(editor.selected[i], prop, scl)
-		editor.history.add_undo_property(editor.selected[i], prop, original_scales[i])
+		editor.history.add_do_property(n, prop, scl)
+		editor.history.add_undo_property(n, prop, original_scales[i])
 	editor.history.commit_action()
 
 func _gizmo_rotate(change: Vector3):
 	const prop := &"global_rotation"
 	editor.history.create_action("rotate %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
 	for i in len(editor.selected):
-		editor.history.add_do_property(
-			editor.selected[i], prop, original_rotations[i] + change
-		)
-		editor.history.add_undo_property(
-			editor.selected[i], prop, original_rotations[i]
-		)
+		var n := editor.selected[i].live_node
+		editor.history.add_do_property(n, prop, original_rotations[i] + change)
+		editor.history.add_undo_property(n, prop, original_rotations[i])
 	editor.history.commit_action()
 
 func _gizmo_finalize():
 	for i in len(editor.selected):
-		var o := editor.selected[i]
-		original_positions[i] = o.global_position
-		original_scales[i] = o.scale
-		original_rotations[i] = o.global_rotation
+		var n := editor.selected[i].live_node
+		original_positions[i] = n.global_position
+		original_scales[i] = n.scale
+		original_rotations[i] = n.global_rotation
 	original_gh_p = gizmo_holder.global_position
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
