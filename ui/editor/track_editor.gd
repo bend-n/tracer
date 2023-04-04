@@ -67,7 +67,6 @@ func to_trackdata() -> TrackResource:
 
 func _on_item_created(object: TrackObject) -> void:
 	objects.append(object)
-	print("created")
 
 var n: String
 func _on_propertys_name_changed(p_name: String) -> void:

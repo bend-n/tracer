@@ -17,15 +17,27 @@ corner_radius_bottom_left = 15
 resource_name = "dropdrag"
 script/source = "extends PanelContainer
 
-func init(t: Texture2D):
-	%tr.texture = t
+func get_columns(x: int) -> int:
+	return floori(sqrt(x))
+
+func init(textures: Array[Texture2D]):
+	var columns := get_columns(textures.size())
+	%grid.columns = columns
+	for t in textures:
+		var t_rect := TextureRect.new()
+		t_rect.size_flags_horizontal = SIZE_EXPAND
+		t_rect.size_flags_vertical = SIZE_EXPAND
+		t_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		t_rect.texture = t
+		t_rect.custom_minimum_size = Vector2(64/columns, 64/columns)
+		%grid.add_child(t_rect)
 	return self
 "
 
 [node name="preview" type="PanelContainer"]
 clip_children = 2
-offset_right = 74.0
-offset_bottom = 74.0
+offset_right = 72.0
+offset_bottom = 72.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_p80jk")
 script = SubResource("GDScript_iva8e")
 
@@ -35,14 +47,13 @@ layout_mode = 2
 texture = ExtResource("2_hvrcj")
 expand_mode = 1
 
-[node name="tr" type="TextureRect" parent="clip"]
+[node name="grid" type="GridContainer" parent="clip"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -2.0
-offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
-stretch_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0

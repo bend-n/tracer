@@ -26,6 +26,28 @@ static func get_thumb(f: FileItem) -> Array:
 				return [thumb, hsh]
 	return [thumb]
 
+## doesnt care about failures & processes multiple files.
+## the size of the output may not equal the size of the input,
+## as it tries to not create duplicates.
+static func get_thumbs(files: Array[FileItem]) -> Array[Texture2D]:
+	var set := []
+	for file in files:
+		if not set.has(file):
+			set.append(file)
+	var output: Array[Texture2D]
+	output.resize(len(set))
+	for i in len(set):
+		var thumb: Texture2D = icon_table[-1]
+		if files[i] is WeakLink:
+			thumb = icon_table[files[i].type]
+			if files[i].type == WeakLink.Type.Scene:
+				var hsh: PackedByteArray = files[i].hash_s()
+				var img := Thumbnail._load(Globals.THUMBS % files[i].resource_name, hsh)
+				if img:
+					thumb = ImageTexture.create_from_image(img)
+				output[i] = thumb
+	return output
+
 func open_dir(dir: DirRes):
 	clear()
 	selected = dir
@@ -72,12 +94,12 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 		return null
 	match f.type:
 		WeakLink.Type.Scene:
-			set_drag_preview(make_drag_preview(get_item_icon(index)))
+			set_drag_preview(make_drag_preview([get_item_icon(index)]))
 	var objects: Array[TrackObject] = [TrackObject.new(f.scene, null, f)]
 	return objects
 
-func make_drag_preview(tex: Texture2D) -> Control:
-	var preview: Control = preload("res://ui/editor/block_dragdrop_preview.tscn").instantiate().init(tex)
+func make_drag_preview(textures: Array[Texture2D]) -> Control:
+	var preview: Control = preload("res://ui/editor/block_dragdrop_preview.tscn").instantiate().init(textures)
 	%view.mouse_entered.connect(preview.hide)
 	%view.mouse_exited.connect(preview.show)
 	return preview
