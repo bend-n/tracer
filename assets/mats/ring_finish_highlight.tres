@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://djl4cvi3wxk1y"]
+
+[ext_resource type="Texture2D" uid="uid://c4e2s06xl4u0x" path="res://assets/textures/finish.png" id="1_jl8u5"]
+[ext_resource type="Material" uid="uid://t7fn8554gl6p" path="res://assets/mats/outline_highlight.tres" id="2_pm0cf"]
+
+[resource]
+next_pass = ExtResource("2_pm0cf")
+albedo_color = Color(1.5, 1.5, 1.5, 1)
+albedo_texture = ExtResource("1_jl8u5")
+metallic_specular = 0.0
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 0

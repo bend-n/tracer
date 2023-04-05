@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cgahye6xlgwga"]
+
+[ext_resource type="Texture2D" uid="uid://2fjjxft1ip57" path="res://assets/textures/road.png" id="1_k1hyl"]
+
+[resource]
+albedo_color = Color(1.5, 1.5, 1.5, 1)
+albedo_texture = ExtResource("1_k1hyl")
+metallic_specular = 0.0
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 0
