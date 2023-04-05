@@ -43,6 +43,7 @@ func _can_drop_data(at_position: Vector2, data) -> bool:
 	block_preview_objects.resize(len(blocks))
 	for i in len(blocks):
 		var block: Block = blocks[i].base_scene.instantiate()
+		block.editor = true
 		var obj := TrackObject.new(blocks[i].base_scene, block, blocks[i].link)
 		block_preview_objects[i] = obj
 		add_child(block)
