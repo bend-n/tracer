@@ -59,20 +59,17 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 			current.rotated.connect(_gizmo_rotate)
 			current.clicked.connect(%mousecast.gizmo_clicked)
 
+func snap(v: Vector3, step: Vector3 = Globals.SNAP) -> Vector3:
+	return v.snapped(step) if editor.snapping else v
+
 func _gizmo_displace(offset: Vector3):
 	const prop := &"global_position"
 	editor.history.create_action("move %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
 	for i in len(editor.selected):
 		var n := editor.selected[i].live_node
-		editor.history.add_do_property(
-			n,
-			prop,
-			Utils.snap_v(10, 5, 10, original_positions[i] + offset)
-				if editor.snapping else
-			original_positions[i] + offset
-		)
+		editor.history.add_do_property( n, prop, snap(original_positions[i] + offset))
 		editor.history.add_undo_property(n, prop, original_positions[i])
-	editor.history.add_do_property(gizmo_holder, prop, Utils.snap_v(10, 5, 10, original_gh_p + offset) if editor.snapping else original_gh_p + offset)
+	editor.history.add_do_property(gizmo_holder, prop, original_gh_p + snap(offset))
 	editor.history.add_undo_property(gizmo_holder, prop, original_gh_p)
 	editor.history.commit_action()
 
@@ -81,7 +78,7 @@ func _gizmo_scale(change: Vector3):
 	editor.history.create_action("scale %d nodes" % editor.selected.size(), UndoRedo.MERGE_ENDS)
 	for i in len(editor.selected):
 		var n := editor.selected[i].live_node
-		var scl := (original_scales[i] + change).snapped(Vector3.ONE) if editor.snapping else original_scales[i] + change
+		var scl := snap(original_scales[i] + change, Vector3.ONE)
 		if scl.x <= 0 || scl.y <= 0: # pls no flip
 			scl = Vector3.ONE
 		editor.history.add_do_property(n, prop, scl)

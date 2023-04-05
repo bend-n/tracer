@@ -36,7 +36,7 @@ func _can_drop_data(at_position: Vector2, data) -> bool:
 	if not block_preview_objects.is_empty():
 		if block_preview_original_objs == blocks:
 			for i in len(block_preview_objects):
-				block_preview_objects[i].live_node.global_position = Utils.snap_v(10, 5, 10, (offsets[i] + mp) if not offsets_unset else mp)
+				block_preview_objects[i].live_node.global_position = ((offsets[i] + mp) if not offsets_unset else mp).snapped(Globals.SNAP)
 			return true
 		reset_preview()
 	block_preview_original_objs = blocks
@@ -48,7 +48,7 @@ func _can_drop_data(at_position: Vector2, data) -> bool:
 		block_preview_objects[i] = obj
 		add_child(block)
 		obj.set_live(block)
-		obj.live_node.global_position = Utils.snap_v(10, 5, 10, (offsets[i] + mp) if not offsets_unset else mp)
+		obj.live_node.global_position = ((offsets[i] + mp) if not offsets_unset else mp).snapped(Globals.SNAP)
 	return true
 
 func _on_mouse_exited() -> void:
