@@ -66,6 +66,7 @@ func get_wall_mode() -> int: return wall_mode
 func can_theme() -> bool: return true
 func has_left_wall() -> bool: return is_instance_valid(left_wall)
 func has_right_wall() -> bool: return is_instance_valid(right_wall)
+func get_aabb() -> AABB: return mesh.get_aabb()
 
 func un_highlight():
 	if !_previous_material:
