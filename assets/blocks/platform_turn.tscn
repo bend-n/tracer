@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkbp38xlmtln2"]
+[gd_scene load_steps=5 format=3 uid="uid://dtmmpkwtlvovq"]
 
 [ext_resource type="Script" path="res://classes/platform.gd" id="1_8xamw"]
-[ext_resource type="ArrayMesh" uid="uid://dng7wtvij87aw" path="res://assets/meshes/turn_platform.mesh" id="1_dtda5"]
+[ext_resource type="ArrayMesh" uid="uid://dgxce0yrvqmg5" path="res://assets/meshes/platforms/turn.tres" id="2_6mnla"]
+[ext_resource type="PackedScene" uid="uid://bfe6ps3cjf37j" path="res://assets/blocks/walls/turn_wall.tscn" id="2_pgjox"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qno1p"]
 points = PackedVector3Array(-5, 0, -5, -5, 1, -5, -4.15818, 0, -5, -5, 0, 5, -5, 1, 5, -4.15818, 1, -5, -2.85532, 0, -4.90701, 5, 0, 5, 5, 1, 5, -2.85532, 1, -4.90701, -1.5789, 0, -4.62999, 5, 0, 4.1572, 5, 1, 4.1572, -1.5789, 1, -4.62999, -0.354346, 0, -4.17287, 4.90603, 0, 2.85435, 4.90603, 1, 2.85435, -0.354346, 1, -4.17287, 0.792874, 0, -3.5464, 4.62901, 0, 1.57792, 4.62901, 1, 1.57792, 0.792874, 1, -3.5464, 1.83829, 0, -2.76331, 4.17189, 0, 0.353367, 4.17189, 1, 0.353367, 1.83829, 1, -2.76331, 2.76233, 0, -1.83927, 3.54542, 0, -0.793853, 3.54542, 1, -0.793853, 2.76233, 1, -1.83927)
@@ -11,10 +12,16 @@ collision_mask = 0
 input_ray_pickable = false
 script = ExtResource("1_8xamw")
 mesh = NodePath("mesh")
+wall_mode = 1
+left_wall_scene = ExtResource("2_pgjox")
+left_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+test_left_wall = false
+right_wall_scene = null
+right_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+test_right_wall = false
 
 [node name="mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-mesh = ExtResource("1_dtda5")
+mesh = ExtResource("2_6mnla")
 
 [node name="collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://enkf5y6y66cx"]
+[gd_scene load_steps=6 format=3 uid="uid://cotdon210bw6c"]
 
 [ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="1_ox5eu"]
 [ext_resource type="Script" path="res://classes/platform.gd" id="1_y4r5p"]
+[ext_resource type="PackedScene" uid="uid://lq13suvwdu6g" path="res://assets/blocks/walls/flat_wall.tscn" id="2_i18l8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yy48c"]
 material = ExtResource("1_ox5eu")
@@ -15,6 +16,9 @@ collision_mask = 0
 input_ray_pickable = false
 script = ExtResource("1_y4r5p")
 mesh = NodePath("mesh")
+left_wall_scene = ExtResource("2_i18l8")
+right_wall_scene = ExtResource("2_i18l8")
+right_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_yy48c")

@@ -1,16 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwt6qb0suidh5"]
+[gd_scene load_steps=5 format=3 uid="uid://ceo1o8kfhqnxy"]
 
 [ext_resource type="Script" path="res://classes/platform.gd" id="1_kratg"]
-[ext_resource type="ArrayMesh" uid="uid://bonmk01fmkuk2" path="res://assets/meshes/diagonal.mesh" id="2_5csml"]
+[ext_resource type="PackedScene" uid="uid://dforj6583ykxh" path="res://assets/blocks/walls/diagonal_wall.tscn" id="2_4a34e"]
+[ext_resource type="ArrayMesh" uid="uid://bonmk01fmkuk2" path="res://assets/meshes/platforms/diagonal.mesh" id="2_5csml"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_57rux"]
 points = PackedVector3Array(-5, -0.500196, -5, -5, 0.5, -5, 5, -5.5, -5, -5, -0.500196, 5, -5, 0.5, 5, 5, -4.50039, -5, 5, -5.5, 5, 5, -4.50039, 5)
 
-[node name="platform_depression" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+[node name="platform_diagonal" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
 collision_mask = 0
 input_ray_pickable = false
 script = ExtResource("1_kratg")
 mesh = NodePath("mesh")
+left_wall_scene = ExtResource("2_4a34e")
+right_wall_scene = ExtResource("2_4a34e")
+right_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 mesh = ExtResource("2_5csml")

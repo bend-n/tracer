@@ -49,6 +49,10 @@ func pressed(b: Button) -> void:
 	mode = Mode[b.name.to_pascal_case()]
 	make_gizmo.emit(mode)
 
+func reset_selected() -> void:
+	var new: Array[TrackObject] = []
+	selected = new
+
 func _on_mousecast_hit(colls: Array[Block]) -> void:
 	var new_selected: Array[TrackObject] = []
 	new_selected.resize(colls.size())

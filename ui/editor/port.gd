@@ -102,10 +102,6 @@ func _gizmo_finalize():
 		original_rotations[i] = n.global_rotation
 	original_gh_p = gizmo_holder.global_position
 
-func _on_snapping_toggled(button_pressed: bool) -> void:
-	if current != null:
-		current.snapping = button_pressed
-
 func _on_remove_tobj() -> void:
 	if current != null:
 		current.queue_free()

@@ -65,7 +65,7 @@ func _drop_data(_at_position: Vector2, _data) -> void:
 		var node := obj.live_node
 		history.add_do_method(add_obj.bind(obj))
 		history.add_do_reference(node)
-		history.add_undo_method(remove_obj.bind(obj, node))
+		history.add_undo_method(remove_obj.bind(obj))
 	history.commit_action()
 
 func add_obj(o: TrackObject):

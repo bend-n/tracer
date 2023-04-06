@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://clvtje1uy8v2s"]
+
+[ext_resource type="Script" path="res://classes/wall.gd" id="1_kfuvf"]
+[ext_resource type="ArrayMesh" uid="uid://tdpui03o1a0i" path="res://assets/meshes/walls/corner_wall.tres" id="2_wftl1"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_y18tm"]
+points = PackedVector3Array(-4.99354, -0.5, -6.00711, -5, -0.5, -5.00078, -4.99354, 2.5, -6.00711, 6.00711, -0.5, 4.99246, -5, 2.5, -5.00078, 4.9997, -0.5, 5, 6.00711, 2.5, 4.99246, 4.9997, 2.5, 5)
+
+[node name="corner_wall" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("1_kfuvf")
+mesh = NodePath("mesh")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0, 0, 0)
+mesh = ExtResource("2_wftl1")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_y18tm")

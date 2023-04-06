@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://da3kwx63ins6k"]
+[gd_scene load_steps=13 format=3 uid="uid://ct733wlw6osxl"]
 
 [ext_resource type="Script" path="res://classes/booster.gd" id="1_xsyb5"]
 [ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="2_7slgu"]
+[ext_resource type="PackedScene" uid="uid://lq13suvwdu6g" path="res://assets/blocks/walls/flat_wall.tscn" id="2_b2gjs"]
 [ext_resource type="Material" uid="uid://cpqd2somc06dx" path="res://assets/blocks/arrow.material" id="3_0ymhr"]
-[ext_resource type="ArrayMesh" uid="uid://dpryebqcookr2" path="res://assets/meshes/arrow.mesh" id="3_hvb8d"]
+[ext_resource type="ArrayMesh" uid="uid://dpryebqcookr2" path="res://assets/blocks/arrow.mesh" id="3_hvb8d"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yy48c"]
 material = ExtResource("2_7slgu")
@@ -33,7 +34,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("arrow1:position")
+tracks/0/path = NodePath("arrow_holder/arrow1:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -45,7 +46,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("arrow2:position")
+tracks/1/path = NodePath("arrow_holder/arrow2:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -57,7 +58,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("arrow3:position")
+tracks/2/path = NodePath("arrow_holder/arrow3:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -69,7 +70,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("arrow1:surface_material_override/0:albedo_color")
+tracks/3/path = NodePath("arrow_holder/arrow1:surface_material_override/0:albedo_color")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -81,7 +82,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("arrow2:surface_material_override/0:albedo_color")
+tracks/4/path = NodePath("arrow_holder/arrow2:surface_material_override/0:albedo_color")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -93,7 +94,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("arrow3:surface_material_override/0:albedo_color")
+tracks/5/path = NodePath("arrow_holder/arrow3:surface_material_override/0:albedo_color")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -110,7 +111,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("arrow1:position")
+tracks/0/path = NodePath("arrow_holder/arrow1:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -122,7 +123,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("arrow2:position")
+tracks/1/path = NodePath("arrow_holder/arrow2:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -134,7 +135,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("arrow2:surface_material_override/0:albedo_color")
+tracks/2/path = NodePath("arrow_holder/arrow2:surface_material_override/0:albedo_color")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -146,7 +147,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("arrow3:position")
+tracks/3/path = NodePath("arrow_holder/arrow3:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -158,7 +159,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("arrow3:surface_material_override/0:albedo_color")
+tracks/4/path = NodePath("arrow_holder/arrow3:surface_material_override/0:albedo_color")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -170,7 +171,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("arrow1:surface_material_override/0:albedo_color")
+tracks/5/path = NodePath("arrow_holder/arrow1:surface_material_override/0:albedo_color")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -192,6 +193,12 @@ input_ray_pickable = false
 script = ExtResource("1_xsyb5")
 dir = Vector3(-1, 0, 0)
 mesh = NodePath("mesh")
+left_wall_scene = ExtResource("2_b2gjs")
+left_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+test_left_wall = false
+right_wall_scene = ExtResource("2_b2gjs")
+right_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+test_right_wall = false
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_yy48c")
@@ -199,19 +206,25 @@ mesh = SubResource("BoxMesh_yy48c")
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_0mmg7")
 
-[node name="arrow1" type="MeshInstance3D" parent="."]
+[node name="arrow_holder" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="arrow1" type="MeshInstance3D" parent="arrow_holder"]
 transform = Transform3D(1.41421, 0, 1.41421, 0, 0.7, 0, -1.41421, 0, 1.41421, 1.58947, 1.1, 0)
 mesh = ExtResource("3_hvb8d")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("3_0ymhr")
 
-[node name="arrow2" type="MeshInstance3D" parent="."]
+[node name="arrow2" type="MeshInstance3D" parent="arrow_holder"]
 transform = Transform3D(1.41421, 0, 1.41421, 0, 0.7, 0, -1.41421, 0, 1.41421, 4.24211, 1.1, 0)
 mesh = ExtResource("3_hvb8d")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_t325e")
 
-[node name="arrow3" type="MeshInstance3D" parent="."]
+[node name="arrow3" type="MeshInstance3D" parent="arrow_holder"]
 transform = Transform3D(1.41421, 0, 1.41421, 0, 0.7, 0, -1.41421, 0, 1.41421, -1.06316, 1.1, 0)
 mesh = ExtResource("3_hvb8d")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_djys4")
 
 [node name="animator" type="AnimationPlayer" parent="."]

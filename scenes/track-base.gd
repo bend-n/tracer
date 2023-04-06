@@ -15,13 +15,7 @@ func update():
 	sun.rotation_degrees.y = track.sun_y
 	ground.global_position = track.offset
 	for block in track.blocks:
-		var node: Node3D = block.base_scene.instantiate()
-		add_child(node)
-		if node.get_script() != null:
-			if not node is Decoration:
-				(node.mesh as MeshInstance3D).set_surface_override_material(0, block.material)
-			node.editor = editor
-		(node as Node3D).global_transform = block.transform
+		var node: Block = block.create(self, editor)
 		if editor:
 			block.set_live(node)
 		if not editor:

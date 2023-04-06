@@ -3,7 +3,9 @@ class_name TrackObject
 
 var base_scene: PackedScene
 var live_node: Block
-var material: Material
+#var material: Material
+var has_left_wall := false
+var has_right_wall := false
 var transform: Transform3D:
 	get:
 		if live_node:
@@ -22,24 +24,30 @@ func exprt() -> Dictionary:
 		@warning_ignore("incompatible_ternary")
 		return {
 			# no objects: object = code execution = rm -rf ~
-			material = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path if live_node.mesh != null else null,
-			base_scene = base_scene.resource_path,
-			transform = live_node.global_transform,
+#			m = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path if live_node.mesh != null else null,
+			b = base_scene.resource_path,
+			t = live_node.global_transform,
+			r = live_node.has_right_wall(),
+			l = live_node.has_left_wall(),
 		}
 	else:
 		return exprt_imported()
 
 func exprt_imported() -> Dictionary:
 	return {
-		material = material.resource_path,
-		base_scene = base_scene.resource_path,
-		transform = transform
+#		m = material.resource_path,
+		b = base_scene.resource_path,
+		t = transform,
+		r = has_right_wall,
+		l = has_left_wall,
 	}
 
 static func from_d(d: Dictionary) -> TrackObject:
-	var o := TrackObject.new(load(d.base_scene), null, null)
-	o.material = load(d.material) if d.material else null
-	o.transform = d.transform
+	var o := TrackObject.new(load(d.b), null, null)
+#	o.material = load(d.m) if d.m else null
+	o.transform = d.t
+	o.has_left_wall = d.l
+	o.has_right_wall = d.r
 	return o
 
 func set_live(p_live: Node):
@@ -48,6 +56,19 @@ func set_live(p_live: Node):
 	# but i pass around my tracks too much, and build them, that this will be a problem.
 	# material = null
 	# transform = Transform3D()
+
+func create(parent: Node3D, is_editor := false) -> Node3D:
+	var node: Block = base_scene.instantiate()
+	parent.add_child(node)
+#	if not node is Decoration:
+#		node.mesh.set_surface_override_material(0, material)
+	node.editor = is_editor
+	if has_left_wall and node.get_wall_mode() & Block.WALL_MODE_LEFT:
+		node.make_left_wall()
+	if has_right_wall and node.get_wall_mode() & Block.WALL_MODE_RIGHT:
+		node.make_right_wall()
+	node.global_transform = transform
+	return node
 
 func _to_string() -> String:
 	return "TrackObject<%s>" % link.resource_name

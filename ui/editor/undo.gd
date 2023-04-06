@@ -3,6 +3,7 @@ extends Button
 @onready var hist: UndoRedo = owner.history
 
 func _pressed() -> void:
+	owner.reset_selected()
 	hist.undo()
 
 func _ready() -> void:
