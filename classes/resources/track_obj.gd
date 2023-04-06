@@ -50,24 +50,26 @@ static func from_d(d: Dictionary) -> TrackObject:
 	o.has_right_wall = d.r
 	return o
 
-func set_live(p_live: Node):
+## [param p_live] may or may not be in the tree
+func set_live(p_live: Block):
 	live_node = p_live
 	# we dont need these: this information should be transfered to the live node.
 	# but i pass around my tracks too much, and build them, that this will be a problem.
 	# material = null
 	# transform = Transform3D()
 
-func create(parent: Node3D, is_editor := false) -> Node3D:
+func create(is_editor := false) -> Node3D:
 	var node: Block = base_scene.instantiate()
-	parent.add_child(node)
 #	if not node is Decoration:
 #		node.mesh.set_surface_override_material(0, material)
 	node.editor = is_editor
-	if has_left_wall and node.get_wall_mode() & Block.WALL_MODE_LEFT:
-		node.make_left_wall()
-	if has_right_wall and node.get_wall_mode() & Block.WALL_MODE_RIGHT:
-		node.make_right_wall()
 	node.global_transform = transform
+	node.ready.connect(func():
+		if has_left_wall and node.get_wall_mode() & Block.WALL_MODE_LEFT:
+			node.make_left_wall()
+		if has_right_wall and node.get_wall_mode() & Block.WALL_MODE_RIGHT:
+			node.make_right_wall()
+	)
 	return node
 
 func _to_string() -> String:

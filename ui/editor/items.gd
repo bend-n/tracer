@@ -99,7 +99,8 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	return objects
 
 func make_drag_preview(textures: Array[Texture2D]) -> Control:
-	var preview: Control = preload("res://ui/editor/block_dragdrop_preview.tscn").instantiate().init(textures)
-	%view.mouse_entered.connect(preview.hide)
-	%view.mouse_exited.connect(preview.show)
+	var preview: DragDropPreview = preload("res://ui/editor/block_dragdrop_preview.tscn").instantiate().init(textures, %cam)
+	%view.gui_input.connect(preview.viewport_event)
+	%view.mouse_entered.connect(preview.over_viewport)
+	%view.mouse_exited.connect(preview.exit_viewport)
 	return preview

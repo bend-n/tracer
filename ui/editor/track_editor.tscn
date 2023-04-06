@@ -231,7 +231,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-allow_reselect = true
 max_columns = 3
 icon_mode = 0
 fixed_icon_size = Vector2i(64, 64)
@@ -459,7 +458,6 @@ theme_override_styles/panel = ExtResource("13_cyvq7")
 [connection signal="pressed" from="split/split2/middle dock/buttons/container/delete" to="." method="_on_delete_pressed"]
 [connection signal="created" from="split/split2/middle dock/viewport/view" to="." method="_on_item_created"]
 [connection signal="created" from="split/split2/middle dock/viewport/view" to="split/split2/middle dock/viewport/view/port/mousecast" method="_on_view_created" unbinds=1]
-[connection signal="mouse_exited" from="split/split2/middle dock/viewport/view" to="split/split2/middle dock/viewport/view" method="_on_mouse_exited"]
 [connection signal="remove_tobj" from="split/split2/middle dock/viewport/view" to="." method="_on_remove_tobj"]
 [connection signal="remove_tobj" from="split/split2/middle dock/viewport/view" to="split/split2/middle dock/viewport/view/port" method="_on_remove_tobj" unbinds=1]
 [connection signal="hit" from="split/split2/middle dock/viewport/view/port/mousecast" to="." method="_on_mousecast_hit"]

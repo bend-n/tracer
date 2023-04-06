@@ -15,7 +15,8 @@ func update():
 	sun.rotation_degrees.y = track.sun_y
 	ground.global_position = track.offset
 	for block in track.blocks:
-		var node: Block = block.create(self, editor)
+		var node: Block = block.create(editor)
+		add_child(node)
 		if editor:
 			block.set_live(node)
 		if not editor:

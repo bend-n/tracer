@@ -1,5 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://br4clathh5ppo"]
 
+[ext_resource type="Script" path="res://ui/editor/block_dragdrop_preview.gd" id="1_svugf"]
 [ext_resource type="Texture2D" uid="uid://cvivkif8cfior" path="res://ui/assets/clip.png" id="2_hvrcj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p80jk"]
@@ -13,42 +14,30 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
-[sub_resource type="GDScript" id="GDScript_iva8e"]
-resource_name = "dropdrag"
-script/source = "extends PanelContainer
+[node name="preview" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 68.0
+offset_bottom = 68.0
+script = ExtResource("1_svugf")
 
-func get_columns(x: int) -> int:
-	return floori(sqrt(x))
-
-func init(textures: Array[Texture2D]):
-	var columns := get_columns(textures.size())
-	%grid.columns = columns
-	for t in textures:
-		var t_rect := TextureRect.new()
-		t_rect.size_flags_horizontal = SIZE_EXPAND
-		t_rect.size_flags_vertical = SIZE_EXPAND
-		t_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		t_rect.texture = t
-		@warning_ignore(\"integer_division\")
-		t_rect.custom_minimum_size = Vector2(64/columns, 64/columns)
-		%grid.add_child(t_rect)
-	return self
-"
-
-[node name="preview" type="PanelContainer"]
+[node name="panel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
 clip_children = 2
+layout_mode = 0
 offset_right = 72.0
 offset_bottom = 72.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_p80jk")
-script = SubResource("GDScript_iva8e")
 
-[node name="clip" type="TextureRect" parent="."]
+[node name="clip" type="TextureRect" parent="panel"]
 clip_children = 1
 layout_mode = 2
 texture = ExtResource("2_hvrcj")
 expand_mode = 1
 
-[node name="grid" type="GridContainer" parent="clip"]
+[node name="grid" type="GridContainer" parent="panel/clip"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15

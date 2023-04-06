@@ -17,4 +17,3 @@ func _pressed() -> void:
 	add_child(tool)
 	tool.init(editor.selected, hist)
 	tool.close_requested.connect(tool.queue_free)
-

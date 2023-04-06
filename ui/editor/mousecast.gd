@@ -9,7 +9,7 @@ var gizmo_just_hit := false
 var viewport_just_dropped := false
 var cast_ray := false
 var start = null
-const depth := 2000.0
+const depth := 4000.0
 
 signal hit(colls: Array[Block])
 
@@ -41,8 +41,9 @@ func _physics_process(_delta: float) -> void:
 		if r.size.length_squared() < 1000:
 			position_to(r.get_center())
 			force_raycast_update()
-			if is_colliding():
+			if is_colliding() and get_collider() != null:
 				selection.append(get_collider())
+			print(selection)
 			hit.emit(selection)
 			return
 		for obj in editor.objects:
