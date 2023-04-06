@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://0x720q7tnsj0"]
+[gd_scene load_steps=55 format=3 uid="uid://0x720q7tnsj0"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -72,6 +72,14 @@ unicode = 101
 [sub_resource type="Shortcut" id="Shortcut_tekm2"]
 events = [SubResource("InputEventKey_wcb2q")]
 
+[sub_resource type="InputEventKey" id="InputEventKey_xodsd"]
+device = -1
+keycode = 83
+unicode = 115
+
+[sub_resource type="Shortcut" id="Shortcut_p3vb8"]
+events = [SubResource("InputEventKey_xodsd")]
+
 [sub_resource type="InputEventKey" id="InputEventKey_nyu56"]
 device = -1
 shift_pressed = true
@@ -86,6 +94,14 @@ font_size = 12
 font_color = Color(0.14902, 0.545098, 0.823529, 1)
 outline_size = 10
 outline_color = Color(0.027451, 0.211765, 0.258824, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_s0wgx"]
+device = -1
+keycode = 68
+unicode = 100
+
+[sub_resource type="Shortcut" id="Shortcut_6c6fh"]
+events = [SubResource("InputEventKey_s0wgx")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_eddoh"]
 device = -1
@@ -303,7 +319,7 @@ tooltip_text = "Scale Mode (S)"
 theme = ExtResource("9_x2saf")
 toggle_mode = true
 button_group = ExtResource("6_vgj8v")
-shortcut = SubResource("Shortcut_tet3e")
+shortcut = SubResource("Shortcut_p3vb8")
 shortcut_in_tooltip = false
 text = "󰘖"
 
@@ -349,7 +365,9 @@ layout_mode = 2
 [node name="wall tool" type="Button" parent="split/split2/middle dock/buttons/container"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+tooltip_text = "Wall Tool (D)"
 disabled = true
+shortcut = SubResource("Shortcut_6c6fh")
 text = "󰟾"
 script = ExtResource("15_t20tf")
 

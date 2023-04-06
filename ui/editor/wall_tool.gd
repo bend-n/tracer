@@ -5,6 +5,7 @@ var blocks: Array[Block]
 var hist: UndoRedo
 
 func init(p_nodes: Array[TrackObject], p_hist: UndoRedo) -> void:
+	move_to_foreground()
 	var has_map := { Block.WALL_MODE_LEFT: 0, Block.WALL_MODE_RIGHT: 0 }
 	for node in p_nodes:
 		var wm := node.live_node.get_wall_mode()
@@ -23,6 +24,7 @@ func init(p_nodes: Array[TrackObject], p_hist: UndoRedo) -> void:
 		%left.button_pressed = true
 	if has_map[Block.WALL_MODE_RIGHT] > roundi(blocks.size() / 2.0):
 		%right.button_pressed = true
+	%label.text = "editing %d block%s" % [p_nodes.size(), "s" if p_nodes.size() > 1 else ""]
 	hist = p_hist
 
 func _on_left_toggled(button_pressed: bool) -> void:
