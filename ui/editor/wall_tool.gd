@@ -33,7 +33,7 @@ func _on_left_toggled(button_pressed: bool) -> void:
 		if block.get_wall_mode() & Block.WALL_MODE_LEFT:
 			if button_pressed:
 				hist.add_do_method(block.make_left_wall)
-				hist.add_undo_method(block.make_right_wall)
+				hist.add_undo_method(block.remove_left_wall)
 				block.make_left_wall()
 			elif block.has_left_wall():
 				hist.add_do_method(block.remove_left_wall)

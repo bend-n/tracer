@@ -4,9 +4,10 @@ class_name EditorViewport
 @onready var editor: TrackEditor = owner
 
 const map = {
-	TrackEditor.Mode.Select: preload("res://ui/editor/gizmos/selection_marker.tscn"),
-	TrackEditor.Mode.Move: preload("res://ui/editor/gizmos/translate/translate.tscn"),
-	TrackEditor.Mode.Scale: preload("res://ui/editor/gizmos/scale/scale.tscn")
+	TrackEditor.Mode.Select: preload("res://addons/@bendn/gizmo3d/selection_marker.tscn"),
+	TrackEditor.Mode.Move: preload("res://addons/@bendn/gizmo3d/translate/translate.tscn"),
+	TrackEditor.Mode.Scale: preload("res://addons/@bendn/gizmo3d/scale/scale.tscn"),
+	TrackEditor.Mode.Rotate: preload("res://addons/@bendn/gizmo3d/rotation/rotation.tscn"),
 }
 
 var current: Gizmo
@@ -51,9 +52,8 @@ func update_gizmo(mode: TrackEditor.Mode) -> void:
 			current = map[mode].instantiate()
 			_position_gizmo_holder()
 			gizmo_holder.add_child(current)
-			current.update_scale()
 			_setup_originals()
-			current.finalize.connect(_gizmo_finalize) # trust me this is much easier to read than lambdas
+			current.finalize.connect(_gizmo_finalize)
 			current.displaced.connect(_gizmo_displace)
 			current.scaled.connect(_gizmo_scale)
 			current.rotated.connect(_gizmo_rotate)

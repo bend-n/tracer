@@ -17,8 +17,6 @@ var current_lap := 0
 var playing := false
 var timer := GameTimer.new()
 
-const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
-
 signal next_lap
 signal created_car(car: Car)
 signal created_ghost(ghost: GhostCar)

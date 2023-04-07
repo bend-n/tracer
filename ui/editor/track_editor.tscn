@@ -74,8 +74,8 @@ events = [SubResource("InputEventKey_wcb2q")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_xodsd"]
 device = -1
-keycode = 83
-unicode = 115
+keycode = 67
+unicode = 99
 
 [sub_resource type="Shortcut" id="Shortcut_p3vb8"]
 events = [SubResource("InputEventKey_xodsd")]
@@ -305,7 +305,6 @@ custom_minimum_size = Vector2(40, 50)
 layout_mode = 2
 tooltip_text = "Rotate Mode (E)"
 theme = ExtResource("9_x2saf")
-disabled = true
 toggle_mode = true
 button_group = ExtResource("6_vgj8v")
 shortcut = SubResource("Shortcut_tekm2")
@@ -315,7 +314,7 @@ text = "󰶘"
 [node name="scale" type="Button" parent="split/split2/middle dock/buttons/container"]
 custom_minimum_size = Vector2(40, 50)
 layout_mode = 2
-tooltip_text = "Scale Mode (S)"
+tooltip_text = "Scale Mode (C)"
 theme = ExtResource("9_x2saf")
 toggle_mode = true
 button_group = ExtResource("6_vgj8v")
