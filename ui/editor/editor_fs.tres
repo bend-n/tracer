@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DirRes" load_steps=45 format=3 uid="uid://djgoj7p7on11f"]
+[gd_resource type="Resource" script_class="DirRes" load_steps=46 format=3 uid="uid://djgoj7p7on11f"]
 
 [ext_resource type="PackedScene" uid="uid://cy2ialm17md6c" path="res://assets/blocks/ring_start.tscn" id="1_obh5s"]
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="2_vbck3"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://odkse4oqjcge" path="res://assets/blocks/platform_smooth_ramp.tscn" id="11_whj5x"]
 [ext_resource type="PackedScene" uid="uid://cotdon210bw6c" path="res://assets/blocks/platform_square.tscn" id="12_aumqd"]
 [ext_resource type="PackedScene" uid="uid://dtmmpkwtlvovq" path="res://assets/blocks/platform_turn.tscn" id="13_gt2n1"]
+[ext_resource type="PackedScene" uid="uid://c7xxrp8ml2ku1" path="res://assets/blocks/platform_x.tscn" id="14_nfuay"]
 [ext_resource type="PackedScene" uid="uid://ct733wlw6osxl" path="res://assets/blocks/platform_booster.tscn" id="15_22aj3"]
 [ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="15_a3etn"]
 [ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="16_aluwl"]
@@ -93,7 +94,7 @@ scene = ExtResource("13_gt2n1")
 [sub_resource type="Resource" id="Resource_hk5rh"]
 resource_name = "x"
 script = ExtResource("2_vbck3")
-scene = ExtResource("7_2mb8w")
+scene = ExtResource("14_nfuay")
 
 [sub_resource type="Resource" id="Resource_l415k"]
 resource_name = "booster"
