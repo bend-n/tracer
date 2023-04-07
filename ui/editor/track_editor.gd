@@ -71,6 +71,10 @@ func to_trackdata() -> TrackResource:
 
 func _on_item_created(object: TrackObject) -> void:
 	objects.append(object)
+	if object.live_node is Booster:
+		for block in objects:
+			if block.live_node is Booster:
+				block.live_node.sync()
 
 var n: String
 func _on_propertys_name_changed(p_name: String) -> void:

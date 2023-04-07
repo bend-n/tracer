@@ -7,7 +7,6 @@
 [ext_resource type="ArrayMesh" uid="uid://dpryebqcookr2" path="res://assets/blocks/arrow.mesh" id="3_hvb8d"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yy48c"]
-material = ExtResource("2_7slgu")
 size = Vector3(10, 1, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0mmg7"]
@@ -191,7 +190,6 @@ _data = {
 collision_mask = 0
 input_ray_pickable = false
 script = ExtResource("1_xsyb5")
-dir = Vector3(1, 0, 0)
 mesh = NodePath("mesh")
 left_wall_scene = ExtResource("2_b2gjs")
 left_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -202,6 +200,7 @@ test_right_wall = false
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_yy48c")
+surface_material_override/0 = ExtResource("2_7slgu")
 
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_0mmg7")
@@ -228,6 +227,7 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_djys4")
 
 [node name="animator" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 autoplay = "move"
 libraries = {
 "": SubResource("AnimationLibrary_vxlkq")
