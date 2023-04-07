@@ -18,6 +18,7 @@ func populate(fs: DirRes, parent: TreeItem):
 			item.set_icon_max_width(0, 24)
 			item.set_text(0, file.resource_name)
 			item.set_meta(&"res", file)
+			item.set_tooltip_text(0, file.description)
 			item.collapsed = true
 			populate(file, item)
 		else: pass # we dont do files here (that responsibility goes to items)

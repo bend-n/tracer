@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=20 format=3 uid="uid://d3ywcokn5ddy8"]
+[gd_resource type="Theme" load_steps=22 format=3 uid="uid://d3ywcokn5ddy8"]
 
 [ext_resource type="SystemFont" uid="uid://xriuk0v4f6wj" path="res://ui/ubuntu_mononf.tres" id="1_37cf0"]
 [ext_resource type="StyleBox" uid="uid://cdth5nc7lbx1v" path="res://ui/panel_skewed.tres" id="1_g8q83"]
@@ -11,6 +11,7 @@
 [ext_resource type="StyleBox" uid="uid://dxtsrhgnyr80k" path="res://ui/panel_dark.stylebox" id="4_mx083"]
 [ext_resource type="Texture2D" uid="uid://vck01c83m1x3" path="res://ui/assets/arrow.png" id="6_uqp3t"]
 [ext_resource type="Texture2D" uid="uid://buwxt5g5y761m" path="res://ui/assets/arrow_collapsed.png" id="7_raqbt"]
+[ext_resource type="SystemFont" uid="uid://bkjqtc5i64r3j" path="res://ui/ubuntu.tres" id="10_1rhih"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o4qbo"]
 content_margin_left = 5.0
@@ -100,6 +101,17 @@ corner_radius_top_left = 53
 corner_radius_top_right = 53
 corner_detail = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b8jmu"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0431373, 0.270588, 0.32549, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_vr8fs"]
 color = Color(0.345098, 0.431373, 0.458824, 1)
 grow_begin = -10.0
@@ -141,6 +153,9 @@ TabContainer/styles/panel = SubResource("StyleBoxFlat_ki0ve")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_y04f3")
 TabContainer/styles/tab_unselected = ExtResource("4_mx083")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_m0gry")
+TooltipLabel/colors/font_color = Color(0.933333, 0.909804, 0.835294, 1)
+TooltipLabel/fonts/font = ExtResource("10_1rhih")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_b8jmu")
 Tree/colors/children_hl_line_color = Color(0.396078, 0.482353, 0.513726, 1)
 Tree/colors/font_color = Color(0.501961, 0.596078, 0.627451, 1)
 Tree/colors/font_selected_color = Color(0.933333, 0.909804, 0.835294, 1)

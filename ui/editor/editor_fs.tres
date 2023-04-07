@@ -25,128 +25,154 @@
 resource_name = "ring start"
 script = ExtResource("2_vbck3")
 scene = ExtResource("1_obh5s")
+description = "A torus shaped start"
 
 [sub_resource type="Resource" id="Resource_fmplp"]
 resource_name = "starts"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_8f0v1")])
+description = "Start (you need one of these)"
 
 [sub_resource type="Resource" id="Resource_r3xn4"]
 resource_name = "ring checkpoint"
 script = ExtResource("2_vbck3")
 scene = ExtResource("4_t7omt")
+description = "A torus shaped checkpoint"
 
 [sub_resource type="Resource" id="Resource_0yv1r"]
 resource_name = "checkpoints"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_r3xn4")])
+description = "Checkpoints"
 
 [sub_resource type="Resource" id="Resource_kvgvy"]
 resource_name = "ring finish"
 script = ExtResource("2_vbck3")
 scene = ExtResource("5_wj8by")
+description = "A torus shaped finish"
 
 [sub_resource type="Resource" id="Resource_kak46"]
 resource_name = "finishes"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_kvgvy")])
+description = "Finishes (you need one of these)"
 
 [sub_resource type="Resource" id="Resource_wrtlo"]
 resource_name = "corner"
 script = ExtResource("2_vbck3")
 scene = ExtResource("6_rprvw")
+description = "A sharp corner piece, very poky"
 
 [sub_resource type="Resource" id="Resource_oxmos"]
 resource_name = "depression"
 script = ExtResource("2_vbck3")
 scene = ExtResource("7_2mb8w")
+description = "Lowers a corner down a level"
 
 [sub_resource type="Resource" id="Resource_l3v8g"]
 resource_name = "diagonal"
 script = ExtResource("2_vbck3")
 scene = ExtResource("8_2o3rf")
+description = "A slanted block"
 
 [sub_resource type="Resource" id="Resource_ub3e2"]
 resource_name = "poke"
 script = ExtResource("2_vbck3")
 scene = ExtResource("9_lc43u")
+description = "The opposite of the depression; Raises a corner up a level"
 
 [sub_resource type="Resource" id="Resource_1w0pw"]
 resource_name = "ramp"
 script = ExtResource("2_vbck3")
 scene = ExtResource("10_f1l1g")
+description = "Like the diagonal piece, but with a base."
 
 [sub_resource type="Resource" id="Resource_23jh3"]
 resource_name = "smooth ramp"
 script = ExtResource("2_vbck3")
 scene = ExtResource("11_whj5x")
+description = "Buttery ramp"
 
 [sub_resource type="Resource" id="Resource_4d15v"]
 resource_name = "square"
 script = ExtResource("2_vbck3")
 scene = ExtResource("12_aumqd")
+description = "Square, flat platform"
 
 [sub_resource type="Resource" id="Resource_5ko53"]
 resource_name = "turn"
 script = ExtResource("2_vbck3")
 scene = ExtResource("13_gt2n1")
+description = "Smooth turn"
 
 [sub_resource type="Resource" id="Resource_hk5rh"]
 resource_name = "x"
 script = ExtResource("2_vbck3")
 scene = ExtResource("14_nfuay")
+description = "X shaped block"
 
 [sub_resource type="Resource" id="Resource_l415k"]
 resource_name = "booster"
 script = ExtResource("2_vbck3")
 scene = ExtResource("15_22aj3")
+description = "Forces the car in a direction with moderate force"
 
 [sub_resource type="Resource" id="Resource_xovbr"]
 resource_name = "platform"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_1w0pw"), SubResource("Resource_23jh3"), SubResource("Resource_4d15v"), SubResource("Resource_5ko53"), SubResource("Resource_hk5rh"), SubResource("Resource_l415k")])
+description = "Platforms (you can add barriers with the wall tool)"
 
 [sub_resource type="Resource" id="Resource_ax7gx"]
 resource_name = "road"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_xovbr")])
+description = "Road building blocks"
 
 [sub_resource type="Resource" id="Resource_jyrtx"]
 resource_name = "grass"
 script = ExtResource("2_vbck3")
 material = ExtResource("15_a3etn")
+description = ""
 
 [sub_resource type="Resource" id="Resource_x8ami"]
 resource_name = "platform"
 script = ExtResource("2_vbck3")
 material = ExtResource("16_aluwl")
+description = ""
 
 [sub_resource type="Resource" id="Resource_y68us"]
 resource_name = "road"
 script = ExtResource("2_vbck3")
 material = ExtResource("17_slejy")
+description = ""
 
 [sub_resource type="Resource" id="Resource_4uj50"]
 resource_name = "wall"
 script = ExtResource("2_vbck3")
 material = ExtResource("18_osy7q")
+description = ""
 
 [sub_resource type="Resource" id="Resource_sbgew"]
 resource_name = "materials"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_jyrtx"), SubResource("Resource_x8ami"), SubResource("Resource_y68us"), SubResource("Resource_4uj50")])
+description = "Materials"
 
 [sub_resource type="Resource" id="Resource_vtfgn"]
 resource_name = "tree"
 script = ExtResource("2_vbck3")
 scene = ExtResource("19_vck13")
+description = ""
 
 [sub_resource type="Resource" id="Resource_77r1h"]
 resource_name = "decoration"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_vtfgn")])
+description = "Decorations"
 
 [resource]
 resource_name = "editor filesystem"
 script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_fmplp"), SubResource("Resource_0yv1r"), SubResource("Resource_kak46"), SubResource("Resource_ax7gx"), SubResource("Resource_sbgew"), SubResource("Resource_77r1h")])
+description = "Blocks"

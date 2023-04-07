@@ -40,6 +40,11 @@ movie_writer/fps=15
 
 enabled=PackedStringArray()
 
+[gui]
+
+theme/custom="res://ui/theme.tres"
+theme/custom_font="res://ui/ubuntu.tres"
+
 [importer_defaults]
 
 texture={

@@ -57,7 +57,7 @@ func open_dir(dir: DirRes):
 		var thumb := Items.get_thumb(file)
 		if thumb.size() > 1:
 			needing_thumbs.append([i, file, thumb[-1]])
-		add_item(file.resource_name, thumb[0])
+		set_item_tooltip(add_item(file.resource_name, thumb[0]), file.description)
 	if thread.is_started():
 		while thread.is_alive():
 			await Engine.get_main_loop().process_frame
