@@ -26,10 +26,10 @@ func _drop_data(at_position: Vector2, data) -> void:
 		and data[1] is PackedVector3Array
 		and data[0].size() == data[1].size()
 	):
-		objs = data[0].duplicate()
+		objs = data[0]
 		offsets = data[1]
 	elif data is Array[TrackObject]:
-		objs = data.duplicate()
+		objs = data
 		offsets_unset = true
 	history.create_action("add blocks");
 	for i in len(objs):
@@ -43,9 +43,10 @@ func _drop_data(at_position: Vector2, data) -> void:
 		history.add_do_reference(node)
 	history.commit_action()
 
-func add_obj(o: TrackObject, pos := Vector3.ZERO):
+func add_obj(o: TrackObject, pos = null):
 	%port.add_child(o.live_node)
-	o.live_node.global_position = pos
+	if pos is Vector3:
+		o.live_node.global_position = pos
 	created.emit(o)
 
 func remove_obj(o: TrackObject):

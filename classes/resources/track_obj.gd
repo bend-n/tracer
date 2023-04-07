@@ -58,6 +58,7 @@ func set_live(p_live: Block):
 	# material = null
 	# transform = Transform3D()
 
+## @constant
 func create(is_editor := false) -> Node3D:
 	var node: Block = base_scene.instantiate()
 #	if not node is Decoration:
@@ -71,6 +72,11 @@ func create(is_editor := false) -> Node3D:
 			node.make_right_wall()
 	)
 	return node
+
+## a more efficient [code]TrackObject.from_d(obj.exprt())[/code].
+func dup() -> TrackObject:
+	return TrackObject.new(base_scene, null, link)
+
 
 func _to_string() -> String:
 	return "TrackObject<%s>" % link.resource_name

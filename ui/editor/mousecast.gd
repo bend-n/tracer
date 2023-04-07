@@ -47,7 +47,7 @@ func _physics_process(_delta: float) -> void:
 			return
 		for obj in editor.objects:
 			var origin := obj.transform.origin
-			if c.is_position_behind(origin) || c.global_position.distance_squared_to(origin) > 5000:
+			if c.is_position_behind(origin) || c.global_position.distance_squared_to(origin) > 40000:
 				continue
 			var point := c.unproject_position(origin)
 			if r.has_point(point):

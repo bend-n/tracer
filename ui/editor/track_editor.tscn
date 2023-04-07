@@ -367,6 +367,7 @@ layout_mode = 2
 tooltip_text = "Wall Tool (D)"
 disabled = true
 shortcut = SubResource("Shortcut_6c6fh")
+shortcut_in_tooltip = false
 text = "󰟾"
 script = ExtResource("15_t20tf")
 
@@ -461,6 +462,8 @@ size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("13_cyvq7")
 
 [connection signal="make_gizmo" from="." to="split/split2/middle dock/viewport/view/port" method="update_gizmo"]
+[connection signal="selection_changed" from="." to="split/split2/middle dock/buttons/container/delete" method="_on_selection_changed"]
+[connection signal="selection_changed" from="." to="split/split2/middle dock/buttons/container/duplicate" method="_on_selection_changed"]
 [connection signal="back" from="split/left dock/data/container/buttons/back" to="." method="queue_free"]
 [connection signal="pressed" from="split/left dock/data/container/buttons/back" to="split/left dock/data/container/buttons/back" method="_on_pressed"]
 [connection signal="pressed" from="split/left dock/data/container/buttons/save" to="split/left dock/data/container/buttons/save" method="_on_pressed"]

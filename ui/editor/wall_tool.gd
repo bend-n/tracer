@@ -4,7 +4,7 @@ class_name WallTool
 var blocks: Array[Block]
 var hist: UndoRedo
 
-func init(p_nodes: Array[TrackObject], p_hist: UndoRedo) -> void:
+func init(p_nodes: Array[TrackObject]) -> void:
 	move_to_foreground()
 	var has_map := { Block.WALL_MODE_LEFT: 0, Block.WALL_MODE_RIGHT: 0 }
 	for node in p_nodes:
@@ -25,7 +25,6 @@ func init(p_nodes: Array[TrackObject], p_hist: UndoRedo) -> void:
 	if has_map[Block.WALL_MODE_RIGHT] > roundi(blocks.size() / 2.0):
 		%right.button_pressed = true
 	%label.text = "editing %d block%s" % [p_nodes.size(), "s" if p_nodes.size() > 1 else ""]
-	hist = p_hist
 
 func _on_left_toggled(button_pressed: bool) -> void:
 	hist.create_action("set left wall on %d nodes" % len(blocks))
@@ -34,7 +33,6 @@ func _on_left_toggled(button_pressed: bool) -> void:
 			if button_pressed:
 				hist.add_do_method(block.make_left_wall)
 				hist.add_undo_method(block.remove_left_wall)
-				block.make_left_wall()
 			elif block.has_left_wall():
 				hist.add_do_method(block.remove_left_wall)
 				hist.add_undo_method(block.make_left_wall)

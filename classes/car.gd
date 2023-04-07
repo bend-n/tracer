@@ -150,7 +150,9 @@ func _physics_process(delta: float):
 
 	for i in 4:
 		if wheels[i].get_contact_body() is Booster:
-			apply_central_force((wheels[i].get_contact_body() as Booster).dir * BOOSTER_FORCE)
+			apply_central_force(
+				(wheels[i].get_contact_body().transform.basis.x) * BOOSTER_FORCE
+			)
 
 		particles[i].emitting = wheels[i].get_skidinfo() < (.2 if i > 2 else .99) and wheels[i].is_in_contact() and kph() > 30
 		if particles[i].emitting:

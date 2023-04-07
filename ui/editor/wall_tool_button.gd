@@ -14,6 +14,7 @@ func _ready() -> void:
 
 func _pressed() -> void:
 	var tool: WallTool = preload("res://ui/editor/wall_tool.tscn").instantiate()
+	tool.hist = hist
 	add_child(tool)
-	tool.init(editor.selected, hist)
+	tool.init(editor.selected)
 	tool.close_requested.connect(tool.queue_free)
