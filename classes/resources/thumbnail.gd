@@ -30,7 +30,7 @@ static func hash_b(b: PackedByteArray) -> PackedByteArray:
 	h.update(b)
 	return h.finish()
 
-static func create_thumb(parent: Node, node: Node3D, cam: Camera3D, size := Vector2i(64, 64), world := World3D.new()) -> Image:
+static func create_thumb(parent: Node, node: Node3D, size := Vector2i(64, 64), world := World3D.new()) -> Image:
 	var port := SubViewport.new()
 	port.size = size
 	port.msaa_3d = Viewport.MSAA_4X
@@ -39,7 +39,6 @@ static func create_thumb(parent: Node, node: Node3D, cam: Camera3D, size := Vect
 	port.world_3d = world
 	parent.add_child(port)
 	port.add_child(node)
-	port.add_child(cam)
 	port.render_target_update_mode = SubViewport.UPDATE_ONCE
 	await RenderingServer.frame_post_draw
 	var img: Image = port.get_texture().get_image()

@@ -31,6 +31,8 @@ static func s2td(s: String) -> TrackResource:
 	if not split.size() || split[0].length() < 100:
 		return null
 	var buf := Marshalls.base64_to_raw(split[0])
+	if buf.size() < 100:
+		return
 	var decompressed: PackedByteArray = []
 	if split.size() > 1 and split[1].length() < 20 and split[1].hex_to_int() > 0:
 		decompressed = buf.decompress(split[1].hex_to_int(), FileAccess.COMPRESSION_DEFLATE)

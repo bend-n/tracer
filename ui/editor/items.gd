@@ -67,16 +67,15 @@ func open_dir(dir: DirRes):
 			var file: WeakLink = need[1]
 			match file.type:
 				WeakLink.Type.Scene:
-					var n := file.scene.instantiate()
+					var n: Block = file.scene.instantiate()
+					n.making_thumbnail = true
 					n.add_child(preload("res://scenes/sun.tscn").instantiate())
 					var ground := preload("res://scenes/floor.tscn").instantiate()
 					ground.position.y -= 5
 					n.add_child(ground)
-					var camera := Camera3D.new()
-					camera.position = Vector3(-8, 10,-8)
-					camera.position += camera.transform.basis.z * 2
-					camera.rotation = Vector3(-PI/4, -PI/1.35, 0)
-					var t := await Thumbnail.create_thumb(self, n, camera)
+					var world := World3D.new()
+					world.environment = preload("res://default_env.tres")
+					var t := await Thumbnail.create_thumb(self, n, Vector2(64,64), world)
 					var e := Thumbnail.save(t, Globals.THUMBS % file.resource_name, need[2])
 					if e != OK:
 						push_error("err when thumbnailing %s: %d" % [file.resource_name, e])

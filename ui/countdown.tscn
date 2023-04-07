@@ -90,8 +90,6 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/bold_font_size = 800
 bbcode_enabled = true
-text = "
-"
 fit_content = true
 
 [connection signal="animation_finished" from="CountPlayer" to="." method="finished_anim" unbinds=1]

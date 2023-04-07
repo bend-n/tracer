@@ -1,6 +1,6 @@
 @tool
-extends Block
 class_name Platform3D
+extends Block
 
 @export var mesh: MeshInstance3D
 

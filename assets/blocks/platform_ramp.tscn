@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ci24eqfa38cy4"]
+[gd_scene load_steps=6 format=3 uid="uid://ci24eqfa38cy4"]
 
 [ext_resource type="Script" path="res://classes/platform.gd" id="1_3ciq1"]
 [ext_resource type="PackedScene" uid="uid://cqi0dgrpfy1wq" path="res://assets/blocks/walls/tall_diagonal_wall.tscn" id="2_j1v08"]
 [ext_resource type="ArrayMesh" uid="uid://442u0becco0s" path="res://assets/meshes/platforms/ramp.mesh" id="2_q044q"]
+[ext_resource type="PackedScene" uid="uid://ccfnlmu6xnhxg" path="res://ui/editor/cameras/tall_side_slant_cam.tscn" id="4_v4u3u"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2xbcn"]
 points = PackedVector3Array(-5, -0.5, -5, -5, 0.499608, -5, 5, -0.5, -5, -5, -0.5, 5, -5, 0.499608, 5, 5, 5.5, -5, 5, -0.5, 5, 5, 5.5, 5)
@@ -14,11 +15,15 @@ script = ExtResource("1_3ciq1")
 mesh = NodePath("mesh")
 left_wall_scene = ExtResource("2_j1v08")
 left_wall_transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+test_left_wall = false
 right_wall_scene = ExtResource("2_j1v08")
 right_wall_transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+test_right_wall = false
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 mesh = ExtResource("2_q044q")
 
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_2xbcn")
+
+[node name="camera" parent="." instance=ExtResource("4_v4u3u")]

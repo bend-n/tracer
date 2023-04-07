@@ -1,6 +1,6 @@
 @tool
-extends Platform3D
 class_name Booster
+extends Platform3D
 
 ## Reset the animation
 func sync() -> void:

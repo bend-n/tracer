@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c1h0ic5drv85m"]
+[gd_scene load_steps=11 format=3 uid="uid://c1h0ic5drv85m"]
 
 [ext_resource type="Script" path="res://assets/blocks/tree.gd" id="1_aqri3"]
 [ext_resource type="ArrayMesh" uid="uid://wpn040a4trym" path="res://assets/meshes/platforms/tree_bottom.tres" id="2_bf1hl"]
 [ext_resource type="ArrayMesh" uid="uid://dnglrbqb00hnw" path="res://assets/meshes/platforms/tree_top.mesh" id="3_uocic"]
+[ext_resource type="PackedScene" uid="uid://ccfnlmu6xnhxg" path="res://ui/editor/cameras/tall_side_slant_cam.tscn" id="4_ruq6c"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_id6f0"]
 resource_name = "tree top hl"
@@ -58,3 +59,5 @@ shape = SubResource("CylinderShape3D_0lfwo")
 [node name="collision2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.98431, 0)
 shape = SubResource("ConvexPolygonShape3D_woi3d")
+
+[node name="camera" parent="." instance=ExtResource("4_ruq6c")]

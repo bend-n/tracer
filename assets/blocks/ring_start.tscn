@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cy2ialm17md6c"]
+[gd_scene load_steps=8 format=3 uid="uid://cy2ialm17md6c"]
 
 [ext_resource type="TorusMesh" uid="uid://cwiqggu3nwbyh" path="res://assets/meshes/ring_start.tres" id="1_ksild"]
 [ext_resource type="Material" uid="uid://dekbqdhjdmtod" path="res://assets/blocks/start_guide.material" id="3_8k4fv"]
+[ext_resource type="PackedScene" uid="uid://bb56nmgmi1i74" path="res://ui/editor/cameras/side_far_cam.tscn" id="3_cpkl8"]
 
 [sub_resource type="GDScript" id="GDScript_jas2p"]
 resource_name = "ring start"
@@ -53,3 +54,5 @@ mesh = SubResource("CylinderMesh_1hr2x")
 [node name="editor_guide_point" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -12.5)
 mesh = SubResource("CylinderMesh_l0thy")
+
+[node name="camera" parent="." instance=ExtResource("3_cpkl8")]

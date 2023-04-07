@@ -19,7 +19,8 @@ func init(t: TrackResource, g: GhostData) -> void:
 	if tex == null:
 		var trackloader: TrackLoader = trackloader_scn.instantiate()
 		trackloader.track = t
-		tex = await Thumbnail.create_thumb(self, trackloader, IntroCam.new(t, null), Vector2i(450, 200))
+		trackloader.add_child(IntroCam.new(t, null))
+		tex = await Thumbnail.create_thumb(self, trackloader, Vector2i(450, 200))
 		var e := Thumbnail.save(tex, p, Thumbnail.hash_f(Globals.TRACKS % t.name))
 		if e != OK:
 			push_error("saving thumbnail failed with error %d" % e)

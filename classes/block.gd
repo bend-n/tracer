@@ -6,6 +6,8 @@ class_name Block
 
 ## [code]true[/code] if this block in the editor.
 var editor := false
+## [code]true[/code] if this block is being photographed.
+var making_thumbnail := false
 
 ## The left(z-) wall for this block.
 var left_wall: Wall = null
@@ -18,6 +20,10 @@ const WALL_MODE_RIGHT = 2
 func _ready() -> void:
 	if editor:
 		collision_layer = Globals.DEFAULT_EDITOR_LAYER
+	if not making_thumbnail:
+		var cam := get_node_or_null(^"camera")
+		if cam:
+			cam.queue_free()
 
 # override functions
 
