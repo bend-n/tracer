@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=22 format=3 uid="uid://d3ywcokn5ddy8"]
+[gd_resource type="Theme" load_steps=23 format=3 uid="uid://d3ywcokn5ddy8"]
 
 [ext_resource type="SystemFont" uid="uid://xriuk0v4f6wj" path="res://ui/ubuntu_mononf.tres" id="1_37cf0"]
 [ext_resource type="StyleBox" uid="uid://cdth5nc7lbx1v" path="res://ui/panel_skewed.tres" id="1_g8q83"]
@@ -66,6 +66,8 @@ corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
 corner_detail = 12
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1onps"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ki0ve"]
 content_margin_left = 10.0
@@ -135,6 +137,12 @@ Button/styles/pressed = SubResource("StyleBoxFlat_vcupl")
 CheckBox/icons/checked = ExtResource("2_7t4t0")
 CheckBox/icons/checked_disabled = ExtResource("3_6k4vd")
 CheckBox/icons/unchecked = ExtResource("3_xehpy")
+CheckBox/styles/disabled = SubResource("StyleBoxEmpty_1onps")
+CheckBox/styles/focus = SubResource("StyleBoxEmpty_1onps")
+CheckBox/styles/hover = SubResource("StyleBoxEmpty_1onps")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxEmpty_1onps")
+CheckBox/styles/normal = SubResource("StyleBoxEmpty_1onps")
+CheckBox/styles/pressed = SubResource("StyleBoxEmpty_1onps")
 ItemList/colors/guide_color = Color(0, 0, 0, 0)
 ItemList/constants/line_separation = 0
 ItemList/styles/panel = ExtResource("2_0o40a")

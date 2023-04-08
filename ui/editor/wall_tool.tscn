@@ -1,50 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0deiw5m5f1h7"]
+[gd_scene load_steps=3 format=3 uid="uid://cvs6pj6a5w5t"]
 
 [ext_resource type="Script" path="res://ui/editor/wall_tool.gd" id="1_35bl1"]
-[ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_qxexq"]
+[ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="2_326xw"]
 
-[node name="wall tool" type="Window"]
-disable_3d = true
-title = "wall tool"
-position = Vector2i(0, 36)
-size = Vector2i(500, 200)
-wrap_controls = true
-transient = true
-min_size = Vector2i(500, 200)
-max_size = Vector2i(1080, 540)
+[node name="wall" type="VBoxContainer"]
 script = ExtResource("1_35bl1")
 
-[node name="panel" type="PanelContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_qxexq")
-theme_type_variation = &"ui_panel"
+[node name="label" type="Label" parent="."]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("2_326xw")
+text = "󰟾 walls"
+horizontal_alignment = 1
 
-[node name="vbox" type="VBoxContainer" parent="panel"]
+[node name="left" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="label" type="Label" parent="panel/vbox"]
-unique_name_in_owner = true
+[node name="label" type="Label" parent="left"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "editing %s nodes"
-
-[node name="hbox" type="HFlowContainer" parent="panel/vbox"]
-layout_mode = 2
-
-[node name="left" type="CheckBox" parent="panel/vbox/hbox"]
-unique_name_in_owner = true
-layout_mode = 2
-disabled = true
 text = "left wall"
 
-[node name="right" type="CheckBox" parent="panel/vbox/hbox"]
+[node name="left" type="CheckBox" parent="left"]
 unique_name_in_owner = true
 layout_mode = 2
-disabled = true
+
+[node name="right" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="right"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
 text = "right wall"
 
-[connection signal="toggled" from="panel/vbox/hbox/left" to="." method="_on_left_toggled"]
-[connection signal="toggled" from="panel/vbox/hbox/right" to="." method="_on_right_toggled"]
+[node name="right" type="CheckBox" parent="right"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="toggled" from="left/left" to="." method="_on_left_toggled"]
+[connection signal="toggled" from="right/right" to="." method="_on_right_toggled"]

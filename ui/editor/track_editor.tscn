@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://0x720q7tnsj0"]
+[gd_scene load_steps=54 format=3 uid="uid://0x720q7tnsj0"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -19,8 +19,7 @@
 [ext_resource type="Script" path="res://ui/editor/undo.gd" id="13_bgr8w"]
 [ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="13_cyvq7"]
 [ext_resource type="Script" path="res://ui/editor/redo.gd" id="14_2ypjq"]
-[ext_resource type="Script" path="res://ui/editor/wall_tool_button.gd" id="15_t20tf"]
-[ext_resource type="PackedScene" uid="uid://d0deiw5m5f1h7" path="res://ui/editor/wall_tool.tscn" id="16_6ojvx"]
+[ext_resource type="PackedScene" uid="uid://cvs6pj6a5w5t" path="res://ui/editor/wall_tool.tscn" id="16_6ojvx"]
 [ext_resource type="Script" path="res://ui/editor/duplicate.gd" id="17_7y8ae"]
 [ext_resource type="Script" path="res://ui/editor/hatch.gd" id="17_ugqw3"]
 [ext_resource type="Script" path="res://ui/editor/mousecast.gd" id="19_hmpi3"]
@@ -75,8 +74,8 @@ events = [SubResource("InputEventKey_wcb2q")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_xodsd"]
 device = -1
-keycode = 67
-unicode = 99
+keycode = 83
+unicode = 115
 
 [sub_resource type="Shortcut" id="Shortcut_p3vb8"]
 events = [SubResource("InputEventKey_xodsd")]
@@ -95,14 +94,6 @@ font_size = 12
 font_color = Color(0.14902, 0.545098, 0.823529, 1)
 outline_size = 10
 outline_color = Color(0.027451, 0.211765, 0.258824, 1)
-
-[sub_resource type="InputEventKey" id="InputEventKey_s0wgx"]
-device = -1
-keycode = 68
-unicode = 100
-
-[sub_resource type="Shortcut" id="Shortcut_6c6fh"]
-events = [SubResource("InputEventKey_s0wgx")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_eddoh"]
 device = -1
@@ -162,6 +153,17 @@ shader_parameter/bg_color = Color(0, 0, 0, 0.1)
 shader_parameter/dash_color = 1.0
 shader_parameter/empty_color = 0.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vunt4"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0.168627, 0.211765, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
 [node name="TrackEditor" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,6 +180,7 @@ group = ExtResource("6_vgj8v")
 layout_mode = 2
 
 [node name="left dock" type="VSplitContainer" parent="split"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -362,20 +365,6 @@ label_settings = SubResource("LabelSettings_6nqim")
 [node name="sep4" type="VSeparator" parent="split/split2/middle dock/buttons/container"]
 layout_mode = 2
 
-[node name="wall tool" type="Button" parent="split/split2/middle dock/buttons/container" node_paths=PackedStringArray("tool")]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-tooltip_text = "Wall Tool (D)"
-disabled = true
-shortcut = SubResource("Shortcut_6c6fh")
-shortcut_in_tooltip = false
-text = "󰟾"
-script = ExtResource("15_t20tf")
-tool = NodePath("window")
-
-[node name="window" parent="split/split2/middle dock/buttons/container/wall tool" instance=ExtResource("16_6ojvx")]
-visible = false
-
 [node name="spacer2" type="Control" parent="split/split2/middle dock/buttons/container"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -431,6 +420,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7qcnf")
 
 [node name="view" type="SubViewportContainer" parent="split/split2/middle dock/viewport"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
 stretch = true
 script = ExtResource("17_ugqw3")
@@ -458,17 +448,30 @@ unique_name_in_owner = true
 script = ExtResource("6_o7q05")
 
 [node name="right dock" type="VBoxContainer" parent="split/split2"]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="inspector" type="PanelContainer" parent="split/split2/right dock"]
+[node name="panel" type="PanelContainer" parent="split/split2/right dock"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("13_cyvq7")
 
+[node name="panelinner" type="PanelContainer" parent="split/split2/right dock/panel"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vunt4")
+
+[node name="inspector" type="VBoxContainer" parent="split/split2/right dock/panel/panelinner"]
+layout_mode = 2
+
+[node name="wall" parent="split/split2/right dock/panel/panelinner/inspector" node_paths=PackedStringArray("editor") instance=ExtResource("16_6ojvx")]
+layout_mode = 2
+editor = NodePath("../../../../../../..")
+
 [connection signal="make_gizmo" from="." to="split/split2/middle dock/viewport/view/port" method="update_gizmo"]
 [connection signal="selection_changed" from="." to="split/split2/middle dock/buttons/container/delete" method="_on_selection_changed"]
 [connection signal="selection_changed" from="." to="split/split2/middle dock/buttons/container/duplicate" method="_on_selection_changed"]
+[connection signal="selection_changed" from="." to="split/split2/right dock/panel/panelinner/inspector/wall" method="_on_track_editor_selection_changed"]
 [connection signal="back" from="split/left dock/data/container/buttons/back" to="." method="queue_free"]
 [connection signal="pressed" from="split/left dock/data/container/buttons/back" to="split/left dock/data/container/buttons/back" method="_on_pressed"]
 [connection signal="pressed" from="split/left dock/data/container/buttons/save" to="split/left dock/data/container/buttons/save" method="_on_pressed"]
