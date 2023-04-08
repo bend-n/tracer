@@ -4,7 +4,12 @@ class_name WallTool
 var blocks: Array[Block]
 var hist: UndoRedo
 
+func reset():
+	hide()
+	blocks = []
+
 func init(p_nodes: Array[TrackObject]) -> void:
+	show()
 	move_to_foreground()
 	var has_map := { Block.WALL_MODE_LEFT: 0, Block.WALL_MODE_RIGHT: 0 }
 	for node in p_nodes:

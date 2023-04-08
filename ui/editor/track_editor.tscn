@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://0x720q7tnsj0"]
+[gd_scene load_steps=56 format=3 uid="uid://0x720q7tnsj0"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -20,6 +20,7 @@
 [ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="13_cyvq7"]
 [ext_resource type="Script" path="res://ui/editor/redo.gd" id="14_2ypjq"]
 [ext_resource type="Script" path="res://ui/editor/wall_tool_button.gd" id="15_t20tf"]
+[ext_resource type="PackedScene" uid="uid://d0deiw5m5f1h7" path="res://ui/editor/wall_tool.tscn" id="16_6ojvx"]
 [ext_resource type="Script" path="res://ui/editor/duplicate.gd" id="17_7y8ae"]
 [ext_resource type="Script" path="res://ui/editor/hatch.gd" id="17_ugqw3"]
 [ext_resource type="Script" path="res://ui/editor/mousecast.gd" id="19_hmpi3"]
@@ -361,7 +362,7 @@ label_settings = SubResource("LabelSettings_6nqim")
 [node name="sep4" type="VSeparator" parent="split/split2/middle dock/buttons/container"]
 layout_mode = 2
 
-[node name="wall tool" type="Button" parent="split/split2/middle dock/buttons/container"]
+[node name="wall tool" type="Button" parent="split/split2/middle dock/buttons/container" node_paths=PackedStringArray("tool")]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 tooltip_text = "Wall Tool (D)"
@@ -370,6 +371,10 @@ shortcut = SubResource("Shortcut_6c6fh")
 shortcut_in_tooltip = false
 text = "󰟾"
 script = ExtResource("15_t20tf")
+tool = NodePath("window")
+
+[node name="window" parent="split/split2/middle dock/buttons/container/wall tool" instance=ExtResource("16_6ojvx")]
+visible = false
 
 [node name="spacer2" type="Control" parent="split/split2/middle dock/buttons/container"]
 layout_mode = 2
@@ -469,8 +474,8 @@ theme_override_styles/panel = ExtResource("13_cyvq7")
 [connection signal="pressed" from="split/left dock/data/container/buttons/save" to="split/left dock/data/container/buttons/save" method="_on_pressed"]
 [connection signal="item_edited" from="split/left dock/data/container/propertys" to="split/left dock/data/container/propertys" method="_on_item_edited"]
 [connection signal="name_changed" from="split/left dock/data/container/propertys" to="." method="_on_propertys_name_changed"]
-[connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="expand_selected"]
 [connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="_on_cell_selected"]
+[connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="expand_selected"]
 [connection signal="selected_dir" from="split/left dock/fs/fs tree" to="split/left dock/fs/items" method="open_dir"]
 [connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="_on_items_dir_selected"]
 [connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected" unbinds=1]
