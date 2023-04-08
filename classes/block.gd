@@ -9,15 +9,30 @@ var editor := false
 ## [code]true[/code] if this block is being photographed.
 var making_thumbnail := false
 
-## The left(z-) wall for this block.
-var left_wall: Wall = null
-## The right(z+) wall for this block.
-var right_wall: Wall = null
+## A dictionary storing the walls.
+## Dictionary[int, Wall]
+var walls := {
+	WALL_W: null, # z-
+	WALL_E: null, # z+
+	WALL_S: null, # x-
+	WALL_N: null, # x+
+}
 
-const WALL_MODE_LEFT = 1
-const WALL_MODE_RIGHT = 2
+const WALL_W := 1
+const WALL_E := 2
+const WALL_S := 4
+const WALL_N := 8
+const STRING := {
+	WALL_W: "west",
+	WALL_E: "east",
+	WALL_S: "south",
+	WALL_N: "north",
+}
+const ITER := [WALL_W, WALL_E, WALL_S, WALL_N]
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	if editor:
 		collision_layer = Globals.DEFAULT_EDITOR_LAYER
 	if not making_thumbnail:
@@ -25,7 +40,13 @@ func _ready() -> void:
 		if cam:
 			cam.queue_free()
 
-# override functions
+# helpers
+
+func has_wall(w: int) -> bool: return has_walls(w, true) & w
+func remove_wall(w: int) -> void: remove_walls(w, true)
+func make_wall(w: int) -> void: make_walls(w, true)
+
+# virtual functions
 
 ## Gets the [AABB] of this block.
 func get_aabb() -> AABB: return AABB()
@@ -34,14 +55,29 @@ func highlight() -> void: pass
 ## Reverses [method highlight].
 func un_highlight() -> void: pass
 ## Get the wall mode.
-## Returns a flag that can container [const WALl_MODE_LEFT] and [const WALL_MODE_RIGHT]
+## Returns a flag. see [const WALL_W].
 func get_wall_mode() -> int: return 0
-func make_left_wall() -> void: pass
-func remove_left_wall() -> void: left_wall.queue_free()
-func make_right_wall() -> void: pass
-func has_left_wall() -> bool: return false
-func has_right_wall() -> bool: return false
-func remove_right_wall() -> void: right_wall.queue_free()
+func make_walls(_w: int, _singular := false) -> void: pass
+func remove_walls(w: int, singular := false) -> void:
+	for wall in walls:
+		if w & wall:
+			if not is_instance_valid(walls[wall]):
+				push_error("wall doesnt exist!")
+				return
+			walls[wall].queue_free()
+			if singular:
+				return
+func has_walls(w: int, singular := false) -> int:
+	var has := 0
+	for wall in walls:
+		if w & wall:
+			if is_instance_valid(walls[wall]):
+				if singular:
+					return wall
+				has |= wall
+			elif singular:
+				return 0
+	return has
 ## Can this block be painted? (TODO)
 func can_theme() -> bool: return false
 func get_mats() -> Array[BaseMaterial3D]: return []

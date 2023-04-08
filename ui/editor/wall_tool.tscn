@@ -12,29 +12,55 @@ theme_override_styles/normal = ExtResource("2_326xw")
 text = "󰟾 walls"
 horizontal_alignment = 1
 
-[node name="left" type="HBoxContainer" parent="."]
+[node name="west" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="label" type="Label" parent="left"]
+[node name="label" type="Label" parent="west"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "left wall"
+text = " wall"
 
-[node name="left" type="CheckBox" parent="left"]
+[node name="west" type="CheckBox" parent="west"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="right" type="HBoxContainer" parent="."]
+[node name="east" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="label" type="Label" parent="right"]
+[node name="label" type="Label" parent="east"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "right wall"
+text = " wall"
 
-[node name="right" type="CheckBox" parent="right"]
+[node name="east" type="CheckBox" parent="east"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="toggled" from="left/left" to="." method="_on_left_toggled"]
-[connection signal="toggled" from="right/right" to="." method="_on_right_toggled"]
+[node name="north" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="north"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = " wall"
+
+[node name="north" type="CheckBox" parent="north"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="south" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="south"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = " wall"
+
+[node name="south" type="CheckBox" parent="south"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="toggled" from="west/west" to="." method="toggle" binds= [1]]
+[connection signal="toggled" from="east/east" to="." method="toggle" binds= [2]]
+[connection signal="toggled" from="north/north" to="." method="toggle" binds= [8]]
+[connection signal="toggled" from="south/south" to="." method="toggle" binds= [4]]

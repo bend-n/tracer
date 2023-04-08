@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://8mjs78vkeleb"]
+
+[ext_resource type="Script" path="res://classes/wall.gd" id="1_xbiyt"]
+[ext_resource type="ArrayMesh" uid="uid://d0lg74fptx6bd" path="res://assets/meshes/walls/tall_wall.tres" id="2_kc1g3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n6nfl"]
+size = Vector3(10, 8, 1)
+
+[node name="flat_wall" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("1_xbiyt")
+mesh = NodePath("mesh")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+editor_description = "cant use boxmesh cuz uvs wierd"
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("2_kc1g3")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, -5.5)
+shape = SubResource("BoxShape3D_n6nfl")

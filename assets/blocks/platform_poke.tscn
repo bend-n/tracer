@@ -14,12 +14,14 @@ collision_mask = 0
 input_ray_pickable = false
 script = ExtResource("1_8mrda")
 mesh = NodePath("mesh")
-left_wall_scene = ExtResource("2_g8isk")
-left_wall_transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-test_left_wall = false
-right_wall_scene = ExtResource("2_bi3dp")
-right_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
-test_right_wall = false
+west_wall_scene = ExtResource("2_g8isk")
+west_wall_transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+east_wall_scene = ExtResource("2_bi3dp")
+east_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+north_wall_scene = ExtResource("2_g8isk")
+north_wall_transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, 0)
+south_wall_scene = ExtResource("2_bi3dp")
+south_wall_transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_y4mln")

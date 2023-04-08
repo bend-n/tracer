@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpve5rga4f5ts"]
+[gd_scene load_steps=7 format=3 uid="uid://bpve5rga4f5ts"]
 
 [ext_resource type="ArrayMesh" uid="uid://cvcsk0675a5hy" path="res://assets/meshes/platforms/corner.mesh" id="1_gka10"]
 [ext_resource type="Script" path="res://classes/platform.gd" id="1_h30a2"]
 [ext_resource type="PackedScene" uid="uid://clvtje1uy8v2s" path="res://assets/blocks/walls/corner_wall.tscn" id="2_d1j4r"]
+[ext_resource type="PackedScene" uid="uid://lq13suvwdu6g" path="res://assets/blocks/walls/flat_wall.tscn" id="3_ou0ka"]
 [ext_resource type="PackedScene" uid="uid://urgqw6yoy4f5" path="res://ui/editor/cameras/topdown_cam.tscn" id="4_xugmh"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l5if3"]
@@ -13,13 +14,15 @@ collision_mask = 0
 input_ray_pickable = false
 script = ExtResource("1_h30a2")
 mesh = NodePath("mesh")
-wall_mode = 1
-left_wall_scene = ExtResource("2_d1j4r")
-left_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-test_left_wall = false
-right_wall_scene = null
-right_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-test_right_wall = false
+wall_mode = 7
+west_wall_scene = ExtResource("2_d1j4r")
+west_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+east_wall_scene = ExtResource("3_ou0ka")
+east_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+north_wall_scene = null
+north_wall_transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, 0)
+south_wall_scene = ExtResource("3_ou0ka")
+south_wall_transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

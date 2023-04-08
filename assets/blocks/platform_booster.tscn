@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://lq13suvwdu6g" path="res://assets/blocks/walls/flat_wall.tscn" id="2_b2gjs"]
 [ext_resource type="Material" uid="uid://cpqd2somc06dx" path="res://assets/blocks/arrow.material" id="3_0ymhr"]
 [ext_resource type="ArrayMesh" uid="uid://dpryebqcookr2" path="res://assets/blocks/arrow.mesh" id="3_hvb8d"]
-[ext_resource type="PackedScene" uid="uid://urgqw6yoy4f5" path="res://ui/editor/cameras/topdown_cam.tscn" id="6_kxavu"]
+[ext_resource type="PackedScene" uid="uid://urgqw6yoy4f5" path="res://ui/editor/cameras/topdown_cam.tscn" id="6_ajq8r"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yy48c"]
 size = Vector3(10, 1, 10)
@@ -192,12 +192,14 @@ collision_mask = 0
 input_ray_pickable = false
 script = ExtResource("1_xsyb5")
 mesh = NodePath("mesh")
-left_wall_scene = ExtResource("2_b2gjs")
-left_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-test_left_wall = false
-right_wall_scene = ExtResource("2_b2gjs")
-right_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
-test_right_wall = false
+west_wall_scene = ExtResource("2_b2gjs")
+west_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+east_wall_scene = ExtResource("2_b2gjs")
+east_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+north_wall_scene = ExtResource("2_b2gjs")
+north_wall_transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, 0)
+south_wall_scene = ExtResource("2_b2gjs")
+south_wall_transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 
 [node name="mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_yy48c")
@@ -234,4 +236,4 @@ libraries = {
 "": SubResource("AnimationLibrary_vxlkq")
 }
 
-[node name="camera" parent="." instance=ExtResource("6_kxavu")]
+[node name="camera" parent="." instance=ExtResource("6_ajq8r")]

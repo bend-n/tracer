@@ -4,8 +4,7 @@ class_name TrackObject
 var base_scene: PackedScene
 var live_node: Block
 #var material: Material
-var has_left_wall := false
-var has_right_wall := false
+var wall_mode: int
 var transform: Transform3D:
 	get:
 		if live_node:
@@ -27,8 +26,7 @@ func exprt() -> Dictionary:
 #			m = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path if live_node.mesh != null else null,
 			b = base_scene.resource_path,
 			t = live_node.global_transform,
-			r = live_node.has_right_wall(),
-			l = live_node.has_left_wall(),
+			w = live_node.get_wall_mode(),
 		}
 	else:
 		return exprt_imported()
@@ -38,16 +36,14 @@ func exprt_imported() -> Dictionary:
 #		m = material.resource_path,
 		b = base_scene.resource_path,
 		t = transform,
-		r = has_right_wall,
-		l = has_left_wall,
+		w = wall_mode,
 	}
 
 static func from_d(d: Dictionary) -> TrackObject:
 	var o := TrackObject.new(load(d.b), null, null)
 #	o.material = load(d.m) if d.m else null
 	o.transform = d.t
-	o.has_left_wall = d.l
-	o.has_right_wall = d.r
+	o.wall_mode = d.w
 	return o
 
 ## [param p_live] may or may not be in the tree
@@ -65,20 +61,14 @@ func create(is_editor := false) -> Node3D:
 #		node.mesh.set_surface_override_material(0, material)
 	node.editor = is_editor
 	node.global_transform = transform
-	node.ready.connect(func():
-		if has_left_wall and node.get_wall_mode() & Block.WALL_MODE_LEFT:
-			node.make_left_wall()
-		if has_right_wall and node.get_wall_mode() & Block.WALL_MODE_RIGHT:
-			node.make_right_wall()
-	)
+	node.ready.connect(node.make_walls.bind(wall_mode))
 	return node
 
 ## a more efficient [code]TrackObject.from_d(obj.exprt())[/code].
 func dup() -> TrackObject:
 	var tobj := TrackObject.new(base_scene, null, link)
 	tobj.transform = live_node.global_transform
-	tobj.has_left_wall = live_node.has_left_wall()
-	tobj.has_right_wall = live_node.has_right_wall()
+	tobj.wall_mode = live_node.get_wall_mode()
 	return tobj
 
 

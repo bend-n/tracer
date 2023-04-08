@@ -4,68 +4,93 @@ extends Block
 
 @export var mesh: MeshInstance3D
 
-const DEFAULT_TRANSFORM := Transform3D(Basis(), Vector3())
+var west_wall_scene: PackedScene
+var east_wall_scene: PackedScene
+var south_wall_scene: PackedScene
+var north_wall_scene: PackedScene
 
-var left_wall_scene: PackedScene
-var left_wall_transform: Transform3D = DEFAULT_TRANSFORM:
-	set(lwt):
-		left_wall_transform = lwt
-		if is_instance_valid(left_wall):
-			left_wall.global_transform = lwt
-var right_wall_scene: PackedScene
-var right_wall_transform: Transform3D = DEFAULT_TRANSFORM:
-	set(rwt):
-		right_wall_transform = rwt
-		if is_instance_valid(right_wall):
-			right_wall.global_transform = rwt
+func wall_scenes() -> Dictionary:
+	return {
+		WALL_W: west_wall_scene,
+		WALL_E: east_wall_scene,
+		WALL_S: south_wall_scene,
+		WALL_N: north_wall_scene,
+	}
 
-@export_flags("Left Wall", "Right Wall") var wall_mode := WALL_MODE_LEFT | WALL_MODE_RIGHT:
+func wall_transforms() -> Dictionary:
+	return {
+		WALL_W: west_wall_transform,
+		WALL_E: east_wall_transform,
+		WALL_S: south_wall_transform,
+		WALL_N: north_wall_transform,
+	}
+
+var west_wall_transform: Transform3D = Transform3D(Basis(), Vector3()):
+	set(wt):
+		west_wall_transform = wt
+		if is_instance_valid(walls[WALL_W]):
+			walls[WALL_W].global_transform = wt
+var east_wall_transform: Transform3D = Transform3D(Vector3(1, 0, 0), Vector3(0, 1, 0), Vector3(0, 0, -1), Vector3()):
+	set(wt):
+		east_wall_transform = wt
+		if is_instance_valid(walls[WALL_E]):
+			walls[WALL_E].global_transform = wt
+var south_wall_transform: Transform3D = Transform3D(Vector3(0, 0, -1), Vector3(0, 1, 0), Vector3(1, 0, 0), Vector3()):
+	set(wt):
+		south_wall_transform = wt
+		if is_instance_valid(walls[WALL_S]):
+			walls[WALL_S].global_transform = wt
+var north_wall_transform: Transform3D = Transform3D(Vector3(0, 0, 1), Vector3(0, 1, 0), Vector3(-1, 0, 0), Vector3()):
+	set(wt):
+		north_wall_transform = wt
+		if is_instance_valid(walls[WALL_N]):
+			walls[WALL_N].global_transform = wt
+
+@export_flags("West", "East", "South", "North") var wall_mode := WALL_W | WALL_E | WALL_S | WALL_N:
 	set(wm):
 		wall_mode = wm
 		notify_property_list_changed()
 
-var test_left_wall = false:
+@export_flags("Test west", "Test east", "Test south", "Test north") var tests = 0:
 	set(v):
-		if Engine.is_editor_hint():
-			test_left_wall = v
-			if test_left_wall: make_left_wall()
-			elif has_left_wall(): remove_left_wall()
-var test_right_wall = false:
-	set(v):
-		if Engine.is_editor_hint():
-			test_right_wall = v
-			if v: make_right_wall()
-			elif has_right_wall(): remove_right_wall()
+		tests = v if v else 0
+		for wall in ITER:
+			if has_walls(wall, true) and not tests & wall:
+				remove_walls(wall, true)
+			elif tests & wall:
+				make_walls(wall, true)
 
 func _get_property_list() -> Array:
-	var left_usage := PROPERTY_USAGE_DEFAULT if wall_mode & WALL_MODE_LEFT else PROPERTY_USAGE_NO_EDITOR
-	var right_usage := PROPERTY_USAGE_DEFAULT if wall_mode & WALL_MODE_RIGHT else PROPERTY_USAGE_NO_EDITOR
+	var west_usage := PROPERTY_USAGE_DEFAULT if wall_mode & WALL_W else PROPERTY_USAGE_NO_EDITOR
+	var east_usage := PROPERTY_USAGE_DEFAULT if wall_mode & WALL_E else PROPERTY_USAGE_NO_EDITOR
+	var north_usage := PROPERTY_USAGE_DEFAULT if wall_mode & WALL_N else PROPERTY_USAGE_NO_EDITOR
+	var south_usage := PROPERTY_USAGE_DEFAULT if wall_mode & WALL_S else PROPERTY_USAGE_NO_EDITOR
 	return [
-		{ "name": "left_wall_scene", "type": TYPE_OBJECT, "usage": left_usage, "hint": PROPERTY_HINT_RESOURCE_TYPE, "hint_string": "PackedScene" },
-		{ "name": "left_wall_transform", "type": TYPE_TRANSFORM3D, "usage": left_usage },
-		{ "name": "test_left_wall", "type": TYPE_BOOL, "usage": left_usage },
-		{ "name": "right_wall_scene", "type": TYPE_OBJECT, "usage": right_usage, "hint": PROPERTY_HINT_RESOURCE_TYPE, "hint_string": "PackedScene" },
-		{ "name": "right_wall_transform", "type": TYPE_TRANSFORM3D, "usage": right_usage },
-		{ "name": "test_right_wall", "type": TYPE_BOOL, "usage": right_usage }
+		{ "name": "west_wall_scene", "type": TYPE_OBJECT, "usage": west_usage, "hint": PROPERTY_HINT_RESOURCE_TYPE, "hint_string": "PackedScene" },
+		{ "name": "west_wall_transform", "type": TYPE_TRANSFORM3D, "usage": west_usage },
+		{ "name": "east_wall_scene", "type": TYPE_OBJECT, "usage": east_usage, "hint": PROPERTY_HINT_RESOURCE_TYPE, "hint_string": "PackedScene" },
+		{ "name": "east_wall_transform", "type": TYPE_TRANSFORM3D, "usage": east_usage },
+		{ "name": "north_wall_scene", "type": TYPE_OBJECT, "usage": north_usage, "hint": PROPERTY_HINT_RESOURCE_TYPE, "hint_string": "PackedScene" },
+		{ "name": "north_wall_transform", "type": TYPE_TRANSFORM3D, "usage": north_usage },
+		{ "name": "south_wall_scene", "type": TYPE_OBJECT, "usage": south_usage, "hint": PROPERTY_HINT_RESOURCE_TYPE, "hint_string": "PackedScene" },
+		{ "name": "south_wall_transform", "type": TYPE_TRANSFORM3D, "usage": south_usage },
 	]
 
-
-func make_left_wall():
-	left_wall = left_wall_scene.instantiate()
-	if left_wall_transform != DEFAULT_TRANSFORM:
-		left_wall.global_transform = left_wall_transform
-	add_child(left_wall)
-
-func make_right_wall():
-	right_wall = right_wall_scene.instantiate()
-	if right_wall_transform != DEFAULT_TRANSFORM:
-		right_wall.global_transform = right_wall_transform
-	add_child(right_wall)
+func make_walls(w: int, singular := false) -> void:
+	for wall in walls:
+		if w & wall:
+			if is_instance_valid(walls[wall]):
+				push_error("wall exists!")
+				return
+			var node: Wall = wall_scenes()[wall].instantiate()
+			node.global_transform = wall_transforms()[wall]
+			add_child(node)
+			walls[wall] = node
+			if singular:
+				return
 
 func get_wall_mode() -> int: return wall_mode
 func can_theme() -> bool: return true
-func has_left_wall() -> bool: return is_instance_valid(left_wall)
-func has_right_wall() -> bool: return is_instance_valid(right_wall)
 func get_aabb() -> AABB: return mesh.get_aabb()
 
 func un_highlight():
