@@ -39,6 +39,7 @@ func _ready() -> void:
 		var cam := get_node_or_null(^"camera")
 		if cam:
 			cam.queue_free()
+	input_ray_pickable = false
 
 # helpers
 
@@ -67,7 +68,7 @@ func remove_walls(w: int, singular := false) -> void:
 			walls[wall].queue_free()
 			if singular:
 				return
-func has_walls(w: int, singular := false) -> int:
+func has_walls(w := WALL_W | WALL_E | WALL_N | WALL_S, singular := false) -> int:
 	var has := 0
 	for wall in walls:
 		if w & wall:

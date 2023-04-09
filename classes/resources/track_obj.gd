@@ -26,7 +26,7 @@ func exprt() -> Dictionary:
 #			m = (live_node.mesh as MeshInstance3D).get_active_material(0).resource_path if live_node.mesh != null else null,
 			b = base_scene.resource_path,
 			t = live_node.global_transform,
-			w = live_node.get_wall_mode(),
+			w = live_node.has_walls(),
 		}
 	else:
 		return exprt_imported()
@@ -68,7 +68,7 @@ func create(is_editor := false) -> Node3D:
 func dup() -> TrackObject:
 	var tobj := TrackObject.new(base_scene, null, link)
 	tobj.transform = live_node.global_transform
-	tobj.wall_mode = live_node.get_wall_mode()
+	tobj.wall_mode = live_node.has_walls()
 	return tobj
 
 
