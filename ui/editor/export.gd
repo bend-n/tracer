@@ -5,7 +5,7 @@ class_name EditorMarshalling
 
 func _pressed() -> void:
 	var enc := EditorMarshalling.td2s(editor.to_trackdata())
-	print_rich("exporting %s to `[code]%s[/code]`" % [editor.n, enc]) # for funny clipboard shenanigans
+	print_rich("exporting to `[code]%s[/code]`" % enc) # for funny clipboard shenanigans
 	DisplayServer.clipboard_set(enc)
 
 static func td2s(td: TrackResource) -> String:

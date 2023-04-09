@@ -36,8 +36,8 @@ func _ready() -> void:
 	# the loader has loaded, get rid of it
 	l.queue_free()
 	objects = data.blocks # please be reference
-	%propertys.set_n(data.name)
-	n = data.name
+	%propertys.name_.text = data.name
+	%propertys.laps_.value = data.laps
 	%cam.global_transform = IntroCam.get_origin(data) # put the camera up high, looking straight down
 
 	if not FileAccess.file_exists(Globals.TRACKS % data.name):
@@ -66,7 +66,8 @@ func _on_snapping_toggled(button_pressed: bool) -> void:
 func to_trackdata() -> TrackResource:
 	objects = objects.filter(func(o: TrackObject): return is_instance_valid(o.live_node))
 	var data := TrackResource.new(objects)
-	data.name = n
+	data.name = %propertys.name_.text
+	data.laps = %propertys.laps_.value
 	return data
 
 func _on_item_created(object: TrackObject) -> void:
@@ -75,10 +76,6 @@ func _on_item_created(object: TrackObject) -> void:
 		for block in objects:
 			if block.live_node is Booster:
 				block.live_node.sync()
-
-var n: String
-func _on_propertys_name_changed(p_name: String) -> void:
-	n = p_name
 
 func tobj_from_node(node: Block) -> TrackObject:
 	for o in objects:

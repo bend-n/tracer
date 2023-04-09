@@ -25,11 +25,11 @@ func mkbutton(track: TrackResource) -> void:
 	var ghost := GhostData._load(Globals.SAVES % track.name)
 	var button := trackbutton.instantiate() as TrackEditableButton
 	add_child(button)
-	# hopefully this is all reference based and i wont have any issues whatsoever
 	button.init(track, ghost)
-	button.play.connect(other_track_select.play.bind(track, ghost))
-	button.watch.connect(other_track_select.watch.bind(track, ghost))
-	button.edit.connect(edit.bind(track))
+	# todo: instead of duplicating, transfer the track path.
+	button.play.connect(other_track_select.play.bind(track.dup(), ghost))
+	button.watch.connect(other_track_select.watch.bind(track.dup(), ghost))
+	button.edit.connect(edit.bind(track.dup()))
 	button.delete.connect(delete.bind(track))
 	tracks.append(track)
 

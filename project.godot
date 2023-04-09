@@ -32,7 +32,7 @@ window/vsync/vsync_mode=0
 
 movie_writer/mix_rate=24000
 movie_writer/mjpeg_quality=0.8
-movie_writer/movie_file="/home/bendn/Documents/tracer/movie.avi"
+movie_writer/movie_file="/home/bendn/Documents/tracer/movie/movie.png"
 movie_writer/disable_vsync=true
 movie_writer/fps=15
 

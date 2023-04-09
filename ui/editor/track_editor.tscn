@@ -5,7 +5,6 @@
 [ext_resource type="StyleBox" uid="uid://dxtsrhgnyr80k" path="res://ui/panel_dark.stylebox" id="2_l1cwd"]
 [ext_resource type="Script" path="res://ui/editor/items.gd" id="2_q16oo"]
 [ext_resource type="Script" path="res://ui/editor/track_editor.gd" id="3_50gj4"]
-[ext_resource type="Script" path="res://ui/editor/propertys.gd" id="5_v84um"]
 [ext_resource type="Script" path="res://ui/editor/cam.gd" id="6_o7q05"]
 [ext_resource type="ButtonGroup" uid="uid://oio3aly7aeny" path="res://ui/editor/group.tres" id="6_vgj8v"]
 [ext_resource type="Script" path="res://ui/editor/port.gd" id="7_ftio3"]
@@ -13,6 +12,7 @@
 [ext_resource type="Script" path="res://ui/editor/save.gd" id="7_saajs"]
 [ext_resource type="Script" path="res://ui/editor/export.gd" id="9_nra4c"]
 [ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="9_x2saf"]
+[ext_resource type="PackedScene" uid="uid://c4h850namjrn2" path="res://ui/editor/propertys.tscn" id="10_kqvab"]
 [ext_resource type="Resource" uid="uid://djgoj7p7on11f" path="res://ui/editor/editor_fs.tres" id="11_ijop2"]
 [ext_resource type="Script" path="res://ui/multi_button.gd" id="11_nar81"]
 [ext_resource type="Script" path="res://ui/editor/delete.gd" id="13_agg2r"]
@@ -225,13 +225,9 @@ shortcut_in_tooltip = false
 text = "󰈝"
 script = ExtResource("9_nra4c")
 
-[node name="propertys" type="Tree" parent="split/left dock/data/container"]
+[node name="propertys" parent="split/left dock/data/container" instance=ExtResource("10_kqvab")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-columns = 2
-hide_root = true
-script = ExtResource("5_v84um")
 
 [node name="fs" type="VSplitContainer" parent="split/left dock"]
 layout_mode = 2
@@ -429,7 +425,7 @@ script = ExtResource("17_ugqw3")
 unique_name_in_owner = true
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(1067, 1010)
+size = Vector2i(250, 250)
 render_target_update_mode = 4
 script = ExtResource("7_ftio3")
 
@@ -475,10 +471,8 @@ editor = NodePath("../../../../../../..")
 [connection signal="back" from="split/left dock/data/container/buttons/back" to="." method="queue_free"]
 [connection signal="pressed" from="split/left dock/data/container/buttons/back" to="split/left dock/data/container/buttons/back" method="_on_pressed"]
 [connection signal="pressed" from="split/left dock/data/container/buttons/save" to="split/left dock/data/container/buttons/save" method="_on_pressed"]
-[connection signal="item_edited" from="split/left dock/data/container/propertys" to="split/left dock/data/container/propertys" method="_on_item_edited"]
-[connection signal="name_changed" from="split/left dock/data/container/propertys" to="." method="_on_propertys_name_changed"]
-[connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="_on_cell_selected"]
 [connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="expand_selected"]
+[connection signal="cell_selected" from="split/left dock/fs/fs tree" to="split/left dock/fs/fs tree" method="_on_cell_selected"]
 [connection signal="selected_dir" from="split/left dock/fs/fs tree" to="split/left dock/fs/items" method="open_dir"]
 [connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="_on_items_dir_selected"]
 [connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected" unbinds=1]

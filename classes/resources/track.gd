@@ -75,3 +75,16 @@ func get_aabb() -> AABB:
 		if block.live_node:
 			box = box.merge(block.live_node.get_aabb())
 	return box
+
+func dup() -> TrackResource:
+	var blocks_dup: Array[TrackObject] = []
+	for block in blocks:
+		blocks_dup.append(block.dup())
+	var o := TrackResource.new(blocks_dup)
+	o.sun_x = sun_x
+	o.sun_y = sun_y
+	o.overview_height = overview_height
+	o.name = name
+	o.offset = offset
+	o.laps = laps
+	return o

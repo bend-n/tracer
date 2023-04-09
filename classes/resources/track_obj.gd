@@ -67,8 +67,12 @@ func create(is_editor := false) -> Node3D:
 ## a more efficient [code]TrackObject.from_d(obj.exprt())[/code].
 func dup() -> TrackObject:
 	var tobj := TrackObject.new(base_scene, null, link)
-	tobj.transform = live_node.global_transform
-	tobj.wall_mode = live_node.has_walls()
+	if live_node:
+		tobj.transform = live_node.global_transform
+		tobj.wall_mode = live_node.has_walls()
+	else:
+		tobj.transform = transform
+		tobj.wall_mode = wall_mode
 	return tobj
 
 
