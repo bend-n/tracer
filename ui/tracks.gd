@@ -17,7 +17,6 @@ func add(t: TrackResource):
 	var file := FileAccess.open("res://tracks.cfg", FileAccess.READ_WRITE)
 	file.store_line(EditorMarshalling.td2s(t))
 	file.close()
-	print("added %s!" % EditorMarshalling.td2s(t))
 	tracks.append(t)
 	mkbutton(t)
 

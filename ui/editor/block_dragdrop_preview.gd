@@ -48,8 +48,7 @@ func cleanup() -> void:
 
 func mkobjs(objs: Array[TrackObject]):
 	for obj in objs:
-		var block: Block = obj.create()
-		block.editor = true
+		var block: Block = obj.create(true)
 		add_child(block)
 		block.hide()
 		blocks.append(block)

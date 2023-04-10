@@ -44,6 +44,11 @@ func _ready() -> void:
 		%save.unsaved = true
 
 	group.pressed.connect(pressed)
+	tree_exiting.connect(
+		func():
+			for obj in objects:
+				obj.delete_live()
+	)
 
 func pressed(b: Button) -> void:
 	mode = Mode[b.name.to_pascal_case()]
@@ -58,6 +63,7 @@ func _on_mousecast_hit(colls: Array[Block]) -> void:
 	new_selected.resize(colls.size())
 	for i in len(colls):
 		new_selected[i] = tobj_from_node(colls[i])
+		assert(new_selected[i]!=null, "%s was not found" % [colls[i]])
 	selected = new_selected
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
