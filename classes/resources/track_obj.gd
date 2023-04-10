@@ -16,7 +16,7 @@ var link: WeakLink
 func _init(p_base: PackedScene, p_live: Node, p_link: WeakLink) -> void:
 	link = p_link
 	base_scene = p_base
-	live_node = p_live
+	set_live(p_live)
 
 func exprt() -> Dictionary:
 	if live_node:
@@ -49,6 +49,8 @@ static func from_d(d: Dictionary) -> TrackObject:
 ## [param p_live] may or may not be in the tree
 func set_live(p_live: Block):
 	live_node = p_live
+	if p_live:
+		live_node.tree_exiting.connect(set_live.bind(null))
 	# we dont need these: this information should be transfered to the live node.
 	# but i pass around my tracks too much, and build them, that this will be a problem.
 	# material = null

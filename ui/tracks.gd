@@ -1,35 +1,31 @@
-@tool
-extends GridContainer
-class_name TrackSelect
-
-@export var tracks: Array[TrackResource]
-@export var race: PackedScene
-@export var ghost_watch: PackedScene
-@export var trackbutton: PackedScene
+extends TrackSelect
+class_name BuiltinTrackSelect
 
 func _ready() -> void:
-	for track in tracks:
-		var button: TrackButton = trackbutton.instantiate()
-		add_child(button)
-		var ghost := GhostData._load(Globals.SAVES % track.name)
-		button.init(track, ghost)
-		button.play.connect(play.bind(tracks, ghost))
-		button.watch.connect(watch.bind(track, ghost))
-	if get_child_count() > 0:
-		(get_child(0) as TrackButton).button.grab_focus()
+	_load()
+	super()
 
-func play(track: TrackResource, ghost: GhostData) -> void:
-	Globals.playing = track
-	Globals.ghost = ghost
-	add_to_main(race)
+func _load():
+	var file := FileAccess.open("res://tracks.cfg", FileAccess.READ)
+	while !file.eof_reached():
+		var line := file.get_line()
+		if line == "!" || line.is_empty():
+			return
+		tracks.append(EditorMarshalling.s2td(line))
 
-func watch(track: TrackResource, ghost: GhostData) -> void:
-	Globals.playing = track
-	Globals.ghost = ghost
-	add_to_main(ghost_watch)
+func add(t: TrackResource):
+	var file := FileAccess.open("res://tracks.cfg", FileAccess.READ_WRITE)
+	file.store_line(EditorMarshalling.td2s(t))
+	file.close()
+	print("added %s!" % EditorMarshalling.td2s(t))
+	tracks.append(t)
+	mkbutton(t)
 
-func add_to_main(p: PackedScene) -> void:
-	owner.hide()
-	var c := p.instantiate()
-	get_viewport().add_child(c)
-	c.tree_exited.connect(owner.show)
+func delete(t: TrackResource):
+	tracks.erase(t)
+	store_all()
+
+func store_all():
+	var file := FileAccess.open("res://tracks.cfg", FileAccess.WRITE)
+	for t in tracks:
+		file.store_line(EditorMarshalling.td2s(t))

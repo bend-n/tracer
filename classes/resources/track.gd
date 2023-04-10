@@ -88,3 +88,6 @@ func dup() -> TrackResource:
 	o.offset = offset
 	o.laps = laps
 	return o
+
+func bytes() -> PackedByteArray:
+	return var_to_bytes(to_d())
