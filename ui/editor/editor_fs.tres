@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DirRes" load_steps=46 format=3 uid="uid://djgoj7p7on11f"]
+[gd_resource type="Resource" script_class="DirRes" load_steps=44 format=3 uid="uid://djgoj7p7on11f"]
 
 [ext_resource type="PackedScene" uid="uid://cy2ialm17md6c" path="res://assets/blocks/ring_start.tscn" id="1_obh5s"]
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="2_vbck3"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://ceo1o8kfhqnxy" path="res://assets/blocks/platform_diagonal.tscn" id="8_2o3rf"]
 [ext_resource type="PackedScene" uid="uid://cb70byabne8d" path="res://assets/blocks/platform_poke.tscn" id="9_lc43u"]
 [ext_resource type="PackedScene" uid="uid://ci24eqfa38cy4" path="res://assets/blocks/platform_ramp.tscn" id="10_f1l1g"]
-[ext_resource type="PackedScene" uid="uid://odkse4oqjcge" path="res://assets/blocks/platform_smooth_ramp.tscn" id="11_whj5x"]
 [ext_resource type="PackedScene" uid="uid://cotdon210bw6c" path="res://assets/blocks/platform_square.tscn" id="12_aumqd"]
 [ext_resource type="PackedScene" uid="uid://dtmmpkwtlvovq" path="res://assets/blocks/platform_turn.tscn" id="13_gt2n1"]
 [ext_resource type="PackedScene" uid="uid://c7xxrp8ml2ku1" path="res://assets/blocks/platform_x.tscn" id="14_nfuay"]
@@ -19,7 +18,7 @@
 [ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="16_aluwl"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="17_slejy"]
 [ext_resource type="Material" uid="uid://dd3673p284fqe" path="res://assets/mats/wall.tres" id="18_osy7q"]
-[ext_resource type="PackedScene" uid="uid://c1h0ic5drv85m" path="res://assets/blocks/tree.tscn" id="19_vck13"]
+[ext_resource type="PackedScene" uid="uid://d2nwkpdn3gnx3" path="res://assets/blocks/tree.tscn" id="19_vck13"]
 
 [sub_resource type="Resource" id="Resource_8f0v1"]
 resource_name = "ring start"
@@ -57,6 +56,12 @@ script = ExtResource("3_5we13")
 files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_kvgvy")])
 description = "Finishes (you need one of these)"
 
+[sub_resource type="Resource" id="Resource_4d15v"]
+resource_name = "square"
+script = ExtResource("2_vbck3")
+scene = ExtResource("12_aumqd")
+description = "Square, flat platform"
+
 [sub_resource type="Resource" id="Resource_wrtlo"]
 resource_name = "corner"
 script = ExtResource("2_vbck3")
@@ -87,18 +92,6 @@ script = ExtResource("2_vbck3")
 scene = ExtResource("10_f1l1g")
 description = "Like the diagonal piece, but with a base."
 
-[sub_resource type="Resource" id="Resource_23jh3"]
-resource_name = "smooth ramp"
-script = ExtResource("2_vbck3")
-scene = ExtResource("11_whj5x")
-description = "Buttery ramp"
-
-[sub_resource type="Resource" id="Resource_4d15v"]
-resource_name = "square"
-script = ExtResource("2_vbck3")
-scene = ExtResource("12_aumqd")
-description = "Square, flat platform"
-
 [sub_resource type="Resource" id="Resource_5ko53"]
 resource_name = "turn"
 script = ExtResource("2_vbck3")
@@ -120,7 +113,7 @@ description = "Forces the car in a direction with moderate force"
 [sub_resource type="Resource" id="Resource_xovbr"]
 resource_name = "platform"
 script = ExtResource("3_5we13")
-files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_1w0pw"), SubResource("Resource_23jh3"), SubResource("Resource_4d15v"), SubResource("Resource_5ko53"), SubResource("Resource_hk5rh"), SubResource("Resource_l415k")])
+files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_4d15v"), SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_1w0pw"), SubResource("Resource_5ko53"), SubResource("Resource_hk5rh"), SubResource("Resource_l415k")])
 description = "Platforms (you can add barriers with the wall tool)"
 
 [sub_resource type="Resource" id="Resource_ax7gx"]
