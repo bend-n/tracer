@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://classes/platform.gd" id="1_kratg"]
 [ext_resource type="PackedScene" uid="uid://dforj6583ykxh" path="res://assets/blocks/walls/diagonal_wall.tscn" id="2_4a34e"]
-[ext_resource type="ArrayMesh" uid="uid://bonmk01fmkuk2" path="res://assets/meshes/platforms/diagonal.mesh" id="2_5csml"]
 [ext_resource type="PackedScene" uid="uid://lq13suvwdu6g" path="res://assets/blocks/walls/flat_wall.tscn" id="3_5esq0"]
+[ext_resource type="ArrayMesh" uid="uid://nw0f20urbu50" path="res://assets/meshes/platforms/diagonal.tres" id="4_fgvbp"]
 [ext_resource type="PackedScene" uid="uid://cb46aartkefse" path="res://ui/editor/cameras/side_slant_cam.tscn" id="4_ik4ya"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_57rux"]
-points = PackedVector3Array(-5, -0.500196, -5, -5, 0.5, -5, 5, -5.5, -5, -5, -0.500196, 5, -5, 0.5, 5, 5, -4.50039, -5, 5, -5.5, 5, 5, -4.50039, 5)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ha1t2"]
+points = PackedVector3Array(-5, -0.500049, -5, -5, 0.5, -5, 5, -3, -5, -5, -0.500049, 5, -5, 0.5, 5, 5, -2.00029, -5, 5, -3, 5, 5, -2.00029, 5)
 
 [node name="platform_diagonal" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
 collision_mask = 0
@@ -24,9 +24,9 @@ south_wall_scene = ExtResource("3_5esq0")
 south_wall_transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 
 [node name="mesh" type="MeshInstance3D" parent="."]
-mesh = ExtResource("2_5csml")
+mesh = ExtResource("4_fgvbp")
 
 [node name="collision" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_57rux")
+shape = SubResource("ConvexPolygonShape3D_ha1t2")
 
 [node name="camera" parent="." instance=ExtResource("4_ik4ya")]

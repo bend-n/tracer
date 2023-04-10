@@ -1,14 +1,14 @@
 [gd_scene load_steps=8 format=3 uid="uid://ci24eqfa38cy4"]
 
 [ext_resource type="Script" path="res://classes/platform.gd" id="1_3ciq1"]
-[ext_resource type="PackedScene" uid="uid://cqi0dgrpfy1wq" path="res://assets/blocks/walls/tall_diagonal_wall.tscn" id="2_j1v08"]
-[ext_resource type="ArrayMesh" uid="uid://442u0becco0s" path="res://assets/meshes/platforms/ramp.mesh" id="2_q044q"]
+[ext_resource type="PackedScene" path="res://assets/blocks/walls/tall_diagonal_wall.tscn" id="2_j1v08"]
 [ext_resource type="PackedScene" uid="uid://8mjs78vkeleb" path="res://assets/blocks/walls/tall_wall.tscn" id="3_18buk"]
 [ext_resource type="PackedScene" uid="uid://lq13suvwdu6g" path="res://assets/blocks/walls/flat_wall.tscn" id="3_lx7hu"]
 [ext_resource type="PackedScene" uid="uid://ccfnlmu6xnhxg" path="res://ui/editor/cameras/tall_side_slant_cam.tscn" id="4_v4u3u"]
+[ext_resource type="ArrayMesh" uid="uid://bf6hiaub2ecc7" path="res://assets/meshes/platforms/ramp.tres" id="5_vmhi2"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2xbcn"]
-points = PackedVector3Array(-5, -0.5, -5, -5, 0.499608, -5, 5, -0.5, -5, -5, -0.5, 5, -5, 0.499608, 5, 5, 5.5, -5, 5, -0.5, 5, 5, 5.5, 5)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_im65t"]
+points = PackedVector3Array(-5, -0.5, -5, -5, 0.499706, -5, 5, -0.5, -5, -5, -0.5, 5, -5, 0.499706, 5, 5, 3, -5, 5, -0.5, 5, 5, 3, 5)
 
 [node name="platform_ramp" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
 collision_mask = 0
@@ -25,9 +25,10 @@ south_wall_scene = ExtResource("3_lx7hu")
 south_wall_transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
 
 [node name="mesh" type="MeshInstance3D" parent="."]
-mesh = ExtResource("2_q044q")
+mesh = ExtResource("5_vmhi2")
 
 [node name="collision" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_2xbcn")
+visible = false
+shape = SubResource("ConvexPolygonShape3D_im65t")
 
 [node name="camera" parent="." instance=ExtResource("4_v4u3u")]
