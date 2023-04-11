@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DirRes" load_steps=46 format=3 uid="uid://cv6atg1k70igk"]
+[gd_resource type="Resource" script_class="DirRes" load_steps=48 format=3 uid="uid://cv6atg1k70igk"]
 
 [ext_resource type="PackedScene" uid="uid://cy2ialm17md6c" path="res://assets/blocks/ring_start.tscn" id="1_obh5s"]
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="2_vbck3"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://ct733wlw6osxl" path="res://assets/blocks/platform_booster.tscn" id="15_22aj3"]
 [ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="15_a3etn"]
 [ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="16_aluwl"]
+[ext_resource type="PackedScene" uid="uid://bawi544gebahm" path="res://assets/blocks/platform_wide_turn.tscn" id="16_gv373"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="17_slejy"]
 [ext_resource type="Material" uid="uid://dd3673p284fqe" path="res://assets/mats/wall.tres" id="18_osy7q"]
 [ext_resource type="PackedScene" uid="uid://d2nwkpdn3gnx3" path="res://assets/blocks/tree.tscn" id="19_vck13"]
@@ -117,10 +118,16 @@ script = ExtResource("2_vbck3")
 scene = ExtResource("15_22aj3")
 description = "Forces the car in a direction with moderate force"
 
+[sub_resource type="Resource" id="Resource_avoux"]
+resource_name = "wide turn"
+script = ExtResource("2_vbck3")
+scene = ExtResource("16_gv373")
+description = "A wide turn."
+
 [sub_resource type="Resource" id="Resource_xovbr"]
 resource_name = "platform"
 script = ExtResource("3_5we13")
-files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_4d15v"), SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_ycvki"), SubResource("Resource_1w0pw"), SubResource("Resource_5ko53"), SubResource("Resource_hk5rh"), SubResource("Resource_l415k")])
+files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_4d15v"), SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_ycvki"), SubResource("Resource_1w0pw"), SubResource("Resource_5ko53"), SubResource("Resource_hk5rh"), SubResource("Resource_l415k"), SubResource("Resource_avoux")])
 description = "Platforms (you can add barriers with the wall tool)"
 
 [sub_resource type="Resource" id="Resource_ax7gx"]
