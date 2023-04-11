@@ -27,6 +27,7 @@ func init(t: TrackResource, g: GhostData) -> void:
 		%time.text = "no time set"
 	else:
 		%time.text = GameTimer.format_precise(g.time)
+	builtin = t.builtin
 	var p: String = Globals.THUMBS % t.name
 	var tex := Thumbnail._load(p, Thumbnail.hash_b(t.bytes()), false)
 	if tex == null:

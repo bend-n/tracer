@@ -18,16 +18,17 @@ var selected: Array[TrackObject]:
 var snapping := true
 var objects: Array[TrackObject] = []
 var history := UndoRedo.new()
+var track: TrackResource
 signal make_gizmo(mode: Mode)
 signal selection_changed(objects: Array[TrackObject])
 
 const loader := preload("res://scenes/track.tscn")
 
 func _ready() -> void:
-	var data := Globals.editing if Globals.editing else TrackResource.new([])
+	track = Globals.editing if Globals.editing else TrackResource.new([])
 	var l: TrackLoader = loader.instantiate()
 	l.editor = true
-	l.track = data
+	l.track = track
 	add_child(l)
 	# move over the loaders children
 	for c in l.get_children():
@@ -35,12 +36,12 @@ func _ready() -> void:
 		%port.add_child(c)
 	# the loader has loaded, get rid of it
 	l.queue_free()
-	objects = data.blocks # please be reference
-	%propertys.name_.text = data.name
-	%propertys.laps_.value = data.laps
-	%cam.global_transform = IntroCam.get_origin(data) # put the camera up high, looking straight down
+	objects = track.blocks # not a reference - if not saved, will be lost
+	%propertys.name_.text = track.name
+	%propertys.laps_.value = track.laps
+	%cam.global_transform = IntroCam.get_origin(track) # put the camera up high, looking straight down
 
-	if not FileAccess.file_exists(Globals.TRACKS % data.name):
+	if not FileAccess.file_exists(Globals.TRACKS % track.name) and not track.builtin:
 		%save.unsaved = true
 
 	group.pressed.connect(pressed)
@@ -69,12 +70,12 @@ func _on_mousecast_hit(colls: Array[Block]) -> void:
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	snapping = button_pressed
 
-func to_trackdata() -> TrackResource:
+func get_trackdata() -> TrackResource:
 	objects = objects.filter(func(o: TrackObject): return is_instance_valid(o.live_node))
-	var data := TrackResource.new(objects)
-	data.name = %propertys.name_.text
-	data.laps = %propertys.laps_.value
-	return data
+	track.blocks = objects
+	track.name = %propertys.name_.text
+	track.laps = %propertys.laps_.value
+	return track
 
 func _on_item_created(object: TrackObject) -> void:
 	objects.append(object)

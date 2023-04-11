@@ -16,6 +16,8 @@ class_name TrackResource
 ## Num laps, 1 = go to finish and done
 @export var laps := 1
 
+var builtin := false # i could (should) use class overrides and stuff but im tired
+
 ## should look something like:
 ## [codeblock]
 ## [
@@ -67,7 +69,10 @@ func to_d() -> Dictionary:
 	}
 
 func save(path: String) -> void:
-	GhostData._save_file(path, to_d())
+	if builtin:
+		BuiltinTrackSelect.store_all()
+	else:
+		GhostData._save_file(path, to_d())
 
 func get_aabb() -> AABB:
 	var box := AABB()

@@ -2,6 +2,7 @@ extends TrackSelect
 class_name TrackEditorList
 
 @export var other: BuiltinTrackSelect
+var tracks: Array[TrackResource] = []
 
 func _ready() -> void:
 	if not DirAccess.dir_exists_absolute(Globals.TRACKS.get_base_dir()):
@@ -12,8 +13,7 @@ func _ready() -> void:
 	while !item.is_empty():
 		tracks.append(TrackResource._load(Globals.TRACKS.get_base_dir().path_join(item)))
 		item = d.get_next()
-	if get_child_count() > 0:
-		(get_child(0) as TrackButton).button.grab_focus()
+	mkbuttons(tracks)
 	super()
 
 func _on_mkbutton(b: TrackButton, t: TrackResource) -> void:

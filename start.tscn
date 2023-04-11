@@ -48,8 +48,7 @@ theme_override_constants/v_separation = 15
 columns = 5
 script = ExtResource("2_po2ce")
 editable = false
-builtin = true
-metadata/_edit_pinned_properties_ = [&"editable", &"builtin"]
+metadata/_edit_pinned_properties_ = [&"editable"]
 
 [node name="create" type="VBoxContainer" parent="margin/tabs"]
 visible = false

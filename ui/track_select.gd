@@ -6,12 +6,9 @@ class_name TrackSelect
 @export var ghost_watch: PackedScene = preload("res://scenes/ghost_watcher.tscn")
 @export var trackbutton: PackedScene = preload("res://ui/track_button.tscn")
 @export var editable := false
-@export var builtin := false
 @onready var dev = DirAccess.dir_exists_absolute("res://.git")
-var tracks: Array[TrackResource]
 
 func _ready() -> void:
-	mkbuttons()
 	if get_child_count() > 0:
 		(get_child(0) as TrackButton).button.grab_focus()
 
@@ -22,7 +19,6 @@ func _on_mkbutton(_button: TrackButton, _track: TrackResource) -> void:
 func mkbutton(track: TrackResource) -> void:
 	var button := trackbutton.instantiate() as TrackButton
 	button.editable = editable
-	button.builtin = builtin
 	button.dev = dev
 	button.name = track.name
 	add_child(button)
@@ -35,7 +31,7 @@ func mkbutton(track: TrackResource) -> void:
 	button.edit.connect(edit.bind(track))
 	_on_mkbutton(button, track)
 
-func mkbuttons() -> void:
+func mkbuttons(tracks: Array[TrackResource]) -> void:
 	for track in tracks:
 		mkbutton(track)
 
@@ -62,9 +58,8 @@ func add_to_main(p: PackedScene) -> void:
 	get_viewport().add_child(c)
 	c.tree_exited.connect(owner.show)
 
-func delete(track: TrackResource):
+static func delete(track: TrackResource):
 #	OS.move_to_trash(Globals.TRACKS % track.name)
 	DirAccess.remove_absolute(Globals.TRACKS % track.name)
 	if FileAccess.file_exists(Globals.THUMBS % track.name):
 		DirAccess.remove_absolute(Globals.THUMBS % track.name)
-	tracks.erase(track)
