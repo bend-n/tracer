@@ -46,7 +46,7 @@ func _physics_process(_delta: float) -> void:
 			hit.emit(selection)
 			return
 		for obj in editor.objects:
-			var origin := obj.transform.origin
+			var origin := obj.live_node.transform.origin
 			if c.is_position_behind(origin) || c.global_position.distance_squared_to(origin) > 40000:
 				continue
 			var point := c.unproject_position(origin)

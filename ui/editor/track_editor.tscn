@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://0x720q7tnsj0"]
+[gd_scene load_steps=55 format=3 uid="uid://0x720q7tnsj0"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" path="res://ui/editor/hatch.gd" id="17_ugqw3"]
 [ext_resource type="Script" path="res://ui/editor/mousecast.gd" id="19_hmpi3"]
 [ext_resource type="Shader" path="res://ui/editor/selection.gdshader" id="22_sij02"]
+[ext_resource type="AudioStream" uid="uid://bvtxqrhkbai7x" path="res://assets/sounds/plonk.ogg" id="25_hegbs"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_8ix4j"]
 device = -1
@@ -425,7 +426,7 @@ script = ExtResource("17_ugqw3")
 unique_name_in_owner = true
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(250, 250)
+size = Vector2i(1067, 1010)
 render_target_update_mode = 4
 script = ExtResource("7_ftio3")
 
@@ -463,6 +464,12 @@ layout_mode = 2
 [node name="wall" parent="split/split2/right dock/panel/panelinner/inspector" node_paths=PackedStringArray("editor") instance=ExtResource("16_6ojvx")]
 layout_mode = 2
 editor = NodePath("../../../../../../..")
+
+[node name="thonk" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("25_hegbs")
+volume_db = -14.0
+max_polyphony = 2
 
 [connection signal="make_gizmo" from="." to="split/split2/middle dock/viewport/view/port" method="update_gizmo"]
 [connection signal="selection_changed" from="." to="split/split2/middle dock/buttons/container/delete" method="_on_selection_changed"]

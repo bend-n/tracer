@@ -82,6 +82,8 @@ func _on_item_created(object: TrackObject) -> void:
 		for block in objects:
 			if block.live_node is Booster:
 				block.live_node.sync()
+	%thonk.pitch_scale = randf_range(.9, 1.2)
+	%thonk.play()
 
 func tobj_from_node(node: Block) -> TrackObject:
 	for o in objects:
