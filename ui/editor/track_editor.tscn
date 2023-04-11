@@ -426,7 +426,7 @@ script = ExtResource("17_ugqw3")
 unique_name_in_owner = true
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(1067, 1010)
+size = Vector2i(250, 250)
 render_target_update_mode = 4
 script = ExtResource("7_ftio3")
 

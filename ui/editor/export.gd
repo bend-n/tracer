@@ -11,20 +11,7 @@ func _pressed() -> void:
 static func td2s(td: TrackResource) -> String:
 	var buf := var_to_bytes(td.to_d())
 	var buf_c := buf.compress(FileAccess.COMPRESSION_DEFLATE)
-	return "%s|%s" % [Marshalls.raw_to_base64(buf_c), int2hex(buf.size())]
-
-static func int2hex(num: int) -> String:
-	var s := "       "
-	for i in range(7, 0, -1):
-		var digit := num & 0x0F
-		var ch := digit + 48
-		if ch > 57:
-			ch += 7
-		s[i-1] = char(ch)
-		num >>= 4
-		i -= 1
-	s = s.lstrip('0')
-	return s
+	return "%s|%s" % [Marshalls.raw_to_base64(buf_c), String.num_uint64(buf.size(), 16)]
 
 static func s2td(s: String) -> TrackResource:
 	var split := s.lstrip('`').rstrip('`').strip_edges().split("|", false, 1)
