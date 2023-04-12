@@ -53,3 +53,4 @@ func count_in():
 	var countdown := countdown_scene.instantiate()
 	huds[0].add_child(countdown)
 	countdown.finished.connect(race.start)
+	countdown.finished.connect(countdown.queue_free)
