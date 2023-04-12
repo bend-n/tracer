@@ -17,6 +17,7 @@ func _ready() -> void:
 	super()
 
 func _on_mkbutton(b: TrackButton, t: TrackResource) -> void:
+	@warning_ignore("static_called_on_instance")
 	b.include.connect(func(): other.add(t); delete(t); b.queue_free())
 
 func _on_new_pressed() -> void:
@@ -27,7 +28,8 @@ func _on_new_pressed() -> void:
 	var nam := "untitled track %d" % n if n != 0 else "untitled track"
 	res.name = nam
 	edit(res)
-	# TODO: mkbutton and stuff
+	tracks.append(res)
+	mkbutton(res)
 
 func _on_import_import(p_track: TrackResource) -> void:
 	for track in tracks:

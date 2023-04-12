@@ -22,23 +22,30 @@ func _ready() -> void:
 
 func init(t: TrackResource, g: GhostData) -> void:
 	%name.text = t.name
+	t.name_changed.connect(func(n: String): %name.text = n)
 	if g == null:
 		%watch.hide()
 		%time.text = "no time set"
 	else:
 		%time.text = GameTimer.format_precise(g.time)
 	builtin = t.builtin
-	var p: String = Globals.THUMBS % t.name
-	var tex := Thumbnail._load(p, Thumbnail.hash_b(t.bytes()), false)
+	var tex := Thumbnail._load(Globals.THUMBS % t.name, Thumbnail.hash_b(t.bytes()), false)
 	if tex == null:
-		var trackloader: TrackLoader = trackloader_scn.instantiate()
-		trackloader.track = t
-		trackloader.add_child(IntroCam.new(t, null))
-		tex = await Thumbnail.create_thumb(self, trackloader, Vector2i(450, 200))
-		var e := Thumbnail.save(tex, p, Thumbnail.hash_b(t.bytes()))
-		if e != OK:
-			push_error("saving thumbnail failed with error %d" % e)
+		tex = await mkthumb(t)
 	(%thumb as TextureRect).texture = ImageTexture.create_from_image(tex)
+	# update thumb on savea
+	t.saved.connect(func(): print("update thumb!"); (%thumb as TextureRect).texture = ImageTexture.create_from_image(await mkthumb(t)))
+
+func mkthumb(t: TrackResource) -> Image:
+	var p: String = Globals.THUMBS % t.name
+	var trackloader: TrackLoader = trackloader_scn.instantiate()
+	trackloader.track = t
+	trackloader.add_child(IntroCam.new(t, null))
+	var tex := await Thumbnail.create_thumb(self, trackloader, Vector2i(450, 200))
+	var e := Thumbnail.save(tex, p, Thumbnail.hash_b(t.bytes()))
+	if e != OK:
+		push_error("saving thumbnail failed with error %d" % e)
+	return tex
 
 
 func _on_delete_pressed() -> void:

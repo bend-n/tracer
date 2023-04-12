@@ -9,7 +9,11 @@ class_name TrackResource
 ## The height of the overview cam
 @export var overview_height := 300.0
 ## The name of this track
-@export var name: String = ""
+@export var name: String = "":
+	set(n):
+		if name != n:
+			name = n
+			name_changed.emit(name)
 ## Offset the entire track
 @export var offset := Vector3.UP
 @export_group("Race")
@@ -17,6 +21,9 @@ class_name TrackResource
 @export var laps := 1
 
 var builtin := false # i could (should) use class overrides and stuff but im tired
+
+signal name_changed(name: String)
+signal saved
 
 ## should look something like:
 ## [codeblock]
@@ -73,6 +80,7 @@ func save(path: String) -> void:
 		BuiltinTrackSelect.store_all()
 	else:
 		GhostData._save_file(path, to_d())
+	saved.emit()
 
 func get_aabb() -> AABB:
 	var box := AABB()

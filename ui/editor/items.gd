@@ -59,8 +59,6 @@ func open_dir(dir: DirRes):
 			needing_thumbs.append([i, file, thumb[-1]])
 		set_item_tooltip(add_item(file.resource_name, thumb[0]), file.description)
 	if thread.is_started():
-		while thread.is_alive():
-			await Engine.get_main_loop().process_frame
 		thread.wait_to_finish()
 	thread.start(func():
 		for need in needing_thumbs:
@@ -81,7 +79,7 @@ func open_dir(dir: DirRes):
 						push_error("err when thumbnailing %s: %d" % [file.resource_name, e])
 					if item_count > need[0]: # may have switched dirs
 						set_item_icon(need[0], ImageTexture.create_from_image(t))
-	)
+	, Thread.PRIORITY_LOW)
 
 func _get_drag_data(at_position: Vector2) -> Variant:
 	var index := get_item_at_position(at_position)
@@ -107,3 +105,7 @@ func make_drag_preview(textures: Array[Texture2D]) -> Control:
 			preview.over_viewport()
 		, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	return preview
+
+
+func _on_tree_exiting() -> void:
+	thread.wait_to_finish()
