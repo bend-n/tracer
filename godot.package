@@ -1,3 +1,4 @@
 [packages]
 "@bendn/gizmo3d" = '1.0.2'
 "@bendn/splitter" = '1.0.6'
+"@bendn/enginesound" = '1.0.0'

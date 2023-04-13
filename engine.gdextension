@@ -1,6 +1,6 @@
 [configuration]
-entry_symbol = "gdextension_rust_init"
+entry_symbol = "gdext_rust_init"
 
 [libraries]
-linux.release.x86_64 = "res://enginesound/target/release/libenginesound.so"
-linux.debug.x86_64 = "res://enginesound/target/release/libenginesound.so"
+linux.release.x86_64 = "res://addons/@bendn/enginesound/libenginesound.so"
+linux.debug.x86_64 = "res://addons/@bendn/enginesound/libenginesound.so"

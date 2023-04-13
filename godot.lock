@@ -1,5 +1,10 @@
 [
   {
+    "name": "@bendn/enginesound",
+    "tarball": "https://registry.npmjs.org/@bendn/enginesound/-/enginesound-1.0.0.tgz",
+    "version": "1.0.0"
+  },
+  {
     "name": "@bendn/gizmo3d",
     "tarball": "https://registry.npmjs.org/@bendn/gizmo3d/-/gizmo3d-1.0.2.tgz",
     "version": "1.0.2"

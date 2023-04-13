@@ -3,7 +3,7 @@ class_name GhostCar
 
 @onready var wheels: Array[Node3D] = [$bl as Node3D, $br as Node3D, $fr as Node3D, $fl as Node3D]
 @onready var body_mesh: MeshInstance3D = $body
-@onready var engine: AudioStreamPlayer3D = $Engine
+@onready var engine: EngineNoise = $Engine
 
 const trail_scene = preload("res://scenes/trail.tscn")
 const inactive = {active = false};
