@@ -18,10 +18,9 @@ func _load():
 
 func add(t: TrackResource):
 	var file := FileAccess.open("res://tracks.cfg", FileAccess.READ_WRITE)
-	file.store_line(EditorMarshalling.td2s(t))
-	file.close()
 	mkbutton(t)
 	Globals.builtin_tracks.append(t)
+	store_all()
 
 static func delete(t: TrackResource):
 	Globals.builtin_tracks.erase(t)

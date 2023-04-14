@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c157wew5y33bo"]
+[gd_scene load_steps=24 format=3 uid="uid://c157wew5y33bo"]
 
 [ext_resource type="Script" path="res://classes/car.gd" id="1_pdccm"]
 [ext_resource type="Material" uid="uid://b6d4vebgc2y88" path="res://assets/cars/kenney_sedan/red_paint.tres" id="2_luxc5"]
@@ -10,7 +10,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hs0do"]
 friction = 0.7
-bounce = 0.7
+bounce = 0.09
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8bpd4"]
 resource_name = "plastic"
@@ -323,8 +323,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8qmjc")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_cknfd"]
-size = Vector3(2.9, 2.1, 5.5)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uyq1o"]
+radius = 0.845291
+height = 5.12084
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mkjgy"]
+size = Vector3(2.353, 3.44463, 1)
 
 [node name="Sedan" type="VehicleBody3D"]
 collision_layer = 2
@@ -334,6 +338,7 @@ center_of_mass_mode = 1
 center_of_mass = Vector3(0, 0.3, 0)
 physics_material_override = SubResource("PhysicsMaterial_hs0do")
 gravity_scale = 3.0
+continuous_cd = true
 max_contacts_reported = 4
 contact_monitor = true
 can_sleep = false
@@ -425,10 +430,6 @@ skeleton = NodePath("")
 
 [node name="particles" parent="fr" instance=ExtResource("4_axi2x")]
 
-[node name="Coll" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48339, 0)
-shape = SubResource("BoxShape3D_cknfd")
-
 [node name="Engine" parent="." instance=ExtResource("4_gseqg")]
 
 [node name="Gearbox" type="Node3D" parent="."]
@@ -441,5 +442,13 @@ volume_db = -25.0
 [node name="checkpoint" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_stkh0")
 volume_db = -10.0
+
+[node name="coll1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.25229, 0)
+shape = SubResource("CapsuleShape3D_uyq1o")
+
+[node name="coll2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.01516, 0.558206)
+shape = SubResource("BoxShape3D_mkjgy")
 
 [connection signal="shifted" from="." to="Gearbox" method="_on_sedan_shifted"]

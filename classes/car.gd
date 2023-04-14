@@ -57,6 +57,8 @@ func reset() -> void:
 	gear_timer = 0
 	clutch_position = 0
 	steering = 0
+	angular_damp = 0
+	linear_damp = 0
 	throttle = 0
 	engine_force = 0
 	brake = MAX_BRAKE_FORCE
