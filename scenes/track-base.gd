@@ -16,7 +16,8 @@ func update():
 	ground.global_position = track.offset
 	for block in track.blocks:
 		var node: Block = block.create(editor)
-		block.set_live(node)
+		if editor:
+			block.set_live(node)
 		add_child(node)
 		if not editor:
 			if node is CheckPoint:

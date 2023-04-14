@@ -64,5 +64,14 @@ func dup() -> TrackObject:
 	tobj.walls = walls
 	return tobj
 
+func name() -> String:
+	if link:
+		return link.resource_name
+	if is_instance_valid(live_node):
+		return live_node.name
+	if base_scene:
+		return base_scene.resource_path.get_file().get_basename()
+	return "unnamed"
+
 func _to_string() -> String:
-	return "TrackObject<%s>" % link.resource_name
+	return "TrackObject<%s>" % name()

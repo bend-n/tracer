@@ -89,7 +89,6 @@ func reset() -> void:
 	data.clear()
 	timer.reset()
 	did_reset.emit()
-	print("did reset!")
 
 func connect_checkpoints() -> void:
 	for i in len(track.checkpoints):

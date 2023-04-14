@@ -32,9 +32,9 @@ func init(t: TrackResource, g: GhostData) -> void:
 	var tex := Thumbnail._load(Globals.THUMBS % t.name, Thumbnail.hash_b(t.bytes()), false)
 	if tex == null:
 		tex = await mkthumb(t)
-	(%thumb as TextureRect).texture = ImageTexture.create_from_image(tex)
-	# update thumb on savea
-	t.saved.connect(func(): print("update thumb!"); (%thumb as TextureRect).texture = ImageTexture.create_from_image(await mkthumb(t)))
+	%thumb.texture = ImageTexture.create_from_image(tex)
+	# update thumb on save
+	t.saved.connect(func(): %thumb.texture = ImageTexture.create_from_image(await mkthumb(t)))
 
 func mkthumb(t: TrackResource) -> Image:
 	var p: String = Globals.THUMBS % t.name
@@ -46,7 +46,6 @@ func mkthumb(t: TrackResource) -> Image:
 	if e != OK:
 		push_error("saving thumbnail failed with error %d" % e)
 	return tex
-
 
 func _on_delete_pressed() -> void:
 	var dialog := ConfirmationDialog.new()
