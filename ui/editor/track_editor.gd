@@ -36,7 +36,7 @@ func _ready() -> void:
 		%port.add_child(c)
 	# the loader has loaded, get rid of it
 	l.queue_free()
-	objects = track.blocks # not a reference - if not saved, will be lost
+	objects = track.blocks.duplicate() # duplicate: if not saved, will be lost
 	%propertys.name_.text = track.name
 	%propertys.laps_.value = track.laps
 	%cam.global_transform = IntroCam.get_origin(track) # put the camera up high, looking straight down
@@ -72,7 +72,7 @@ func _on_snapping_toggled(button_pressed: bool) -> void:
 
 func get_trackdata() -> TrackResource:
 	objects = objects.filter(func(o: TrackObject): return is_instance_valid(o.live_node))
-	track.blocks = objects
+	track.blocks = objects.duplicate()
 	track.name = %propertys.name_.text
 	track.laps = %propertys.laps_.value
 	return track
