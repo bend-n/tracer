@@ -7,26 +7,23 @@ func _ready() -> void:
 	super()
 
 func _load():
-	var file := FileAccess.open("res://tracks.cfg", FileAccess.READ)
-	while !file.eof_reached():
-		var line := file.get_line()
-		if line == "!" || line.is_empty():
-			return
-		var t := EditorMarshalling.s2td(line)
-		t.builtin = true
-		Globals.builtin_tracks.append(t)
+	var str := FileAccess.get_file_as_string("res://tracks.cfg")
+	var tracks: Array = str_to_var(str)
+	for track in tracks:
+		var loaded := TrackResource.from_d(track)
+		loaded.builtin = true
+		Globals.builtin_tracks.append(loaded)
 
 func add(t: TrackResource):
-	var file := FileAccess.open("res://tracks.cfg", FileAccess.READ_WRITE)
 	mkbutton(t)
 	Globals.builtin_tracks.append(t)
-	store_all()
+	BuiltinTrackSelect.store_all()
 
 static func delete(t: TrackResource):
 	Globals.builtin_tracks.erase(t)
-	store_all()
+	BuiltinTrackSelect.store_all()
 
 static func store_all():
+	var arr: Array = Globals.builtin_tracks.map(func(t: TrackResource) -> Dictionary: return t.to_d())
 	var file := FileAccess.open("res://tracks.cfg", FileAccess.WRITE)
-	for t in Globals.builtin_tracks:
-		file.store_line(EditorMarshalling.td2s(t))
+	file.store_string(var_to_str(arr))
