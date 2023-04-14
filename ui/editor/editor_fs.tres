@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DirRes" load_steps=48 format=3 uid="uid://cv6atg1k70igk"]
+[gd_resource type="Resource" script_class="DirRes" load_steps=50 format=3 uid="uid://qxacdpu7fkgb"]
 
 [ext_resource type="PackedScene" uid="uid://cy2ialm17md6c" path="res://assets/blocks/ring_start.tscn" id="1_obh5s"]
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="2_vbck3"]
@@ -11,13 +11,14 @@
 [ext_resource type="PackedScene" uid="uid://cb70byabne8d" path="res://assets/blocks/platform_poke.tscn" id="9_lc43u"]
 [ext_resource type="PackedScene" uid="uid://ci24eqfa38cy4" path="res://assets/blocks/platform_ramp.tscn" id="10_f1l1g"]
 [ext_resource type="PackedScene" uid="uid://cotdon210bw6c" path="res://assets/blocks/platform_square.tscn" id="12_aumqd"]
-[ext_resource type="PackedScene" uid="uid://dtmmpkwtlvovq" path="res://assets/blocks/platform_turn.tscn" id="13_gt2n1"]
+[ext_resource type="PackedScene" uid="uid://dtmmpkwtlvovq" path="res://assets/blocks/platform_turn_1x1.tscn" id="13_niuro"]
 [ext_resource type="PackedScene" uid="uid://c7xxrp8ml2ku1" path="res://assets/blocks/platform_x.tscn" id="14_nfuay"]
 [ext_resource type="PackedScene" uid="uid://bs7iubbwrs78d" path="res://assets/blocks/platform_poke_corner.tscn" id="15_5g7y2"]
 [ext_resource type="PackedScene" uid="uid://ct733wlw6osxl" path="res://assets/blocks/platform_booster.tscn" id="15_22aj3"]
 [ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="15_a3etn"]
 [ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="16_aluwl"]
-[ext_resource type="PackedScene" uid="uid://bawi544gebahm" path="res://assets/blocks/platform_wide_turn.tscn" id="16_gv373"]
+[ext_resource type="PackedScene" uid="uid://bawi544gebahm" path="res://assets/blocks/platform_turn_3x3.tscn" id="16_sarxg"]
+[ext_resource type="PackedScene" uid="uid://dqxgxdxibvabe" path="res://assets/blocks/platform_turn_2x2.tscn" id="17_3cq3g"]
 [ext_resource type="Material" uid="uid://be8pta62kxd2j" path="res://assets/mats/road.tres" id="17_slejy"]
 [ext_resource type="Material" uid="uid://dd3673p284fqe" path="res://assets/mats/wall.tres" id="18_osy7q"]
 [ext_resource type="PackedScene" uid="uid://d2nwkpdn3gnx3" path="res://assets/blocks/tree.tscn" id="19_vck13"]
@@ -101,9 +102,9 @@ scene = ExtResource("10_f1l1g")
 description = "Like the diagonal piece, but with a base."
 
 [sub_resource type="Resource" id="Resource_5ko53"]
-resource_name = "turn"
+resource_name = "1x1 turn"
 script = ExtResource("2_vbck3")
-scene = ExtResource("13_gt2n1")
+scene = ExtResource("13_niuro")
 description = "Smooth turn"
 
 [sub_resource type="Resource" id="Resource_hk5rh"]
@@ -119,15 +120,21 @@ scene = ExtResource("15_22aj3")
 description = "Forces the car in a direction with moderate force"
 
 [sub_resource type="Resource" id="Resource_avoux"]
-resource_name = "wide turn"
+resource_name = "3x3 turn"
 script = ExtResource("2_vbck3")
-scene = ExtResource("16_gv373")
+scene = ExtResource("16_sarxg")
 description = "A wide turn."
+
+[sub_resource type="Resource" id="Resource_lc4fe"]
+resource_name = "2x2 turn"
+script = ExtResource("2_vbck3")
+scene = ExtResource("17_3cq3g")
+description = "A slightly wide turn."
 
 [sub_resource type="Resource" id="Resource_xovbr"]
 resource_name = "platform"
 script = ExtResource("3_5we13")
-files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_4d15v"), SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_ycvki"), SubResource("Resource_1w0pw"), SubResource("Resource_5ko53"), SubResource("Resource_hk5rh"), SubResource("Resource_l415k"), SubResource("Resource_avoux")])
+files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_4d15v"), SubResource("Resource_wrtlo"), SubResource("Resource_oxmos"), SubResource("Resource_l3v8g"), SubResource("Resource_ub3e2"), SubResource("Resource_ycvki"), SubResource("Resource_1w0pw"), SubResource("Resource_5ko53"), SubResource("Resource_hk5rh"), SubResource("Resource_l415k"), SubResource("Resource_avoux"), SubResource("Resource_lc4fe")])
 description = "Platforms (you can add barriers with the wall tool)"
 
 [sub_resource type="Resource" id="Resource_ax7gx"]
