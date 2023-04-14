@@ -108,4 +108,5 @@ func make_drag_preview(textures: Array[Texture2D]) -> Control:
 
 
 func _on_tree_exiting() -> void:
-	thread.wait_to_finish()
+	if thread.is_started():
+		thread.wait_to_finish()
