@@ -1,4 +1,0 @@
-#!/bin/bash
-
-mkdir .godot || true
-python init_classes.py > .godot/global_script_class_cache.cfg
