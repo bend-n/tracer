@@ -89,7 +89,7 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	set_drag_preview(make_drag_preview([get_item_icon(index)]))
 	match f.type:
 		WeakLink.Type.Scene:
-			var objects: Array[TrackObject] = [TrackObject.new(f.scene, null, f)]
+			var objects: Array[TrackObject] = [TrackObject.new(BlockMap.find(f.scene), null, f)]
 			return objects
 		WeakLink.Type.Material:
 			return f

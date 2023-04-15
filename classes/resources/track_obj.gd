@@ -1,14 +1,14 @@
 extends Resource
 class_name TrackObject
 
-var base_scene: PackedScene
+var base_scene: int = -1
 var live_node: Block
 var material: int
 var walls: int
 var transform: Transform3D
 var link: WeakLink
 
-func _init(p_base: PackedScene, p_live: Node, p_link: WeakLink) -> void:
+func _init(p_base: int, p_live: Node, p_link: WeakLink) -> void:
 	link = p_link
 	base_scene = p_base
 	set_live(p_live)
@@ -17,13 +17,13 @@ func exprt() -> Dictionary:
 	save()
 	return {
 		m = material,
-		b = base_scene.resource_path,
+		b = base_scene,
 		t = transform,
 		w = walls,
 	}
 
 static func from_d(d: Dictionary) -> TrackObject:
-	var o := TrackObject.new(load(d.b), null, null)
+	var o := TrackObject.new(d.b, null, null)
 	o.material = d.get("m", 0)
 	o.transform = d.t
 	o.walls = d.w
@@ -49,9 +49,7 @@ func set_live(p_live: Block):
 
 ## @constant
 func create(is_editor := false) -> Node3D:
-	var node: Block = base_scene.instantiate()
-#	if not node is Decoration:
-#		node.mesh.set_surface_override_material(0, material)
+	var node: Block = BlockMap.map[base_scene].instantiate()
 	node.editor = is_editor
 	node.global_transform = transform
 	node.ready.connect(node.make_walls.bind(walls))
@@ -73,8 +71,8 @@ func name() -> String:
 		return link.resource_name
 	if is_instance_valid(live_node):
 		return live_node.name
-	if base_scene:
-		return base_scene.resource_path.get_file().get_basename()
+	if base_scene != -1:
+		return BlockMap.map[base_scene].resource_path.get_file().get_basename()
 	return "unnamed"
 
 func _to_string() -> String:
