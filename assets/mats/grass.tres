@@ -7,5 +7,5 @@ albedo_texture = ExtResource("1_2pspn")
 emission = Color(0, 0.0745098, 0.219608, 1)
 emission_energy_multiplier = 16.0
 ao_light_affect = 0.33
-uv1_scale = Vector3(100, 100, 100)
+uv1_scale = Vector3(5, 5, 5)
 texture_filter = 0
