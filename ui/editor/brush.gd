@@ -1,4 +1,5 @@
 extends MultiButton
+class_name Brush
 
 @onready var brush: TextureRect = $brush
 @onready var outline: TextureRect = $outline

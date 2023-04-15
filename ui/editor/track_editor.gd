@@ -2,6 +2,7 @@ extends PanelContainer
 class_name TrackEditor
 
 @export var group: ButtonGroup
+@onready var brush := %brush
 
 enum Mode { Select, Move, Rotate, Scale }
 var mode: Mode
@@ -62,13 +63,19 @@ func reset_selected() -> void:
 func _on_mousecast_hit(colls: Array[Block]) -> void:
 	var new_selected: Array[TrackObject] = []
 	new_selected.resize(colls.size())
+	var painting: bool = brush.button_pressed and not colls.is_empty()
+	if painting:
+		history.create_action("paint")
 	for i in len(colls):
 		new_selected[i] = tobj_from_node(colls[i])
-		if %brush.button_pressed and colls[i].materials_allowed() & %brush.mat:
-			colls[i].set_mat(%brush.mat)
+		if painting and colls[i].materials_allowed() & brush.mat:
+			history.add_do_method(colls[i].set_mat.bind(brush.mat))
+			history.add_undo_method(colls[i].set_mat.bind(colls[i].mat))
 		assert(new_selected[i]!=null, "%s was not found" % [colls[i]])
-	if not %brush.button_pressed:
+	if not brush.button_pressed:
 		selected = new_selected
+	if painting:
+		history.commit_action()
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	snapping = button_pressed
@@ -103,7 +110,13 @@ func _on_remove_tobj(tobj: TrackObject) -> void:
 
 func _on_brush_toggled(on: bool) -> void:
 	if on:
+		var painting: bool = brush.button_pressed and not selected.is_empty()
+		if painting:
+			history.create_action("paint")
 		for o in selected:
-			if o.live_node.materials_allowed() & %brush.mat:
-				o.live_node.set_mat(%brush.mat)
+			if painting and o.live_node.materials_allowed() & brush.mat:
+				history.add_do_method(o.live_node.set_mat.bind(brush.mat))
+				history.add_undo_method(o.live_node.set_mat.bind(o.live_node.mat))
+		if painting:
+			history.commit_action()
 		reset_selected()

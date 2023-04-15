@@ -85,4 +85,3 @@ func has_walls(w := WALL_W | WALL_E | WALL_N | WALL_S, singular := false) -> int
 func materials_allowed() -> int: return 0
 func default_mat() -> int: return 0
 func set_mat(_mat_id: int) -> void: pass
-func get_mat() -> int: return 0
