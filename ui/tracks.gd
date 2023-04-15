@@ -7,8 +7,7 @@ func _ready() -> void:
 	super()
 
 func _load():
-	var str := FileAccess.get_file_as_string("res://tracks.cfg")
-	var tracks: Array = str_to_var(str)
+	var tracks: Array = str_to_var(FileAccess.get_file_as_string("res://tracks.cfg"))
 	for track in tracks:
 		var loaded := TrackResource.from_d(track)
 		loaded.builtin = true

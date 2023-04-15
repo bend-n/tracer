@@ -64,8 +64,11 @@ func _on_mousecast_hit(colls: Array[Block]) -> void:
 	new_selected.resize(colls.size())
 	for i in len(colls):
 		new_selected[i] = tobj_from_node(colls[i])
+		if %brush.button_pressed and colls[i].materials_allowed() & %brush.mat:
+			colls[i].set_mat(%brush.mat)
 		assert(new_selected[i]!=null, "%s was not found" % [colls[i]])
-	selected = new_selected
+	if not %brush.button_pressed:
+		selected = new_selected
 
 func _on_snapping_toggled(button_pressed: bool) -> void:
 	snapping = button_pressed
@@ -97,3 +100,10 @@ func _on_delete_pressed() -> void:
 
 func _on_remove_tobj(tobj: TrackObject) -> void:
 	objects.erase(tobj)
+
+func _on_brush_toggled(on: bool) -> void:
+	if on:
+		for o in selected:
+			if o.live_node.materials_allowed() & %brush.mat:
+				o.live_node.set_mat(%brush.mat)
+		reset_selected()

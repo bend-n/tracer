@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://0x720q7tnsj0"]
+[gd_scene load_steps=62 format=3 uid="uid://0x720q7tnsj0"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -19,9 +19,14 @@
 [ext_resource type="Script" path="res://ui/editor/undo.gd" id="13_bgr8w"]
 [ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="13_cyvq7"]
 [ext_resource type="Script" path="res://ui/editor/redo.gd" id="14_2ypjq"]
+[ext_resource type="Texture2D" uid="uid://dfmcv080xpxdl" path="res://ui/assets/brush_handle.png" id="15_0xrjt"]
+[ext_resource type="Script" path="res://ui/editor/brush.gd" id="15_vvkyy"]
+[ext_resource type="Texture2D" uid="uid://bn83ygj5y3d8q" path="res://ui/assets/brush_brush.png" id="16_0ntdi"]
+[ext_resource type="Texture2D" uid="uid://dmxtfr7xfkpyf" path="res://ui/assets/brush_cursor.png" id="16_5gj5o"]
 [ext_resource type="PackedScene" uid="uid://cvs6pj6a5w5t" path="res://ui/editor/wall_tool.tscn" id="16_6ojvx"]
 [ext_resource type="Script" path="res://ui/editor/duplicate.gd" id="17_7y8ae"]
 [ext_resource type="Script" path="res://ui/editor/hatch.gd" id="17_ugqw3"]
+[ext_resource type="Texture2D" uid="uid://ce5kkd4bg17wl" path="res://ui/assets/brush_outline.png" id="18_cvlsk"]
 [ext_resource type="Script" path="res://ui/editor/mousecast.gd" id="19_hmpi3"]
 [ext_resource type="Shader" path="res://ui/editor/selection.gdshader" id="22_sij02"]
 [ext_resource type="AudioStream" uid="uid://bvtxqrhkbai7x" path="res://assets/sounds/plonk.ogg" id="25_hegbs"]
@@ -95,6 +100,14 @@ font_size = 12
 font_color = Color(0.14902, 0.545098, 0.823529, 1)
 outline_size = 10
 outline_color = Color(0.027451, 0.211765, 0.258824, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_vl62h"]
+device = -1
+keycode = 80
+unicode = 112
+
+[sub_resource type="Shortcut" id="Shortcut_uthi5"]
+events = [SubResource("InputEventKey_vl62h")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_eddoh"]
 device = -1
@@ -362,6 +375,55 @@ label_settings = SubResource("LabelSettings_6nqim")
 [node name="sep4" type="VSeparator" parent="split/split2/middle dock/buttons/container"]
 layout_mode = 2
 
+[node name="brush" type="Button" parent="split/split2/middle dock/buttons/container" node_paths=PackedStringArray("secondary")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 50)
+layout_mode = 2
+tooltip_text = "Paintbrush Tool (P)"
+theme = ExtResource("9_x2saf")
+theme_override_font_sizes/font_size = 21
+disabled = true
+toggle_mode = true
+shortcut = SubResource("Shortcut_uthi5")
+shortcut_in_tooltip = false
+script = ExtResource("15_vvkyy")
+cursor = ExtResource("16_5gj5o")
+secondary = NodePath("handle")
+
+[node name="handle" type="TextureRect" parent="split/split2/middle dock/buttons/container/brush"]
+modulate = Color(0.870588, 0.831373, 0.698039, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 10.0
+offset_right = 33.0
+offset_bottom = 23.0
+texture = ExtResource("15_0xrjt")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="brush" type="TextureRect" parent="split/split2/middle dock/buttons/container/brush"]
+modulate = Color(0.870588, 0.831373, 0.698039, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 24.0
+offset_right = 33.0
+offset_bottom = 39.0
+texture = ExtResource("16_0ntdi")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="outline" type="TextureRect" parent="split/split2/middle dock/buttons/container/brush"]
+visible = false
+modulate = Color(0.14902, 0.545098, 0.823529, 1)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 34.0
+offset_bottom = 47.0
+texture = ExtResource("18_cvlsk")
+expand_mode = 1
+stretch_mode = 4
+
 [node name="spacer2" type="Control" parent="split/split2/middle dock/buttons/container"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -426,7 +488,7 @@ script = ExtResource("17_ugqw3")
 unique_name_in_owner = true
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(250, 250)
+size = Vector2i(1067, 1010)
 render_target_update_mode = 4
 script = ExtResource("7_ftio3")
 
@@ -485,9 +547,11 @@ max_polyphony = 2
 [connection signal="dir_selected" from="split/left dock/fs/items" to="split/left dock/fs/fs tree" method="expand_selected" unbinds=1]
 [connection signal="tree_exiting" from="split/left dock/fs/items" to="split/left dock/fs/items" method="_on_tree_exiting"]
 [connection signal="toggled" from="split/split2/middle dock/buttons/container/snapping" to="." method="_on_snapping_toggled"]
+[connection signal="toggled" from="split/split2/middle dock/buttons/container/brush" to="." method="_on_brush_toggled"]
 [connection signal="pressed" from="split/split2/middle dock/buttons/container/delete" to="." method="_on_delete_pressed"]
 [connection signal="created" from="split/split2/middle dock/viewport/view" to="." method="_on_item_created"]
 [connection signal="created" from="split/split2/middle dock/viewport/view" to="split/split2/middle dock/viewport/view/port/mousecast" method="_on_view_created" unbinds=1]
 [connection signal="remove_tobj" from="split/split2/middle dock/viewport/view" to="." method="_on_remove_tobj"]
 [connection signal="remove_tobj" from="split/split2/middle dock/viewport/view" to="split/split2/middle dock/viewport/view/port" method="_on_remove_tobj" unbinds=1]
 [connection signal="hit" from="split/split2/middle dock/viewport/view/port/mousecast" to="." method="_on_mousecast_hit"]
+[connection signal="hit" from="split/split2/middle dock/viewport/view/port/mousecast" to="split/split2/middle dock/buttons/container/brush" method="_on_mousecast_hit"]

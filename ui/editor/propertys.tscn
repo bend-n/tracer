@@ -6,8 +6,8 @@
 resource_name = "laps"
 script/source = "extends SpinBox
 
-func _on_value_changed(value: float) -> void:
-	suffix = \"laps\" if value > 1 else \"lap\"
+func _on_value_changed(val: float) -> void:
+	suffix = \"laps\" if val > 1 else \"lap\"
 "
 
 [node name="propertys" type="VBoxContainer"]

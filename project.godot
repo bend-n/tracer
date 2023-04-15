@@ -27,6 +27,7 @@ window/size/viewport_height=1080
 window/subwindows/embed_subwindows=false
 window/stretch/aspect="ignore"
 window/vsync/vsync_mode=0
+mouse_cursor/tooltip_position_offset=Vector2(25, 25)
 
 [editor]
 
@@ -167,6 +168,12 @@ rotate_ccw={
 
 [layer_names]
 
+2d_render/layer_1="platform"
+2d_render/layer_2="road"
+2d_render/layer_3="grass"
+2d_render/layer_4="checkpoint"
+2d_render/layer_5="finish"
+2d_render/layer_6="start"
 3d_physics/layer_1="world"
 3d_physics/layer_2="player"
 3d_physics/layer_31="gizmo"

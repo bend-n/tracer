@@ -54,6 +54,8 @@ func mkobjs(objs: Array[TrackObject]):
 		blocks.append(block)
 
 func over_viewport():
+	if blocks.is_empty():
+		return
 	%panel.hide()
 	for block in blocks: block.show()
 

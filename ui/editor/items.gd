@@ -85,15 +85,15 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	var index := get_item_at_position(at_position)
 	var f := selected.files[index]
 	if not f is WeakLink:
-		clear()
-		dir_selected.emit(index)
-		open_dir(f)
 		return null
+	set_drag_preview(make_drag_preview([get_item_icon(index)]))
 	match f.type:
 		WeakLink.Type.Scene:
-			set_drag_preview(make_drag_preview([get_item_icon(index)]))
-	var objects: Array[TrackObject] = [TrackObject.new(f.scene, null, f)]
-	return objects
+			var objects: Array[TrackObject] = [TrackObject.new(f.scene, null, f)]
+			return objects
+		WeakLink.Type.Material:
+			return f
+	return null
 
 func make_drag_preview(textures: Array[Texture2D]) -> Control:
 	var preview: DragDropPreview = preload("res://ui/editor/block_dragdrop_preview.tscn").instantiate().init(textures, %cam)

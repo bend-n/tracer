@@ -3,7 +3,7 @@ class_name TrackObject
 
 var base_scene: PackedScene
 var live_node: Block
-#var material: Material
+var material: int
 var walls: int
 var transform: Transform3D
 var link: WeakLink
@@ -16,7 +16,7 @@ func _init(p_base: PackedScene, p_live: Node, p_link: WeakLink) -> void:
 func exprt() -> Dictionary:
 	save()
 	return {
-#		m = material.resource_path,
+		m = material,
 		b = base_scene.resource_path,
 		t = transform,
 		w = walls,
@@ -24,7 +24,7 @@ func exprt() -> Dictionary:
 
 static func from_d(d: Dictionary) -> TrackObject:
 	var o := TrackObject.new(load(d.b), null, null)
-#	o.material = load(d.m) if d.m else null
+	o.material = d.get("m", 0)
 	o.transform = d.t
 	o.walls = d.w
 	return o
@@ -33,6 +33,7 @@ func save() -> void:
 	if is_instance_valid(live_node):
 		transform = live_node.transform
 		walls = live_node.has_walls()
+		material = live_node.mat
 
 func delete_live() -> void:
 	save()
@@ -54,6 +55,8 @@ func create(is_editor := false) -> Node3D:
 	node.editor = is_editor
 	node.global_transform = transform
 	node.ready.connect(node.make_walls.bind(walls))
+	if material != 0:
+		node.ready.connect(node.set_mat.bind(material))
 	return node
 
 ## a more efficient [code]TrackObject.from_d(obj.exprt())[/code].
@@ -62,6 +65,7 @@ func dup() -> TrackObject:
 	save()
 	tobj.transform = transform
 	tobj.walls = walls
+	tobj.material = material
 	return tobj
 
 func name() -> String:

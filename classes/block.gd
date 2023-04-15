@@ -8,6 +8,8 @@ class_name Block
 var editor := false
 ## [code]true[/code] if this block is being photographed.
 var making_thumbnail := false
+## The current material.
+var mat := default_mat()
 
 ## A dictionary storing the walls.
 ## Dictionary[int, Wall]
@@ -80,6 +82,7 @@ func has_walls(w := WALL_W | WALL_E | WALL_N | WALL_S, singular := false) -> int
 				return 0
 	return has
 ## Can this block be painted? (TODO)
-func can_theme() -> bool: return false
-func get_mats() -> Array[BaseMaterial3D]: return []
-func set_mats(_mats: Array[BaseMaterial3D]) -> void: pass
+func materials_allowed() -> int: return 0
+func default_mat() -> int: return 0
+func set_mat(_mat_id: int) -> void: pass
+func get_mat() -> int: return 0

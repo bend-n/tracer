@@ -3,4 +3,4 @@ class_name Decoration
 
 ## Unthemeable type of block.
 
-func can_theme() -> bool: return false
+func materials_allowed() -> int: return 0x0

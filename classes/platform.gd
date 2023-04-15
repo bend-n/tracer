@@ -76,6 +76,7 @@ func _get_property_list() -> Array:
 		{ "name": "south_wall_transform", "type": TYPE_TRANSFORM3D, "usage": south_usage },
 	]
 
+# virtual wall functions
 func make_walls(w: int, singular := false) -> void:
 	for wall in walls:
 		if w & wall:
@@ -88,19 +89,16 @@ func make_walls(w: int, singular := false) -> void:
 			walls[wall] = node
 			if singular:
 				return
-
 func get_wall_mode() -> int: return wall_mode
-func can_theme() -> bool: return true
 func get_aabb() -> AABB: return mesh.get_aabb()
-
-func un_highlight():
-	if !_previous_material:
-		push_error("no mat!")
-		return
-	mesh.set_surface_override_material(0, _previous_material)
-
-var _previous_material: BaseMaterial3D
-func highlight() -> void:
-	_previous_material = mesh.get_active_material(0)
-	mesh.set_surface_override_material(0, MatMap.get_highlight(_previous_material))
+# virtual mat functions
+func materials_allowed() -> int: return 1|2|4
+func default_mat() -> int: return 1
+func set_mat(p_mat: int) -> void: mat = p_mat; reset_map()
+# virtual editor functions
+func un_highlight(): reset_map()
+func highlight() -> void: mesh.set_surface_override_material(0, MatMap.get_highlight(mat))
+# utility functions
+func reset_map():
+	mesh.set_surface_override_material(0, MatMap.map[mat])
 
