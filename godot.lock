@@ -6,8 +6,8 @@
   },
   {
     "name": "@bendn/gizmo3d",
-    "tarball": "https://registry.npmjs.org/@bendn/gizmo3d/-/gizmo3d-1.0.2.tgz",
-    "version": "1.0.2"
+    "tarball": "https://registry.npmjs.org/@bendn/gizmo3d/-/gizmo3d-1.0.4.tgz",
+    "version": "1.0.4"
   },
   {
     "name": "@bendn/splitter",
