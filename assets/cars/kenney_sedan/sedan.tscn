@@ -323,12 +323,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8qmjc")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uyq1o"]
-radius = 0.845291
-height = 5.12084
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bmf3l"]
+radius = 0.797748
+height = 3.2258
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mkjgy"]
-size = Vector3(2.353, 3.44463, 1)
+size = Vector3(3.5539, 4.38351, 1.91819)
 
 [node name="Sedan" type="VehicleBody3D"]
 collision_layer = 2
@@ -444,11 +444,11 @@ stream = ExtResource("19_stkh0")
 volume_db = -10.0
 
 [node name="coll1" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.25229, 0)
-shape = SubResource("CapsuleShape3D_uyq1o")
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1.17949, -1.89264)
+shape = SubResource("CapsuleShape3D_bmf3l")
 
 [node name="coll2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.01516, 0.558206)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.59047, 0.423482)
 shape = SubResource("BoxShape3D_mkjgy")
 
 [connection signal="shifted" from="." to="Gearbox" method="_on_sedan_shifted"]

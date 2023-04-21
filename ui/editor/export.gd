@@ -4,7 +4,7 @@ class_name EditorMarshalling
 @onready var editor: TrackEditor = owner
 
 func _pressed() -> void:
-	var enc := EditorMarshalling.td2s(editor.to_trackdata())
+	var enc := EditorMarshalling.td2s(editor.get_trackdata())
 	print_rich("exporting to `[code]%s[/code]`" % enc) # for funny clipboard shenanigans
 	DisplayServer.clipboard_set(enc)
 

@@ -13,14 +13,11 @@ const trackloader_scn = preload("res://scenes/track.tscn")
 
 var editable := false # can edit
 var dev := false # can edit main tracks and can move tracks into main
-var builtin := false # added to tracks.cfg
-
-func _ready() -> void:
-	%edit.visible = editable || dev
-	%delete.visible = editable || dev
-	%include.visible = dev && !builtin
 
 func init(t: TrackResource, g: GhostData) -> void:
+	%edit.visible = editable || dev
+	%delete.visible = editable || dev
+	%include.visible = dev && !t.builtin
 	%name.text = t.name
 	t.name_changed.connect(func(n: String): %name.text = n)
 	if g == null:
@@ -28,11 +25,11 @@ func init(t: TrackResource, g: GhostData) -> void:
 		%time.text = "no time set"
 	else:
 		%time.text = GameTimer.format_precise(g.time)
-	builtin = t.builtin
 	var tex := Thumbnail._load(Globals.THUMBS % t.name, Thumbnail.hash_b(t.bytes()), false)
 	if tex == null:
 		tex = await mkthumb(t)
 	%thumb.texture = ImageTexture.create_from_image(tex)
+
 	# update thumb on save
 	t.saved.connect(func(): %thumb.texture = ImageTexture.create_from_image(await mkthumb(t)))
 

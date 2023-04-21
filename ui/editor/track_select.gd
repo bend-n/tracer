@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _on_mkbutton(b: TrackButton, t: TrackResource) -> void:
 	@warning_ignore("static_called_on_instance")
-	b.include.connect(func(): other.add(t); BuiltinTrackSelect.delete(t); b.queue_free())
+	b.include.connect(func(): other.add(t); TrackSelect.delete(t); b.queue_free())
 
 func _on_new_pressed() -> void:
 	var res := TrackResource.new([])

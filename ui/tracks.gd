@@ -14,6 +14,7 @@ func _load():
 		Globals.builtin_tracks.append(loaded)
 
 func add(t: TrackResource):
+	t.builtin = true
 	mkbutton(t)
 	Globals.builtin_tracks.append(t)
 	BuiltinTrackSelect.store_all()
