@@ -1,0 +1,64 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2nwkpdn3gnx3"]
+
+[ext_resource type="Script" path="res://assets/blocks/tree.gd" id="1_aqri3"]
+[ext_resource type="ArrayMesh" uid="uid://wpn040a4trym" path="res://assets/meshes/tree_bottom.tres" id="2_aqfsv"]
+[ext_resource type="ArrayMesh" uid="uid://dnglrbqb00hnw" path="res://assets/meshes/tree_top.mesh" id="3_ek4hf"]
+[ext_resource type="PackedScene" uid="uid://ccfnlmu6xnhxg" path="res://ui/editor/cameras/tall_side_slant_cam.tscn" id="4_ruq6c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_id6f0"]
+resource_name = "tree top hl"
+albedo_color = Color(0.333333, 0.67451, 0.172549, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_70boo"]
+resource_name = "tree trunk hl"
+albedo_color = Color(0.705882, 0.435294, 0.384314, 1)
+metallic_specular = 0.0
+roughness = 0.0
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bo2t4"]
+resource_name = "tree top"
+albedo_color = Color(0.286275, 0.580392, 0.14902, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wm34v"]
+resource_name = "tree trunk"
+albedo_color = Color(0.403922, 0.223529, 0.192157, 1)
+metallic_specular = 0.0
+roughness = 0.0
+texture_filter = 0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0lfwo"]
+height = 3.0
+radius = 1.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_woi3d"]
+points = PackedVector3Array(0, -1.5, -2.949, -2.08531, -1.5, -2.08531, 0, -0.900059, -2.35955, 2.08474, -1.5, -2.08531, -2.949, -1.5, 0, -2.35955, -0.900059, 0, -1.25165, -0.300117, -1.25165, 0, 0.299824, -1.18006, 1.25107, -0.300117, -1.25165, 2.949, -1.5, 0, -2.08531, -1.5, 2.08474, -1.25165, -0.300117, 1.25107, -1.18006, 0.299824, 0, -0.417409, 0.899765, -0.417409, 0, 1.5, 0, 1.25107, -0.300117, 1.25107, 2.08474, -1.5, 2.08474, 0, -1.5, 2.949)
+
+[node name="tree" type="StaticBody3D"]
+input_ray_pickable = false
+script = ExtResource("1_aqri3")
+hl_top_mat = SubResource("StandardMaterial3D_id6f0")
+hl_trunk_mat = SubResource("StandardMaterial3D_70boo")
+top_mat = SubResource("StandardMaterial3D_bo2t4")
+trunk_mat = SubResource("StandardMaterial3D_wm34v")
+
+[node name="trunk" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = ExtResource("2_aqfsv")
+surface_material_override/0 = SubResource("StandardMaterial3D_wm34v")
+
+[node name="top" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+mesh = ExtResource("3_ek4hf")
+surface_material_override/0 = SubResource("StandardMaterial3D_bo2t4")
+
+[node name="collision1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_0lfwo")
+
+[node name="collision2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.98431, 0)
+shape = SubResource("ConvexPolygonShape3D_woi3d")
+
+[node name="camera" parent="." instance=ExtResource("4_ruq6c")]

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://43gqs1ukside"]
+
+[sub_resource type="GDScript" id="GDScript_bs64t"]
+script/source = "@tool
+extends Node3D
+var last_transform: Transform3D
+func _physics_process(delta: float) -> void:
+	if global_transform != last_transform:
+		last_transform = global_transform
+		print(global_transform)
+"
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = SubResource("GDScript_bs64t")

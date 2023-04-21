@@ -1,3 +1,4 @@
 [packages]
-"@bendn/remap" = '5.0.8'
+"@bendn/gizmo3d" = '1.0.4'
 "@bendn/splitter" = '1.0.6'
+"@bendn/enginesound" = '1.0.0'

@@ -3,6 +3,7 @@ class_name Car
 
 @export var STEER_SPEED := 1.0
 @export var steer_curve: Curve = preload("res://assets/cars/kenney_sedan/steer_curve.tres")
+const sparks := preload("res://assets/cars/sparks.tscn")
 
 var steer_target := 0.0
 
@@ -11,7 +12,8 @@ var steer_target := 0.0
 @export var reverse_ratio := -2.5
 @export var final_drive_ratio := 3.38
 @export var max_engine_rpm := 8000.0
-@export var gear_shift_time = 0.3
+@export var gear_shift_time := 0.3
+@export var BOOSTER_FORCE := 25000
 @export var power_curve: Curve = preload("res://assets/cars/kenney_sedan/power_curve.tres")
 @onready var body_mesh := $body as MeshInstance3D
 @onready var checkpoint_sound := $checkpoint as AudioStreamPlayer
@@ -55,6 +57,8 @@ func reset() -> void:
 	gear_timer = 0
 	clutch_position = 0
 	steering = 0
+	angular_damp = 0
+	linear_damp = 0
 	throttle = 0
 	engine_force = 0
 	brake = MAX_BRAKE_FORCE
@@ -92,7 +96,7 @@ func steer(to: float) -> void:
 	else:
 		to = -steer_curve.sample_baked(-to) if to < 0.0 else steer_curve.sample_baked(to)
 
-	steer_target = clampf(lerpf(steer_target, to, 10 * get_physics_process_delta_time()), -1, 1) * .75
+	steer_target = clampf(lerpf(steer_target, to, 10 * get_physics_process_delta_time()), -1, 1) * .9
 
 ## virtual
 func shift_down() -> bool:
@@ -124,7 +128,7 @@ func _process(delta: float):
 	if can_shift:
 		_process_gear_inputs(delta)
 	steering = -steer_target
-	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf(((-steering * .001) * whl_rpm()) + randf_range(-0.05,0.05), -.4, .4), 10 * delta)
+	body_mesh.rotation.z = lerp(body_mesh.rotation.z, clampf((-steering * .001 + randf_range(-0.0005,0.0005)) * whl_rpm(), -.3, .3), 2 * delta)
 	engine_rpm = clampf(move_toward(engine_rpm, (wheel_rpm * engine_force * 0.0015), 800), 800, MAX_ENGINE_FORCE)
 
 func limit(delta: float) -> void:
@@ -147,6 +151,11 @@ func _physics_process(delta: float):
 	downforce(5)
 
 	for i in 4:
+		if wheels[i].get_contact_body() is Booster:
+			apply_central_force(
+				(wheels[i].get_contact_body().transform.basis.x) * BOOSTER_FORCE
+			)
+
 		particles[i].emitting = wheels[i].get_skidinfo() < (.2 if i > 2 else .99) and wheels[i].is_in_contact() and kph() > 30
 		if particles[i].emitting:
 			@warning_ignore("narrowing_conversion")
@@ -154,7 +163,7 @@ func _physics_process(delta: float):
 			if !skids[i][-1].active:
 				skids[i].append(trail_scene.instantiate() as Trail3D)
 				get_parent().add_child(skids[i][-1])
-			(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .661, 0))
+			(skids[i][-1] as Trail3D).add(wheels[i].global_position - Vector3(0, .561, 0))
 		elif skids[i][-1].active:
 			skids[i][-1].active = false
 
@@ -162,3 +171,16 @@ func start() -> void:
 	brake = 0
 	can_shift = true
 	can_accelerate = true
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	if kph() < 100:
+		return
+	var contact := state.get_contact_count()
+	while contact > 0:
+			contact -= 1
+			var p := state.get_contact_local_position(contact) # it says local, but its global.
+			var direction := state.get_contact_local_normal(contact)
+			var sprk := sparks.instantiate()
+			(sprk.process_material as ParticleProcessMaterial).direction = direction
+			get_parent().add_child(sprk)
+			sprk.global_position = p

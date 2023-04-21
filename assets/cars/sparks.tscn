@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://bg1gm56iyns8a"]
+
+[ext_resource type="Script" path="res://assets/cars/sparks.gd" id="1_34m1u"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7tl5g"]
+spread = 10.0
+flatness = 0.15
+gravity = Vector3(0, -0.5, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 20.0
+linear_accel_min = 0.01
+linear_accel_max = 4.09
+scale_min = 0.5
+scale_max = 1.5
+hue_variation_min = 0.59
+hue_variation_max = 0.59
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lec5"]
+shading_mode = 0
+albedo_color = Color(1, 0.784314, 0.231373, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tbgsw"]
+material = SubResource("StandardMaterial3D_0lec5")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.04
+radial_segments = 8
+
+[node name="crash" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98517, 2.26511, 0)
+emitting = false
+amount = 10
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 0.1
+process_material = SubResource("ParticleProcessMaterial_7tl5g")
+draw_pass_1 = SubResource("CylinderMesh_tbgsw")
+script = ExtResource("1_34m1u")

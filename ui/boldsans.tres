@@ -1,4 +1,8 @@
-[gd_resource type="FontVariation" format=3 uid="uid://ba8ab6dti2fvo"]
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://ba8ab6dti2fvo"]
+
+[sub_resource type="SystemFont" id="SystemFont_nttbt"]
+font_names = PackedStringArray("Sans-Serif")
 
 [resource]
+base_font = SubResource("SystemFont_nttbt")
 variation_embolden = 1.5

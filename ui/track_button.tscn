@@ -1,14 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://dfvtugujgcjcw"]
+[gd_scene load_steps=13 format=3 uid="uid://c6ntm3pmyfcuh"]
 
-[ext_resource type="Theme" uid="uid://cru1d7n2ftrfm" path="res://ui/theme.tres" id="1_noykn"]
-[ext_resource type="Script" path="res://ui/trackbutton.gd" id="2_bcpuy"]
+[ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_noykn"]
+[ext_resource type="Script" path="res://ui/track_button.gd" id="2_bbj4u"]
 [ext_resource type="FontVariation" uid="uid://ba8ab6dti2fvo" path="res://ui/boldsans.tres" id="2_gctvu"]
 [ext_resource type="SystemFont" uid="uid://d2klp6vxh5l2d" path="res://ui/cascadiabold.tres" id="3_suph6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fymg3"]
 bg_color = Color(0.137255, 0.137255, 0.137255, 1)
-
-[sub_resource type="World3D" id="World3D_vgauv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sa0e6"]
 font = ExtResource("2_gctvu")
@@ -20,23 +18,40 @@ font = ExtResource("3_suph6")
 font_size = 25
 font_color = Color(0.933333, 0.909804, 0.835294, 1)
 
-[node name="trackbutton" type="PanelContainer" node_paths=PackedStringArray("button")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sad5x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcebg"]
+bg_color = Color(0.0431373, 0.270588, 0.32549, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 12
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fayhu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qw0k4"]
+bg_color = Color(0.14902, 0.545098, 0.823529, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 12
+
+[sub_resource type="Theme" id="Theme_vsupn"]
+Button/styles/focus = SubResource("StyleBoxEmpty_sad5x")
+Button/styles/hover = SubResource("StyleBoxFlat_vcebg")
+Button/styles/normal = SubResource("StyleBoxEmpty_fayhu")
+Button/styles/pressed = SubResource("StyleBoxFlat_qw0k4")
+
+[node name="track_button" type="PanelContainer" node_paths=PackedStringArray("button")]
 custom_minimum_size = Vector2(450, 243)
 offset_right = 200.0
 offset_bottom = 100.0
 theme = ExtResource("1_noykn")
 theme_override_styles/panel = SubResource("StyleBoxFlat_fymg3")
-script = ExtResource("2_bcpuy")
+script = ExtResource("2_bbj4u")
 button = NodePath("h2/play")
-
-[node name="port" type="SubViewport" parent="."]
-unique_name_in_owner = true
-own_world_3d = true
-world_3d = SubResource("World3D_vgauv")
-msaa_3d = 3
-screen_space_aa = 1
-size = Vector2i(450, 200)
-render_target_update_mode = 1
 
 [node name="v" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -74,23 +89,56 @@ layout_mode = 2
 stretch_mode = 2
 
 [node name="h2" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 8
+theme = SubResource("Theme_vsupn")
+theme_override_constants/separation = 0
 
 [node name="play" type="Button" parent="h2"]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = " "
+alignment = 2
+
+[node name="edit" type="Button" parent="h2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "󰛿 "
+alignment = 2
+
+[node name="include" type="Button" parent="h2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "󱘼"
 
 [node name="spacer" type="Control" parent="h2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="delete" type="Button" parent="h2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "󰚃 "
+alignment = 2
+
 [node name="watch" type="Button" parent="h2"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "󰿎 "
+alignment = 2
 
-[connection signal="pressed" from="h2/play" to="." method="emit_signal" binds= [&"play"]]
-[connection signal="pressed" from="h2/watch" to="." method="emit_signal" binds= [&"watch"]]
+[connection signal="pressed" from="h2/play" to="." method="emit_signal" flags=18 binds= [&"play"]]
+[connection signal="pressed" from="h2/edit" to="." method="emit_signal" binds= [&"edit"]]
+[connection signal="pressed" from="h2/include" to="." method="emit_signal" binds= [&"include"]]
+[connection signal="pressed" from="h2/delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="h2/watch" to="." method="emit_signal" flags=18 binds= [&"watch"]]

@@ -30,7 +30,7 @@ func _ready() -> void:
 	timer.start()
 
 	hud = hud_scene.instantiate()
-	hud.assigned.emit(ghost, ghost, timer, track_loader)
+	hud.assigned.emit(ghost, timer, track_loader)
 	add_child(hud)
 	next_lap.connect(hud.laps.increment)
 

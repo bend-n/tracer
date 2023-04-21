@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://cotdon210bw6c"]
+
+[ext_resource type="Material" uid="uid://cwyjtikumcq3k" path="res://assets/mats/platform.material" id="1_ox5eu"]
+[ext_resource type="Script" path="res://classes/platform.gd" id="1_y4r5p"]
+[ext_resource type="PackedScene" uid="uid://lq13suvwdu6g" path="res://assets/blocks/walls/flat_wall.tscn" id="2_tm8v4"]
+[ext_resource type="PackedScene" uid="uid://urgqw6yoy4f5" path="res://ui/editor/cameras/topdown_cam.tscn" id="4_hin2j"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yy48c"]
+material = ExtResource("1_ox5eu")
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0mmg7"]
+size = Vector3(10, 1, 10)
+
+[node name="platform_square" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("1_y4r5p")
+mesh = NodePath("mesh")
+west_wall_scene = ExtResource("2_tm8v4")
+west_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+east_wall_scene = ExtResource("2_tm8v4")
+east_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+north_wall_scene = ExtResource("2_tm8v4")
+north_wall_transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, 0)
+south_wall_scene = ExtResource("2_tm8v4")
+south_wall_transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_yy48c")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_0mmg7")
+
+[node name="camera" parent="." instance=ExtResource("4_hin2j")]

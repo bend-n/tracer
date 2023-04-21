@@ -1,14 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://cd4a5y0hi58ks"]
+[gd_scene load_steps=6 format=3 uid="uid://cd4a5y0hi58ks"]
 
-[ext_resource type="Material" uid="uid://bdyn312e6c3ll" path="res://assets/mats/grass.tres" id="1_g7360"]
+[ext_resource type="Script" path="res://scenes/floor.gd" id="1_yker8"]
+[ext_resource type="Texture2D" uid="uid://dyk71hogwv01g" path="res://assets/textures/grass.png" id="2_aug46"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tkhh8"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6fb2t"]
+albedo_texture = ExtResource("2_aug46")
+emission = Color(0, 0.0745098, 0.219608, 1)
+emission_energy_multiplier = 16.0
+ao_light_affect = 0.33
+uv1_scale = Vector3(100, 100, 100)
+texture_filter = 0
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_ta0cd"]
-material = ExtResource("1_g7360")
+material = SubResource("StandardMaterial3D_6fb2t")
 size = Vector2(5000, 5000)
 
 [node name="Ground" type="StaticBody3D"]
+collision_mask = 0
+script = ExtResource("1_yker8")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 

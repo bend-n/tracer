@@ -1,17 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://vok7fdcyec68"]
+[gd_scene load_steps=13 format=3 uid="uid://vok7fdcyec68"]
 
-[ext_resource type="Theme" uid="uid://cru1d7n2ftrfm" path="res://ui/theme.tres" id="1_ie2j2"]
+[ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_ie2j2"]
 [ext_resource type="Script" path="res://ui/hud.gd" id="1_sfhpc"]
 [ext_resource type="Script" path="res://ui/speedometer.gd" id="2_cvi37"]
 [ext_resource type="Script" path="res://ui/timer.gd" id="3_poksb"]
-[ext_resource type="Texture2D" uid="uid://bfe4ytl0vjosb" path="res://ui/assets/line.png" id="4_o0swd"]
 [ext_resource type="SystemFont" uid="uid://bkjqtc5i64r3j" path="res://ui/ubuntu.tres" id="4_sh4bn"]
-[ext_resource type="Script" path="res://ui/map.gd" id="5_blxcm"]
 [ext_resource type="Script" path="res://ui/gears.gd" id="5_g6cg4"]
 [ext_resource type="StyleBox" uid="uid://cly1aqudpku5j" path="res://ui/panel_skew_r.tres" id="6_g2n2l"]
-[ext_resource type="Texture2D" uid="uid://b3nmp7eyu0hjk" path="res://ui/assets/flag.png" id="6_ho2g6"]
-[ext_resource type="Texture2D" uid="uid://b6ad1yrgtg6qk" path="res://ui/assets/player_indicator.png" id="7_wv12s"]
-[ext_resource type="Texture2D" uid="uid://dkbrx7rpa8dvc" path="res://ui/assets/ghost.png" id="8_yfv7r"]
+[ext_resource type="FontVariation" uid="uid://ba8ab6dti2fvo" path="res://ui/boldsans.tres" id="8_mupi7"]
 [ext_resource type="PackedScene" uid="uid://nkh2xi7tnumc" path="res://ui/splits/splits.tscn" id="9_gtkqi"]
 [ext_resource type="Script" path="res://ui/laps.gd" id="10_78pxt"]
 
@@ -28,10 +24,6 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 corner_detail = 12
-
-[sub_resource type="Gradient" id="Gradient_2kvil"]
-offsets = PackedFloat32Array(0, 0.178744, 0.454106, 0.719807, 1)
-colors = PackedColorArray(0.85098, 0.85098, 0.85098, 1, 0.942823, 0.942823, 0.942822, 1, 0.868985, 0.868985, 0.868985, 1, 0.838897, 0.838897, 0.838897, 1, 0.85098, 0.85098, 0.85098, 1)
 
 [node name="HUD" type="Control" node_paths=PackedStringArray("splits", "laps")]
 layout_mode = 3
@@ -93,6 +85,7 @@ custom_minimum_size = Vector2(0, 105)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_font_sizes/font_size = 76
 text = "龍 0km/h"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -123,31 +116,10 @@ custom_minimum_size = Vector2(200, 105)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/default_color = Color(0.992157, 0.964706, 0.890196, 1)
+theme_override_fonts/bold_font = ExtResource("8_mupi7")
 bbcode_enabled = true
 text = "[center]  [b][color=#4682b4]N[/color][/b][/center]"
 script = ExtResource("5_g6cg4")
-
-[node name="MiniMapContainer" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(500, 500)
-layout_mode = 1
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 525.0
-offset_bottom = 525.0
-
-[node name="MiniMap" type="Line2D" parent="MiniMapContainer"]
-texture_repeat = 2
-width = 40.0
-default_color = Color(0.854902, 0.854902, 0.854902, 1)
-gradient = SubResource("Gradient_2kvil")
-texture = ExtResource("4_o0swd")
-texture_mode = 1
-antialiased = true
-script = ExtResource("5_blxcm")
-player_color = Color(1, 0.388235, 0.321569, 1)
-finish_indicator = ExtResource("6_ho2g6")
-player_indicator = ExtResource("7_wv12s")
-ghost_indicator = ExtResource("8_yfv7r")
 
 [node name="Splits" parent="." instance=ExtResource("9_gtkqi")]
 layout_mode = 1
@@ -155,8 +127,7 @@ offset_top = -403.0
 offset_bottom = -303.0
 
 [connection signal="assigned" from="." to="Dashboard/laps" method="assigned"]
-[connection signal="assigned" from="." to="MiniMapContainer/MiniMap" method="assigned"]
-[connection signal="assigned" from="." to="Dashboard/speed/speed" method="car_assigned" unbinds=3]
+[connection signal="assigned" from="." to="Dashboard/speed/speed" method="car_assigned" unbinds=2]
 [connection signal="assigned" from="." to="Dashboard/timer/time" method="assigned" unbinds=1]
-[connection signal="assigned" from="." to="Dashboard/gears/gears" method="assigned" unbinds=3]
+[connection signal="assigned" from="." to="Dashboard/gears/gears" method="assigned" unbinds=2]
 [connection signal="next_lap" from="." to="Dashboard/laps" method="increment"]

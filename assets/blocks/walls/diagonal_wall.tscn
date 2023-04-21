@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dforj6583ykxh"]
+
+[ext_resource type="Script" path="res://classes/wall.gd" id="1_ftymv"]
+[ext_resource type="ArrayMesh" uid="uid://8dvooynpliqm" path="res://assets/meshes/walls/diagonal_wall.tres" id="2_88wck"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x2x34"]
+points = PackedVector3Array(-5, 2.5, 6, -5, 2.5, 5, -5, -0.500343, 6, 5, -0.00019598, 6, 5, -0.00019598, 5, -5, -0.500343, 5, 5, -3, 6, 5, -3, 5)
+
+[node name="diagonal_wall" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("1_ftymv")
+mesh = NodePath("mesh")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11)
+mesh = ExtResource("2_88wck")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11)
+shape = SubResource("ConvexPolygonShape3D_x2x34")

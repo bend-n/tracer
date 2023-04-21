@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxodo0cs3ewce"]
+
+[ext_resource type="Script" path="res://classes/wall.gd" id="1_iglgm"]
+[ext_resource type="ArrayMesh" uid="uid://b7vu2ekwlvagf" path="res://assets/meshes/walls/x_wall.tres" id="2_rjvwv"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vv844"]
+points = PackedVector3Array(4.99985, -0.5, -5, 6, -0.5, -5, 3.5, -0.5, 0, 4.99985, 2.5, -5, 6, 2.5, -5, 6, -0.5, 5, 4.99985, -0.5, 5, 3.5, 2.5, 0, 6, 2.5, 5, 4.99985, 2.5, 5)
+
+[node name="x_wall" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("1_iglgm")
+mesh = NodePath("mesh")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("2_rjvwv")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+editor_description = "this collision is inaccurate but should be fine"
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_vv844")

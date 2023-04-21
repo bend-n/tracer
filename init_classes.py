@@ -7,7 +7,7 @@ classes = []  # { file, class name, base class name }
 
 for file in glob("**/*.gd", recursive=True):
     with open(file, "r") as f:
-        text = f"{f.readline()}\n{f.readline()}\n{f.readline()}"  # 3 lines: extend, class, tool
+        text = f"{f.readline()}\n{f.readline()}\n{f.readline()}\n{f.readline()}"  # 4 lines: extend, class, tool, icon
         m = find_class.search(text)
         if not m:
             continue

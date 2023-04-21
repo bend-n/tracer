@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://bs7iubbwrs78d"]
+
+[ext_resource type="Script" path="res://classes/platform.gd" id="1_awaf1"]
+[ext_resource type="PackedScene" path="res://assets/blocks/walls/tall_diagonal_wall.tscn" id="2_xuhlu"]
+[ext_resource type="PackedScene" uid="uid://lq13suvwdu6g" path="res://assets/blocks/walls/flat_wall.tscn" id="3_7c6de"]
+[ext_resource type="PackedScene" uid="uid://cvagg3inem8cy" path="res://assets/blocks/walls/tall_corner_diagonal_wall.tscn" id="3_sxx5x"]
+[ext_resource type="PackedScene" uid="uid://opcnps6psy07" path="res://ui/editor/cameras/tall_right_slant_cam.tscn" id="5_dysll"]
+[ext_resource type="ArrayMesh" uid="uid://buyff2c3guxdj" path="res://assets/meshes/platforms/poke_corner.tres" id="5_jythw"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5v27g"]
+points = PackedVector3Array(-5, -0.5, -5, -5, 0.499706, -5, 5, -0.5, -5, 5, -0.5, 5, 5, 3, 5, 5, 0.499706, -5)
+
+[node name="platform_poke" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("1_awaf1")
+mesh = NodePath("mesh")
+wall_mode = 7
+west_wall_scene = ExtResource("2_xuhlu")
+west_wall_transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+east_wall_scene = ExtResource("3_sxx5x")
+east_wall_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+north_wall_scene = ExtResource("2_xuhlu")
+north_wall_transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, 0)
+south_wall_scene = ExtResource("3_7c6de")
+south_wall_transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
+
+[node name="camera" parent="." instance=ExtResource("5_dysll")]
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("5_jythw")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+visible = false
+shape = SubResource("ConvexPolygonShape3D_5v27g")

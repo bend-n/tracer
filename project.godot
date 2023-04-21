@@ -14,7 +14,7 @@ config/name="tracer"
 run/main_scene="res://start.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="tracer"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.1")
 
 [autoload]
 
@@ -24,16 +24,27 @@ Globals="*res://globals.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/vsync/vsync_mode=0
+window/subwindows/embed_subwindows=false
 window/stretch/aspect="ignore"
+window/vsync/vsync_mode=0
+mouse_cursor/tooltip_position_offset=Vector2(25, 25)
 
 [editor]
 
 movie_writer/mix_rate=24000
 movie_writer/mjpeg_quality=0.8
-movie_writer/movie_file="/home/bendn/Documents/tracer/movie.avi"
+movie_writer/movie_file="/home/bendn/Documents/tracer/movie/movie.png"
 movie_writer/disable_vsync=true
 movie_writer/fps=15
+
+[editor_plugins]
+
+enabled=PackedStringArray()
+
+[gui]
+
+theme/custom="res://ui/theme.tres"
+theme/custom_font="res://ui/ubuntu.tres"
 
 [importer_defaults]
 
@@ -139,26 +150,50 @@ click={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"pressed":false,"double_click":false,"script":null)
 ]
 }
+ui_pan={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":3,"pressed":false,"double_click":false,"script":null)
+]
+}
+rotate_cw={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":82,"key_label":0,"unicode":114,"echo":false,"script":null)
+]
+}
+rotate_ccw={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":82,"key_label":0,"unicode":82,"echo":false,"script":null)
+]
+}
 
 [layer_names]
 
+2d_render/layer_1="platform"
+2d_render/layer_2="road"
+2d_render/layer_3="grass"
+2d_render/layer_4="checkpoint"
+2d_render/layer_5="finish"
+2d_render/layer_6="start"
 3d_physics/layer_1="world"
 3d_physics/layer_2="player"
+3d_physics/layer_31="gizmo"
+3d_physics/layer_32="editor"
 
 [physics]
 
 3d/run_on_separate_thread=true
+common/enable_object_picking=false
 
 [rendering]
 
 occlusion_culling/bvh_build_quality=0
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 lights_and_shadows/directional_shadow/size=2048
 lights_and_shadows/directional_shadow/size.mobile=1024
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=1
 reflections/sky_reflections/ggx_samples=16
 reflections/sky_reflections/ggx_samples.mobile=8
-anti_aliasing/quality/msaa_2d=2
-anti_aliasing/quality/msaa_3d=2
+anti_aliasing/quality/msaa_2d=1
+anti_aliasing/quality/msaa_3d=1
 anti_aliasing/quality/screen_space_aa=1
-textures/canvas_textures/default_texture_filter=0

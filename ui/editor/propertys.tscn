@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4h850namjrn2"]
+
+[ext_resource type="Script" path="res://ui/editor/propertys.gd" id="1_0vjdc"]
+
+[sub_resource type="GDScript" id="GDScript_ly6xd"]
+resource_name = "laps"
+script/source = "extends SpinBox
+
+func _on_value_changed(val: float) -> void:
+	suffix = \"laps\" if val > 1 else \"lap\"
+"
+
+[node name="propertys" type="VBoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_0vjdc")
+
+[node name="name" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="name"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "name"
+
+[node name="name" type="LineEdit" parent="name"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "fluffy gizmo"
+max_length = 50
+caret_blink = true
+
+[node name="laps" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="laps"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "laps"
+
+[node name="laps" type="SpinBox" parent="laps"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 50.0
+value = 1.0
+rounded = true
+suffix = "lap"
+script = SubResource("GDScript_ly6xd")
+
+[connection signal="value_changed" from="laps/laps" to="laps/laps" method="_on_value_changed"]

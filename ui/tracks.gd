@@ -1,34 +1,28 @@
-extends GridContainer
-
-@export var tracks: Array[TrackResource]
-@export var race: PackedScene
-@export var ghost_watch: PackedScene
-@export var trackbutton: PackedScene
+extends TrackSelect
+class_name BuiltinTrackSelect
 
 func _ready() -> void:
+	_load()
+	mkbuttons(Globals.builtin_tracks)
+	super()
+
+func _load():
+	var tracks: Array = str_to_var(FileAccess.get_file_as_string("res://tracks.cfg"))
 	for track in tracks:
-		var button: TrackButton = trackbutton.instantiate()
-		add_child(button)
-		var ghost := GhostData._load(Globals.SAVES % track.name)
-		button.init(track, ghost)
-		button.play.connect(play.bind(track, ghost))
-		button.watch.connect(watch.bind(track, ghost))
-	(get_child(0) as TrackButton).button.grab_focus()
+		var loaded := TrackResource.from_d(track)
+		loaded.builtin = true
+		Globals.builtin_tracks.append(loaded)
 
-func play(track: TrackResource, ghost: GhostData) -> void:
-	print("play %s" % track.name)
-	Globals.playing = track
-	Globals.ghost = ghost
-	add_to_main(race)
+func add(t: TrackResource):
+	mkbutton(t)
+	Globals.builtin_tracks.append(t)
+	BuiltinTrackSelect.store_all()
 
-func watch(track: TrackResource, ghost: GhostData) -> void:
-	print("watch %s" % track.name)
-	Globals.playing = track
-	Globals.ghost = ghost
-	add_to_main(ghost_watch)
+static func delete(t: TrackResource):
+	Globals.builtin_tracks.erase(t)
+	BuiltinTrackSelect.store_all()
 
-func add_to_main(p: PackedScene) -> void:
-	owner.hide()
-	var c := p.instantiate()
-	get_viewport().add_child(c)
-	c.tree_exited.connect(owner.show)
+static func store_all():
+	var arr: Array = Globals.builtin_tracks.map(func(t: TrackResource) -> Dictionary: return t.to_d())
+	var file := FileAccess.open("res://tracks.cfg", FileAccess.WRITE)
+	file.store_string(var_to_str(arr))

@@ -17,8 +17,6 @@ var current_lap := 0
 var playing := false
 var timer := GameTimer.new()
 
-const SaveLoad := preload("res://addons/@bendn/remap/private/SaveLoadUtils.gd")
-
 signal next_lap
 signal created_car(car: Car)
 signal created_ghost(ghost: GhostCar)
@@ -42,18 +40,18 @@ func mkghost() -> void:
 func reset_ghost() -> void:
 	if best_time_data:
 		ghost.update(best_time_data.load_snap(0), -1)
-		ghost.engine.volume = .1
+		ghost.engine.volume = .2
 	else:
 		ghost.engine.volume = 0
-		ghost.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2)
-		ghost.rotation = track.start_rot + Vector3(0, PI, -PI/2)
+		ghost.global_position = track.start_transf.origin + Vector3(0, 1, 0)
+		ghost.rotation = track.start_transf.basis.get_euler()# + Vector3(0, PI, -PI/2)
 	ghost.reset()
 	ghost.hide()
 
 func reset_car() -> void:
 	await get_tree().physics_frame
-	car.rotation = track.start_rot + Vector3(0, PI, -PI/2)
-	car.global_position = track.start_pos + Vector3(0, 2, 0) - (car.global_transform.basis.z * 2) # bump forward a teensy bit
+	car.rotation = track.start_transf.basis.get_euler()# + Vector3(0, PI, -PI/2)
+	car.global_position = track.start_transf.origin + Vector3(0, 1, 0)
 	car.linear_velocity = Vector3.ZERO
 	car.angular_velocity = Vector3.ZERO
 	car.current_gear = 0
@@ -70,7 +68,7 @@ func _ready() -> void:
 	track = track_loader_scene.instantiate()
 	track.track = track_res
 	add_child(track)
-	data = GhostData.new(track_res.checkpoints.size(), track_res.laps)
+	data = GhostData.new(track.checkpoints.size(), track_res.laps)
 	mkcar()
 	mkghost()
 	connect_checkpoints()
@@ -106,18 +104,16 @@ func passed_finish() -> void:
 			return
 	collect(-1)
 	if track_res.laps - 1 == current_lap:
-		print("finished")
 		playing = false
 		timer.stop()
 		car.reset()
 		if not best_time_data or data.time < best_time_data.time:
-			print("new pb!")
 			finished.emit(data.time, best_time_data.time if best_time_data else -1.0)
 			data.save(Globals.SAVES % track_res.name)
 			best_time_data = data
 		else:
 			finished.emit(data.time, best_time_data.time)
-		data = GhostData.new(track_res.checkpoints.size(), track_res.laps)
+		data = GhostData.new(track.checkpoints.size(), track_res.laps)
 	else:
 		current_lap += 1
 		next_lap.emit()
@@ -127,12 +123,12 @@ func _physics_process(delta: float) -> void:
 	if best_time_data:
 		if best_time_data.snap_count - 1 < Engine.get_physics_frames() - start_frame:
 			if ghost.visible:
-				print("ran out of snaps, hiding ghost")
 				ghost.hide()
+				ghost.engine.volume = 0
 			return
 		ghost.update(best_time_data.load_snap(Engine.get_physics_frames() - start_frame), delta)
 		ghost.visible = (ghost.global_position.distance_squared_to(car.global_position) > 10)
-		ghost.engine.volume = lerpf(ghost.engine.volume, .7, delta) if (ghost.global_position.distance_squared_to(car.global_position) > 20) else lerpf(ghost.engine.volume, .2, delta * 3)
+		ghost.engine.volume = lerpf(ghost.engine.volume, .7, delta * 3) if (ghost.global_position.distance_squared_to(car.global_position) > 20) else lerpf(ghost.engine.volume, .2, delta * 3)
 
 func collect(cp: int) -> void:
 	if cp != -1:

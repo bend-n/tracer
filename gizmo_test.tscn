@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" uid="uid://cd4a5y0hi58ks" path="res://scenes/floor.tscn" id="1_1kys7"]
+[ext_resource type="PackedScene" uid="uid://crc02shshycvq" path="res://scenes/sun.tscn" id="2_qpxj4"]
+[ext_resource type="Environment" uid="uid://biwshm46yl62v" path="res://default_env.tres" id="3_2dhxm"]
+[ext_resource type="CameraAttributesPractical" uid="uid://nhsovwj5hjip" path="res://cam.tres" id="4_qhhmo"]
+[ext_resource type="PackedScene" uid="uid://d3enn4l4tqhe8" path="res://ui/editor/gizmos/translate/translate.tscn" id="5_rrfeo"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Ground" parent="." instance=ExtResource("1_1kys7")]
+
+[node name="Sun" parent="." instance=ExtResource("2_qpxj4")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_2dhxm")
+camera_attributes = ExtResource("4_qhhmo")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.135715, 0.93677, 0.322556, 0, 0.325568, -0.945519, -0.990748, -0.128321, -0.0441846, 0, 3.95683, 0)
+size = Vector3(10, 10, 10)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="CSGBox3D"]
+remote_path = NodePath("../../translate")
+update_rotation = false
+update_scale = false
+
+[node name="translate" parent="." instance=ExtResource("5_rrfeo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.95683, 0)
+path = NodePath("../CSGBox3D")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.877583, -0.229849, 0.420735, 0, 0.877583, 0.479426, -0.479426, -0.420736, 0.770151, 31.3445, 35.7169, 57.3757)

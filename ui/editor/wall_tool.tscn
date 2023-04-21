@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvs6pj6a5w5t"]
+
+[ext_resource type="Script" path="res://ui/editor/wall_tool.gd" id="1_35bl1"]
+[ext_resource type="StyleBox" uid="uid://bg21fak47r0np" path="res://ui/panel_light.stylebox" id="2_326xw"]
+
+[node name="wall" type="VBoxContainer"]
+script = ExtResource("1_35bl1")
+
+[node name="label" type="Label" parent="."]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("2_326xw")
+text = "󰟾 walls"
+horizontal_alignment = 1
+
+[node name="west" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="west"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = " wall"
+
+[node name="west" type="CheckBox" parent="west"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="east" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="east"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = " wall"
+
+[node name="east" type="CheckBox" parent="east"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="north" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="north"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = " wall"
+
+[node name="north" type="CheckBox" parent="north"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="south" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="south"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = " wall"
+
+[node name="south" type="CheckBox" parent="south"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="toggled" from="west/west" to="." method="toggle" binds= [1]]
+[connection signal="toggled" from="east/east" to="." method="toggle" binds= [2]]
+[connection signal="toggled" from="north/north" to="." method="toggle" binds= [8]]
+[connection signal="toggled" from="south/south" to="." method="toggle" binds= [4]]

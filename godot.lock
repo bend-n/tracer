@@ -1,8 +1,13 @@
 [
   {
-    "name": "@bendn/remap",
-    "tarball": "https://registry.npmjs.org/@bendn/remap/-/remap-5.0.8.tgz",
-    "version": "5.0.8"
+    "name": "@bendn/enginesound",
+    "tarball": "https://registry.npmjs.org/@bendn/enginesound/-/enginesound-1.0.0.tgz",
+    "version": "1.0.0"
+  },
+  {
+    "name": "@bendn/gizmo3d",
+    "tarball": "https://registry.npmjs.org/@bendn/gizmo3d/-/gizmo3d-1.0.4.tgz",
+    "version": "1.0.4"
   },
   {
     "name": "@bendn/splitter",

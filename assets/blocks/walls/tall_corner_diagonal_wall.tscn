@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvagg3inem8cy"]
+
+[ext_resource type="Script" path="res://classes/wall.gd" id="1_q6ubx"]
+[ext_resource type="ArrayMesh" uid="uid://c4d2oixq5f5uq" path="res://assets/meshes/walls/tall_corner_diagonal_wall.tres" id="2_jshw1"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ud3fk"]
+points = PackedVector3Array(-5.00071, -0.5, -5, -5.00071, 2.4998, -5, 5, -0.5, 4.99966, -5.70711, -0.5, -4.2936, -5.70711, 2.4998, -4.2936, 5, 5, 4.99966, 4.29255, -0.5, 5.70711, 4.29255, 5, 5.70711)
+
+[node name="tall_corner_diagonal_wall" type="StaticBody3D" node_paths=PackedStringArray("mesh")]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("1_q6ubx")
+mesh = NodePath("mesh")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+editor_description = "cant use boxmesh cuz uvs wierd"
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("2_jshw1")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_ud3fk")
