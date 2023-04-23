@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4h850namjrn2"]
+[gd_scene load_steps=4 format=3 uid="uid://c4h850namjrn2"]
 
 [ext_resource type="Script" path="res://ui/editor/propertys.gd" id="1_0vjdc"]
+[ext_resource type="Script" path="res://addons/@bendn/timecontrol/timebutton.gd" id="2_bn54u"]
 
 [sub_resource type="GDScript" id="GDScript_ly6xd"]
 resource_name = "laps"
@@ -49,5 +50,19 @@ value = 1.0
 rounded = true
 suffix = "lap"
 script = SubResource("GDScript_ly6xd")
+
+[node name="time" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="label" type="Label" parent="time"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "time"
+
+[node name="time" type="Button" parent="time"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "12:00 PM"
+script = ExtResource("2_bn54u")
 
 [connection signal="value_changed" from="laps/laps" to="laps/laps" method="_on_value_changed"]

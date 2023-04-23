@@ -20,6 +20,7 @@ var snapping := true
 var objects: Array[TrackObject] = []
 var history := UndoRedo.new()
 var track: TrackResource
+var sun: DirectionalLight3D
 signal make_gizmo(mode: Mode)
 signal selection_changed(objects: Array[TrackObject])
 
@@ -35,11 +36,16 @@ func _ready() -> void:
 	for c in l.get_children():
 		l.remove_child(c)
 		%port.add_child(c)
+		if c is DirectionalLight3D:
+			sun = c
 	# the loader has loaded, get rid of it
 	l.queue_free()
+
 	objects = track.blocks.duplicate() # duplicate: if not saved, will be lost
 	%propertys.name_.text = track.name
 	%propertys.laps_.value = track.laps
+	%propertys.time_.time = { hour = rot2hour(track.sun_x), minute = 00 }
+	%propertys.time_.time_changed.connect(func(t: Dictionary): sun.global_rotation.x = hour2rot(t.hour))
 	%cam.global_transform = IntroCam.get_origin(track) # put the camera up high, looking straight down
 
 	if not FileAccess.file_exists(Globals.TRACKS % track.name) and not track.builtin:
@@ -51,6 +57,12 @@ func _ready() -> void:
 			for obj in objects:
 				obj.delete_live()
 	)
+
+func rot2hour(rot: int) -> int:
+	return round(24.0 * float(posmod(90 - rot, 360)) / 360.0)
+
+func hour2rot(hour: int) -> float:
+	return (6.0 - hour) / 24.0 * TAU
 
 func pressed(b: Button) -> void:
 	mode = Mode[b.name.to_pascal_case()]
@@ -85,6 +97,7 @@ func get_trackdata() -> TrackResource:
 	track.blocks = objects.duplicate()
 	track.name = %propertys.name_.text
 	track.laps = %propertys.laps_.value
+	track.sun_x = roundi(sun.global_rotation_degrees.x)
 	return track
 
 func _on_item_created(object: TrackObject) -> void:

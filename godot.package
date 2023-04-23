@@ -1,4 +1,6 @@
-[packages]
-"@bendn/gizmo3d" = '1.0.4'
-"@bendn/splitter" = '1.1.0'
-"@bendn/enginesound" = '1.0.0'
+packages: {
+	@bendn/gizmo3d: '1.0.4'
+	@bendn/splitter: '1.1.0'
+	@bendn/enginesound: '1.0.0'
+	@bendn/timecontrol: '1.2.2'
+}
