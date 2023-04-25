@@ -38,14 +38,20 @@ theme_override_constants/margin_bottom = 50
 layout_mode = 2
 tab_alignment = 1
 
-[node name="play" type="VBoxContainer" parent="margin/tabs"]
+[node name="play" type="ScrollContainer" parent="margin/tabs"]
 layout_mode = 2
+horizontal_scroll_mode = 0
 
-[node name="tracks" type="GridContainer" parent="margin/tabs/play"]
+[node name="cont" type="VBoxContainer" parent="margin/tabs/play"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="tracks" type="HFlowContainer" parent="margin/tabs/play/cont"]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 15
-columns = 5
 script = ExtResource("2_po2ce")
 editable = false
 metadata/_edit_pinned_properties_ = [&"editable"]
@@ -92,10 +98,22 @@ action_mode = 0
 text = "󰳸"
 script = ExtResource("8_1f3ce")
 
-[node name="tracks_owned" type="GridContainer" parent="margin/tabs/create" node_paths=PackedStringArray("other")]
+[node name="scroll" type="ScrollContainer" parent="margin/tabs/create"]
 layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="vbox" type="VBoxContainer" parent="margin/tabs/create/scroll"]
+editor_description = "needed for horizontal expansion"
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="tracks_owned" type="HFlowContainer" parent="margin/tabs/create/scroll/vbox" node_paths=PackedStringArray("other")]
+layout_mode = 2
+size_flags_vertical = 3
 script = ExtResource("8_v6p1s")
-other = NodePath("../../play/tracks")
+other = NodePath("../../../../play/cont/tracks")
 editable = true
 metadata/_edit_pinned_properties_ = [&"editable"]
 
@@ -105,5 +123,5 @@ volume_db = -25.0
 autoplay = true
 bus = &"music"
 
-[connection signal="pressed" from="margin/tabs/create/buttons/new" to="margin/tabs/create/tracks_owned" method="_on_new_pressed"]
-[connection signal="import" from="margin/tabs/create/buttons/import" to="margin/tabs/create/tracks_owned" method="_on_import_import"]
+[connection signal="pressed" from="margin/tabs/create/buttons/new" to="margin/tabs/create/scroll/vbox/tracks_owned" method="_on_new_pressed"]
+[connection signal="import" from="margin/tabs/create/buttons/import" to="margin/tabs/create/scroll/vbox/tracks_owned" method="_on_import_import"]

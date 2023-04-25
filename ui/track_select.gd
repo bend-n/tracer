@@ -1,4 +1,4 @@
-extends GridContainer
+extends Control
 class_name TrackSelect
 
 @export var editor: PackedScene = preload("res://ui/editor/track_editor.tscn")
