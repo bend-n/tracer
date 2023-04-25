@@ -4,6 +4,17 @@ extends SubViewportContainer
 
 signal created(object: TrackObject)
 signal remove_tobj(tobj: TrackObject)
+signal depth_changed(depth: float)
+
+@export var shift_scrollup: Shortcut
+@export var shift_scrolldown: Shortcut
+
+
+var input_ms: int = 0
+var depth: float = 50.0:
+	set(d):
+		depth = d
+		depth_changed.emit(d)
 
 func _can_drop_data(_at_position: Vector2, data) -> bool:
 	return (
@@ -35,7 +46,7 @@ func _drop_data(at_position: Vector2, data) -> void:
 	for i in len(objs):
 		var obj := objs[i]
 		var node: Block = obj.create(true)
-		var projected: Vector3 = %cam.project_position(at_position, 50)
+		var projected: Vector3 = %cam.project_position(at_position, depth)
 		var pos := (projected + offsets[i] if not offsets_unset else projected).snapped(Globals.SNAP)
 		obj.set_live(node)
 		history.add_do_method(add_obj.bind(obj, pos))
@@ -52,3 +63,13 @@ func add_obj(o: TrackObject, pos = null):
 func remove_obj(o: TrackObject):
 	remove_tobj.emit(o)
 	%port.remove_child(o.live_node)
+
+func _gui_input(event: InputEvent) -> void:
+	var change := func(i: float):
+		# debounce
+		if Time.get_ticks_msec() - input_ms > 1:
+			depth = max(25, depth + i)
+			input_ms = Time.get_ticks_msec()
+		get_viewport().set_input_as_handled()
+	if shift_scrolldown.matches_event(event): change.call(-Globals.SNAP.y)
+	elif shift_scrollup.matches_event(event): change.call(Globals.SNAP.y)

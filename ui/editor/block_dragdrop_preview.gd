@@ -1,6 +1,7 @@
 extends Control
 class_name DragDropPreview
 
+var depth: float
 var blocks: Array[Block] = []
 var objects: Array[Block]
 var offsets: PackedVector3Array = []
@@ -64,7 +65,7 @@ func viewport_event(e: InputEvent) -> void:
 		position_blocks(e.position)
 
 func position_blocks(mp: Vector2):
-	var at_position := cam.project_position(mp, 50)
+	var at_position := cam.project_position(mp, depth)
 	for i in len(blocks):
 		blocks[i].global_position = (
 			(offsets[i] + at_position)
@@ -76,3 +77,6 @@ func exit_viewport() -> void:
 	%panel.show()
 	for block in blocks:
 		block.hide()
+
+func depth_changed(new: float):
+	depth = new

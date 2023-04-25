@@ -100,6 +100,8 @@ func make_drag_preview(textures: Array[Texture2D]) -> Control:
 	%view.gui_input.connect(preview.viewport_event)
 	%view.mouse_entered.connect(preview.over_viewport)
 	%view.mouse_exited.connect(preview.exit_viewport)
+	%view.depth_changed.connect(preview.depth_changed)
+	preview.depth = %view.depth
 	if Rect2(Vector2.ZERO, %port.size).has_point(%port.get_mouse_position()):
 		get_tree().physics_frame.connect(func():
 			preview.over_viewport()

@@ -38,7 +38,7 @@ func _physics_process(_delta: float) -> void:
 		start = null
 		drag_area.hide()
 		drag_area.size = Vector2.ZERO
-		if r.size.length_squared() < 1000:
+		if r.size.length() < depth:
 			position_to(r.get_center())
 			force_raycast_update()
 			if is_colliding() and get_collider() != null:

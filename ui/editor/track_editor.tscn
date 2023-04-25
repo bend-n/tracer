@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://0x720q7tnsj0"]
+[gd_scene load_steps=66 format=3 uid="uid://0x720q7tnsj0"]
 
 [ext_resource type="Script" path="res://ui/editor/tree.gd" id="1_65spq"]
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_cc7dd"]
@@ -160,6 +160,20 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 corner_detail = 12
 anti_aliasing_size = 0.397
+
+[sub_resource type="InputEventMouseButton" id="InputEventMouseButton_sfut2"]
+shift_pressed = true
+button_index = 4
+
+[sub_resource type="Shortcut" id="Shortcut_m8lke"]
+events = [SubResource("InputEventMouseButton_sfut2")]
+
+[sub_resource type="InputEventMouseButton" id="InputEventMouseButton_7fxl4"]
+shift_pressed = true
+button_index = 5
+
+[sub_resource type="Shortcut" id="Shortcut_nokwa"]
+events = [SubResource("InputEventMouseButton_7fxl4")]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y3yf4"]
 shader = ExtResource("22_sij02")
@@ -483,6 +497,8 @@ custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
 stretch = true
 script = ExtResource("17_ugqw3")
+shift_scrollup = SubResource("Shortcut_m8lke")
+shift_scrolldown = SubResource("Shortcut_nokwa")
 
 [node name="port" type="SubViewport" parent="split/split2/middle dock/viewport/view"]
 unique_name_in_owner = true
