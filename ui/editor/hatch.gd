@@ -67,5 +67,5 @@ func _gui_input(event: InputEvent) -> void:
 			depth = max(25, depth + i)
 			input_ms = Time.get_ticks_msec()
 		get_viewport().set_input_as_handled()
-	if event.is_action(&"change_depth+"): change.call(-Globals.SNAP.y)
+	if event.is_action(&"change_depth-"): change.call(-Globals.SNAP.y)
 	elif event.is_action(&"change_depth+"): change.call(Globals.SNAP.y)
