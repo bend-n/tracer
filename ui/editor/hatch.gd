@@ -6,10 +6,6 @@ signal created(object: TrackObject)
 signal remove_tobj(tobj: TrackObject)
 signal depth_changed(depth: float)
 
-@export var shift_scrollup: Shortcut
-@export var shift_scrolldown: Shortcut
-
-
 var input_ms: int = 0
 var depth: float = 50.0:
 	set(d):
@@ -71,5 +67,5 @@ func _gui_input(event: InputEvent) -> void:
 			depth = max(25, depth + i)
 			input_ms = Time.get_ticks_msec()
 		get_viewport().set_input_as_handled()
-	if shift_scrolldown.matches_event(event): change.call(-Globals.SNAP.y)
-	elif shift_scrollup.matches_event(event): change.call(Globals.SNAP.y)
+	if event.is_action(&"change_depth+"): change.call(-Globals.SNAP.y)
+	elif event.is_action(&"change_depth+"): change.call(Globals.SNAP.y)

@@ -14,7 +14,7 @@ var m_vel := Vector2.ZERO
 func _process(_delta):
 	m_vel = get_viewport().get_mouse_position() - last_m_pos
 	last_m_pos = get_viewport().get_mouse_position()
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+	if Input.is_action_pressed(&"freelook"):
 		if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 			mp_before_freelook = get_viewport().get_mouse_position()
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
@@ -35,11 +35,10 @@ func _input(event: InputEvent):
 	if freelook and event is InputEventMouseMotion:
 		rotation.x = clamp(rotation.x + (-event.relative.y * MOUSE_SENSITIVTY), -CAMERA_MAX_ROTATION_ANGLE, CAMERA_MAX_ROTATION_ANGLE);
 		rotation.y += -event.relative.x * MOUSE_SENSITIVTY;
-	elif event is InputEventMouseButton:
-		match event.button_index:
-			# camera zoom
-			MOUSE_BUTTON_WHEEL_UP: global_position -= global_transform.basis.z * SCROLL_SENS
-			MOUSE_BUTTON_WHEEL_DOWN: global_position += global_transform.basis.z * SCROLL_SENS
+	elif event.is_action(&"zoom_in"):
+		global_position -= global_transform.basis.z * SCROLL_SENS
+	elif event.is_action(&"zoom_out"):
+		global_position += global_transform.basis.z * SCROLL_SENS
 	elif event is InputEventMouseMotion and panning:
 		var v := get_viewport()
 		var mp := v.get_mouse_position()

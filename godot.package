@@ -3,4 +3,5 @@ packages: {
 	@bendn/splitter: '1.1.0'
 	@bendn/enginesound: '1.0.0'
 	@bendn/timecontrol: '1.2.2'
+	@bendn/remap: '5.1.0'
 }

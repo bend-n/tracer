@@ -1,0 +1,144 @@
+[gd_scene load_steps=7 format=3 uid="uid://dby5rfnqh7bw8"]
+
+[ext_resource type="StyleBox" uid="uid://dxtsrhgnyr80k" path="res://ui/panel_dark.stylebox" id="1_wnpue"]
+[ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="2_6tbpq"]
+[ext_resource type="Script" path="res://addons/@bendn/remap/ActionLabel.gd" id="2_ye7r6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qrm46"]
+content_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cixwx"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.027451, 0.211765, 0.258824, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 12
+
+[sub_resource type="Theme" id="Theme_v23rf"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_cixwx")
+
+[node name="help" type="Window"]
+title = "how to editor"
+position = Vector2i(0, 36)
+size = Vector2i(1024, 512)
+wrap_controls = true
+transient = true
+min_size = Vector2i(512, 256)
+theme = ExtResource("2_6tbpq")
+
+[node name="panel" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_wnpue")
+
+[node name="inputs" type="ScrollContainer" parent="panel"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qrm46")
+
+[node name="vbox" type="VBoxContainer" parent="panel/inputs"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="tut" type="RichTextLabel" parent="panel/inputs/vbox"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.933333, 0.909804, 0.835294, 1)
+theme_override_font_sizes/normal_font_size = 25
+theme_override_font_sizes/bold_font_size = 30
+theme_override_font_sizes/italics_font_size = 15
+bbcode_enabled = true
+text = "[center][b]camera controls[/b][/center]
+Zooming in and out [i](with default keybinds)[/i] is done with the scroll wheel. You can pan the camera with shift + middle mouse.
+
+[center][b]block placing[/b][/center]
+To place a block, go into the filesystem panel (left), open a folder, and drag a block in.
+
+[center][b]block transformation[/b][/center]
+The toolbar on the topleft is used for various block manipulation.
+The default mode is selection (󰇀), which lets you select blocks. After selecting a block, try switching to the transform gizmo (󰆾 ).
+A object will appear with arrows sticking out of a cube. Interacting with the arrows will move the object that is selected.
+Its worth noting that you can also select multiple objects by dragging, and all the gizmos will work.
+The scale gizmo (󰘖 ) is the same, but for scaling.
+The rotation gizmo (󰶘 ) is a little different. You see, rotation gizmos are quite difficult, so this rotation gizmo operates on keybinds, even though it has a visual hull. R rotates clockwise, and shift + R rotates counter clockwise.
+
+[center][b]barrier creation[/b][/center]
+
+When selecting blocks, the panel on the right (which is called the inspector) may show a walls (󰟾 ) panel.
+Selecting different boxes on the panel will then create barriers.
+[i]todo: make this easier to work with.[/i]
+
+[center][b]block painting[/b][/center]
+You may have noticed some things in the filesystem panel arent directly draggable into the track.
+They are materials. You can drag them onto the paintbrush button on the toolbar, then pressing the paintbrush button will turn your cursor into a brush. Clicking a block will paint that block with the material selected.
+
+[center][b]track settings[/b][/center]
+Theres a few settings for your track:
+[ul]
+Track name: determines track name, and save location
+Laps: number of times you have to pass the finish
+Time: determines the location of the sun
+[/ul]
+
+[center][b]keybinds[/b][/center]"
+fit_content = true
+
+[node name="inputs" type="VBoxContainer" parent="panel/inputs/vbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_v23rf")
+
+[node name="pan" type="HBoxContainer" parent="panel/inputs/vbox/inputs"]
+layout_mode = 2
+tooltip_text = "Pans the camera"
+script = ExtResource("2_ye7r6")
+_name = "pan"
+action = "ui_pan"
+font_size = 25
+
+[node name="depth+" type="HBoxContainer" parent="panel/inputs/vbox/inputs"]
+layout_mode = 2
+tooltip_text = "While holding the block, pressing this button will move the block further away from the camera."
+script = ExtResource("2_ye7r6")
+_name = "depth far"
+action = "change_depth+"
+font_size = 25
+
+[node name="depth-" type="HBoxContainer" parent="panel/inputs/vbox/inputs"]
+layout_mode = 2
+tooltip_text = "While holding the block, pressing this button will move the block closer to the camera."
+script = ExtResource("2_ye7r6")
+_name = "depth close"
+action = "change_depth-"
+font_size = 25
+
+[node name="freelook" type="HBoxContainer" parent="panel/inputs/vbox/inputs"]
+layout_mode = 2
+tooltip_text = "Pressing this button will rotate the camera, according to the mouse."
+script = ExtResource("2_ye7r6")
+_name = "freelook"
+action = "freelook"
+font_size = 25
+
+[node name="zoom_in" type="HBoxContainer" parent="panel/inputs/vbox/inputs"]
+layout_mode = 2
+tooltip_text = "Zooms the camera in."
+script = ExtResource("2_ye7r6")
+_name = "zoom in"
+action = "zoom_in"
+font_size = 25
+
+[node name="zoom_out" type="HBoxContainer" parent="panel/inputs/vbox/inputs"]
+layout_mode = 2
+tooltip_text = "Zooms the camera out."
+script = ExtResource("2_ye7r6")
+_name = "zoom out"
+action = "zoom_out"
+font_size = 25
