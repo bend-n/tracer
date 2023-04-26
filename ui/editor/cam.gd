@@ -11,6 +11,9 @@ const CAMERA_MAX_ROTATION_ANGLE = deg_to_rad(70);
 var m_vel := Vector2.ZERO
 @onready var last_m_pos := get_viewport().get_mouse_position()
 
+func _ready() -> void:
+	fov = Globals.cfg.get_value(SettingsSaver.GRAPHIC, "camera_fov")
+
 func _process(_delta):
 	m_vel = get_viewport().get_mouse_position() - last_m_pos
 	last_m_pos = get_viewport().get_mouse_position()

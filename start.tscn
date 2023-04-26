@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://co11ood2nmady"]
+[gd_scene load_steps=6 format=3 uid="uid://co11ood2nmady"]
 
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_gm0ws"]
 [ext_resource type="PackedScene" uid="uid://oq2hhcxu57xx" path="res://ui/tabs/create.tscn" id="2_sm0m7"]
 [ext_resource type="PackedScene" uid="uid://6p50mntqmyvq" path="res://ui/tabs/play.tscn" id="3_4rfac"]
+[ext_resource type="PackedScene" uid="uid://difst0fhw1538" path="res://ui/tabs/settings.tscn" id="4_r4bcq"]
 [ext_resource type="AudioStream" uid="uid://bwiyphl31lwu6" path="res://assets/sounds/music.ogg" id="9_ma7kx"]
 
 [node name="start" type="Control"]
@@ -34,6 +35,10 @@ tab_alignment = 1
 layout_mode = 2
 
 [node name="create" parent="margin/tabs" instance=ExtResource("2_sm0m7")]
+visible = false
+layout_mode = 2
+
+[node name="settings" parent="margin/tabs" instance=ExtResource("4_r4bcq")]
 visible = false
 layout_mode = 2
 

@@ -14,6 +14,7 @@ var race: Race
 var huds: Array[HUD]
 
 func _ready() -> void:
+	scale = Globals.cfg.get_value(SettingsSaver.GRAPHIC, "viewport_scale") / 100
 	race = Race.new(Globals.playing, Globals.ghost, car_scene, ghost_scene, track_loader_scene)
 	race.did_reset.connect(count_in)
 	add_child(race)
@@ -50,6 +51,9 @@ func add_player() -> void:
 	)
 
 func count_in():
+	if Globals.cfg.get_value(SettingsSaver.UTIL, "countdown_step_length") == 0:
+		race.start()
+		return
 	var countdown := countdown_scene.instantiate()
 	huds[0].add_child(countdown)
 	countdown.finished.connect(race.start)

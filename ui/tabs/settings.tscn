@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3 uid="uid://difst0fhw1538"]
+
+[ext_resource type="Script" path="res://ui/tabs/settings.gd" id="1_8637a"]
+[ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="2_vwoli"]
+
+[node name="settings" type="ScrollContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_vwoli")
+horizontal_scroll_mode = 0
+script = ExtResource("1_8637a")
+
+[node name="vbox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="label" type="Label" parent="vbox"]
+layout_mode = 2
+text = "utility"
+
+[node name="utility" type="HFlowContainer" parent="vbox"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+
+[node name="panel" type="PanelContainer" parent="vbox/utility"]
+layout_mode = 2
+size_flags_vertical = 0
+tooltip_text = "The countdown length (set to 0 to disable countdown)."
+theme_type_variation = &"ui_light_panel"
+
+[node name="countdown_step" type="HBoxContainer" parent="vbox/utility/panel"]
+layout_mode = 2
+tooltip_text = "The countdown length (set to 0 to disable countdown)."
+
+[node name="label" type="Label" parent="vbox/utility/panel/countdown_step"]
+layout_mode = 2
+text = "countdown step length:"
+
+[node name="countdown_step" type="SpinBox" parent="vbox/utility/panel/countdown_step"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "The countdown length (set to 0 to disable countdown)."
+max_value = 30.0
+step = 0.1
+suffix = "s"
+custom_arrow_step = 0.5
+
+[node name="label2" type="Label" parent="vbox"]
+layout_mode = 2
+text = "graphical"
+
+[node name="graphical" type="HFlowContainer" parent="vbox"]
+layout_mode = 2
+
+[node name="panel" type="PanelContainer" parent="vbox/graphical"]
+layout_mode = 2
+tooltip_text = "Viewport scale"
+theme_type_variation = &"ui_light_panel"
+
+[node name="viewport_scale" type="HBoxContainer" parent="vbox/graphical/panel"]
+layout_mode = 2
+tooltip_text = "Viewport scale"
+
+[node name="label" type="Label" parent="vbox/graphical/panel/viewport_scale"]
+layout_mode = 2
+text = "viewport scale:"
+
+[node name="viewport_scale" type="SpinBox" parent="vbox/graphical/panel/viewport_scale"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+tooltip_text = "Viewport scale"
+value = 100.0
+suffix = "%"
+
+[node name="panel2" type="PanelContainer" parent="vbox/graphical"]
+layout_mode = 2
+tooltip_text = "Camera FOV."
+theme_type_variation = &"ui_light_panel"
+
+[node name="camera_fov" type="HBoxContainer" parent="vbox/graphical/panel2"]
+layout_mode = 2
+tooltip_text = "Camera FOV."
+
+[node name="label" type="Label" parent="vbox/graphical/panel2/camera_fov"]
+layout_mode = 2
+text = "camera field of view:"
+
+[node name="camera_fov" type="SpinBox" parent="vbox/graphical/panel2/camera_fov"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+tooltip_text = "Camera FOV."
+min_value = 1.0
+max_value = 179.0
+value = 75.0
+suffix = "deg"

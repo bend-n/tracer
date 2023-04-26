@@ -185,5 +185,7 @@ Tree/icons/arrow_collapsed = ExtResource("7_raqbt")
 Tree/styles/panel = ExtResource("2_0o40a")
 VSeparator/constants/separation = 0
 VSeparator/styles/separator = SubResource("StyleBoxLine_vr8fs")
+ui_light_panel/base_type = &"PanelContainer"
+ui_light_panel/styles/panel = ExtResource("2_0o40a")
 ui_panel/base_type = &"PanelContainer"
 ui_panel/styles/panel = ExtResource("4_mx083")

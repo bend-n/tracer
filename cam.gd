@@ -11,6 +11,7 @@ func _ready():
 	reset()
 	far = 2000
 	near = .2
+	fov = Globals.cfg.get_value(SettingsSaver.GRAPHIC, "camera_fov")
 
 func reset():
 	global_position = follow_this.global_position + (follow_this.global_transform.basis.z * target_distance)
