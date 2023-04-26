@@ -1,7 +1,6 @@
 extends TrackSelect
 class_name TrackEditorList
 
-@export var other: BuiltinTrackSelect
 var tracks: Array[TrackResource] = []
 
 func _ready() -> void:
@@ -18,7 +17,7 @@ func _ready() -> void:
 
 func _on_mkbutton(b: TrackButton, t: TrackResource) -> void:
 	@warning_ignore("static_called_on_instance")
-	b.include.connect(func(): other.add(t); TrackSelect.delete(t); b.queue_free())
+	b.include.connect(func(): Globals.track_select.add(t); TrackSelect.delete(t); b.queue_free())
 
 func _on_new_pressed() -> void:
 	var res := TrackResource.new([])

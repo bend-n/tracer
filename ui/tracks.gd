@@ -3,8 +3,12 @@ class_name BuiltinTrackSelect
 
 func _ready() -> void:
 	_load()
+	Globals.track_select = self
 	mkbuttons(Globals.builtin_tracks)
 	super()
+
+func _exit_tree() -> void:
+	Globals.track_select = null
 
 func _load():
 	var tracks: Array = str_to_var(FileAccess.get_file_as_string("res://tracks.cfg"))

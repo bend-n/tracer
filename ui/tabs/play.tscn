@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://6p50mntqmyvq"]
+
+[ext_resource type="Script" path="res://ui/tracks.gd" id="1_11hct"]
+
+[node name="play" type="ScrollContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="cont" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="tracks" type="HFlowContainer" parent="cont"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+script = ExtResource("1_11hct")
+editable = false
+metadata/_edit_pinned_properties_ = [&"editable"]

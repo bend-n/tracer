@@ -1,17 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://co11ood2nmady"]
+[gd_scene load_steps=5 format=3 uid="uid://co11ood2nmady"]
 
 [ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_gm0ws"]
-[ext_resource type="Script" path="res://ui/tracks.gd" id="2_po2ce"]
-[ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="6_e1quy"]
-[ext_resource type="Script" path="res://ui/multi_button.gd" id="7_rhu6g"]
-[ext_resource type="Script" path="res://ui/editor/import.gd" id="8_1f3ce"]
-[ext_resource type="Script" path="res://ui/editor/track_select.gd" id="8_v6p1s"]
+[ext_resource type="PackedScene" uid="uid://oq2hhcxu57xx" path="res://ui/tabs/create.tscn" id="2_sm0m7"]
+[ext_resource type="PackedScene" uid="uid://6p50mntqmyvq" path="res://ui/tabs/play.tscn" id="3_4rfac"]
 [ext_resource type="AudioStream" uid="uid://bwiyphl31lwu6" path="res://assets/sounds/music.ogg" id="9_ma7kx"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_8ohli"]
-font_size = 24
-outline_size = 12
-outline_color = Color(0, 0.168627, 0.211765, 1)
 
 [node name="start" type="Control"]
 layout_mode = 3
@@ -38,90 +30,15 @@ theme_override_constants/margin_bottom = 50
 layout_mode = 2
 tab_alignment = 1
 
-[node name="play" type="ScrollContainer" parent="margin/tabs"]
+[node name="play" parent="margin/tabs" instance=ExtResource("3_4rfac")]
 layout_mode = 2
-horizontal_scroll_mode = 0
 
-[node name="cont" type="VBoxContainer" parent="margin/tabs/play"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="tracks" type="HFlowContainer" parent="margin/tabs/play/cont"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/h_separation = 15
-theme_override_constants/v_separation = 15
-script = ExtResource("2_po2ce")
-editable = false
-metadata/_edit_pinned_properties_ = [&"editable"]
-
-[node name="create" type="VBoxContainer" parent="margin/tabs"]
+[node name="create" parent="margin/tabs" instance=ExtResource("2_sm0m7")]
 visible = false
 layout_mode = 2
-
-[node name="buttons" type="HFlowContainer" parent="margin/tabs/create"]
-layout_mode = 2
-theme = ExtResource("6_e1quy")
-
-[node name="new" type="Button" parent="margin/tabs/create/buttons" node_paths=PackedStringArray("secondary")]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 52
-action_mode = 0
-text = "󰈔"
-script = ExtResource("7_rhu6g")
-secondary = NodePath("plus")
-
-[node name="plus" type="Label" parent="margin/tabs/create/buttons/new"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -9.0
-offset_top = -24.0
-offset_right = 4.0
-offset_bottom = 4.0
-grow_horizontal = 0
-grow_vertical = 0
-text = ""
-label_settings = SubResource("LabelSettings_8ohli")
-
-[node name="import" type="Button" parent="margin/tabs/create/buttons"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 52
-disabled = true
-action_mode = 0
-text = "󰳸"
-script = ExtResource("8_1f3ce")
-
-[node name="scroll" type="ScrollContainer" parent="margin/tabs/create"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="vbox" type="VBoxContainer" parent="margin/tabs/create/scroll"]
-editor_description = "needed for horizontal expansion"
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="tracks_owned" type="HFlowContainer" parent="margin/tabs/create/scroll/vbox" node_paths=PackedStringArray("other")]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("8_v6p1s")
-other = NodePath("../../../../play/cont/tracks")
-editable = true
-metadata/_edit_pinned_properties_ = [&"editable"]
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_ma7kx")
 volume_db = -25.0
 autoplay = true
 bus = &"music"
-
-[connection signal="pressed" from="margin/tabs/create/buttons/new" to="margin/tabs/create/scroll/vbox/tracks_owned" method="_on_new_pressed"]
-[connection signal="import" from="margin/tabs/create/buttons/import" to="margin/tabs/create/scroll/vbox/tracks_owned" method="_on_import_import"]

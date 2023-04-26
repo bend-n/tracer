@@ -1,0 +1,79 @@
+[gd_scene load_steps=7 format=3 uid="uid://oq2hhcxu57xx"]
+
+[ext_resource type="Theme" uid="uid://bds815vxta4ma" path="res://ui/editor/bar_button.tres" id="1_l1v08"]
+[ext_resource type="Theme" uid="uid://d3ywcokn5ddy8" path="res://ui/theme.tres" id="1_vkyg2"]
+[ext_resource type="Script" path="res://ui/multi_button.gd" id="2_7621o"]
+[ext_resource type="Script" path="res://ui/editor/import.gd" id="3_167pb"]
+[ext_resource type="Script" path="res://ui/editor/track_select.gd" id="4_cxprj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ohli"]
+font_size = 24
+outline_size = 12
+outline_color = Color(0, 0.168627, 0.211765, 1)
+
+[node name="create" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_vkyg2")
+
+[node name="buttons" type="HFlowContainer" parent="."]
+layout_mode = 2
+theme = ExtResource("1_l1v08")
+
+[node name="new" type="Button" parent="buttons" node_paths=PackedStringArray("secondary")]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+action_mode = 0
+text = "󰈔"
+script = ExtResource("2_7621o")
+secondary = NodePath("plus")
+
+[node name="plus" type="Label" parent="buttons/new"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -24.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 0
+grow_vertical = 0
+text = ""
+label_settings = SubResource("LabelSettings_8ohli")
+
+[node name="import" type="Button" parent="buttons"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+disabled = true
+action_mode = 0
+text = "󰳸"
+script = ExtResource("3_167pb")
+
+[node name="scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="vbox" type="VBoxContainer" parent="scroll"]
+editor_description = "needed for horizontal expansion"
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="tracks_owned" type="HFlowContainer" parent="scroll/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("4_cxprj")
+editable = true
+metadata/_edit_pinned_properties_ = [&"editable"]
+
+[connection signal="pressed" from="buttons/new" to="scroll/vbox/tracks_owned" method="_on_new_pressed"]
+[connection signal="import" from="buttons/import" to="scroll/vbox/tracks_owned" method="_on_import_import"]

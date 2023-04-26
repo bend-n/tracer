@@ -4,6 +4,7 @@ class_name Utils
 var playing: TrackResource
 var editing: TrackResource
 var ghost: GhostData
+var track_select: BuiltinTrackSelect
 const SAVES := "user://ghosts/%s.ghost"
 const TRACKS := "user://player data/tracks/%s.track"
 const THUMBS := "user://thumbs/%s.thumb"
