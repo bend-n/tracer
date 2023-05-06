@@ -56,5 +56,5 @@ static func create(from: Car) -> PackedFloat32Array:
 	for i in from.wheels.size():
 		arr.append(int(from.wheels[i].is_in_contact()))
 	for i in from.wheels.size():
-		arr.append_array(vec2arr(from.wheels[i].position))
+		arr.append_array(CarVars.vec2arr(from.wheels[i].position))
 	return arr

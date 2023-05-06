@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DirRes" load_steps=45 format=3 uid="uid://qxacdpu7fkgb"]
+[gd_resource type="Resource" script_class="DirRes" load_steps=47 format=3 uid="uid://qxacdpu7fkgb"]
 
 [ext_resource type="PackedScene" uid="uid://cy2ialm17md6c" path="res://assets/blocks/ring_start.tscn" id="1_obh5s"]
 [ext_resource type="Script" path="res://classes/resources/link.gd" id="2_vbck3"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://ct733wlw6osxl" path="res://assets/blocks/platform_booster.tscn" id="15_22aj3"]
 [ext_resource type="PackedScene" uid="uid://bawi544gebahm" path="res://assets/blocks/platform_turn_3x3.tscn" id="16_sarxg"]
 [ext_resource type="PackedScene" uid="uid://dqxgxdxibvabe" path="res://assets/blocks/platform_turn_2x2.tscn" id="17_3cq3g"]
+[ext_resource type="PackedScene" uid="uid://bl7ex1vbseme6" path="res://assets/blocks/arrow.tscn" id="19_1tnmw"]
 [ext_resource type="PackedScene" uid="uid://d2nwkpdn3gnx3" path="res://assets/blocks/tree.tscn" id="19_vck13"]
 
 [sub_resource type="Resource" id="Resource_8f0v1"]
@@ -205,10 +206,18 @@ material = 0
 material_color = Color(0, 0, 0, 1)
 description = ""
 
+[sub_resource type="Resource" id="Resource_7cp5k"]
+resource_name = "arrow"
+script = ExtResource("2_vbck3")
+scene = ExtResource("19_1tnmw")
+material = 0
+material_color = Color(0, 0, 0, 1)
+description = "a guide."
+
 [sub_resource type="Resource" id="Resource_77r1h"]
 resource_name = "decoration"
 script = ExtResource("3_5we13")
-files = Array[Resource("res://classes/resources/file_item.gd")]([SubResource("Resource_vtfgn")])
+files = [SubResource("Resource_vtfgn"), SubResource("Resource_7cp5k")]
 description = "Decorations"
 
 [resource]

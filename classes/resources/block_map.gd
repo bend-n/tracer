@@ -17,7 +17,8 @@ const map := [
 	preload("res://assets/blocks/ring_checkpoint.tscn"),
 	preload("res://assets/blocks/ring_finish.tscn"),
 	preload("res://assets/blocks/ring_start.tscn"),
-	preload("res://assets/blocks/tree.tscn")
+	preload("res://assets/blocks/tree.tscn"),
+	preload("res://assets/blocks/arrow.tscn")
 ]
 
 static func find(s: PackedScene):

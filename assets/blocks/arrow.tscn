@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://bl7ex1vbseme6"]
+
+[ext_resource type="Script" path="res://assets/blocks/arrow.gd" id="1_k7yx4"]
+[ext_resource type="Material" uid="uid://74eb801jwyac" path="res://assets/mats/hl_metal.tres" id="2_b33y4"]
+[ext_resource type="Material" uid="uid://cbx2ccneely82" path="res://assets/mats/metal.tres" id="3_a1c6k"]
+[ext_resource type="ArrayMesh" uid="uid://cvfi4cn2fs3ey" path="res://assets/meshes/arrow/arrow_chair.tres" id="4_fqfq6"]
+[ext_resource type="ArrayMesh" uid="uid://02diawni5ua7" path="res://assets/meshes/arrow/arrow_back.tres" id="5_j552q"]
+[ext_resource type="ArrayMesh" uid="uid://ca5by4h1njjp8" path="res://assets/meshes/arrow/arrow.tres" id="6_4tonh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_esdgn"]
+size = Vector3(0.5, 2, 2)
+
+[node name="arrow" type="StaticBody3D"]
+collision_mask = 0
+input_ray_pickable = false
+script = ExtResource("1_k7yx4")
+hl_metal = ExtResource("2_b33y4")
+metal = ExtResource("3_a1c6k")
+
+[node name="stool" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.5, 0)
+mesh = ExtResource("4_fqfq6")
+
+[node name="holder" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.85, 2.5, 0)
+mesh = ExtResource("5_j552q")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.85, 2.5, 0)
+shape = SubResource("BoxShape3D_esdgn")
+
+[node name="arrow" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(2.18557e-08, -0.5, -7.54979e-08, -0.5, -2.18557e-08, -4.37114e-08, 4.37114e-08, 7.54979e-08, -0.5, -4.55, 2.5, 0)
+mesh = ExtResource("6_4tonh")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 2, 0)
